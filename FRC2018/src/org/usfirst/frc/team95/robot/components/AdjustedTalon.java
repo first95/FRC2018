@@ -1,9 +1,7 @@
-package org.usfirst.frc.team95.robot;
+package org.usfirst.frc.team95.robot.components;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import com.ctre.CANTalon;
@@ -13,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AdjustedTalon extends CANTalon
 	{
-		private PowerDistributionPanel panel = new PowerDistributionPanel();
+		private static PowerDistributionPanel panel = new PowerDistributionPanel();
 		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
 		static final double MIN_CURRENT = 40.0;
 		static final double MAX_CURRENT = 90.0;
@@ -46,6 +44,7 @@ public class AdjustedTalon extends CANTalon
 		@Override
 		public void set(double rate)
 			{
+				// TODO: Right now we're checking voltage once per AdjustedTalon, when we technically only need to do it once per iteration for the whole robot
 				double current = super.getOutputCurrent();
 				double voltage = panel.getVoltage();
 				double newAtten;
