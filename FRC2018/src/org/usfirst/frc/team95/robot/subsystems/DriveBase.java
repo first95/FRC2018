@@ -20,7 +20,7 @@ import org.usfirst.frc.team95.robot.commands.TankDriveWithJoystick;
  * the robots chassis. These include four drive motors, a left and right encoder
  * and a gyro.
  */
-public class DriveTrain extends Subsystem {
+public class DriveBase extends Subsystem {
 	private SpeedController frontLeftMotor = new Talon(1);
 	private SpeedController rearLeftMotor = new Talon(2);
 	private SpeedController frontRightMotor = new Talon(3);
@@ -33,7 +33,7 @@ public class DriveTrain extends Subsystem {
 	private AnalogInput rangefinder = new AnalogInput(6);
 	private AnalogGyro gyro = new AnalogGyro(1);
 
-	public DriveTrain() {
+	public DriveBase() {
 		super();
 
 		// Encoders may measure differently in the real world and in

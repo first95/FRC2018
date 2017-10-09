@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.commands.Autonomous;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
-import org.usfirst.frc.team95.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Wrist;
 
@@ -22,7 +22,7 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 
-	public static DriveTrain drivetrain;
+	public static DriveBase drivetrain;
 	public static Elevator elevator;
 	public static Wrist wrist;
 	public static Claw claw;
@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		// Initialize all subsystems
-		drivetrain = new DriveTrain();
+		drivetrain = new DriveBase();
 		elevator = new Elevator();
 		wrist = new Wrist();
 		claw = new Claw();
