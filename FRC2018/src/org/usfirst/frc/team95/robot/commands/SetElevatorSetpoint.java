@@ -17,6 +17,15 @@ import org.usfirst.frc.team95.robot.Robot;
 public class SetElevatorSetpoint extends Command {
 	private double setpoint;
 
+
+	/*
+	 * Note:
+	 * 
+	 * This command hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
 	public SetElevatorSetpoint(double setpoint) {
 		this.setpoint = setpoint;
 		requires(Robot.elevator);

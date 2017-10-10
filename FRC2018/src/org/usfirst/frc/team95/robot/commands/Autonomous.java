@@ -6,6 +6,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * The main autonomous command to pickup and deliver the soda to the box.
  */
 public class Autonomous extends CommandGroup {
+
+	/*
+	 * Note:
+	 * 
+	 * This command hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
+	
 	public Autonomous() {
 		addSequential(new PrepareToPickup());
 		addSequential(new Pickup());

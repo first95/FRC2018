@@ -16,6 +16,15 @@ import org.usfirst.frc.team95.robot.Robot;
 public class SetWristSetpoint extends Command {
 	private double setpoint;
 
+
+	/*
+	 * Note:
+	 * 
+	 * This command hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
 	public SetWristSetpoint(double setpoint) {
 		this.setpoint = setpoint;
 		requires(Robot.wrist);
