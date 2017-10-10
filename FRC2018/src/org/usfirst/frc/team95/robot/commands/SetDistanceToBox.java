@@ -22,13 +22,13 @@ public class SetDistanceToBox extends Command {
 	private PIDController pid;
 
 	public SetDistanceToBox(double distance) {
-		requires(Robot.drivetrain);
+		requires(Robot.drivebase);
 		pid = new PIDController(-2, 0, 0, new PIDSource() {
 			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
 			@Override
 			public double pidGet() {
-				return Robot.drivetrain.getDistanceToObstacle();
+				return Robot.drivebase.getDistanceToObstacle();
 			}
 
 			@Override
@@ -43,7 +43,7 @@ public class SetDistanceToBox extends Command {
 		}, new PIDOutput() {
 			@Override
 			public void pidWrite(double d) {
-				Robot.drivetrain.drive(d, d);
+				Robot.drivebase.drive(d, d);
 			}
 		});
 		pid.setAbsoluteTolerance(0.01);
@@ -54,7 +54,7 @@ public class SetDistanceToBox extends Command {
 	@Override
 	protected void initialize() {
 		// Get everything in a safe starting state.
-		Robot.drivetrain.reset();
+		Robot.drivebase.reset();
 		pid.reset();
 		pid.enable();
 	}
@@ -70,6 +70,6 @@ public class SetDistanceToBox extends Command {
 	protected void end() {
 		// Stop PID and the wheels
 		pid.disable();
-		Robot.drivetrain.drive(0, 0);
+		Robot.drivebase.drive(0, 0);
 	}
 }

@@ -14,13 +14,13 @@ import org.usfirst.frc.team95.robot.Robot;
 public class TankDriveWithJoystick extends Command {
 
 	public TankDriveWithJoystick() {
-		requires(Robot.drivetrain);
+		requires(Robot.drivebase);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.drivetrain.drive(Robot.oi.getJoystick());
+		Robot.drivebase.drive(Robot.oi.getJoystick());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -32,6 +32,6 @@ public class TankDriveWithJoystick extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.drivetrain.drive(0, 0);
+		Robot.drivebase.drive(0, 0);
 	}
 }

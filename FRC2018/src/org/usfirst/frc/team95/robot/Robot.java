@@ -22,7 +22,7 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 
-	public static DriveBase drivetrain;
+	public static DriveBase drivebase;
 	public static Elevator elevator;
 	public static Wrist wrist;
 	public static Claw claw;
@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		// Initialize all subsystems
-		drivetrain = new DriveBase();
+		drivebase = new DriveBase();
 		elevator = new Elevator();
 		wrist = new Wrist();
 		claw = new Claw();
@@ -45,7 +45,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = new Autonomous();
 
 		// Show what command your subsystem is running on the SmartDashboard
-		SmartDashboard.putData(drivetrain);
+		SmartDashboard.putData(drivebase);
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(wrist);
 		SmartDashboard.putData(claw);
@@ -97,7 +97,7 @@ public class Robot extends IterativeRobot {
 	private void log() {
 		wrist.log();
 		elevator.log();
-		drivetrain.log();
+		drivebase.log();
 		claw.log();
 	}
 }
