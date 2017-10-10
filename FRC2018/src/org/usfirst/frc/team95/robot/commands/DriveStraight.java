@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team95.robot.Robot;
+import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
  * Drive the given distance straight (negative values go backwards). Uses a
@@ -19,35 +20,39 @@ import org.usfirst.frc.team95.robot.Robot;
  * encoders.
  */
 public class DriveStraight extends Command {
-	private PIDController pid;
-
+//	private PIDController pid;
+	double distanceInches;
+	
 	public DriveStraight(double distance) {
 		requires(Robot.drivebase);
-		pid = new PIDController(4, 0, 0, new PIDSource() {
-			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
-
-			@Override
-			public double pidGet() {
-				return Robot.drivebase.getDistance();
-			}
-
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				m_sourceType = pidSource;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return m_sourceType;
-			}
-		}, new PIDOutput() {
-			@Override
-			public void pidWrite(double d) {
-				Robot.drivebase.drive(d, d);
-			}
-		});
-		pid.setAbsoluteTolerance(0.01);
-		pid.setSetpoint(distance);
+		
+		this.distanceInches = distance;
+		
+//		pid = new PIDController(4, 0, 0, new PIDSource() {
+//			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
+//
+//			@Override
+//			public double pidGet() {
+//				return Robot.drivebase.getDistance();
+//			}
+//
+//			@Override
+//			public void setPIDSourceType(PIDSourceType pidSource) {
+//				m_sourceType = pidSource;
+//			}
+//
+//			@Override
+//			public PIDSourceType getPIDSourceType() {
+//				return m_sourceType;
+//			}
+//		}, new PIDOutput() {
+//			@Override
+//			public void pidWrite(double d) {
+//				Robot.drivebase.drive(d, d);
+//			}
+//		});
+//		pid.setAbsoluteTolerance(0.01);
+//		pid.setSetpoint(distance);
 	}
 
 	// Called just before this Command runs the first time
@@ -55,21 +60,26 @@ public class DriveStraight extends Command {
 	protected void initialize() {
 		// Get everything in a safe starting state.
 		Robot.drivebase.reset();
-		pid.reset();
-		pid.enable();
+		
+		// Command the movement
+		Robot.drivebase.travelStraight(distanceInches);
+		
+//		pid.reset();
+//		pid.enable();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return pid.onTarget();
+//		return pid.onTarget();
+		return Robot.drivebase.onTarget();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
 		// Stop PID and the wheels
-		pid.disable();
+//		pid.disable();
 		Robot.drivebase.drive(0, 0);
 	}
 }

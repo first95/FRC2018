@@ -30,7 +30,7 @@ public class DriveBase extends Subsystem {
 		super();
 
 		leftPod  = new DrivePod("Left",  1, 2, 3, false);
-		rightPod = new DrivePod("Right", 4, 5, 6, false);
+		rightPod = new DrivePod("Right", 4, 5, 6, false); // TODO: one of these may need to be reversed
 	}
 
 	/**
@@ -103,6 +103,10 @@ public class DriveBase extends Subsystem {
 		// Really meters in simulation since it's a rangefinder...
 //		return rangefinder.getAverageVoltage();
 		return 0.0;
+	}
+	
+	public boolean onTarget() {
+		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
 	
 	// Command that the robot should travel a specific distance along the carpet.

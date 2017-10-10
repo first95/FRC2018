@@ -84,7 +84,7 @@ public class DrivePod {
 	
 	// Returns true if and only if the drive pod has achieved the distance commanded by
 	// the most recent call to travelDistance()
-	public boolean hasFinishedTravelingDistanceCommanded() {
+	public boolean isOnTarget() {
 		// TODO
 		return true;
 	}
