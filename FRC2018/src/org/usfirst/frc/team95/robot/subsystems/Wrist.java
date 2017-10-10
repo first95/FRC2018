@@ -22,6 +22,14 @@ public class Wrist extends PIDSubsystem {
 	private SpeedController motor;
 	private Potentiometer pot;
 
+	/*
+	 * Note:
+	 * 
+	 * This subsystem hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
 	private static final double kP_real = 1, kP_simulation = 0.05;
 
 	public Wrist() {

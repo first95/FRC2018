@@ -19,6 +19,15 @@ public class Claw extends Subsystem {
 	private SpeedController motor = new Victor(7);
 	private DigitalInput contact = new DigitalInput(5);
 
+	/*
+	 * Note:
+	 * 
+	 * This subsystem hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
+	
 	public Claw() {
 		super();
 

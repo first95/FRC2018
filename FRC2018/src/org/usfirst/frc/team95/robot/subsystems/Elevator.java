@@ -23,6 +23,15 @@ public class Elevator extends PIDSubsystem {
 	private SpeedController motor;
 	private Potentiometer pot;
 
+
+	/*
+	 * Note:
+	 * 
+	 * This subsystem hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
 	private static final double kP_real = 4, kI_real = 0.07, kP_simulation = 18, kI_simulation = 0.2;
 
 	public Elevator() {

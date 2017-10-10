@@ -21,6 +21,16 @@ import org.usfirst.frc.team95.robot.Robot;
 public class SetDistanceToBox extends Command {
 	private PIDController pid;
 
+	/*
+	 * Note:
+	 * 
+	 * This command hasn't been updated to reflect Team 95's robot.
+	 * It remains here as an example.
+	 * 
+	 * 
+	 */
+	
+	
 	public SetDistanceToBox(double distance) {
 		requires(Robot.drivebase);
 		pid = new PIDController(-2, 0, 0, new PIDSource() {
