@@ -12,13 +12,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.TankDriveWithJoystick;
+import org.usfirst.frc.team95.robot.components.DrivePod;
 
 /**
- * The DriveTrain subsystem incorporates the sensors and actuators attached to
- * the robots chassis. These include four drive motors, a left and right encoder
- * and a gyro.
+ * The DriveBase subsystem incorporates the sensors and actuators attached to
+ * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
 	private SpeedController frontLeftMotor = new Talon(1);
@@ -33,9 +34,12 @@ public class DriveBase extends Subsystem {
 	private AnalogInput rangefinder = new AnalogInput(6);
 	private AnalogGyro gyro = new AnalogGyro(1);
 
+	private DrivePod leftPod, rightPod;
+	
 	public DriveBase() {
 		super();
 
+		leftPod = new DrivePod(1, 2, 3, false);
 		// Encoders may measure differently in the real world and in
 		// simulation. In this example the robot moves 0.042 barleycorns
 		// per tick in the real world, but the simulated encoders
@@ -131,4 +135,81 @@ public class DriveBase extends Subsystem {
 		// Really meters in simulation since it's a rangefinder...
 		return rangefinder.getAverageVoltage();
 	}
+	
+	
+	// Corresponded to the Drive class in the 2017 code
+	public void tank(double leftsp, double rightsp)
+		{
+			leftPod.setThrottle(-leftsp);
+			rightPod.setThrottle(rightsp);
+		}
+
+	public void arcade(double forward, double spin)
+		{
+			tank(forward - spin, forward + spin);
+		}
+
+	public void halfArcade(double forward, double spin)
+		{
+			tank((forward - spin) / 2, (forward + spin) / 2);
+		}
+
+	public void arcade(Joystick stick, boolean twostick)
+		{
+			double y = stick.getY();
+			double x;
+			if (twostick)
+				{
+					x = stick.getRawAxis(4);
+				}
+			else
+				{
+					x = stick.getX();
+				}
+
+			if (Math.abs(y) <= Constants.joystickDeadbandV)
+				{
+					y = 0;
+				}
+
+			if (Math.abs(x) <= Constants.joystickDeadbandH)
+				{
+					x = 0;
+				}
+
+			// "Exponential" drive, where the movements are more sensitive during slow movement,
+			// permitting easier fine control
+			x = Math.pow(x, 3);
+			y = Math.pow(y, 3);
+			arcade(y, x);
+		}
+
+	public void halfArcade(Joystick stick, boolean twostick)
+		{
+			double y = stick.getY();
+			double x;
+			if (twostick)
+				{
+					x = stick.getRawAxis(4);
+				}
+			else
+				{
+					x = stick.getX();
+				}
+			if (Math.abs(y) <= Constants.joystickDeadbandV)
+				{
+					y = 0;
+				}
+
+			if (Math.abs(x) <= Constants.joystickDeadbandH)
+				{
+					x = 0;
+				}
+
+			// "Exponential" drive, where the movements are more sensitive during slow movement,
+			// permitting easier fine control
+			x = Math.pow(x, 3);
+			y = Math.pow(y, 3);
+			halfArcade(y, x);
+		}
 }
