@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod {
 	private CANTalon leader, follower1, follower2;
-	private final double DEFAULT_SPEED_INCHES_PER_S = 20;
 	private String name;
 	
 	// Provide the CAN addresses of the three motor controllers.
@@ -81,11 +80,6 @@ public class DrivePod {
 	// distance remaining.
 	public void travelDistance(double inchesToTravel, double speedInchesPerSecond) {
 		// TODO
-	}
-	
-	// Provide a default value for travel speed
-	public void travelDistance(double inchesToTravel) {
-		travelDistance(inchesToTravel, DEFAULT_SPEED_INCHES_PER_S);
 	}
 	
 	// Returns true if and only if the drive pod has achieved the distance commanded by
