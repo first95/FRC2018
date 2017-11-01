@@ -5,6 +5,7 @@
 package org.usfirst.frc.team95.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot;
 
@@ -20,7 +21,10 @@ public class TankDriveWithJoystick extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.drivebase.drive(Robot.oi.getJoystick());
+		
+		Robot.drivebase.driveStick(Robot.oi.getJoystick());
+		
+		SmartDashboard.putNumber("test", Robot.oi.getJoystick().getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

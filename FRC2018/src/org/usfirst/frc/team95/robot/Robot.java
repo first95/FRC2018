@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,7 +22,9 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-
+	
+	public static Timer testTime = new Timer();
+	
 	public static DriveBase drivebase;
 	public static Elevator elevator;
 	public static Wrist wrist;
@@ -34,6 +37,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		testTime.stop();
+		testTime.start();
+		
 		// Initialize all subsystems
 		drivebase = new DriveBase();
 		elevator = new Elevator();
