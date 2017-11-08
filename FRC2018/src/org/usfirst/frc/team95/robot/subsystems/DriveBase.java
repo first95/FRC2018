@@ -74,16 +74,7 @@ public class DriveBase extends Subsystem
 		 */
 		public void driveStick(Joystick stick)
 			{
-				
-				double y = stick.getY();
-				double x = stick.getY();
-				
-					
-
-				
-				drive(y, x);
-				// TODO: use this "joy.getAxis(AxisType.kThrottle)" or "joy.getY()" the first
-				// option was not working
+				arcade(stick, true);
 			}
 
 		/**
