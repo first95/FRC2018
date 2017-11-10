@@ -1,5 +1,7 @@
 package org.usfirst.frc.team95.robot.components;
 
+import org.usfirst.frc.team95.robot.Robot;
+
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -20,6 +22,8 @@ public class DrivePod {
 	// (This is to account for the way the drive pods are mounted in a rotationally symmetric way.)
 	// Name is for feedback on the SmartDashboard - likely "left" or "right"
 	public DrivePod(String name, int leaderCanNum, int follower1CanNum,  int follower2CanNum, boolean reverse) {
+		Robot.sysLog.SystemLoggerWrite("Drivepod Started");
+		
 		this.name = name;
 		
 		// Connect each Talon

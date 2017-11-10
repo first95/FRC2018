@@ -36,6 +36,8 @@ public class Elevator extends PIDSubsystem {
 
 	public Elevator() {
 		super(kP_real, kI_real, 0);
+		
+		Robot.sysLog.SystemLoggerWrite("Elevator Started");
 		if (Robot.isSimulation()) { // Check for simulation and update PID
 									// values
 			getPIDController().setPID(kP_simulation, kI_simulation, 0, 0);

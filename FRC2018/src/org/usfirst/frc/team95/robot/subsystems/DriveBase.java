@@ -31,6 +31,7 @@ public class DriveBase extends Subsystem
 		public DriveBase()
 			{
 				super();
+				Robot.sysLog.SystemLoggerWrite("Drive Base Started");
 
 				leftPod = new DrivePod("Left", 1, 2, 3, false);
 				rightPod = new DrivePod("Right", 4, 5, 6, false); // TODO: one of these may need to be reversed
@@ -65,6 +66,7 @@ public class DriveBase extends Subsystem
 		 */
 		public void drive(double left, double right)
 			{
+				
 				tank(left, right);
 			}
 

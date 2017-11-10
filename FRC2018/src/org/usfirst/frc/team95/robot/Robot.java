@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.IOException;
+
 import org.usfirst.frc.team95.robot.commands.Autonomous;
+import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -21,9 +24,11 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
 	Command autonomousCommand;
 	
-	public static Timer testTime = new Timer();
+	public static Timer systemLoggerTimer = new Timer();
+	public static SystemLogger sysLog;
 	
 	public static DriveBase drivebase;
 	public static Elevator elevator;
@@ -38,8 +43,18 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
-		testTime.stop();
-		testTime.start();
+		systemLoggerTimer.stop();
+		systemLoggerTimer.reset();
+		systemLoggerTimer.start();
+		try
+			{
+				sysLog = new SystemLogger();
+			}
+		catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		sysLog.SystemLoggerWrite("System Logger Started");
 		
 		// Initialize all subsystems
 		drivebase = new DriveBase();
