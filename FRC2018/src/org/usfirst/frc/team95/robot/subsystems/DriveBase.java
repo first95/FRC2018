@@ -31,8 +31,7 @@ public class DriveBase extends Subsystem
 		public DriveBase()
 			{
 				super();
-				Robot.sysLog.SystemLoggerWrite("Drive Base Started");
-
+				
 				leftPod = new DrivePod("Left", 1, 2, 3, false);
 				rightPod = new DrivePod("Right", 4, 5, 6, false); // TODO: one of these may need to be reversed
 			}
@@ -138,6 +137,13 @@ public class DriveBase extends Subsystem
 			{
 				travelStraight(inchesToTravel, DEFAULT_TRAVEL_SPEED_INCHES_PER_S);
 			}
+		
+		// Talon Brake system
+		public void brake(boolean isEnabled)
+		{
+			leftPod.enableBrakeMode(isEnabled);
+			rightPod.enableBrakeMode(isEnabled);
+		}
 
 		// Command that the robot should travel a specific distance along the carpet.
 		// Call this once to command distance - do not call repeatedly, as this will

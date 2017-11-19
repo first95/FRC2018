@@ -1,5 +1,7 @@
+
 package org.usfirst.frc.team95.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.io.IOException;
 
 import org.usfirst.frc.team95.robot.commands.Autonomous;
+import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -23,103 +26,111 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
-	
-	Command autonomousCommand;
-	
-	public static Timer systemLoggerTimer = new Timer();
-	public static SystemLogger sysLog;
-	
-	public static DriveBase drivebase;
-	public static Elevator elevator;
-	public static Wrist wrist;
-	public static Claw claw;
-	public static OI oi;
+public class Robot extends IterativeRobot
+	{
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		
-		systemLoggerTimer.stop();
-		systemLoggerTimer.reset();
-		systemLoggerTimer.start();
-		try
+		Command autonomousCommand;
+
+		public static DriveBase drivebase;
+		public static Elevator elevator;
+		public static Wrist wrist;
+		public static Claw claw;
+		public static OI oi;
+
+		boolean once = true;
+
+		private ButtonTracker testBrake;
+
+		/**
+		 * This function is run when the robot is first started up and should be used
+		 * for any initialization code.
+		 */
+		@Override
+		public void robotInit()
 			{
-				sysLog = new SystemLogger();
+
+
+				
+				
+				// Initialize all subsystems
+				drivebase = new DriveBase();
+				elevator = new Elevator();
+				wrist = new Wrist();
+				claw = new Claw();
+				oi = new OI();
+				testBrake = new ButtonTracker(Constants.driveStick, 1);
+				
+				Compressor compressor = new Compressor();
+
+				// instantiate the command used for the autonomous period
+				autonomousCommand = new Autonomous();
+
+				// Show what command your subsystem is running on the SmartDashboard
+				SmartDashboard.putData(drivebase);
+				SmartDashboard.putData(elevator);
+				SmartDashboard.putData(wrist);
+				SmartDashboard.putData(claw);
 			}
-		catch (IOException e)
+
+		@Override
+		public void autonomousInit()
 			{
-				e.printStackTrace();
+				autonomousCommand.start(); // schedule the autonomous command (example)
 			}
-		sysLog.SystemLoggerWrite("System Logger Started");
-		
-		// Initialize all subsystems
-		drivebase = new DriveBase();
-		elevator = new Elevator();
-		wrist = new Wrist();
-		claw = new Claw();
-		oi = new OI();
 
-		// instantiate the command used for the autonomous period
-		autonomousCommand = new Autonomous();
+		/**
+		 * This function is called periodically during autonomous
+		 */
+		@Override
+		public void autonomousPeriodic()
+			{
+				Scheduler.getInstance().run();
+				log();
+			}
 
-		// Show what command your subsystem is running on the SmartDashboard
-		SmartDashboard.putData(drivebase);
-		SmartDashboard.putData(elevator);
-		SmartDashboard.putData(wrist);
-		SmartDashboard.putData(claw);
+		@Override
+		public void teleopInit()
+			{
+				// This makes sure that the autonomous stops running when
+				// teleop starts running. If you want the autonomous to
+				// continue until interrupted by another command, remove
+				// this line or comment it out.
+				autonomousCommand.cancel();
+				
+				drivebase.brake(true);
+				
+			}
+
+		/**
+		 * This function is called periodically during operator control
+		 */
+		@Override
+		public void teleopPeriodic()
+			{
+				Scheduler.getInstance().run();
+				log();
+
+				
+
+			}
+
+		/**
+		 * This function is called periodically during test mode
+		 */
+		@Override
+		public void testPeriodic()
+			{
+				LiveWindow.run();
+			}
+
+		/**
+		 * The log method puts interesting information to the SmartDashboard.
+		 */
+		private void log()
+			{
+				wrist.log();
+				elevator.log();
+				drivebase.log();
+				claw.log();
+			}
 	}
-
-	@Override
-	public void autonomousInit() {
-		autonomousCommand.start(); // schedule the autonomous command (example)
-	}
-
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	@Override
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-		log();
-	}
-
-	@Override
-	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		autonomousCommand.cancel();
-	}
-
-	/**
-	 * This function is called periodically during operator control
-	 */
-	@Override
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-		log();
-	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
-
-	/**
-	 * The log method puts interesting information to the SmartDashboard.
-	 */
-	private void log() {
-		wrist.log();
-		elevator.log();
-		drivebase.log();
-		claw.log();
-	}
-}

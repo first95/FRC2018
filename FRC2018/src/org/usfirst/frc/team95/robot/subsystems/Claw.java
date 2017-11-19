@@ -33,7 +33,7 @@ public class Claw extends Subsystem {
 	public Claw() {
 		super();
 
-		Robot.sysLog.SystemLoggerWrite("Claw Started");
+		
 		// Let's show everything on the LiveWindow
 		LiveWindow.addActuator("Claw", "Motor", (Victor) motor);
 		LiveWindow.addActuator("Claw", "Limit Switch", contact);
@@ -50,7 +50,7 @@ public class Claw extends Subsystem {
 	 * Set the claw motor to move in the open direction.
 	 */
 	public void open() {
-		Robot.sysLog.SystemLoggerWrite("Claw Open");
+		
 		motor.set(-1);
 	}
 
@@ -58,7 +58,7 @@ public class Claw extends Subsystem {
 	 * Set the claw motor to move in the close direction.
 	 */
 	public void close() {
-		Robot.sysLog.SystemLoggerWrite("Claw Closed");
+		
 		motor.set(1);
 	}
 
@@ -66,7 +66,7 @@ public class Claw extends Subsystem {
 	 * Stops the claw motor from moving.
 	 */
 	public void stop() {
-		Robot.sysLog.SystemLoggerWrite("Claw Stop");
+		
 		motor.set(0);
 	}
 
@@ -75,7 +75,6 @@ public class Claw extends Subsystem {
 	 * the limit switch.
 	 */
 	public boolean isGrabbing() {
-		Robot.sysLog.SystemLoggerWrite("Claw Is Grabbing");
 		return contact.get();
 	}
 }
