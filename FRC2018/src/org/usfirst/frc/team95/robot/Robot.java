@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot
 		public void robotInit()
 			{
 
-
+				drivebase.brake(false);
 				
 				
 				// Initialize all subsystems
@@ -88,6 +88,26 @@ public class Robot extends IterativeRobot
 				log();
 			}
 
+		/**
+		 * This function is called once each time the robot enters Disabled mode. You can use it to reset any subsystem
+		 * information you want to clear when the robot is disabled.
+		 */
+		public void disabledInit()
+			{
+
+				System.out.println("TEST");
+				drivebase.brake(false);
+			}
+
+		public void disabledPeriodic()
+			{
+
+				
+				Scheduler.getInstance().run();
+
+			}
+		
+		
 		@Override
 		public void teleopInit()
 			{
@@ -97,7 +117,7 @@ public class Robot extends IterativeRobot
 				// this line or comment it out.
 				autonomousCommand.cancel();
 				
-				drivebase.brake(true);
+				
 				
 			}
 
