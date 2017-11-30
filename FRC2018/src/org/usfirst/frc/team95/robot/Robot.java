@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot
 		public void robotInit()
 			{
 
-				drivebase.brake(false);
+				
 				
 				
 				// Initialize all subsystems
@@ -70,11 +70,14 @@ public class Robot extends IterativeRobot
 				SmartDashboard.putData(elevator);
 				SmartDashboard.putData(wrist);
 				SmartDashboard.putData(claw);
+				
+				drivebase.brake(false);
 			}
 
 		@Override
 		public void autonomousInit()
 			{
+				drivebase.brake(true);
 				autonomousCommand.start(); // schedule the autonomous command (example)
 			}
 
@@ -111,6 +114,7 @@ public class Robot extends IterativeRobot
 		@Override
 		public void teleopInit()
 			{
+				drivebase.brake(true);
 				// This makes sure that the autonomous stops running when
 				// teleop starts running. If you want the autonomous to
 				// continue until interrupted by another command, remove
