@@ -5,6 +5,7 @@ import org.usfirst.frc.team95.robot.Robot;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.CANSpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private CANTalon leader, follower1, follower2;
+		private CANSpeedController leader, follower1, follower2;
 		private String name;
 
 		// Provide the CAN addresses of the three motor controllers.
@@ -28,14 +29,13 @@ public class DrivePod
 		// Name is for feedback on the SmartDashboard - likely "left" or "right"
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, boolean reverse)
 			{
-				
-
 				this.name = name;
 
+
 				// Connect each Talon
-				leader = new CANTalon(leaderCanNum);
-				follower1 = new CANTalon(follower1CanNum);
-				follower2 = new CANTalon(follower2CanNum);
+				CANTalon leader = new CANTalon(leaderCanNum);
+				CANTalon follower1 = new CANTalon(follower1CanNum);
+				CANTalon follower2 = new CANTalon(follower2CanNum);
 
 				// Leaders have quadrature encoders connected to their inputs
 				leader.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -50,11 +50,23 @@ public class DrivePod
 				// Are all the speeds and distances expressed in ticks (/per second)?
 
 				// TODO: How do we reverse a drive pod?
+				
+				this.leader = leader;
+				this.follower1 = follower1;
+				this.follower2 = follower2;
 
 				// Add to LiveWindow
 				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
 			}
-
+		
+		// Constructor used by tester
+		public DrivePod(String name, CANSpeedController leader, CANSpeedController follower1, CANSpeedController follower2) {
+			this.name = name;
+			this.leader    = leader;
+			this.follower1 = follower1;
+			this.follower2 = follower2;
+		}
+		
 		// Provide a default value for reverse parameter
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum)
 			{
@@ -104,9 +116,9 @@ public class DrivePod
 
 		public void enableBrakeMode(boolean isEnabled)
 			{
-				leader.enableBrakeMode(isEnabled);
-				follower1.enableBrakeMode(isEnabled);
-				follower2.enableBrakeMode(isEnabled);
+				if(leader    instanceof CANTalon) { ((CANTalon)leader).   enableBrakeMode(isEnabled); }
+				if(follower1 instanceof CANTalon) { ((CANTalon)follower1).enableBrakeMode(isEnabled); }
+				if(follower2 instanceof CANTalon) { ((CANTalon)follower2).enableBrakeMode(isEnabled); }
 			}
 
 		// Returns true if and only if the drive pod has achieved the distance commanded
