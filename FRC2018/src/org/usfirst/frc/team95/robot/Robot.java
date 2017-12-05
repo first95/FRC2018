@@ -14,6 +14,7 @@ import java.io.IOException;
 import org.usfirst.frc.team95.robot.commands.Autonomous;
 import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
+import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -32,12 +33,18 @@ public class Robot extends IterativeRobot
 
 		Command autonomousCommand;
 
+		// Actual classes used in the robot
 		public static DriveBase drivebase;
+		public static OI oi;
+
+		// Examples - the minimum possible subsystems
 		public static BareMinimumPneumaticSubsystem bmns;
+		public static BareMinimumMotorSubsystem bmms;
+		
+		// Slightly more elaborate example subsystems from WPILib
 		public static Elevator elevator;
 		public static Wrist wrist;
 		public static Claw claw;
-		public static OI oi;
 
 		boolean once = true;
 

@@ -10,6 +10,7 @@ public class ExtendOrRetractPiston extends Command {
 		requires(Robot.bmns);
 		this.extend = extend;
 	}
+	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
@@ -17,9 +18,15 @@ public class ExtendOrRetractPiston extends Command {
 	}
 	
 	@Override
+	protected void execute() {
+		// This method is called once every loop through the robot code.
+		// If something changes over time, handle it here.
+	}
+	
+	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		// When this method returns true, execute() will no longer be called.
+		return true;
 	}
 
 }
