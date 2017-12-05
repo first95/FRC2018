@@ -14,6 +14,7 @@ import java.io.IOException;
 import org.usfirst.frc.team95.robot.commands.Autonomous;
 import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
+import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -32,6 +33,7 @@ public class Robot extends IterativeRobot
 		Command autonomousCommand;
 
 		public static DriveBase drivebase;
+		public static BareMinimumPneumaticSubsystem bmns;
 		public static Elevator elevator;
 		public static Wrist wrist;
 		public static Claw claw;
