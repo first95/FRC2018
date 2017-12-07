@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		// private AdjustedTalon leader, follower1, follower2;
-		private CANTalon leader, follower1, follower2;
+		private AdjustedTalon leader, follower1, follower2;
+		//private CANTalon leader, follower1, follower2;
 		private String name;
 
 		private static final double MIN_VOLTAGE = 7.5;
@@ -39,12 +39,12 @@ public class DrivePod
 				this.name = name;
 
 				// Connect each Talon
-				leader = new CANTalon(leaderCanNum);
-				follower1 = new CANTalon(follower1CanNum);
-				follower2 = new CANTalon(follower2CanNum);
-				// leader = new AdjustedTalon(leaderCanNum);
-				// follower1 = new AdjustedTalon(follower1CanNum);
-				// follower2 = new AdjustedTalon(follower2CanNum);
+				//leader = new CANTalon(leaderCanNum);
+				//follower1 = new CANTalon(follower1CanNum);
+				//follower2 = new CANTalon(follower2CanNum);
+				leader = new AdjustedTalon(leaderCanNum);
+				follower1 = new AdjustedTalon(follower1CanNum);
+				follower2 = new AdjustedTalon(follower2CanNum);
 
 				// Leaders have quadrature encoders connected to their inputs
 				leader.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -78,6 +78,8 @@ public class DrivePod
 			{
 				// TODO: Anything we wanna see on the SmartDashboard, put here
 				SmartDashboard.putNumber(name + " debug value", 1);
+				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
+				SmartDashboard.putNumber("OutputVoltage", leader.getOutputVoltage());
 			}
 
 		public void reset()
@@ -124,26 +126,18 @@ public class DrivePod
 
 		public void voltageCurrentLimit()
 			{
-				leader.setCurrentLimit(MAX_CURRENT);
-				leader.EnableCurrentLimit(true);
-				
-				//No Voltage LIMIT found 
+				//Notes of GitHub
+				//leader.setCurrentLimit(amps);
+				//leader.EnableCurrentLimit(boolean);
 			}
 
 		public void voltageCurrentComp()
 			{
-				leader.changeControlMode(TalonControlMode.Voltage);
-				leader.setVoltageCompensationRampRate(24.0);
-				//leader.setNominalClosedLoopVoltage(MIN_VOLTAGE);
-				leader.set(1.0);
 				
-				follower1.setVoltageCompensationRampRate(24.0);
-				follower1.set(1.0);
-				//follower1.setNominalClosedLoopVoltage(MIN_VOLTAGE);
-				
-				follower2.setVoltageCompensationRampRate(24.0);
-				follower2.set(1.0);
-				//follower2.setNominalClosedLoopVoltage(MIN_VOLTAGE);
+				//Notes of GitHub
+				//leader.setControlMode(TalonControlMode.Voltage);
+				//leader.setVoltageCompensationRampRate(rampRate);
+				//leader.set(rate);
 			}
 
 		// Returns true if and only if the drive pod has achieved the distance commanded
