@@ -39,8 +39,8 @@ public class OI {
 		// Connect the buttons to commands
 		d_up.whenPressed(new SetElevatorSetpoint(0.2));
 		d_down.whenPressed(new SetElevatorSetpoint(-0.2));
-		d_right.whenPressed(new CloseClaw());
-		d_left.whenPressed(new OpenClaw());
+		d_right.whenPressed(new ExtendOrRetractPiston(true));
+		d_right.whenReleased(new ExtendOrRetractPiston(false));
 
 		r1.whenPressed(new PrepareToPickup());
 		r2.whenPressed(new Pickup());
