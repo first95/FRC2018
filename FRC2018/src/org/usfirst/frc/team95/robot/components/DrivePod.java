@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
+		// Leave these as the interface (CANSpeedController) rather than the concrete class
+		// (CANTalon or AdjustedTalon) so that we can use the unit tests.
+		// See "Liskov substitution principle".
 		private CANSpeedController leader, follower1, follower2;
 		private String name;
 
@@ -59,7 +62,8 @@ public class DrivePod
 				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
 			}
 		
-		// Constructor used by tester
+		// Constructor used by tester.
+		// This is a design pattern called "Dependency Injection".
 		public DrivePod(String name, CANSpeedController leader, CANSpeedController follower1, CANSpeedController follower2) {
 			this.name = name;
 			this.leader    = leader;
@@ -116,9 +120,15 @@ public class DrivePod
 
 		public void enableBrakeMode(boolean isEnabled)
 			{
-				if(leader    instanceof CANTalon) { ((CANTalon)leader).   enableBrakeMode(isEnabled); }
-				if(follower1 instanceof CANTalon) { ((CANTalon)follower1).enableBrakeMode(isEnabled); }
-				if(follower2 instanceof CANTalon) { ((CANTalon)follower2).enableBrakeMode(isEnabled); }
+				// Specify which type of CANSpeedController by casting to CANTalon.
+				// In the normal robot code, it is a safe assumption that leader, follower1, and follower1
+				// are CANTalon objects (which can be safely stored in CANSpeedController variables because
+				// the CANSpeedController class is a parent of the CANTalon class, and the robot code calls
+				// the constructor that sets them to CANTalon objects.
+				// Ask a coach if you want to know more!
+				((CANTalon)leader   ).enableBrakeMode(isEnabled);
+				((CANTalon)follower1).enableBrakeMode(isEnabled);
+				((CANTalon)follower2).enableBrakeMode(isEnabled);
 			}
 
 		// Returns true if and only if the drive pod has achieved the distance commanded
