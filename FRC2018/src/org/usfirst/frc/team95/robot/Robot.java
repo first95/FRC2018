@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.commands.Autonomous;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
+import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Wrist;
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static Wrist wrist;
 	public static Claw claw;
 	public static OI oi;
+	public static Climber climber;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 		wrist = new Wrist();
 		claw = new Claw();
 		oi = new OI();
+		climber = new Climber();
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
@@ -49,6 +52,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(wrist);
 		SmartDashboard.putData(claw);
+		SmartDashboard.putData(climber);
 	}
 
 	@Override
