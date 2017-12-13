@@ -1,14 +1,11 @@
 package org.usfirst.frc.team95.robot.components;
 
-import java.awt.Robot;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class SystemLogger
 	{
@@ -41,33 +38,33 @@ public class SystemLogger
 
 		private void SystemLoggerInit() throws IOException
 			{
-				currentDate = new Date();
-				systemDate = currentDate.toString();
-
-				systemDay = systemDate.substring(1, 3);
-				systemMonth = systemDate.substring(5, 7);
-				systemNoDay = systemDate.substring(9, 10);
-				systemHour = systemDate.substring(12, 13);
-				systemMinute = systemDate.substring(15, 16);
-				systemSecond = systemDate.substring(18, 19);
-				systemTimeZone = systemDate.substring(21, 23);
-				systemYear = systemDate.substring(25, 28);
-				
-				systemDate = systemYear + systemMonth + systemDay + "-" + systemHour + systemMinute + systemSecond;
-
-				dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-				try
-					{
-						finalDate = dateFormat.parse(systemDate);
-					}
-				catch (ParseException e)
-					{
-						e.printStackTrace();
-					}
-
-				logFileTitleCSV = finalDate.toString();
-				logFileTitleTimeline = finalDate.toString() + "_Timeline";
+//				currentDate = new Date();
+//				systemDate = currentDate.toString();
+//
+//				systemDay = systemDate.substring(1, 3);
+//				systemMonth = systemDate.substring(5, 7);
+//				systemNoDay = systemDate.substring(9, 10);
+//				systemHour = systemDate.substring(12, 13);
+//				systemMinute = systemDate.substring(15, 16);
+//				systemSecond = systemDate.substring(18, 19);
+//				systemTimeZone = systemDate.substring(21, 23);
+//				systemYear = systemDate.substring(25, 28);
+//				
+//				systemDate = systemYear + systemMonth + systemDay + "-" + systemHour + systemMinute + systemSecond;
+//
+//				dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//
+//				try
+//					{
+//						finalDate = dateFormat.parse(systemDate);
+//					}
+//				catch (ParseException e)
+//					{
+//						e.printStackTrace();
+//					}
+//
+//				logFileTitleCSV = finalDate.toString();
+//				logFileTitleTimeline = finalDate.toString() + "_Timeline";
 				
 				File logFileCSV = new File("/home/lvuser/Logs/" + logFileTitleCSV + ".csv");
 				File logFileTimeline = new File("/home/lvuser/Logs/" + logFileTitleTimeline + ".txt");

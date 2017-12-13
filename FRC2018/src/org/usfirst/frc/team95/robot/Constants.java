@@ -14,6 +14,8 @@ public class Constants
 		public static double robotWidth = 34.7;
 		public static double visionLength = 3;
 		public static double FLOOR_INTAKE_THROTTLE = 0.7;
+		
+		public static int EXAMPLE_MOTOR_AXIS = 6; // there isn't actually an axis #6; this is just an example
 
 		public static double RFVoltsToFt(double voltage)
 			{

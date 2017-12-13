@@ -14,6 +14,8 @@ import java.io.IOException;
 import org.usfirst.frc.team95.robot.commands.Autonomous;
 import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
+import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
+import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -31,15 +33,20 @@ public class Robot extends IterativeRobot
 
 		Command autonomousCommand;
 
+		// Actual classes used in the robot
 		public static DriveBase drivebase;
+		public static OI oi;
+
+		// Examples - the minimum possible subsystems
+		public static BareMinimumPneumaticSubsystem bmns;
+		public static BareMinimumMotorSubsystem bmms;
+		
+		// Slightly more elaborate example subsystems from WPILib
 		public static Elevator elevator;
 		public static Wrist wrist;
 		public static Claw claw;
-		public static OI oi;
-
+		public static SystemLogger sL;
 		boolean once = true;
-
-		private ButtonTracker testBrake;
 
 		/**
 		 * This function is run when the robot is first started up and should be used
@@ -49,8 +56,16 @@ public class Robot extends IterativeRobot
 		public void robotInit()
 			{
 
-
-				
+				// SystemLogger setup + TestWrite
+				try
+					{
+						sL = new SystemLogger();
+					}
+				catch (IOException e)
+					{	
+						e.printStackTrace();
+					}
+				sL.SystemLoggerWrite("--Robot Boot");
 				
 				// Initialize all subsystems
 				drivebase = new DriveBase();
@@ -58,23 +73,27 @@ public class Robot extends IterativeRobot
 				wrist = new Wrist();
 				claw = new Claw();
 				oi = new OI();
-				testBrake = new ButtonTracker(Constants.driveStick, 1);
-				
+				sL.SystemLoggerWrite("Subsystems initialized");
+
 				Compressor compressor = new Compressor();
+				sL.SystemLoggerWrite("Compressor initialized");
 
 				// instantiate the command used for the autonomous period
 				autonomousCommand = new Autonomous();
-
+				
 				// Show what command your subsystem is running on the SmartDashboard
 				SmartDashboard.putData(drivebase);
 				SmartDashboard.putData(elevator);
 				SmartDashboard.putData(wrist);
 				SmartDashboard.putData(claw);
+				
+				drivebase.brake(false);
 			}
 
 		@Override
 		public void autonomousInit()
 			{
+				drivebase.brake(true);
 				autonomousCommand.start(); // schedule the autonomous command (example)
 			}
 
@@ -88,17 +107,30 @@ public class Robot extends IterativeRobot
 				log();
 			}
 
+		/**
+		 * This function is called once each time the robot enters Disabled mode. You can use it to reset any subsystem
+		 * information you want to clear when the robot is disabled.
+		 */
+		public void disabledInit()
+			{
+				drivebase.brake(false);
+			}
+
+		public void disabledPeriodic()
+			{
+				Scheduler.getInstance().run();
+			}
+		
+		
 		@Override
 		public void teleopInit()
 			{
+				drivebase.brake(true);
 				// This makes sure that the autonomous stops running when
 				// teleop starts running. If you want the autonomous to
 				// continue until interrupted by another command, remove
 				// this line or comment it out.
 				autonomousCommand.cancel();
-				
-				drivebase.brake(true);
-				
 			}
 
 		/**
@@ -109,9 +141,6 @@ public class Robot extends IterativeRobot
 			{
 				Scheduler.getInstance().run();
 				log();
-
-				
-
 			}
 
 		/**

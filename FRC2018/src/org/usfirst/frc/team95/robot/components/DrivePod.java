@@ -4,6 +4,7 @@ package org.usfirst.frc.team95.robot.components;
 import org.usfirst.frc.team95.robot.Robot;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.CANSpeedController;
 import edu.wpi.first.wpilibj.Talon;
@@ -22,7 +23,13 @@ public class DrivePod
 		// (CANTalon or AdjustedTalon) so that we can use the unit tests.
 		// See "Liskov substitution principle".
 		private CANSpeedController leader, follower1, follower2;
+
 		private String name;
+
+		private static final double MIN_VOLTAGE = 7.5;
+		private static final double MAX_VOLTAGE = 9.5;
+		private static final int MIN_CURRENT = 40;
+		private static final int MAX_CURRENT = 100;
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -36,9 +43,9 @@ public class DrivePod
 
 
 				// Connect each Talon
-				CANTalon leader = new CANTalon(leaderCanNum);
-				CANTalon follower1 = new CANTalon(follower1CanNum);
-				CANTalon follower2 = new CANTalon(follower2CanNum);
+				AdjustedTalon leader = new AdjustedTalon(leaderCanNum);
+				AdjustedTalon follower1 = new AdjustedTalon(follower1CanNum);
+				AdjustedTalon follower2 = new AdjustedTalon(follower2CanNum);
 
 				// Leaders have quadrature encoders connected to their inputs
 				leader.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -49,6 +56,10 @@ public class DrivePod
 				follower2.changeControlMode(CANTalon.TalonControlMode.Follower);
 				follower2.set(leaderCanNum);
 
+				voltageCurrentLimit();
+				voltageCurrentComp();
+				
+				
 				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
 				// Are all the speeds and distances expressed in ticks (/per second)?
 
@@ -81,6 +92,8 @@ public class DrivePod
 			{
 				// TODO: Anything we wanna see on the SmartDashboard, put here
 				SmartDashboard.putNumber(name + " debug value", 1);
+				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
+				SmartDashboard.putNumber("OutputVoltage", leader.getOutputVoltage());
 			}
 
 		public void reset()
@@ -129,6 +142,22 @@ public class DrivePod
 				((CANTalon)leader   ).enableBrakeMode(isEnabled);
 				((CANTalon)follower1).enableBrakeMode(isEnabled);
 				((CANTalon)follower2).enableBrakeMode(isEnabled);
+			}
+
+		public void voltageCurrentLimit()
+			{
+				//Notes of GitHub
+				//leader.setCurrentLimit(amps);
+				//leader.EnableCurrentLimit(boolean);
+			}
+
+		public void voltageCurrentComp()
+			{
+				
+				//Notes of GitHub
+				//leader.setControlMode(TalonControlMode.Voltage);
+				//leader.setVoltageCompensationRampRate(rampRate);
+				//leader.set(rate);
 			}
 
 		// Returns true if and only if the drive pod has achieved the distance commanded
