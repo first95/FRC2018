@@ -29,20 +29,6 @@ public class DrivePodTester extends JFrame implements TestCanSpeedController.Lis
 		
 		uut = new DrivePod("Test drive pod", new TestCanSpeedController(0, this), null, null);
 		
-		// Create dataset
-		XYDataset dataset = createDataset();
-
-		// Create chart
-		JFreeChart chart = ChartFactory.createScatterPlot("Test chart", "X-Axis", "Y-Axis",
-				dataset);
-
-		// Changes background color
-		XYPlot plot = (XYPlot) chart.getPlot();
-		plot.setBackgroundPaint(new Color(200, 200, 200));
-
-		// Create Panel
-		ChartPanel panel = new ChartPanel(chart);
-		setContentPane(panel);
 	}
 
 	public void runThrottleTest() {
@@ -57,7 +43,7 @@ public class DrivePodTester extends JFrame implements TestCanSpeedController.Lis
 		((XYSeriesCollection)dataset).addSeries(series1);
 
 		// Create chart
-		JFreeChart chart = ChartFactory.createScatterPlot("Test chart", "X-Axis", "Y-Axis",
+		JFreeChart chart = ChartFactory.createScatterPlot("Leader throttle vs input", "Input speed", "Leader throttle",
 				dataset);
 
 		// Changes background color
@@ -67,26 +53,6 @@ public class DrivePodTester extends JFrame implements TestCanSpeedController.Lis
 		// Create Panel
 		ChartPanel panel = new ChartPanel(chart);
 		setContentPane(panel);
-	}
-	
-	private XYDataset createDataset() {
-		XYSeriesCollection dataset = new XYSeriesCollection();
-
-		XYSeries series1 = new XYSeries("Series 1");
-		series1.add(0, 0);
-		series1.add(1, 1);
-		series1.add(2, 1.5);
-		series1.add(3, 2.7);
-		dataset.addSeries(series1);
-
-		XYSeries series2 = new XYSeries("Series 2");
-		series2.add(0, 7);
-		series2.add(1, 3);
-		series2.add(2, 5.5);
-		series2.add(3, 6);
-		dataset.addSeries(series2);
-
-		return dataset;
 	}
 
 	public static void main(String[] args) {
