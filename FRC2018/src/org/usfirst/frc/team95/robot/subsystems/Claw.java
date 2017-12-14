@@ -4,6 +4,8 @@
  */
 package org.usfirst.frc.team95.robot.subsystems;
 
+import org.usfirst.frc.team95.robot.Robot;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
@@ -31,6 +33,7 @@ public class Claw extends Subsystem {
 	public Claw() {
 		super();
 
+		
 		// Let's show everything on the LiveWindow
 		LiveWindow.addActuator("Claw", "Motor", (Victor) motor);
 		LiveWindow.addActuator("Claw", "Limit Switch", contact);
@@ -47,6 +50,7 @@ public class Claw extends Subsystem {
 	 * Set the claw motor to move in the open direction.
 	 */
 	public void open() {
+		
 		motor.set(-1);
 	}
 
@@ -54,6 +58,7 @@ public class Claw extends Subsystem {
 	 * Set the claw motor to move in the close direction.
 	 */
 	public void close() {
+		
 		motor.set(1);
 	}
 
@@ -61,6 +66,7 @@ public class Claw extends Subsystem {
 	 * Stops the claw motor from moving.
 	 */
 	public void stop() {
+		
 		motor.set(0);
 	}
 
