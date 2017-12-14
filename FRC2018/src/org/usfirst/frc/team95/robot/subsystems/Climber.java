@@ -16,6 +16,11 @@ public class Climber extends Subsystem
 	private CANTalon winchLeft = new CANTalon(7);
 	private CANTalon winchRight = new CANTalon(8);
 	
+	public Climber ()
+	{
+		super();
+	}
+	
 	public void climb (double input)
 	{
 		winchLeft.set(input);
