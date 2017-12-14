@@ -26,4 +26,9 @@ public class Climber extends Subsystem
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void log() {
+		// TODO Auto-generated method stub
+		
+	}
 }

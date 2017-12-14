@@ -30,100 +30,69 @@ import org.usfirst.frc.team95.robot.subsystems.Wrist;
  * directory.
  */
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot
+{
+
 	Command autonomousCommand;
 
+	// Actual classes used in the robot
 	public static DriveBase drivebase;
-	public static Elevator elevator;
-	public static Wrist wrist;
-	public static Claw claw;
 	public static OI oi;
 	public static Climber climber;
 
+	// Examples - the minimum possible subsystems
+	public static BareMinimumPneumaticSubsystem bmns;
+	public static BareMinimumMotorSubsystem bmms;
+	
+	// Slightly more elaborate example subsystems from WPILib
+	public static Elevator elevator;
+	public static Wrist wrist;
+	public static Claw claw;
+	public static SystemLogger sL;
+	boolean once = true;
+
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used
+	 * for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
-		// Initialize all subsystems
-		drivebase = new DriveBase();
-		elevator = new Elevator();
-		wrist = new Wrist();
-		claw = new Claw();
-		oi = new OI();
-		climber = new Climber();
+	public void robotInit()
+		{
 
-		// instantiate the command used for the autonomous period
-		autonomousCommand = new Autonomous();
+			// SystemLogger setup + TestWrite
+			try
+				{
+					sL = new SystemLogger();
+				}
+			catch (IOException e)
+				{	
+					e.printStackTrace();
+				}
+			sL.SystemLoggerWrite("--Robot Boot");
+			
+			// Initialize all subsystems
+			drivebase = new DriveBase();
+			elevator = new Elevator();
+			wrist = new Wrist();
+			claw = new Claw();
+			oi = new OI();
+			climber = new Climber();
+			sL.SystemLoggerWrite("Subsystems initialized");
 
-		// Show what command your subsystem is running on the SmartDashboard
-		SmartDashboard.putData(drivebase);
-		SmartDashboard.putData(elevator);
-		SmartDashboard.putData(wrist);
-		SmartDashboard.putData(claw);
-		SmartDashboard.putData(climber);
-	}
-public class Robot extends IterativeRobot
-	{
+			Compressor compressor = new Compressor();
+			sL.SystemLoggerWrite("Compressor initialized");
 
-		Command autonomousCommand;
-
-		// Actual classes used in the robot
-		public static DriveBase drivebase;
-		public static OI oi;
-
-		// Examples - the minimum possible subsystems
-		public static BareMinimumPneumaticSubsystem bmns;
-		public static BareMinimumMotorSubsystem bmms;
-		
-		// Slightly more elaborate example subsystems from WPILib
-		public static Elevator elevator;
-		public static Wrist wrist;
-		public static Claw claw;
-		public static SystemLogger sL;
-		boolean once = true;
-
-		/**
-		 * This function is run when the robot is first started up and should be used
-		 * for any initialization code.
-		 */
-		@Override
-		public void robotInit()
-			{
-
-				// SystemLogger setup + TestWrite
-				try
-					{
-						sL = new SystemLogger();
-					}
-				catch (IOException e)
-					{	
-						e.printStackTrace();
-					}
-				sL.SystemLoggerWrite("--Robot Boot");
+			// instantiate the command used for the autonomous period
+			autonomousCommand = new Autonomous();
+			
+			// Show what command your subsystem is running on the SmartDashboard
+			SmartDashboard.putData(drivebase);
+			SmartDashboard.putData(elevator);
+			SmartDashboard.putData(wrist);
+			SmartDashboard.putData(claw);
+			SmartDashboard.putData(climber);
 				
-				// Initialize all subsystems
-				drivebase = new DriveBase();
-				elevator = new Elevator();
-				wrist = new Wrist();
-				claw = new Claw();
-				oi = new OI();
-				sL.SystemLoggerWrite("Subsystems initialized");
-
-				Compressor compressor = new Compressor();
-				sL.SystemLoggerWrite("Compressor initialized");
-
-				// instantiate the command used for the autonomous period
-				autonomousCommand = new Autonomous();
-				
-				// Show what command your subsystem is running on the SmartDashboard
-				SmartDashboard.putData(drivebase);
-				SmartDashboard.putData(elevator);
-				SmartDashboard.putData(wrist);
-				SmartDashboard.putData(claw);
-				
-				drivebase.brake(false);
+			drivebase.brake(false);
 			}
 
 		@Override
@@ -197,6 +166,6 @@ public class Robot extends IterativeRobot
 				elevator.log();
 				drivebase.log();
 				claw.log();
+				climber.log();
 			}
-	}
 	}
