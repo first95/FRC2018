@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.Robot;
+import org.usfirst.frc.team95.robot.commands.ClimberCommand;
 
 
 public class Climber extends Subsystem
@@ -23,8 +24,7 @@ public class Climber extends Subsystem
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
+		setDefaultCommand(new ClimberCommand());
 	}
 
 	public void log() {
