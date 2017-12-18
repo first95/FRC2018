@@ -8,7 +8,7 @@ import org.usfirst.frc.team95.robot.Constants;
 
 public class ClimberCommand extends Command
 {
-	public void SetClimb()
+	public ClimberCommand()
 	{
 		requires(Robot.climber);
 	}
