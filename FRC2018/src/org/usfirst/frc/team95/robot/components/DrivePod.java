@@ -6,6 +6,7 @@ import org.usfirst.frc.team95.robot.Robot;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +21,7 @@ public class DrivePod
 	{
 		private AdjustedTalon leader, follower1, follower2;
 		//private CANTalon leader, follower1, follower2;
+		private Solenoid shifter;
 		private String name;
 
 		private static final double MIN_VOLTAGE = 7.5;
@@ -33,7 +35,7 @@ public class DrivePod
 		// (This is to account for the way the drive pods are mounted in a rotationally
 		// symmetric way.)
 		// Name is for feedback on the SmartDashboard - likely "left" or "right"
-		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, boolean reverse)
+		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber, boolean reverse)
 			{
 
 				this.name = name;
@@ -69,9 +71,9 @@ public class DrivePod
 			}
 
 		// Provide a default value for reverse parameter
-		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum)
+		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber)
 			{
-				this(name, leaderCanNum, follower1CanNum, follower2CanNum, false);
+				this(name, leaderCanNum, follower1CanNum, follower2CanNum, shifterNumber, false);
 			}
 
 		public void log()
@@ -117,6 +119,10 @@ public class DrivePod
 				// TODO
 			}
 
+		public void setGear(boolean isHighGear) {
+			shifter.set(isHighGear);
+		}
+		
 		public void enableBrakeMode(boolean isEnabled)
 			{
 				leader.enableBrakeMode(isEnabled);

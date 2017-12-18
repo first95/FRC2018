@@ -16,6 +16,10 @@ public class Constants
 		public static double FLOOR_INTAKE_THROTTLE = 0.7;
 		public static int CLIMBER_AXIS = 2;
 		
+		public static int LEFT_SHIFTER_SOLENOID_NUM  = 0;
+		public static int RIGHT_SHIFTER_SOLENOID_NUM = 1;
+		public static int SHIFT_BUTTON = 1; // TODO: Pick a good button
+		
 		public static int EXAMPLE_MOTOR_AXIS = 6; // there isn't actually an axis #6; this is just an example
 
 		public static double RFVoltsToFt(double voltage)

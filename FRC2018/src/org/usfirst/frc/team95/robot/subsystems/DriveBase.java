@@ -32,8 +32,9 @@ public class DriveBase extends Subsystem
 			{
 				super();
 				
-				leftPod = new DrivePod("Left", 1, 2, 3, false);
-				rightPod = new DrivePod("Right", 4, 5, 6, false); // TODO: one of these may need to be reversed
+				// TODO: one of these may need to be reversed
+				leftPod  = new DrivePod("Left",  1, 2, 3, Constants.LEFT_SHIFTER_SOLENOID_NUM,  false);
+				rightPod = new DrivePod("Right", 4, 5, 6, Constants.RIGHT_SHIFTER_SOLENOID_NUM, false);
 			}
 
 		/**
@@ -245,4 +246,10 @@ public class DriveBase extends Subsystem
 				y = Math.pow(y, 3);
 				halfArcade(y, x);
 			}
+		
+
+		public void setGear(boolean isHighGear) {
+			leftPod. setGear(isHighGear);
+			rightPod.setGear(isHighGear);
+		}
 	}
