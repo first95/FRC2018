@@ -14,7 +14,7 @@ public class Constants
 		public static double robotWidth = 34.7;
 		public static double visionLength = 3;
 		public static double FLOOR_INTAKE_THROTTLE = 0.7;
-		public static int CLIMBER_AXIS = 2;
+		public static int CLIMBER_AXIS = 1;
 		
 		public static int LEFT_SHIFTER_SOLENOID_NUM  = 0;
 		public static int RIGHT_SHIFTER_SOLENOID_NUM = 1;
