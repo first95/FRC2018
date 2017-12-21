@@ -65,7 +65,9 @@ public class DrivePod
 				// Are all the speeds and distances expressed in ticks (/per second)?
 
 				// TODO: How do we reverse a drive pod?
-
+				
+				shifter = new Solenoid(shifterNumber);
+				
 				// Add to LiveWindow
 				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
 			}
