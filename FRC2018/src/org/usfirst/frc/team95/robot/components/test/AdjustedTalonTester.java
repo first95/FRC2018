@@ -21,6 +21,7 @@ public class AdjustedTalonTester extends JFrame implements TestCanSpeedControlle
 	private static final long serialVersionUID = -8288607681504299432L;
 	
 	AdjustedTalon uut;
+	TestPowerDistributionPanel pdp = new TestPowerDistributionPanel();
 	private double  lastCommandedLeaderThrottle;
 	private double  lastCommandedLeaderSpeed;
 	private boolean lastCommandedShift;
@@ -28,17 +29,18 @@ public class AdjustedTalonTester extends JFrame implements TestCanSpeedControlle
 	public AdjustedTalonTester(String title) {
 		super(title);
 		
-		uut = new AdjustedTalon(new TestCanSpeedController(0, this));
+		uut = new AdjustedTalon(new TestCanSpeedController(0, this), pdp);
 		
 	}
 
 	public void runThrottleTest() {
 		// Create dataset
 		XYDataset dataset = new XYSeriesCollection();
-		XYSeries series1 = new XYSeries("Leader throttle vs input");
+		XYSeries series1 = new XYSeries("Adjusted throttle vs input");
 		
+		pdp.setVoltage(13.0);
 		for(double throttle = -1.0; throttle <= 1.0; throttle += 0.05) {
-//			uut.setThrottle(throttle);
+			uut.set(throttle);
 			series1.add(throttle, lastCommandedLeaderThrottle);
 		}
 		((XYSeriesCollection)dataset).addSeries(series1);
