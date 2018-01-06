@@ -9,7 +9,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AdjustedTalon extends CanTalonWrapper implements CanTalonI
+public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 	{
 		private static PowerDistributionPanel panel = new PowerDistributionPanel();
 		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
@@ -30,7 +30,12 @@ public class AdjustedTalon extends CanTalonWrapper implements CanTalonI
 			{
 				super(deviceNumber);
 			}
+		
 
+		public AdjustedTalon(CanTalonI device) {
+			super(device);
+		}
+		
 		@Override
 		public void set(double rate)
 			{
