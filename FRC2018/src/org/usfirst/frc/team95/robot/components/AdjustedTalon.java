@@ -12,19 +12,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 	{
 		private static PowerDistributionPanelI panel;
-		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
-		static final double MIN_CURRENT = 40.0;
-		static final double MAX_CURRENT = 90.0;
-		static final double MIN_ATTENC = 0.95;
-		static final double MAX_ATTENC = 0.05;
-		static final double SLOPEC = ((MAX_ATTENC - MIN_ATTENC) / (MAX_CURRENT - MIN_CURRENT));
-		static final double INTERCEPTC = (MIN_ATTENC - (SLOPEC * MIN_CURRENT));
-		static final double MIN_VOLTAGE = 7.5;
-		static final double MAX_VOLTAGE = 9.5;
-		static final double MIN_ATTENV = 0.05;
-		static final double MAX_ATTENV = 0.95;
-		static final double SLOPEV = ((MAX_ATTENV - MIN_ATTENV) / (MAX_VOLTAGE - MIN_VOLTAGE));
-		static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
+		public static final int NUM_RECENT_SAMPLES = 3;
+		public static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
+		public static final double MIN_CURRENT = 40.0;
+		public static final double MAX_CURRENT = 90.0;
+		public static final double MIN_ATTENC = 0.95;
+		public static final double MAX_ATTENC = 0.05;
+		public static final double SLOPEC = ((MAX_ATTENC - MIN_ATTENC) / (MAX_CURRENT - MIN_CURRENT));
+		public static final double INTERCEPTC = (MIN_ATTENC - (SLOPEC * MIN_CURRENT));
+		public static final double MIN_VOLTAGE = 7.5;
+		public static final double MAX_VOLTAGE = 9.5;
+		public static final double MIN_ATTENV = 0.05;
+		public static final double MAX_ATTENV = 0.95;
+		public static final double SLOPEV = ((MAX_ATTENV - MIN_ATTENV) / (MAX_VOLTAGE - MIN_VOLTAGE));
+		public static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
 		Queue<Double> voltageRec = new LinkedList<Double>();
 
 		public AdjustedTalon(int deviceNumber) {
@@ -46,7 +47,7 @@ public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 				double newAtten;
 				
 				voltageRec.add(voltage);
-				if (voltageRec.size() > 3) {
+				if (voltageRec.size() > NUM_RECENT_SAMPLES) {
 					voltageRec.remove();
 				}
 				
