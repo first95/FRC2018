@@ -43,7 +43,7 @@ public class AdjustedTalonTester extends JFrame implements TestCanSpeedControlle
 			pdp.setVoltage(voltage);
 			XYSeries series = new XYSeries("Battery at " + pdp.getVoltage() + "V", false);
 			
-			for(double throttle = -1.0; throttle <= 1.0; throttle += 0.05) {
+			for(double throttle = -1.0; throttle <= 1.0; throttle += 0.01) {
 				uut.set(throttle);
 				series.add(throttle, lastCommandedThrottle);
 			}
@@ -82,7 +82,7 @@ public class AdjustedTalonTester extends JFrame implements TestCanSpeedControlle
 			}
 			
 			XYSeries series = new XYSeries("Throttle at " + throttle, false);
-			for(; voltage >= 5.0; voltage -= 0.05) {
+			for(; voltage >= 5.0; voltage -= 0.01) {
 				pdp.setVoltage(voltage);
 				uut.set(throttle);
 				series.add(voltage, lastCommandedThrottle);
