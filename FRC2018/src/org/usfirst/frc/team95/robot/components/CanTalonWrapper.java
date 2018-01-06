@@ -19,11 +19,20 @@ package org.usfirst.frc.team95.robot.components;
 import com.ctre.CANTalon;
 
 public class CanTalonWrapper implements CanTalonI {
-	private CANTalon wrapped; // The inner talon
+	protected CANTalon wrapped; // The inner talon
 	
 	public CanTalonWrapper(int deviceNumber) {
 		wrapped = new CANTalon(deviceNumber);
 	}
+
+	public CanTalonWrapper(int deviceNumber, int controlPeriodMs) {
+		wrapped = new CANTalon(deviceNumber, controlPeriodMs);
+	}
+
+	public CanTalonWrapper(int deviceNumber, int controlPeriodMs, int enablePeriodMs) {
+		wrapped = new CANTalon(deviceNumber, controlPeriodMs, enablePeriodMs);
+	}
+
 	public void pidWrite(double output) { wrapped.pidWrite(output); }
 	public void setPIDSourceType(edu.wpi.first.wpilibj.PIDSourceType pidSource) { wrapped.setPIDSourceType(pidSource); }
 	public double pidGet() { return wrapped.pidGet(); }

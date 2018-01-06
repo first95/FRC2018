@@ -23,7 +23,7 @@ public class DrivePod
 		// Leave these as the interface (CANSpeedController) rather than the concrete class
 		// (CANTalon or AdjustedTalon) so that we can use the unit tests.
 		// See "Liskov substitution principle".
-		private CANSpeedController leader, follower1, follower2;
+		private CanTalonI leader, follower1, follower2;
 
 		private Solenoid shifter;
 		private String name;
@@ -72,14 +72,12 @@ public class DrivePod
 				this.follower2 = follower2;
 
 				shifter = new Solenoid(shifterNumber);
-				
-				// Add to LiveWindow
-				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
+
 			}
 		
 		// Constructor used by tester.
 		// This is a design pattern called "Dependency Injection".
-		public DrivePod(String name, CANSpeedController leader, CANSpeedController follower1, CANSpeedController follower2) {
+		public DrivePod(String name, CanTalonI leader, CanTalonI follower1, CanTalonI follower2) {
 			this.name = name;
 			this.leader    = leader;
 			this.follower1 = follower1;
