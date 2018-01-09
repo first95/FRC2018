@@ -35,12 +35,15 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class TalonSrxWrapper implements IMotorControllerEnhanced {
-	private TalonSRX wrapped;
+	private IMotorControllerEnhanced wrapped;
 	
 	public TalonSrxWrapper(int deviceNumber) {
 		wrapped = new TalonSRX(deviceNumber);
 	}
 	
+	public TalonSrxWrapper(IMotorControllerEnhanced wrapped) {
+		this.wrapped = wrapped;
+	}
 	@Override
 	public void set(ControlMode Mode, double demand) { wrapped.set(Mode, demand); }
 	@Override

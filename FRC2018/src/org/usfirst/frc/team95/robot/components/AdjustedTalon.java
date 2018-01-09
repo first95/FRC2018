@@ -5,14 +5,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AdjustedTalon extends TalonSRX
+public class AdjustedTalon extends TalonSrxWrapper
 	{
-		private static PowerDistributionPanel panel = new PowerDistributionPanel();
+		private PowerDistributionPanelI panel;
 		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
 		static final double MIN_CURRENT = 40.0;
 		static final double MAX_CURRENT = 90.0;
@@ -27,10 +25,15 @@ public class AdjustedTalon extends TalonSRX
 		static final double SLOPEV = ((MAX_ATTENV - MIN_ATTENV) / (MAX_VOLTAGE - MIN_VOLTAGE));
 		static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
 		Queue<Double> voltageRec = new LinkedList<Double>();
-		public AdjustedTalon(int deviceNumber)
-			{
-				super(deviceNumber);
-			}
+
+		public AdjustedTalon(int deviceNumber) {
+			super(deviceNumber);
+			panel = new PowerDistributionPanelWrapper();
+		}
+		public AdjustedTalon(IMotorControllerEnhanced wrapped, PowerDistributionPanelI panel) {
+			super(wrapped);
+			this.panel = panel;
+		}
 
 		@Override
 		public void set(ControlMode mode,  double rate)
