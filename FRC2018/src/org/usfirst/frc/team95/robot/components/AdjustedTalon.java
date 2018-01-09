@@ -4,42 +4,36 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
+public class AdjustedTalon extends TalonSRX
 	{
-		private static PowerDistributionPanelI panel;
-		public static final int NUM_RECENT_SAMPLES = 3;
-		public static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
-		public static final double MIN_CURRENT = 40.0;
-		public static final double MAX_CURRENT = 90.0;
-		public static final double MIN_ATTENC = 0.95;
-		public static final double MAX_ATTENC = 0.05;
-		public static final double SLOPEC = ((MAX_ATTENC - MIN_ATTENC) / (MAX_CURRENT - MIN_CURRENT));
-		public static final double INTERCEPTC = (MIN_ATTENC - (SLOPEC * MIN_CURRENT));
-		public static final double MIN_VOLTAGE = 7.5;
-		public static final double MAX_VOLTAGE = 9.5;
-		public static final double MIN_ATTENV = 0.05;
-		public static final double MAX_ATTENV = 0.95;
-		public static final double SLOPEV = ((MAX_ATTENV - MIN_ATTENV) / (MAX_VOLTAGE - MIN_VOLTAGE));
-		public static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
+		private static PowerDistributionPanel panel = new PowerDistributionPanel();
+		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
+		static final double MIN_CURRENT = 40.0;
+		static final double MAX_CURRENT = 90.0;
+		static final double MIN_ATTENC = 0.95;
+		static final double MAX_ATTENC = 0.05;
+		static final double SLOPEC = ((MAX_ATTENC - MIN_ATTENC) / (MAX_CURRENT - MIN_CURRENT));
+		static final double INTERCEPTC = (MIN_ATTENC - (SLOPEC * MIN_CURRENT));
+		static final double MIN_VOLTAGE = 7.5;
+		static final double MAX_VOLTAGE = 9.5;
+		static final double MIN_ATTENV = 0.05;
+		static final double MAX_ATTENV = 0.95;
+		static final double SLOPEV = ((MAX_ATTENV - MIN_ATTENV) / (MAX_VOLTAGE - MIN_VOLTAGE));
+		static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
 		Queue<Double> voltageRec = new LinkedList<Double>();
+		public AdjustedTalon(int deviceNumber)
+			{
+				super(deviceNumber);
+			}
 
-		public AdjustedTalon(int deviceNumber) {
-			super(deviceNumber);
-			panel = new PowerDistributionPanelWrapper();
-		}
-
-		public AdjustedTalon(CanTalonI device, PowerDistributionPanelI pdp) {
-			super(device);
-			panel = pdp;
-		}
-		
 		@Override
-		public void set(double rate)
+		public void set(ControlMode mode,  double rate)
 			{
 				// TODO: Right now we're checking voltage once per AdjustedTalon, when we technically only need to do it once per iteration for the whole robot
 				double current = super.getOutputCurrent();
@@ -47,7 +41,7 @@ public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 				double newAtten;
 				
 				voltageRec.add(voltage);
-				if (voltageRec.size() > NUM_RECENT_SAMPLES) {
+				if (voltageRec.size() > 3) {
 					voltageRec.remove();
 				}
 				
@@ -73,7 +67,7 @@ public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 					}else {
 						newAtten = 1;
 					}
-//				SmartDashboard.putNumber("Atten", newAtten);
+				SmartDashboard.putNumber("Atten", newAtten);
 				/*else if (current < MAX_CURRENT)
 					{
 						newAtten = (SLOPEC * current) + INTERCEPTC;
@@ -83,7 +77,7 @@ public class AdjustedTalon extends CanTalonIWrapper implements CanTalonI
 					}*/
 				// System.out.println("Voltage" + panel.getVoltage());
 				// System.out.println("Rate" + rate);
-				super.set(rate);
+				super.set(mode, rate);
 			}
 
 	}
