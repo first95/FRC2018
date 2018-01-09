@@ -48,7 +48,6 @@ public class Robot extends IterativeRobot
 	public static Elevator elevator;
 	public static Wrist wrist;
 	public static Claw claw;
-	public static SystemLogger sL;
 	boolean once = true;
 
 	/**
@@ -59,17 +58,6 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 		{
 
-			// SystemLogger setup + TestWrite
-			try
-				{
-					sL = new SystemLogger();
-				}
-			catch (IOException e)
-				{	
-					e.printStackTrace();
-				}
-			sL.SystemLoggerWrite("--Robot Boot");
-			
 			// Initialize all subsystems
 			drivebase = new DriveBase();
 			elevator = new Elevator();
@@ -77,11 +65,9 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
-			sL.SystemLoggerWrite("Subsystems initialized");
-
+			
 			Compressor compressor = new Compressor();
-			sL.SystemLoggerWrite("Compressor initialized");
-
+			
 			// instantiate the command used for the autonomous period
 			autonomousCommand = new Autonomous();
 			
