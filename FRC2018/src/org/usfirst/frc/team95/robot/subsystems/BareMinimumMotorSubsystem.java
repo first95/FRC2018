@@ -2,14 +2,15 @@ package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.commands.SetMotorSpeed;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class BareMinimumMotorSubsystem extends Subsystem {
 	// Here you put the objects to interface with the physical system.
 	// Make them private, so that we know for sure all interactions with them go through this class's methods.
-	private CANTalon motor = new CANTalon(73);
+	private TalonSRX motor = new TalonSRX(73);
 	
 	public BareMinimumMotorSubsystem() {
 		super(); // Call the parent class's constructor (in this case Subsystem)
@@ -30,6 +31,6 @@ public class BareMinimumMotorSubsystem extends Subsystem {
 	 * @param throttle - 1.0 for full power forward, 0.0 for stationary, -1.0 for full power reverse
 	 */
 	public void setMotorThrottle(double throttle) {
-		motor.set(throttle);
+		motor.set(ControlMode.PercentOutput, throttle);
 	}
 }

@@ -4,12 +4,13 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AdjustedTalon extends CANTalon
+public class AdjustedTalon extends TalonSRX
 	{
 		private static PowerDistributionPanel panel = new PowerDistributionPanel();
 		static final double BACKWARDS_MULTIPLIER = 1.0 / 0.92; // Main CIMs run about 8% less efficiently going backwards. Reverse that.
@@ -31,18 +32,8 @@ public class AdjustedTalon extends CANTalon
 				super(deviceNumber);
 			}
 
-		public AdjustedTalon(int deviceNumber, int controlPeriodMs)
-			{
-				super(deviceNumber, controlPeriodMs);
-			}
-
-		public AdjustedTalon(int deviceNumber, int controlPeriodMs, int enablePeriodMs)
-			{
-				super(deviceNumber, controlPeriodMs, enablePeriodMs);
-			}
-
 		@Override
-		public void set(double rate)
+		public void set(ControlMode mode,  double rate)
 			{
 				// TODO: Right now we're checking voltage once per AdjustedTalon, when we technically only need to do it once per iteration for the whole robot
 				double current = super.getOutputCurrent();
@@ -86,7 +77,7 @@ public class AdjustedTalon extends CANTalon
 					}*/
 				// System.out.println("Voltage" + panel.getVoltage());
 				// System.out.println("Rate" + rate);
-				super.set(rate);
+				super.set(mode, rate);
 			}
 
 	}

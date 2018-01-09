@@ -1,15 +1,10 @@
 
 package org.usfirst.frc.team95.robot.components;
 
-import org.usfirst.frc.team95.robot.Robot;
-
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-
-import edu.wpi.first.wpilibj.CANSpeedController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -20,10 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		// Leave these as the interface (CANSpeedController) rather than the concrete class
-		// (CANTalon or AdjustedTalon) so that we can use the unit tests.
-		// See "Liskov substitution principle".
-		private CANSpeedController leader, follower1, follower2;
+		private AdjustedTalon leader, follower1, follower2;
 
 		private Solenoid shifter;
 		private String name;
@@ -50,13 +42,11 @@ public class DrivePod
 				AdjustedTalon follower2 = new AdjustedTalon(follower2CanNum);
 
 				// Leaders have quadrature encoders connected to their inputs
-				leader.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
 				// Tell the followers to follow the leader
-				follower1.changeControlMode(CANTalon.TalonControlMode.Follower);
-				follower1.set(leaderCanNum);
-				follower2.changeControlMode(CANTalon.TalonControlMode.Follower);
-				follower2.set(leaderCanNum);
+				follower1.set(ControlMode.Follower, leaderCanNum);
+				follower2.set(ControlMode.Follower, leaderCanNum);
 
 				voltageCurrentLimit();
 				voltageCurrentComp();
@@ -73,18 +63,7 @@ public class DrivePod
 
 				shifter = new Solenoid(shifterNumber);
 				
-				// Add to LiveWindow
-				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
 			}
-		
-		// Constructor used by tester.
-		// This is a design pattern called "Dependency Injection".
-		public DrivePod(String name, CANSpeedController leader, CANSpeedController follower1, CANSpeedController follower2) {
-			this.name = name;
-			this.leader    = leader;
-			this.follower1 = follower1;
-			this.follower2 = follower2;
-		}
 		
 		// Provide a default value for reverse parameter
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber)
@@ -97,7 +76,7 @@ public class DrivePod
 				// TODO: Anything we wanna see on the SmartDashboard, put here
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-				SmartDashboard.putNumber("OutputVoltage", leader.getOutputVoltage());
+				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
 
 		public void reset()
@@ -111,15 +90,16 @@ public class DrivePod
 		// be applied to the motor. It corresponds well to speed.
 		public void setThrottle(double throttle)
 			{
-				// TODO: change mode as necessary
-				leader.set(throttle);
+				leader.set(ControlMode.PercentOutput, throttle);
 				// followers follow
 			}
 
 		// Command a specific speed, to be enforced via PID control
 		public void setSpeed(double speedInchesPerSecond)
 			{
-				// TODO
+				// TODO: this won't work without some settings getting applied first
+//				leader.set(ControlMode.Velocity, speedInchesPerSecond);
+				// followers follow
 			}
 
 		// Command that this side of the robot should travel a specific distance along
@@ -141,15 +121,9 @@ public class DrivePod
 		
 		public void enableBrakeMode(boolean isEnabled)
 			{
-				// Specify which type of CANSpeedController by casting to CANTalon.
-				// In the normal robot code, it is a safe assumption that leader, follower1, and follower1
-				// are CANTalon objects (which can be safely stored in CANSpeedController variables because
-				// the CANSpeedController class is a parent of the CANTalon class, and the robot code calls
-				// the constructor that sets them to CANTalon objects.
-				// Ask a coach if you want to know more!
-				((CANTalon)leader   ).enableBrakeMode(isEnabled);
-				((CANTalon)follower1).enableBrakeMode(isEnabled);
-				((CANTalon)follower2).enableBrakeMode(isEnabled);
+				leader   .setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
+				follower1.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
+				follower2.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
 			}
 
 		public void voltageCurrentLimit()
