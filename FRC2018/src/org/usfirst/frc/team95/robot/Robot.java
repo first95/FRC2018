@@ -1,17 +1,23 @@
 
 package org.usfirst.frc.team95.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.IOException;
 
-import org.usfirst.frc.team95.robot.commands.Autonomous;
+import org.usfirst.frc.team95.robot.commands.GoToSwitch;
+import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
@@ -34,7 +40,9 @@ public class Robot extends IterativeRobot
 {
 
 	Command autonomousCommand;
-
+	SendableChooser chooser;
+	SendableChooser a, b, c;
+	
 	// Actual classes used in the robot
 	public static DriveBase drivebase;
 	public static OI oi;
@@ -68,9 +76,6 @@ public class Robot extends IterativeRobot
 			
 			Compressor compressor = new Compressor();
 			
-			// instantiate the command used for the autonomous period
-			autonomousCommand = new Autonomous();
-			
 			// Show what command your subsystem is running on the SmartDashboard
 			SmartDashboard.putData(drivebase);
 			SmartDashboard.putData(elevator);
@@ -78,6 +83,17 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(claw);
 			SmartDashboard.putData(climber);
 				
+			// Sendable Chooser
+			chooser = new SendableChooser();
+			SmartDashboard.putData("Auto mode", chooser);
+
+			a = new SendableChooser();
+			a.addDefault("None", new Nothing());
+
+			// DISPLAY CHOSERS TO DASHBOARD:
+			SmartDashboard.putData("1st", a);
+			
+			
 			drivebase.brake(false);
 			}
 
@@ -85,7 +101,10 @@ public class Robot extends IterativeRobot
 		public void autonomousInit()
 			{
 				drivebase.brake(true);
-				autonomousCommand.start(); // schedule the autonomous command (example)
+				
+				// instantiate the command used for the autonomous period
+				autonomousCommand = (Command) a.getSelected();
+				autonomousCommand.start();
 			}
 
 		/**

@@ -135,7 +135,6 @@ public class DrivePod
 
 		public void voltageCurrentComp()
 			{
-				
 				//Notes of GitHub
 				//leader.setControlMode(TalonControlMode.Voltage);
 				//leader.setVoltageCompensationRampRate(rampRate);

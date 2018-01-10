@@ -3,7 +3,7 @@ package org.usfirst.frc.team95.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class testCommand extends Command
+public class Nothing extends Command
 	{
 
 	@Override
