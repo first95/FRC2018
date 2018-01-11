@@ -75,13 +75,8 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
-<<<<<<< HEAD
 			facepusher = new FacePusher();
 			sL.SystemLoggerWrite("Subsystems initialized");
-
-=======
-			
->>>>>>> 23e313ae1777e98a5608676149f7613e106cb26c
 			Compressor compressor = new Compressor();
 			
 			// Show what command your subsystem is running on the SmartDashboard
