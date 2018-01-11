@@ -1,14 +1,10 @@
 
 package org.usfirst.frc.team95.robot.components;
 
-import org.usfirst.frc.team95.robot.Robot;
-
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -20,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivePod
 	{
 		private AdjustedTalon leader, follower1, follower2;
-		//private CANTalon leader, follower1, follower2;
+
 		private Solenoid shifter;
 		private String name;
 
@@ -37,25 +33,20 @@ public class DrivePod
 		// Name is for feedback on the SmartDashboard - likely "left" or "right"
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber, boolean reverse)
 			{
-
 				this.name = name;
 
+
 				// Connect each Talon
-				//leader = new CANTalon(leaderCanNum);
-				//follower1 = new CANTalon(follower1CanNum);
-				//follower2 = new CANTalon(follower2CanNum);
-				leader = new AdjustedTalon(leaderCanNum);
-				follower1 = new AdjustedTalon(follower1CanNum);
-				follower2 = new AdjustedTalon(follower2CanNum);
+				AdjustedTalon leader = new AdjustedTalon(leaderCanNum);
+				AdjustedTalon follower1 = new AdjustedTalon(follower1CanNum);
+				AdjustedTalon follower2 = new AdjustedTalon(follower2CanNum);
 
 				// Leaders have quadrature encoders connected to their inputs
-				leader.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
 				// Tell the followers to follow the leader
-				follower1.changeControlMode(CANTalon.TalonControlMode.Follower);
-				follower1.set(leaderCanNum);
-				follower2.changeControlMode(CANTalon.TalonControlMode.Follower);
-				follower2.set(leaderCanNum);
+				follower1.set(ControlMode.Follower, leaderCanNum);
+				follower2.set(ControlMode.Follower, leaderCanNum);
 
 				voltageCurrentLimit();
 				voltageCurrentComp();
@@ -66,12 +57,14 @@ public class DrivePod
 
 				// TODO: How do we reverse a drive pod?
 				
+				this.leader = leader;
+				this.follower1 = follower1;
+				this.follower2 = follower2;
+
 				shifter = new Solenoid(shifterNumber);
 				
-				// Add to LiveWindow
-				LiveWindow.addActuator("Drive Train", name + " drive pod", (CANTalon) leader);
 			}
-
+		
 		// Provide a default value for reverse parameter
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber)
 			{
@@ -83,7 +76,7 @@ public class DrivePod
 				// TODO: Anything we wanna see on the SmartDashboard, put here
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-				SmartDashboard.putNumber("OutputVoltage", leader.getOutputVoltage());
+				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
 
 		public void reset()
@@ -97,15 +90,16 @@ public class DrivePod
 		// be applied to the motor. It corresponds well to speed.
 		public void setThrottle(double throttle)
 			{
-				// TODO: change mode as necessary
-				leader.set(throttle);
+				leader.set(ControlMode.PercentOutput, throttle);
 				// followers follow
 			}
 
 		// Command a specific speed, to be enforced via PID control
 		public void setSpeed(double speedInchesPerSecond)
 			{
-				// TODO
+				// TODO: this won't work without some settings getting applied first
+//				leader.set(ControlMode.Velocity, speedInchesPerSecond);
+				// followers follow
 			}
 
 		// Command that this side of the robot should travel a specific distance along
@@ -127,9 +121,9 @@ public class DrivePod
 		
 		public void enableBrakeMode(boolean isEnabled)
 			{
-				leader.enableBrakeMode(isEnabled);
-				follower1.enableBrakeMode(isEnabled);
-				follower2.enableBrakeMode(isEnabled);
+				leader   .setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
+				follower1.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
+				follower2.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
 			}
 
 		public void voltageCurrentLimit()
@@ -141,7 +135,6 @@ public class DrivePod
 
 		public void voltageCurrentComp()
 			{
-				
 				//Notes of GitHub
 				//leader.setControlMode(TalonControlMode.Voltage);
 				//leader.setVoltageCompensationRampRate(rampRate);

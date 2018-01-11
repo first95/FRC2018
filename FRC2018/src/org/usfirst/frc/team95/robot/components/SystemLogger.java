@@ -25,54 +25,52 @@ public class SystemLogger
 		private SimpleDateFormat dateFormat;
 
 		private String logFileTitleCSV;
-		private String logFileTitleTimeline;
 		private File logFileCSV;
-		private File logFileTimeline;
 		private FileWriter fWCSV;
-		private FileWriter fWTimeline;
 
 		public SystemLogger() throws IOException
 			{
+				System.out.println("-- Attempting to start System Logger --");
 				SystemLoggerInit();
+				System.out.println("-- System Logger initalized --");
 			}
 
 		private void SystemLoggerInit() throws IOException
 			{
-//				currentDate = new Date();
-//				systemDate = currentDate.toString();
-//
-//				systemDay = systemDate.substring(1, 3);
-//				systemMonth = systemDate.substring(5, 7);
-//				systemNoDay = systemDate.substring(9, 10);
-//				systemHour = systemDate.substring(12, 13);
-//				systemMinute = systemDate.substring(15, 16);
-//				systemSecond = systemDate.substring(18, 19);
-//				systemTimeZone = systemDate.substring(21, 23);
-//				systemYear = systemDate.substring(25, 28);
-//				
-//				systemDate = systemYear + systemMonth + systemDay + "-" + systemHour + systemMinute + systemSecond;
-//
-//				dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//
-//				try
-//					{
-//						finalDate = dateFormat.parse(systemDate);
-//					}
-//				catch (ParseException e)
-//					{
-//						e.printStackTrace();
-//					}
-//
-//				logFileTitleCSV = finalDate.toString();
-//				logFileTitleTimeline = finalDate.toString() + "_Timeline";
+				currentDate = new Date();
+				systemDate = currentDate.toString();
+
+				systemDay = systemDate.substring(1, 3);
+				systemMonth = systemDate.substring(5, 7);
+				systemNoDay = systemDate.substring(9, 10);
+				systemHour = systemDate.substring(12, 13);
+				systemMinute = systemDate.substring(15, 16);
+				systemSecond = systemDate.substring(18, 19);
+				systemTimeZone = systemDate.substring(21, 23);
+				systemYear = systemDate.substring(25, 28);
+				
+				systemDate = systemYear + systemMonth + systemDay + "-" + systemHour + systemMinute + systemSecond;
+
+				dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+				try
+					{
+						finalDate = dateFormat.parse(systemDate);
+					}
+				catch (ParseException e)
+					{
+						System.out.println("-- Error parsing date --");
+						System.out.println("ERROR:");
+						e.printStackTrace();
+					}
+
+				logFileTitleCSV = finalDate.toString();
 				
 				File logFileCSV = new File("/home/lvuser/Logs/" + logFileTitleCSV + ".csv");
-				File logFileTimeline = new File("/home/lvuser/Logs/" + logFileTitleTimeline + ".txt");
-
+				
 				fWCSV = new FileWriter(logFileCSV);
-				fWTimeline = new FileWriter(logFileTimeline);
-
-				fWCSV.write("time, currentR, currentL, voltageR, voltageL, encoderR, encoderL,  rpmR, rpmL, heightoftargetinpix, distancetotarget, compressoronbol, groundloadgearbol, brakedeploybol, faceextendbol, tiphatbol, jazzhandsbol, automovechosen");
+				
+				fWCSV.write("test, test");
 			}
 
 		public void SystemLoggerWrite(String mData)
@@ -85,20 +83,8 @@ public class SystemLogger
 					}
 				catch (Exception e)
 					{
-						e.printStackTrace();
-					}
-
-			}
-
-		public void SystemLoggerWriteTimeline(String mData)
-			{
-				try
-					{
-						//fWTimeline.write(org.usfirst.frc.team95.robot.Robot.testTime() + " -- " + mData + "\n");
-						fWTimeline.flush();
-					}
-				catch (IOException e)
-					{
+						System.out.println("-- Error writing to file --");
+						System.out.println("ERROR:");
 						e.printStackTrace();
 					}
 
@@ -135,10 +121,11 @@ public class SystemLogger
 				try
 					{
 						fWCSV.close();
-						fWTimeline.close();
 					}
 				catch (IOException e)
 					{
+						System.out.println("-- Error Closing System Logger --");
+						System.out.println("ERROR:");
 						e.printStackTrace();
 					}
 			}

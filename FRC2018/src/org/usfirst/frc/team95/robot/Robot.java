@@ -1,17 +1,23 @@
 
 package org.usfirst.frc.team95.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.IOException;
 
-import org.usfirst.frc.team95.robot.commands.Autonomous;
+import org.usfirst.frc.team95.robot.commands.GoToSwitch;
+import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.components.ButtonTracker;
 import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
@@ -35,7 +41,9 @@ public class Robot extends IterativeRobot
 {
 
 	Command autonomousCommand;
-
+	SendableChooser chooser;
+	SendableChooser a, b, c;
+	
 	// Actual classes used in the robot
 	public static DriveBase drivebase;
 	public static OI oi;
@@ -50,7 +58,6 @@ public class Robot extends IterativeRobot
 	public static Elevator elevator;
 	public static Wrist wrist;
 	public static Claw claw;
-	public static SystemLogger sL;
 	boolean once = true;
 
 	/**
@@ -61,17 +68,6 @@ public class Robot extends IterativeRobot
 	public void robotInit()
 		{
 
-			// SystemLogger setup + TestWrite
-			try
-				{
-					sL = new SystemLogger();
-				}
-			catch (IOException e)
-				{	
-					e.printStackTrace();
-				}
-			sL.SystemLoggerWrite("--Robot Boot");
-			
 			// Initialize all subsystems
 			drivebase = new DriveBase();
 			elevator = new Elevator();
@@ -79,14 +75,14 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
+<<<<<<< HEAD
 			facepusher = new FacePusher();
 			sL.SystemLoggerWrite("Subsystems initialized");
 
+=======
+			
+>>>>>>> 23e313ae1777e98a5608676149f7613e106cb26c
 			Compressor compressor = new Compressor();
-			sL.SystemLoggerWrite("Compressor initialized");
-
-			// instantiate the command used for the autonomous period
-			autonomousCommand = new Autonomous();
 			
 			// Show what command your subsystem is running on the SmartDashboard
 			SmartDashboard.putData(drivebase);
@@ -96,6 +92,17 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(climber);
 			SmartDashboard.putData(facepusher);
 				
+			// Sendable Chooser
+			chooser = new SendableChooser();
+			SmartDashboard.putData("Auto mode", chooser);
+
+			a = new SendableChooser();
+			a.addDefault("None", new Nothing());
+
+			// DISPLAY CHOSERS TO DASHBOARD:
+			SmartDashboard.putData("1st", a);
+			
+			
 			drivebase.brake(false);
 			}
 
@@ -103,7 +110,10 @@ public class Robot extends IterativeRobot
 		public void autonomousInit()
 			{
 				drivebase.brake(true);
-				autonomousCommand.start(); // schedule the autonomous command (example)
+				
+				// instantiate the command used for the autonomous period
+				autonomousCommand = (Command) a.getSelected();
+				autonomousCommand.start();
 			}
 
 		/**

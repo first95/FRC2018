@@ -24,7 +24,7 @@ public class OI {
 		SmartDashboard.putData("Open Claw", new OpenClaw());
 		SmartDashboard.putData("Close Claw", new CloseClaw());
 
-		SmartDashboard.putData("Deliver Soda", new Autonomous());
+		SmartDashboard.putData("Deliver Soda", new GoToSwitch());
 
 		// Create some buttons
 		JoystickButton d_up = new JoystickButton(joy, 5);
@@ -45,7 +45,7 @@ public class OI {
 		r1.whenPressed(new PrepareToPickup());
 		r2.whenPressed(new Pickup());
 		l1.whenPressed(new Place());
-		l2.whenPressed(new Autonomous());
+		l2.whenPressed(new GoToSwitch());
 	}
 
 	public Joystick getJoystick() {
