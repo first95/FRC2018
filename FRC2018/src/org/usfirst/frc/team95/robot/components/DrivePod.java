@@ -3,8 +3,8 @@ package org.usfirst.frc.team95.robot.components;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -15,15 +15,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private AdjustedTalon leader, follower1, follower2;
+		private IMotorControllerEnhanced leader, follower1, follower2;
 
-		private Solenoid shifter;
+		private SolenoidI shifter;
 		private String name;
-
-		private static final double MIN_VOLTAGE = 7.5;
-		private static final double MAX_VOLTAGE = 9.5;
-		private static final int MIN_CURRENT = 40;
-		private static final int MAX_CURRENT = 100;
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -34,35 +29,16 @@ public class DrivePod
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber, boolean reverse)
 			{
 				this.name = name;
-
-
-				// Connect each Talon
-				AdjustedTalon leader = new AdjustedTalon(leaderCanNum);
-				AdjustedTalon follower1 = new AdjustedTalon(follower1CanNum);
-				AdjustedTalon follower2 = new AdjustedTalon(follower2CanNum);
-
-				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-
+				this.leader    = new AdjustedTalon(leaderCanNum);   
+				this.follower1 = new AdjustedTalon(follower1CanNum);
+				this.follower2 = new AdjustedTalon(follower2CanNum);
+				this.shifter   = new SolenoidWrapper(shifterNumber);
+				
 				// Tell the followers to follow the leader
 				follower1.set(ControlMode.Follower, leaderCanNum);
 				follower2.set(ControlMode.Follower, leaderCanNum);
 
-				voltageCurrentLimit();
-				voltageCurrentComp();
-				
-				
-				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
-				// Are all the speeds and distances expressed in ticks (/per second)?
-
-				// TODO: How do we reverse a drive pod?
-				
-				this.leader = leader;
-				this.follower1 = follower1;
-				this.follower2 = follower2;
-
-				shifter = new Solenoid(shifterNumber);
-				
+				init();
 			}
 		
 		// Provide a default value for reverse parameter
@@ -70,7 +46,32 @@ public class DrivePod
 			{
 				this(name, leaderCanNum, follower1CanNum, follower2CanNum, shifterNumber, false);
 			}
+		
+		// Constructor used for unit tests
+		public DrivePod(String name, IMotorControllerEnhanced leader, IMotorControllerEnhanced follower1, IMotorControllerEnhanced follower2, SolenoidI shifter) {
+			this.name = name;
+			this.leader    = leader   ;    
+			this.follower1 = follower1;
+			this.follower2 = follower2;
+			this.shifter   = shifter  ;
+		}
 
+		private void init() {
+
+			// Leaders have quadrature encoders connected to their inputs
+			leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+
+			voltageCurrentLimit();
+			voltageCurrentComp();
+			
+
+			// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
+			// Are all the speeds and distances expressed in ticks (/per second)?
+
+			// TODO: How do we reverse a drive pod?
+			
+		}
+		
 		public void log()
 			{
 				// TODO: Anything we wanna see on the SmartDashboard, put here
