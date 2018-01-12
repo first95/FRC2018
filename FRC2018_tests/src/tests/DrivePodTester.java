@@ -1,8 +1,20 @@
 package tests;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.usfirst.frc.team95.robot.components.DrivePod;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import mocks.MockMotorController;
 import mocks.MockMotorController;
@@ -29,7 +41,31 @@ public class DrivePodTester extends JFrame implements MockSolenoid.Listener, Moc
 	}
 	
 	public void runDrivePodTest() {
+		// Create dataset
+		XYDataset dataset = new XYSeriesCollection();
 		
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        int seriesNum = 0;
+		for(double t = 0; t <= 20; t += 0.1) {
+			// TODO: Insert functions for throttle and current here
+			leader.setOutputCurrent(0.0);
+			uut.setThrottle(1.0);
+			
+			// TODO: add results to plot
+		}
+
+		// Create chart
+		JFreeChart chart = ChartFactory.createScatterPlot("Adjusted throttle vs input", "Input throttle", "Adjusted throttle",
+				dataset);
+
+		// Changes background color
+		XYPlot plot = (XYPlot) chart.getPlot();
+		plot.setBackgroundPaint(new Color(200, 200, 200));
+		plot.setRenderer(renderer);
+
+		// Create Panel
+		ChartPanel panel = new ChartPanel(chart);
+		setContentPane(panel);
 	}
 	
 	@Override
