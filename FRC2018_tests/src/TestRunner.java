@@ -20,9 +20,6 @@ public class TestRunner {
 			example2.setLocationRelativeTo(null);
 			example2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 			example2.setVisible(true);
-		
 		});
-
 	}
-
 }
