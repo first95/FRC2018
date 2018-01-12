@@ -25,19 +25,17 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 public class MockMotorController implements IMotorControllerEnhanced{
 	private double setpoint;
 	private double current;
-	private int myId; // An arbitrary ID that identifies this object to its listener
 	
 	// An interface to be implemented by the class that owns these
 	public interface Listener {
-		void takeSet     (int id, double set  );
-		void takeSpeed   (int id, double speed);
-		void takePosition(int id, double pos  );
+		void takeSet     (MockMotorController source, double set  );
+		void takeSpeed   (MockMotorController source, double speed);
+		void takePosition(MockMotorController source, double pos  );
 	}
 	private Listener listener;
 	
-	public MockMotorController(int id, Listener l) {
+	public MockMotorController(Listener l) {
 		listener = l;
-		myId = id;
 	}
 	
 
@@ -61,13 +59,13 @@ public class MockMotorController implements IMotorControllerEnhanced{
 		case MotionProfileArc:
 			break;
 		case PercentOutput:
-			listener.takeSet(myId, demand);
+			listener.takeSet(this, demand);
 			break;
 		case Position:
-			listener.takePosition(myId, demand);
+			listener.takePosition(this, demand);
 			break;
 		case Velocity:
-			listener.takeSpeed(myId, demand);
+			listener.takeSpeed(this, demand);
 			break;
 		default:
 			break;
@@ -178,8 +176,7 @@ public class MockMotorController implements IMotorControllerEnhanced{
 
 	@Override
 	public double getMotorOutputPercent() {
-		// TODO Auto-generated method stub
-		return 0;
+		return setpoint;
 	}
 
 	@Override

@@ -3,13 +3,9 @@ package tests;
 import java.awt.Color;
 
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-
 import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 
 import mocks.MockMotorController;
-import mocks.MockMotorController.Listener;
 import mocks.MockPowerDistributionPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -20,24 +16,21 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.usfirst.frc.team95.robot.components.AdjustedTalon;
-import org.usfirst.frc.team95.robot.components.DrivePod;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 
-public class AdjustedTalonTester extends JFrame implements Listener {
+public class AdjustedTalonTester extends JFrame implements MockMotorController.Listener {
 	private static final long serialVersionUID = -8288607681504299432L;
 	
-	AdjustedTalon uut;
-	MockPowerDistributionPanel pdp = new MockPowerDistributionPanel();
+	private AdjustedTalon uut;
+	private MockPowerDistributionPanel pdp = new MockPowerDistributionPanel();
 	private double  lastCommandedThrottle;
 	private double  lastCommandedSpeed;
 	
 	public AdjustedTalonTester(String title) {
 		super(title);
 		
-		uut = new AdjustedTalon(new MockMotorController(0, this), pdp);
+		uut = new AdjustedTalon(new MockMotorController(this), pdp);
 		
 	}
 
@@ -118,18 +111,18 @@ public class AdjustedTalonTester extends JFrame implements Listener {
 
 	// Methods for TestCanSpeedController.Listener
 	@Override
-	public void takeSet(int id, double set) {
+	public void takeSet(MockMotorController source, double set) {
 		lastCommandedThrottle = set;
 	}
 
 	@Override
-	public void takeSpeed(int id, double speed) {
+	public void takeSpeed(MockMotorController source, double speed) {
 		lastCommandedSpeed = speed;
 		
 	}
 
 	@Override
-	public void takePosition(int id, double pos) {
+	public void takePosition(MockMotorController source, double pos) {
 		// TODO Auto-generated method stub
 		
 	}
