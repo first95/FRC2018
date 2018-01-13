@@ -54,6 +54,8 @@ public class DrivePod
 			this.follower1 = follower1;
 			this.follower2 = follower2;
 			this.shifter   = shifter  ;
+			
+			init();
 		}
 
 		private void init() {
