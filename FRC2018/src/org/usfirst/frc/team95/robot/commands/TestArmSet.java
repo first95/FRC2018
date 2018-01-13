@@ -14,12 +14,11 @@ public class TestArmSet extends Command {
 	protected void execute() {
 		// This method is called once every loop through the robot code.
 		double throttle = Constants.weaponStick.getRawAxis(Constants.TEST_ARM_AXIS);
-		Robot.testArm.setMotorThrottle(throttle);
+		Robot.testArm.setMotor(throttle);
 	}
 	
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
