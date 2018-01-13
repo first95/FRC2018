@@ -12,6 +12,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.util.ShapeUtilities;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -45,17 +46,33 @@ public class DrivePodTester extends JFrame implements MockSolenoid.Listener, Moc
 		XYDataset dataset = new XYSeriesCollection();
 		
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        int seriesNum = 0;
+        XYSeries throttleSeries = new XYSeries("Throttle (input)");
+        XYSeries currentSeries  = new XYSeries("Motor current (simulated)");
+        XYSeries gearSeries     = new XYSeries("Transmission gear (output)");
 		for(double t = 0; t <= 20; t += 0.1) {
-			// TODO: Insert functions for throttle and current here
-			leader.setOutputCurrent(0.0);
-			uut.setThrottle(1.0);
+			// Generate stimulus
+			double throttle = Math.sin(t / (Math.PI));
+			double current  = 2.0 * throttle ; // until we replace this with a better approximation
 			
-			// TODO: add results to plot
+			// Feed stimulus to unit under test.
+			// Set the current first so that the drive pod can respond to it.
+			leader.setOutputCurrent(current);
+			uut.setThrottle(throttle);
+			
+			// Add inputs and outputs to plot
+			throttleSeries.add(t, throttle);
+			currentSeries .add(t, current );
+			gearSeries    .add(t, lastShifterGear? 1 : 0);
 		}
-
+		((XYSeriesCollection)dataset).addSeries(throttleSeries);
+		((XYSeriesCollection)dataset).addSeries(currentSeries );
+		((XYSeriesCollection)dataset).addSeries(gearSeries    );
+		renderer.setSeriesShapesVisible(0, false);
+        renderer.setSeriesShapesVisible(1, false);
+        renderer.setSeriesShape(2, ShapeUtilities.createDiamond(2.0f));
+		
 		// Create chart
-		JFreeChart chart = ChartFactory.createScatterPlot("Adjusted throttle vs input", "Input throttle", "Adjusted throttle",
+		JFreeChart chart = ChartFactory.createScatterPlot("Gearshift behavior over time", "Time", "Amps, Volts, high/low",
 				dataset);
 
 		// Changes background color
@@ -67,6 +84,10 @@ public class DrivePodTester extends JFrame implements MockSolenoid.Listener, Moc
 		ChartPanel panel = new ChartPanel(chart);
 		setContentPane(panel);
 	}
+	
+	/////////////////////////////////////////////////////
+	// Methods used to listen to output
+	/////////////////////////////////////////////////////
 	
 	@Override
 	public void takeSet(MockSolenoid source, boolean on) {
