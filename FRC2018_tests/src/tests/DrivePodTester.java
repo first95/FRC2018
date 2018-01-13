@@ -49,9 +49,9 @@ public class DrivePodTester extends JFrame implements MockSolenoid.Listener, Moc
         XYSeries throttleSeries = new XYSeries("Throttle (input)");
         XYSeries currentSeries  = new XYSeries("Motor current (simulated)");
         XYSeries gearSeries     = new XYSeries("Transmission gear (output)");
-		for(double t = 0; t <= 20; t += 0.1) {
+		for(double t = 0; t <= 15; t += 0.01) {
 			// Generate stimulus
-			double throttle = Math.sin(t / (Math.PI));
+			double throttle = Math.sin(t * t / (Math.PI));
 			double current  = 2.0 * throttle ; // until we replace this with a better approximation
 			
 			// Feed stimulus to unit under test.
