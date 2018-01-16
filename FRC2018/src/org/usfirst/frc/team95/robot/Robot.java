@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot
 	// Actual classes used in the robot
 	public static DriveBase drivebase;
 	public static OI oi;
-	public static Climber climber;
+//	public static Climber climber;
 	public static FacePusher facepusher;
 	public static TestArm testArm;
 
@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot
 			wrist = new Wrist();
 			claw = new Claw();
 			oi = new OI();
-			climber = new Climber();
+//			climber = new Climber();
 			facepusher = new FacePusher();
 			Compressor compressor = new Compressor();
 			
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(elevator);
 			SmartDashboard.putData(wrist);
 			SmartDashboard.putData(claw);
-			SmartDashboard.putData(climber);
+//			SmartDashboard.putData(climber);
 			SmartDashboard.putData(facepusher);
 				
 			// Sendable Chooser
@@ -164,7 +164,7 @@ public class Robot extends IterativeRobot
 		@Override
 		public void testPeriodic()
 			{
-				LiveWindow.run();
+//				LiveWindow.run();
 			}
 
 		/**
@@ -176,7 +176,7 @@ public class Robot extends IterativeRobot
 				elevator.log();
 				drivebase.log();
 				claw.log();
-				climber.log();
+//				climber.log();
 				facepusher.log();
 			}
 	}

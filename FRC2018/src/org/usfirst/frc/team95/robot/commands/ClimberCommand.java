@@ -10,13 +10,13 @@ public class ClimberCommand extends Command
 {
 	public ClimberCommand()
 	{
-		requires(Robot.climber);
+//		requires(Robot.climber);
 	}
 	
 	protected void execute()
 	{
 		double input = Constants.weaponStick.getRawAxis(Constants.CLIMBER_AXIS);
-		Robot.climber.climb(input);
+//		Robot.climber.climb(input);
 	}
 
 	@Override
