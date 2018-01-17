@@ -1,25 +1,15 @@
 
 package org.usfirst.frc.team95.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
-
-import org.usfirst.frc.team95.robot.commands.GoToSwitch;
 import org.usfirst.frc.team95.robot.commands.Nothing;
-import org.usfirst.frc.team95.robot.components.ButtonTracker;
-import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
