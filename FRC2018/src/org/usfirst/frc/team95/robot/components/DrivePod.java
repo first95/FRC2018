@@ -54,6 +54,8 @@ public class DrivePod
 			this.follower1 = follower1;
 			this.follower2 = follower2;
 			this.shifter   = shifter  ;
+			
+			init();
 		}
 
 		private void init() {
@@ -93,6 +95,13 @@ public class DrivePod
 			{
 				leader.set(ControlMode.PercentOutput, throttle);
 				// followers follow
+				
+				// Temporary gearshift algorithm - replace with a better one
+				if(Math.abs(leader.getOutputCurrent()) > 1.5) {
+					setGear(false);
+				} else {
+					setGear(true);
+				}
 			}
 
 		// Command a specific speed, to be enforced via PID control
