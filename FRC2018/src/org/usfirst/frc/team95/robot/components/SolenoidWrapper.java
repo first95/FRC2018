@@ -19,9 +19,9 @@ public class SolenoidWrapper implements SolenoidI {
 	public boolean isBlackListed() { return wrapped.get(); }
 
 	@Override
-	public void setPulseDuration(double durationSeconds) { wrapped.setPulseDuration(durationSeconds); }
+	public void setPulseDuration(double durationSeconds) { ((SolenoidI) wrapped).setPulseDuration(durationSeconds); }
 
 	@Override
-	public void startPulse() { wrapped.startPulse(); }
+	public void startPulse() { ((SolenoidI) wrapped).startPulse(); }
 
 }
