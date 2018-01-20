@@ -66,6 +66,7 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
+			bmns = new BareMinimumPneumaticSubsystem();
 			//facepusher = new FacePusher();
 			Compressor compressor = new Compressor();
 			
@@ -75,6 +76,7 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(wrist);
 			SmartDashboard.putData(claw);
 			SmartDashboard.putData(climber);
+			SmartDashboard.putData(bmns);
 			//SmartDashboard.putData(facepusher);
 				
 			// Sendable Chooser

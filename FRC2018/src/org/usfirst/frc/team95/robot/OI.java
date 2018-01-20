@@ -26,6 +26,9 @@ public class OI {
 
 		SmartDashboard.putData("Deliver Soda", new GoToSwitch());
 
+		SmartDashboard.putData("Retract Pneumatic", new ExtendOrRetractPiston(false));
+		SmartDashboard.putData("Extend Pneumatic", new ExtendOrRetractPiston(true));
+		
 		// Create some buttons
 		JoystickButton d_up = new JoystickButton(joy, 5);
 		JoystickButton d_right = new JoystickButton(joy, 6);
