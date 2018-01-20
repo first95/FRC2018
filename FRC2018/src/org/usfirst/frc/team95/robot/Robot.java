@@ -2,6 +2,7 @@
 package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -93,6 +94,15 @@ public class Robot extends IterativeRobot
 		@Override
 		public void autonomousInit()
 			{
+				String gameData;
+				gameData = DriverStation.getInstance().getGameSpecificMessage();
+				System.out.println("Game data is: "+gameData) ;
+//				if(gameData.charAt(0) == 'L')
+//				{
+//					//Put left auto code here
+//				} else {
+//					//Put right auto code here
+//				}
 				drivebase.brake(true);
 				
 				// instantiate the command used for the autonomous period
