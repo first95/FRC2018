@@ -17,7 +17,7 @@ import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
-import org.usfirst.frc.team95.robot.subsystems.FacePusher;
+//import org.usfirst.frc.team95.robot.subsystems.FacePusher;
 import org.usfirst.frc.team95.robot.subsystems.Wrist;
 
 /**
@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot
 	public static DriveBase drivebase;
 	public static OI oi;
 	public static Climber climber;
-	public static FacePusher facepusher;
+	//public static FacePusher facepusher;
 
 	// Examples - the minimum possible subsystems
 	public static BareMinimumPneumaticSubsystem bmns;
@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
-			facepusher = new FacePusher();
+			//facepusher = new FacePusher();
 			Compressor compressor = new Compressor();
 			
 			// Show what command your subsystem is running on the SmartDashboard
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(wrist);
 			SmartDashboard.putData(claw);
 			SmartDashboard.putData(climber);
-			SmartDashboard.putData(facepusher);
+			//SmartDashboard.putData(facepusher);
 				
 			// Sendable Chooser
 			chooser = new SendableChooser();
@@ -175,6 +175,6 @@ public class Robot extends IterativeRobot
 				drivebase.log();
 				claw.log();
 				climber.log();
-				facepusher.log();
+				//facepusher.log();
 			}
 	}
