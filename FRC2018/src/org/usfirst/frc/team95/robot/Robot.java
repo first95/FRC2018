@@ -96,18 +96,18 @@ public class Robot extends IterativeRobot
 			{
 				String gameData;
 				gameData = DriverStation.getInstance().getGameSpecificMessage();
-				System.out.println("Game data is: "+gameData) ;
+				System.out.println(gameData);
 //				if(gameData.charAt(0) == 'L')
 //				{
 //					//Put left auto code here
 //				} else {
 //					//Put right auto code here
 //				}
-				drivebase.brake(true);
-				
-				// instantiate the command used for the autonomous period
-				autonomousCommand = (Command) a.getSelected();
-				autonomousCommand.start();
+//				drivebase.brake(true);
+//				
+//				// instantiate the command used for the autonomous period
+//				autonomousCommand = (Command) a.getSelected();
+//				autonomousCommand.start();
 			}
 
 		/**
@@ -116,7 +116,7 @@ public class Robot extends IterativeRobot
 		@Override
 		public void autonomousPeriodic()
 			{
-				Scheduler.getInstance().run();
+//				Scheduler.getInstance().run();
 				log();
 			}
 
