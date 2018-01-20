@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot
 			{
 				String gameData;
 				gameData = DriverStation.getInstance().getGameSpecificMessage();
-				System.out.println(gameData);
+				System.out.println("Plate assignments are "+gameData);
 //				if(gameData.charAt(0) == 'L')
 //				{
 //					//Put left auto code here
