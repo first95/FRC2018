@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TestArm extends Subsystem {
 	private TalonSRX motor = new TalonSRX(7);
 	public TestArm() {
+		super();
 		motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 	}
 	

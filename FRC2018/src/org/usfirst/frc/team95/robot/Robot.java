@@ -17,6 +17,7 @@ import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
+import org.usfirst.frc.team95.robot.subsystems.TestArm;
 //import org.usfirst.frc.team95.robot.subsystems.FacePusher;
 import org.usfirst.frc.team95.robot.subsystems.Wrist;
 
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot
 	public static DriveBase drivebase;
 	public static OI oi;
 	public static Climber climber;
+	public static TestArm testArm;
 	//public static FacePusher facepusher;
 
 	// Examples - the minimum possible subsystems

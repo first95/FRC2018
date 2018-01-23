@@ -19,7 +19,7 @@ public class TestArmSet extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return false; // Runs until interrupted
 	}
 
 }
