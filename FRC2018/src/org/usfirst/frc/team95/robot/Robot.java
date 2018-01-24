@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
@@ -82,6 +83,7 @@ public class Robot extends IterativeRobot
 
 			a = new SendableChooser();
 			a.addDefault("None", new Nothing());
+			a.addObject("none", new DriveStraight(1));
 
 			// DISPLAY CHOSERS TO DASHBOARD:
 			SmartDashboard.putData("1st", a);
