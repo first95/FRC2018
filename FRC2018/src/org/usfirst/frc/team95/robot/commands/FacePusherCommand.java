@@ -8,13 +8,13 @@ public class FacePusherCommand extends Command
 	private boolean extend;
 	public void pushOrPullFace(boolean extend)
 	{
-		requires(Robot.facepusher);
+		//requires(Robot.facepusher);
 		this.extend = extend;
 	}
 	
 	protected void initialize()
 	{
-		Robot.facepusher.pushOrPull(extend);
+		//Robot.facepusher.pushOrPull(extend);
 	}
 	
 	protected void execute()
