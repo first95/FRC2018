@@ -13,6 +13,11 @@ public class BareMinimumPneumaticSubsystem extends Subsystem {
 		// No default command
 	}
 	
+	public BareMinimumPneumaticSubsystem()
+		{
+			System.out.println("TEST BMNS");
+		}
+	
 	// Here is where you write methods that perform actions specific to this subsystem.
 	public void ExtendOrRetract(boolean extend) {
 		piston.set(extend);

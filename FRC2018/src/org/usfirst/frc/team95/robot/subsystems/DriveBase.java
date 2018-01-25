@@ -20,9 +20,9 @@ public class DriveBase extends Subsystem
 		public DriveBase()
 			{
 				super();
-				
+
 				// TODO: one of these may need to be reversed
-				leftPod  = new DrivePod("Left",  1, 2, 3, Constants.LEFT_SHIFTER_SOLENOID_NUM,  false);
+				leftPod = new DrivePod("Left", 1, 2, 3, Constants.LEFT_SHIFTER_SOLENOID_NUM, false);
 				rightPod = new DrivePod("Right", 4, 5, 6, Constants.RIGHT_SHIFTER_SOLENOID_NUM, false);
 			}
 
@@ -55,7 +55,7 @@ public class DriveBase extends Subsystem
 		 */
 		public void drive(double left, double right)
 			{
-				
+
 				tank(left, right);
 			}
 
@@ -97,6 +97,7 @@ public class DriveBase extends Subsystem
 				return (0.0);
 			}
 
+
 		/**
 		 * @return The distance to the obstacle detected by the rangefinder.
 		 */
@@ -127,13 +128,13 @@ public class DriveBase extends Subsystem
 			{
 				travelStraight(inchesToTravel, DEFAULT_TRAVEL_SPEED_INCHES_PER_S);
 			}
-		
+
 		// Talon Brake system
 		public void brake(boolean isEnabled)
-		{
-			leftPod.enableBrakeMode(isEnabled);
-			rightPod.enableBrakeMode(isEnabled);
-		}
+			{
+				leftPod.enableBrakeMode(isEnabled);
+				rightPod.enableBrakeMode(isEnabled);
+			}
 
 		// Command that the robot should travel a specific distance along the carpet.
 		// Call this once to command distance - do not call repeatedly, as this will
@@ -235,10 +236,10 @@ public class DriveBase extends Subsystem
 				y = Math.pow(y, 3);
 				halfArcade(y, x);
 			}
-		
 
-		public void setGear(boolean isHighGear) {
-			leftPod. setGear(isHighGear);
-			rightPod.setGear(isHighGear);
-		}
+		public void setGear(boolean isHighGear)
+			{
+				leftPod.setGear(isHighGear);
+				rightPod.setGear(isHighGear);
+			}
 	}

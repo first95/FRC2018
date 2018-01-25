@@ -1,4 +1,4 @@
-package org.usfirst.frc.team95.robot.commands;
+/*package org.usfirst.frc.team95.robot.commands;
 
 import org.usfirst.frc.team95.robot.Robot;
 
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ExtendOrRetractPiston extends Command {
 	private boolean extend;
 	public ExtendOrRetractPiston(boolean extend) {
-		requires(Robot.bmns);
+		//requires(Robot.bmns);
 		this.extend = extend;
 	}
 	
@@ -30,3 +30,4 @@ public class ExtendOrRetractPiston extends Command {
 	}
 
 }
+*/
