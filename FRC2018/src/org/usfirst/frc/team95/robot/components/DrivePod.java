@@ -89,7 +89,7 @@ public class DrivePod
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
-				//SmartDashboard.putNumber("Encoder", leader.getSensorCollection());
+				SmartDashboard.putNumber("Encoder", leader.getSelectedSensorPosition(0));
 				
 			}
 
@@ -139,9 +139,9 @@ public class DrivePod
 				// TODO
 			}
 
-		public void setGear(boolean isHighGear)
+		public void setGear(boolean m_isHighGear)
 			{
-				shifter.set(isHighGear);
+				shifter.set(m_isHighGear);
 			}
 
 		public void enableBrakeMode(boolean isEnabled)
@@ -151,9 +151,10 @@ public class DrivePod
 				follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 			}
 
-		public void getQuadEncoders()
+		public double getQuadEncoders()
 			{			
 				
+				return leader.getSelectedSensorPosition(0);
 			}
 
 		public void voltageCurrentLimit()

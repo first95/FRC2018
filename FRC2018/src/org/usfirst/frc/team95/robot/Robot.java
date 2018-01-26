@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot
 			climber = new Climber();
 			//bmns = new BareMinimumPneumaticSubsystem();
 			//facepusher = new FacePusher();
-			//Compressor compressor = new Compressor();
+			Compressor compressor = new Compressor();
 			
 			// Show what command your subsystem is running on the SmartDashboard
 			SmartDashboard.putData(drivebase);

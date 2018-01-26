@@ -13,6 +13,9 @@ import org.usfirst.frc.team95.robot.components.DrivePod;
  */
 public class DriveBase extends Subsystem
 	{
+		
+		public boolean isHighGear = false;
+		
 		private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 		private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 		private DrivePod leftPod, rightPod;
@@ -33,7 +36,7 @@ public class DriveBase extends Subsystem
 		@Override
 		public void initDefaultCommand()
 			{
-				setDefaultCommand(new TankDriveWithJoystick());
+				//setDefaultCommand(new TankDriveWithJoystick());
 			}
 
 		/**
@@ -237,9 +240,20 @@ public class DriveBase extends Subsystem
 				halfArcade(y, x);
 			}
 
-		public void setGear(boolean isHighGear)
+//		public void leftEncoderPos() {
+//			
+//		}
+//		
+//		public void rightEncoderPos() {
+//			
+//		}
+		
+		public void setGear(boolean m_isHighGear)
 			{
-				leftPod.setGear(isHighGear);
-				rightPod.setGear(isHighGear);
+				
+				isHighGear = m_isHighGear;
+				
+				leftPod.setGear(m_isHighGear);
+				rightPod.setGear(m_isHighGear);
 			}
 	}
