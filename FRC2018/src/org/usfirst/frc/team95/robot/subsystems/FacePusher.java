@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FacePusher extends Subsystem
 {
-	private Solenoid piston = new Solenoid(0);
+	private Solenoid piston = new Solenoid(3);
 	
 	@Override
 	protected void initDefaultCommand()

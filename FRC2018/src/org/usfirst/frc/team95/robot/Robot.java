@@ -1,32 +1,24 @@
 
 package org.usfirst.frc.team95.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.IOException;
-
-import org.usfirst.frc.team95.robot.commands.GoToSwitch;
+import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.Nothing;
-import org.usfirst.frc.team95.robot.components.ButtonTracker;
-import org.usfirst.frc.team95.robot.components.SystemLogger;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
 import org.usfirst.frc.team95.robot.subsystems.Claw;
 import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
-import org.usfirst.frc.team95.robot.subsystems.FacePusher;
+//import org.usfirst.frc.team95.robot.subsystems.FacePusher;
 import org.usfirst.frc.team95.robot.subsystems.Wrist;
 
 /**
@@ -48,10 +40,10 @@ public class Robot extends IterativeRobot
 	public static DriveBase drivebase;
 	public static OI oi;
 	public static Climber climber;
-	public static FacePusher facepusher;
+	//public static FacePusher facepusher;
 
 	// Examples - the minimum possible subsystems
-	public static BareMinimumPneumaticSubsystem bmns;
+	//public static BareMinimumPneumaticSubsystem bmns;
 	public static BareMinimumMotorSubsystem bmms;
 	
 	// Slightly more elaborate example subsystems from WPILib
@@ -75,8 +67,8 @@ public class Robot extends IterativeRobot
 			claw = new Claw();
 			oi = new OI();
 			climber = new Climber();
-			facepusher = new FacePusher();
-			sL.SystemLoggerWrite("Subsystems initialized");
+			//bmns = new BareMinimumPneumaticSubsystem();
+			//facepusher = new FacePusher();
 			Compressor compressor = new Compressor();
 			
 			// Show what command your subsystem is running on the SmartDashboard
@@ -85,7 +77,8 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData(wrist);
 			SmartDashboard.putData(claw);
 			SmartDashboard.putData(climber);
-			SmartDashboard.putData(facepusher);
+			//SmartDashboard.putData(bmns);
+			//SmartDashboard.putData(facepusher);
 				
 			// Sendable Chooser
 			chooser = new SendableChooser();
@@ -93,6 +86,7 @@ public class Robot extends IterativeRobot
 
 			a = new SendableChooser();
 			a.addDefault("None", new Nothing());
+			a.addObject("none", new DriveStraight(1));
 
 			// DISPLAY CHOSERS TO DASHBOARD:
 			SmartDashboard.putData("1st", a);
@@ -104,8 +98,18 @@ public class Robot extends IterativeRobot
 		@Override
 		public void autonomousInit()
 			{
-				drivebase.brake(true);
+				String gameData;
+				gameData = DriverStation.getInstance().getGameSpecificMessage();
+				System.out.println("Plate assignments are "+gameData);
 				
+//				if(gameData.charAt(0) == 'L')
+//				{
+//					//Put left auto code here
+//				} else {
+//					//Put right auto code here
+//				}
+//				drivebase.brake(true);
+//				
 				// instantiate the command used for the autonomous period
 				autonomousCommand = (Command) a.getSelected();
 				autonomousCommand.start();
@@ -117,7 +121,7 @@ public class Robot extends IterativeRobot
 		@Override
 		public void autonomousPeriodic()
 			{
-				Scheduler.getInstance().run();
+//				Scheduler.getInstance().run();
 				log();
 			}
 
@@ -132,6 +136,7 @@ public class Robot extends IterativeRobot
 
 		public void disabledPeriodic()
 			{
+				drivebase.log();
 				Scheduler.getInstance().run();
 			}
 		
@@ -144,7 +149,7 @@ public class Robot extends IterativeRobot
 				// teleop starts running. If you want the autonomous to
 				// continue until interrupted by another command, remove
 				// this line or comment it out.
-				autonomousCommand.cancel();
+				//autonomousCommand.cancel();
 			}
 
 		/**
@@ -153,8 +158,12 @@ public class Robot extends IterativeRobot
 		@Override
 		public void teleopPeriodic()
 			{
+				
+				Robot.drivebase.arcade(Constants.driveStick, true);
 				Scheduler.getInstance().run();
 				log();
+				
+				
 			}
 
 		/**
@@ -176,6 +185,6 @@ public class Robot extends IterativeRobot
 				drivebase.log();
 				claw.log();
 				climber.log();
-				facepusher.log();
+				//facepusher.log();
 			}
 	}

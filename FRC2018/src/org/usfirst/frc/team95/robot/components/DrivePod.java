@@ -3,8 +3,11 @@ package org.usfirst.frc.team95.robot.components;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.wpilibj.Solenoid;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -15,15 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private AdjustedTalon leader, follower1, follower2;
+		private IMotorControllerEnhanced leader, follower1, follower2;
 
-		private Solenoid shifter;
+		private SolenoidI shifter;
 		private String name;
-
-		private static final double MIN_VOLTAGE = 7.5;
-		private static final double MAX_VOLTAGE = 9.5;
-		private static final int MIN_CURRENT = 40;
-		private static final int MAX_CURRENT = 100;
+		private FeedbackDevice encoder;
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -34,41 +33,54 @@ public class DrivePod
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber, boolean reverse)
 			{
 				this.name = name;
-
-
-				// Connect each Talon
-				AdjustedTalon leader = new AdjustedTalon(leaderCanNum);
-				AdjustedTalon follower1 = new AdjustedTalon(follower1CanNum);
-				AdjustedTalon follower2 = new AdjustedTalon(follower2CanNum);
-
-				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+				this.leader = new AdjustedTalon(leaderCanNum);
+				this.follower1 = new AdjustedTalon(follower1CanNum);
+				this.follower2 = new AdjustedTalon(follower2CanNum);
+				this.shifter = new SolenoidWrapper(shifterNumber);
 
 				// Tell the followers to follow the leader
 				follower1.set(ControlMode.Follower, leaderCanNum);
 				follower2.set(ControlMode.Follower, leaderCanNum);
+				
 
-				voltageCurrentLimit();
-				voltageCurrentComp();
-				
-				
-				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
-				// Are all the speeds and distances expressed in ticks (/per second)?
-
-				// TODO: How do we reverse a drive pod?
-				
-				this.leader = leader;
-				this.follower1 = follower1;
-				this.follower2 = follower2;
-
-				shifter = new Solenoid(shifterNumber);
-				
+				init();
 			}
-		
+
 		// Provide a default value for reverse parameter
 		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber)
 			{
 				this(name, leaderCanNum, follower1CanNum, follower2CanNum, shifterNumber, false);
+			}
+
+		// Constructor used for unit tests
+		public DrivePod(String name, IMotorControllerEnhanced leader, IMotorControllerEnhanced follower1, IMotorControllerEnhanced follower2, SolenoidI shifter)
+			{
+				this.name = name;
+				this.leader = leader;
+				this.follower1 = follower1;
+				this.follower2 = follower2;
+				this.shifter = shifter;
+
+				init();
+			}
+
+		private void init()
+			{
+
+				encoder = FeedbackDevice.QuadEncoder;
+				// Leaders have quadrature encoders connected to their inputs
+				leader.configSelectedFeedbackSensor(encoder, 0, 0);
+				
+				
+				
+				voltageCurrentLimit();
+				voltageCurrentComp();
+
+				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
+				// Are all the speeds and distances expressed in ticks (/per second)?
+
+				// TODO: How do we reverse a drive pod?
+
 			}
 
 		public void log()
@@ -77,6 +89,8 @@ public class DrivePod
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+				SmartDashboard.putNumber("Encoder", leader.getSelectedSensorPosition(0));
+				
 			}
 
 		public void reset()
@@ -92,13 +106,23 @@ public class DrivePod
 			{
 				leader.set(ControlMode.PercentOutput, throttle);
 				// followers follow
+
+				// Temporary gearshift algorithm - replace with a better one
+				if (Math.abs(leader.getOutputCurrent()) > 1.5)
+					{
+						setGear(false);
+					}
+				else
+					{
+						setGear(true);
+					}
 			}
 
 		// Command a specific speed, to be enforced via PID control
 		public void setSpeed(double speedInchesPerSecond)
 			{
 				// TODO: this won't work without some settings getting applied first
-//				leader.set(ControlMode.Velocity, speedInchesPerSecond);
+				// leader.set(ControlMode.Velocity, speedInchesPerSecond);
 				// followers follow
 			}
 
@@ -115,30 +139,37 @@ public class DrivePod
 				// TODO
 			}
 
-		public void setGear(boolean isHighGear) {
-			shifter.set(isHighGear);
-		}
-		
+		public void setGear(boolean m_isHighGear)
+			{
+				shifter.set(m_isHighGear);
+			}
+
 		public void enableBrakeMode(boolean isEnabled)
 			{
-				leader   .setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
-				follower1.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
-				follower2.setNeutralMode(isEnabled? NeutralMode.Brake : NeutralMode.Coast);
+				leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+				follower1.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+				follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+			}
+
+		public double getQuadEncoders()
+			{			
+				
+				return leader.getSelectedSensorPosition(0);
 			}
 
 		public void voltageCurrentLimit()
 			{
-				//Notes of GitHub
-				//leader.setCurrentLimit(amps);
-				//leader.EnableCurrentLimit(boolean);
+				// Notes of GitHub
+				// leader.setCurrentLimit(amps);
+				// leader.EnableCurrentLimit(boolean);
 			}
 
 		public void voltageCurrentComp()
 			{
-				//Notes of GitHub
-				//leader.setControlMode(TalonControlMode.Voltage);
-				//leader.setVoltageCompensationRampRate(rampRate);
-				//leader.set(rate);
+				// Notes of GitHub
+				// leader.setControlMode(TalonControlMode.Voltage);
+				// leader.setVoltageCompensationRampRate(rampRate);
+				// leader.set(rate);
 			}
 
 		// Returns true if and only if the drive pod has achieved the distance commanded

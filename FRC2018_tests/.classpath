@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="jfreechart-1.0.19/lib/orsonpdf-1.6-eval.jar"/>
 	<classpathentry kind="lib" path="jfreechart-1.0.19/lib/servlet.jar"/>
 	<classpathentry kind="lib" path="jfreechart-1.0.19/lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="/FRC2018/CTRE/CTRE_Phoenix-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

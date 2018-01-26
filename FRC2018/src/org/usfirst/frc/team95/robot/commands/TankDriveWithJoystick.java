@@ -24,7 +24,7 @@ public class TankDriveWithJoystick extends Command {
 	protected void execute() {
 		
 		Robot.drivebase.driveStick(Constants.driveStick);
-		Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
+		//Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
 		
 		SmartDashboard.putNumber("test", Robot.oi.getJoystick().getY());
 	}

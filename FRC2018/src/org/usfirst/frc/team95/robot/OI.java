@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,6 +27,9 @@ public class OI {
 
 		SmartDashboard.putData("Deliver Soda", new GoToSwitch());
 
+		//SmartDashboard.putData("Retract Pneumatic", new ExtendOrRetractPiston(false));
+		//SmartDashboard.putData("Extend Pneumatic", new ExtendOrRetractPiston(true));
+		
 		// Create some buttons
 		JoystickButton d_up = new JoystickButton(joy, 5);
 		JoystickButton d_right = new JoystickButton(joy, 6);
@@ -35,6 +39,7 @@ public class OI {
 		JoystickButton r2 = new JoystickButton(joy, 10);
 		JoystickButton l1 = new JoystickButton(joy, 11);
 		JoystickButton r1 = new JoystickButton(joy, 12);
+		JoystickButton a = new JoystickButton(joy, 1);
 
 		// Connect the buttons to commands
 		d_up.whenPressed(new SetElevatorSetpoint(0.2));
@@ -43,9 +48,12 @@ public class OI {
 //		d_right.whenReleased(new ExtendOrRetractPiston(false));
 
 		r1.whenPressed(new PrepareToPickup());
-		r2.whenPressed(new Pickup());
+		r2.whenPressed(new Pickup()); 	
 		l1.whenPressed(new Place());
 		l2.whenPressed(new GoToSwitch());
+		
+		
+		//a.whenPressed(new ShiftGear());
 	}
 
 	public Joystick getJoystick() {
