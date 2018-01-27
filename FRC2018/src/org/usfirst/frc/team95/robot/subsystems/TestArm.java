@@ -17,7 +17,10 @@ public class TestArm extends Subsystem {
 	public static final int CAN_TIMEOUT_MS = 10; // Timeout for each operation.
 	
 	// Velocity control constants, determined by following section 12.4 in the software reference manual.
-	public static final double K_F = 0.0354850853954534691;
+	public static final double K_F = 0.24224484963296234904;
+	public static final double K_P = 0;
+	public static final double K_I = 0;
+	public static final double K_D = 0;
 	
 	public TestArm() {
 		super();
@@ -25,7 +28,9 @@ public class TestArm extends Subsystem {
 		// Configure Talon
 		motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, PID_IDX, CAN_TIMEOUT_MS);
 		motor.config_kF(PID_IDX, K_F, CAN_TIMEOUT_MS);
-//		motor.config_kP(0, value, timeoutMs)
+		motor.config_kP(PID_IDX, K_P, CAN_TIMEOUT_MS);
+		motor.config_kI(PID_IDX, K_I, CAN_TIMEOUT_MS);
+		motor.config_kD(PID_IDX, K_D, CAN_TIMEOUT_MS);
 	}
 	
 	@Override
@@ -38,13 +43,19 @@ public class TestArm extends Subsystem {
 	 * 
 	 * @param value - the amount of speed/power or position.  Expected to be between -1 and 1.
 	 */
+	@SuppressWarnings("unused")
 	public void setMotor(double value) {
-		motor.set(ControlMode.PercentOutput, value);
-		System.out.println("Set: " + value + "\t Speed: " +  motor.getSelectedSensorVelocity(0));
-//		double speed_in_rev_per_second = value * 2.0;
-//		double speed_in_ticks_per_100ms = speed_in_rev_per_second * ENCODER_TICKS_PER_ARM_REV / 10.0;
-//		System.out.println("Target velocity is: " + speed_in_ticks_per_100ms);
-//		motor.set(ControlMode.Velocity, speed_in_ticks_per_100ms);
+		final int STEP = 1; // Step in the list of steps to determine the PID constants.
+		
+		if(0 == STEP) {
+			motor.set(ControlMode.PercentOutput, value);
+			System.out.println("Set: " + value + "\t Speed (sensor units per 100ms): " +  motor.getSelectedSensorVelocity(PID_IDX));
+		} else if (1 == STEP) {
+			double target_rpm = value * 2000.0; // RPM as the Talon thinks of it, which may be different from the arm's RPM
+			motor.set(ControlMode.Velocity, target_rpm);
+			System.out.println("Target: " + target_rpm + "\t Measured: " +
+					motor.getSelectedSensorVelocity(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
+		}
 	}
 	
 	public void updateSmartDash() {
