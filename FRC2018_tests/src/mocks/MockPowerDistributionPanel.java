@@ -1,3 +1,14 @@
+/*
+ * MockPowerDistributionPanel.java
+ * 
+ * This class acts like a PDP object, except it doesn't require the robot
+ * to operate, and doesn't interact with any hardware at all.  Instead, it
+ * reports outputs that can be controlled by a tester.
+ * 
+ * This is useful for unit testing.
+ * 
+ * 
+ */
 package mocks;
 
 import org.usfirst.frc.team95.robot.components.PowerDistributionPanelI;

@@ -1,3 +1,14 @@
+/*
+ * SolenoidWrapper.java
+ * 
+ * This class is a simple container for the WPILib Solenoid class,
+ * but also adds compliance to the SolenoidI interface.
+ * 
+ * Using this class, rather than using the Solenoid object itself,
+ * permits easier unit testing.
+ * 
+ * 
+ */
 package org.usfirst.frc.team95.robot.components;
 
 import edu.wpi.first.wpilibj.Solenoid;
