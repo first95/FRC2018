@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team95.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,8 +29,9 @@ public class Robot extends IterativeRobot
 	SendableChooser chooser;
 	SendableChooser a, b, c;
 	
-	// Actual classes used in the robot
+	// Components of the robot
 	public static DriveBase drivebase;
+	public static Compressor compressor;
 	public static OI oi;	
 
 	/**
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot
 
 			// Initialize all subsystems
 			drivebase = new DriveBase();
+			compressor = new Compressor();
 			oi = new OI();
 			
 			// Show what command your subsystem is running on the SmartDashboard
