@@ -17,7 +17,7 @@ public class TestArm extends Subsystem {
 	
 	// Velocity control constants, determined by following section 12.4 in the software reference manual.
 //	public static final double K_F = 0.24224484963296234904; // = 1023/4223, where 4223 was the velocity measured when the motor was full throttle
-	public static final double K_F = 0.0;
+	public static final double K_F = 0.0; // Don't use in position mode.
 	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 20% throttle
 	public static final double K_I = 0.0045;
 	public static final double K_D = 44.0;
@@ -36,12 +36,12 @@ public class TestArm extends Subsystem {
 //		initialArmPos = motor.getSelectedSensorPosition(PID_IDX);
 		
 		// We'll be treating this spot as the zero.
-		// SAFETY NOTE: this is actually really important.
+		// SAFETY NOTE: this is actually really important. (when using position mode)
 		// The talon tracks position changes as long as it has power, no matter
 		// how many times you restart the code.  You can easily turn a motor a zillion
 		// times, and the talon is counting each and every one of those revolutions.
 		// If you then command the motor to see position 0, it will make all haste 
-		// to turn it back as many revolutions as you've turned the shaft since poweron.
+		// to turn it back as many revolutions as you've turned the shaft since power-on.
 		motor.setSelectedSensorPosition(0, PID_IDX, CAN_TIMEOUT_MS);
 	}
 	
@@ -67,19 +67,21 @@ public class TestArm extends Subsystem {
 			motor.set(ControlMode.Velocity, target_nupt);
 			System.out.println("Target: " + target_nupt + "\t Measured: " +
 					motor.getSelectedSensorVelocity(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
+			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
+			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
 		} else if (2 == STEP) {
 			double target_pos = value * ENCODER_TICKS_PER_ARM_REV / 2.0; // In native units
 			motor.set(ControlMode.Position, target_pos);
 			System.out.println("Target: " + target_pos + "\t Measured: " +
 					motor.getSelectedSensorPosition(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
+			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
+			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
 		}
 	}
 	
 	public void updateSmartDash() {
 		SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX));
-//		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX));
-		SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
-		SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
+		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX));
 	}
 
 }
