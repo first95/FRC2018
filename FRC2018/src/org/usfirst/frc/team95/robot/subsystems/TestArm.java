@@ -51,9 +51,9 @@ public class TestArm extends Subsystem {
 			motor.set(ControlMode.PercentOutput, value);
 			System.out.println("Set: " + value + "\t Speed (sensor units per 100ms): " +  motor.getSelectedSensorVelocity(PID_IDX));
 		} else if (1 == STEP) {
-			double target_rpm = value * 2000.0; // RPM as the Talon thinks of it, which may be different from the arm's RPM
-			motor.set(ControlMode.Velocity, target_rpm);
-			System.out.println("Target: " + target_rpm + "\t Measured: " +
+			double target_nupt = value * 2000.0; // In native units per 100ms
+			motor.set(ControlMode.Velocity, target_nupt);
+			System.out.println("Target: " + target_nupt + "\t Measured: " +
 					motor.getSelectedSensorVelocity(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
 		}
 	}
