@@ -25,8 +25,8 @@ public class DriveBase extends Subsystem
 				super();
 
 				// TODO: one of these may need to be reversed
-				leftPod = new DrivePod("Left", 1, 2, 3, Constants.LEFT_SHIFTER_SOLENOID_NUM, false);
-				rightPod = new DrivePod("Right", 4, 5, 6, Constants.RIGHT_SHIFTER_SOLENOID_NUM, false);
+				leftPod = new DrivePod("Left", Constants.LEFT_LEAD, Constants.LEFT_F1, Constants.LEFT_F2, Constants.LEFT_SHIFTER_SOLENOID_NUM, false);
+				rightPod = new DrivePod("Right", Constants.RIGHT_LEAD, Constants.RIGHT_F1, Constants.RIGHT_F2, Constants.RIGHT_SHIFTER_SOLENOID_NUM, false);
 			}
 
 		/**
