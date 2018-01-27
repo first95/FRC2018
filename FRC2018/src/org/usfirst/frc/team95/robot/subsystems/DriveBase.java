@@ -4,6 +4,7 @@ package org.usfirst.frc.team95.robot.subsystems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 
 /**
@@ -13,7 +14,7 @@ import org.usfirst.frc.team95.robot.components.DrivePod;
 public class DriveBase extends Subsystem
 	{
 		
-		public boolean isHighGear = false;
+		private boolean isHighGear = false;
 		
 		private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 		private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
@@ -35,7 +36,7 @@ public class DriveBase extends Subsystem
 		@Override
 		public void initDefaultCommand()
 			{
-				//setDefaultCommand(new TankDriveWithJoystick());
+				setDefaultCommand(new ArcadeDriveWithJoystick());
 			}
 
 		/**

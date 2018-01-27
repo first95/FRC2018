@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot
 		public void teleopPeriodic()
 			{
 				
-				Robot.drivebase.arcade(Constants.driveStick, true);
+				
 				Scheduler.getInstance().run();
 				log();
 				

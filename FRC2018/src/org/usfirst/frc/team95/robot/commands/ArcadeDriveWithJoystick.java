@@ -13,9 +13,9 @@ import org.usfirst.frc.team95.robot.Robot;
 /**
  * Have the robot drive tank style using the PS3 Joystick until interrupted.
  */
-public class TankDriveWithJoystick extends Command {
+public class ArcadeDriveWithJoystick extends Command {
 
-	public TankDriveWithJoystick() {
+	public ArcadeDriveWithJoystick() {
 		requires(Robot.drivebase);
 	}
 
@@ -23,10 +23,10 @@ public class TankDriveWithJoystick extends Command {
 	@Override
 	protected void execute() {
 		
-		Robot.drivebase.driveStick(Constants.driveStick);
-		//Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
+		Robot.drivebase.arcade(Constants.driveStick, true);
+		Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
 		
-		SmartDashboard.putNumber("test", Robot.oi.getJoystick().getY());
+//		SmartDashboard.putNumber("test", Robot.oi.getJoystick().getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

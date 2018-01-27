@@ -13,10 +13,13 @@ public class ShiftGear extends Command
 
 		public ShiftGear()
 			{
-				
-				requires(Robot.drivebase);
+			requires(Robot.drivebase);
+			}
+		
+		@Override
+		protected void execute() {
 
-				if (driveBase.isHighGear)
+				if (false)
 					{
 						Robot.drivebase.setGear(false);
 					}
