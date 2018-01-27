@@ -29,3 +29,11 @@ For Robotbuilder:
 
 	Take the desired extension folder (eg. "Talon SRX") and place it in
 	USERHOME\Robotbuilder\extensions.
+	
+	
+NOTE:
+	The Software Reference Manual is based on last year's CTRE Lib.  Some functions have 
+	changed units since then - for example, the getSelectedSensorVelocity() method returns
+	velocity in native units per 100ms, NOT in RPM.  Thus, equations regarding PID tuning
+	found in the reference manual are no longer accurate.
+	
