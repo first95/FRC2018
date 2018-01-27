@@ -79,6 +79,10 @@ public class TestArm extends Subsystem {
 		}
 	}
 	
+	public void stopMotor() {
+		motor.set(ControlMode.PercentOutput, 0.0);
+	}
+	
 	public void updateSmartDash() {
 		SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX));
 		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX));
