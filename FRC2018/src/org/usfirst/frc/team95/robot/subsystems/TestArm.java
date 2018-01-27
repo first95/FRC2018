@@ -18,7 +18,7 @@ public class TestArm extends Subsystem {
 	
 	// Velocity control constants, determined by following section 12.4 in the software reference manual.
 	public static final double K_F = 0.24224484963296234904;
-	public static final double K_P = 0;
+	public static final double K_P = 0.113333 * 2.0;
 	public static final double K_I = 0;
 	public static final double K_D = 0;
 	
@@ -59,8 +59,10 @@ public class TestArm extends Subsystem {
 	}
 	
 	public void updateSmartDash() {
-		SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX));
+		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX));
+		SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
+		SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
 	}
 
 }
