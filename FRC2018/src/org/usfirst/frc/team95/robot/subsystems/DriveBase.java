@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team95.robot.components.DrivePod;
+import org.usfirst.frc.team95.robot.components.SolenoidI;
+import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
 
 /**
  * The DriveBase subsystem incorporates the sensors and actuators attached to
@@ -19,14 +21,15 @@ public class DriveBase extends Subsystem
 		private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 		private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 		private DrivePod leftPod, rightPod;
+		private SolenoidI shifter;
 
 		public DriveBase()
 			{
 				super();
 
-				// TODO: one of these may need to be reversed
-				leftPod = new DrivePod("Left", Constants.LEFT_LEAD, Constants.LEFT_F1, Constants.LEFT_F2, Constants.LEFT_SHIFTER_SOLENOID_NUM, false);
-				rightPod = new DrivePod("Right", Constants.RIGHT_LEAD, Constants.RIGHT_F1, Constants.RIGHT_F2, Constants.RIGHT_SHIFTER_SOLENOID_NUM, false);
+				leftPod = new DrivePod("Left", Constants.LEFT_LEAD, Constants.LEFT_F1, Constants.LEFT_F2);
+				rightPod = new DrivePod("Right", Constants.RIGHT_LEAD, Constants.RIGHT_F1, Constants.RIGHT_F2);
+				shifter = new SolenoidWrapper(Constants.SHIFTER_SOLENOID_NUM);
 			}
 
 		/**
@@ -253,7 +256,6 @@ public class DriveBase extends Subsystem
 				System.out.println("Gear is " + (isHighGear? "high": "low"));
 				this.isHighGear = isHighGear;
 				
-				leftPod.setGear(isHighGear);
-				rightPod.setGear(isHighGear);
+				shifter.set(isHighGear);
 			}
 	}

@@ -17,7 +17,6 @@ public class DrivePod
 	{
 		private IMotorControllerEnhanced leader, follower1, follower2;
 
-		private SolenoidI shifter;
 		private String name;
 		private FeedbackDevice encoder;
 
@@ -27,13 +26,12 @@ public class DrivePod
 		// (This is to account for the way the drive pods are mounted in a rotationally
 		// symmetric way.)
 		// Name is for feedback on the SmartDashboard - likely "left" or "right"
-		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber, boolean reverse)
+		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, boolean reverse)
 			{
 				this.name = name;
 				this.leader = new AdjustedTalon(leaderCanNum);
 				this.follower1 = new AdjustedTalon(follower1CanNum);
 				this.follower2 = new AdjustedTalon(follower2CanNum);
-				this.shifter = new SolenoidWrapper(shifterNumber);
 
 				// Tell the followers to follow the leader
 				follower1.set(ControlMode.Follower, leaderCanNum);
@@ -44,9 +42,9 @@ public class DrivePod
 			}
 
 		// Provide a default value for reverse parameter
-		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum, int shifterNumber)
+		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum)
 			{
-				this(name, leaderCanNum, follower1CanNum, follower2CanNum, shifterNumber, false);
+				this(name, leaderCanNum, follower1CanNum, follower2CanNum, false);
 			}
 
 		// Constructor used for unit tests
@@ -56,7 +54,6 @@ public class DrivePod
 				this.leader = leader;
 				this.follower1 = follower1;
 				this.follower2 = follower2;
-				this.shifter = shifter;
 
 				init();
 			}
@@ -103,16 +100,6 @@ public class DrivePod
 			{
 				leader.set(ControlMode.PercentOutput, throttle);
 				// followers follow
-
-				// Temporary gearshift algorithm - replace with a better one
-				if (Math.abs(leader.getOutputCurrent()) > 1.5)
-					{
-						setGear(false);
-					}
-				else
-					{
-						setGear(true);
-					}
 			}
 
 		// Command a specific speed, to be enforced via PID control
@@ -134,11 +121,6 @@ public class DrivePod
 		public void travelDistance(double inchesToTravel, double speedInchesPerSecond)
 			{
 				// TODO
-			}
-
-		public void setGear(boolean isHighGear)
-			{
-				shifter.set(isHighGear);
 			}
 
 		public void enableBrakeMode(boolean isEnabled)

@@ -26,7 +26,6 @@ public class ArcadeDriveWithJoystick extends Command {
 		Robot.drivebase.arcade(Constants.driveStick, true);
 		Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
 		
-//		SmartDashboard.putNumber("test", Robot.oi.getJoystick().getY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
