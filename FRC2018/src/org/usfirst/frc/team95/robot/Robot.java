@@ -11,15 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.commands.Nothing;
-import org.usfirst.frc.team95.robot.subsystems.BareMinimumMotorSubsystem;
-import org.usfirst.frc.team95.robot.subsystems.BareMinimumPneumaticSubsystem;
-import org.usfirst.frc.team95.robot.subsystems.Claw;
-import org.usfirst.frc.team95.robot.subsystems.Climber;
-import org.usfirst.frc.team95.robot.subsystems.DriveBase;
-import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.TestArm;
-//import org.usfirst.frc.team95.robot.subsystems.FacePusher;
-import org.usfirst.frc.team95.robot.subsystems.Wrist;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,20 +29,7 @@ public class Robot extends IterativeRobot
 	SendableChooser a, b, c;
 	
 	// Actual classes used in the robot
-	public static DriveBase drivebase;
-	public static OI oi;
-	public static Climber climber;
 	public static TestArm testArm;
-	//public static FacePusher facepusher;
-
-	// Examples - the minimum possible subsystems
-	public static BareMinimumPneumaticSubsystem bmns;
-	public static BareMinimumMotorSubsystem bmms;
-	
-	// Slightly more elaborate example subsystems from WPILib
-	public static Elevator elevator;
-	public static Wrist wrist;
-	public static Claw claw;
 	boolean once = true;
 
 	/**
@@ -62,23 +41,24 @@ public class Robot extends IterativeRobot
 		{
 
 			// Initialize all subsystems
-			drivebase = new DriveBase();
-			elevator = new Elevator();
-			wrist = new Wrist();
-			claw = new Claw();
-			oi = new OI();
-			climber = new Climber();
-			bmns = new BareMinimumPneumaticSubsystem();
+			testArm = new TestArm();
+	//		drivebase = new DriveBase();
+//			elevator = new Elevator();
+//			wrist = new Wrist();
+//			claw = new Claw();
+//			oi = new OI();
+//			climber = new Climber();
+//			bmns = new BareMinimumPneumaticSubsystem();
 			//facepusher = new FacePusher();
-			Compressor compressor = new Compressor();
+//			Compressor compressor = new Compressor();
 			
 			// Show what command your subsystem is running on the SmartDashboard
-			SmartDashboard.putData(drivebase);
-			SmartDashboard.putData(elevator);
-			SmartDashboard.putData(wrist);
-			SmartDashboard.putData(claw);
-			SmartDashboard.putData(climber);
-			SmartDashboard.putData(bmns);
+//			SmartDashboard.putData(drivebase);
+//			SmartDashboard.putData(elevator);
+//			SmartDashboard.putData(wrist);
+//			SmartDashboard.putData(claw);
+//			SmartDashboard.putData(climber);
+//			SmartDashboard.putData(bmns);
 			//SmartDashboard.putData(facepusher);
 				
 			// Sendable Chooser
@@ -92,7 +72,7 @@ public class Robot extends IterativeRobot
 			SmartDashboard.putData("1st", a);
 			
 			
-			drivebase.brake(false);
+//			drivebase.brake(false);
 			}
 
 		@Override
@@ -130,7 +110,7 @@ public class Robot extends IterativeRobot
 		 */
 		public void disabledInit()
 			{
-				drivebase.brake(false);
+//				drivebase.brake(false);
 			}
 
 		public void disabledPeriodic()
@@ -142,12 +122,12 @@ public class Robot extends IterativeRobot
 		@Override
 		public void teleopInit()
 			{
-				drivebase.brake(true);
+//				drivebase.brake(true);
 				// This makes sure that the autonomous stops running when
 				// teleop starts running. If you want the autonomous to
 				// continue until interrupted by another command, remove
 				// this line or comment it out.
-				autonomousCommand.cancel();
+//				autonomousCommand.cancel();
 			}
 
 		/**
@@ -174,11 +154,11 @@ public class Robot extends IterativeRobot
 		 */
 		private void log()
 			{
-				wrist.log();
-				elevator.log();
-				drivebase.log();
-				claw.log();
-				climber.log();
+//				wrist.log();
+//				elevator.log();
+//				drivebase.log();
+//				claw.log();
+//				climber.log();
 				//facepusher.log();
 			}
 	}

@@ -18,6 +18,7 @@ public class TestArm extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
+		System.out.println("initDefaultCommand");
 		setDefaultCommand(new TestArmSet());
 	}
 	

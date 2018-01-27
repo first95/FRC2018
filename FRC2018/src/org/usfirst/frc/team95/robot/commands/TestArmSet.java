@@ -7,13 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TestArmSet extends Command {
 	public TestArmSet() {
+		super();
 		requires(Robot.testArm);
 	}
 
 	@Override
 	protected void execute() {
+
 		// This method is called once every loop through the robot code.
 		double throttle = Constants.weaponStick.getRawAxis(Constants.TEST_ARM_AXIS);
+		System.out.println("execute() - throttle is: " + throttle);
 		Robot.testArm.setMotor(throttle);
 	}
 	
