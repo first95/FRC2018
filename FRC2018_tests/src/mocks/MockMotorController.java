@@ -1,3 +1,14 @@
+/*
+ * MockMotorController.java
+ * 
+ * This class acts like a motor controller object, except it doesn't require the robot
+ * to operate, and doesn't interact with any hardware at all.  Instead, it
+ * reports the inputs it receives to the listener.
+ * 
+ * This is useful for unit testing.
+ * 
+ * 
+ */
 package mocks;
 
 import com.ctre.phoenix.ErrorCode;

@@ -1,4 +1,11 @@
 /*
+ * TalonSrxWrapper.java
+ * 
+ * This class wraps the TalonSRX object from the CTRE Phoenix Framework.
+ * It exists so that the AdjustedTalon class can extend something, without
+ * knowing if it's extending a mock object or the real TalonSRX object.
+ * 
+ * 
  * Automatically generated with a series of N++ regular expressions.
  * Delete all bodies, then:
  * Find: (public void ([a-zA-Z]+)\([a-zA-Z0-9]+ ([a-zA-Z0-9]+), [a-zA-Z0-9]+ ([a-zA-Z0-9]+), [a-zA-Z0-9]+ ([a-zA-Z0-9]+)\)) $

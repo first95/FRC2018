@@ -18,10 +18,19 @@ public class Constants
 		
 		public static int LEFT_SHIFTER_SOLENOID_NUM  = 0;
 		public static int RIGHT_SHIFTER_SOLENOID_NUM = 1;
-		public static int SHIFT_BUTTON = 1; // TODO: Pick a good button
+		// Shift button in IO
+		//public static int SHIFT_BUTTON = 1; // TODO: Pick a good button
 		
 		public static int TEST_ARM_AXIS = 4; 
 		public static int EXAMPLE_MOTOR_AXIS = 6; // there isn't actually an axis #6; this is just an example
+		
+		// Indices for Talons
+		public static int LEFT_LEAD = 10;
+		public static int LEFT_F1 = 11;
+		public static int LEFT_F2 = 12;
+		public static int RIGHT_LEAD = 20;
+		public static int RIGHT_F1 = 21;
+		public static int RIGHT_F2 = 22;
 
 		public static double RFVoltsToFt(double voltage)
 			{
