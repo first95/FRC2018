@@ -15,9 +15,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.ShapeUtilities;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import mocks.MockMotorController;
 import mocks.MockMotorController;
 import mocks.MockSolenoid;
 

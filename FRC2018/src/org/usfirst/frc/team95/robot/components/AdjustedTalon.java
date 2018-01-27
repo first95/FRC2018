@@ -6,7 +6,6 @@ import java.util.Queue;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AdjustedTalon extends TalonSrxWrapper
 	{

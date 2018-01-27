@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
  * This class is the glue that binds the controls on the physical operator

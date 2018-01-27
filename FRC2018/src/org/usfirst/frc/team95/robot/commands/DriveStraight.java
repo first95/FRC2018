@@ -4,14 +4,9 @@
  */
 package org.usfirst.frc.team95.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
  * Drive the given distance straight (negative values go backwards). Uses a
