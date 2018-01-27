@@ -136,9 +136,9 @@ public class DrivePod
 				// TODO
 			}
 
-		public void setGear(boolean m_isHighGear)
+		public void setGear(boolean isHighGear)
 			{
-				shifter.set(m_isHighGear);
+				shifter.set(isHighGear);
 			}
 
 		public void enableBrakeMode(boolean isEnabled)

@@ -248,12 +248,12 @@ public class DriveBase extends Subsystem
 //			
 //		}
 		
-		public void setGear(boolean m_isHighGear)
+		public void setGear(boolean isHighGear)
 			{
+				System.out.println("Gear is " + (isHighGear? "high": "low"));
+				this.isHighGear = isHighGear;
 				
-				isHighGear = m_isHighGear;
-				
-				leftPod.setGear(m_isHighGear);
-				rightPod.setGear(m_isHighGear);
+				leftPod.setGear(isHighGear);
+				rightPod.setGear(isHighGear);
 			}
 	}

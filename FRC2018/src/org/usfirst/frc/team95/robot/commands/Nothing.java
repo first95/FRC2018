@@ -9,7 +9,7 @@ public class Nothing extends Command
 	protected boolean isFinished()
 		{
 			// TODO Auto-generated method stub
-			System.out.println("Do nothing!");
+//			System.out.println("Do nothing!");
 			return false;
 		}
 
