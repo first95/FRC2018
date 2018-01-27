@@ -116,6 +116,7 @@ public class Robot extends IterativeRobot
 		public void disabledPeriodic()
 			{
 				Scheduler.getInstance().run();
+				testArm.updateSmartDash();
 			}
 		
 		
@@ -137,6 +138,7 @@ public class Robot extends IterativeRobot
 		public void teleopPeriodic()
 			{
 				Scheduler.getInstance().run();
+				testArm.updateSmartDash();
 				log();
 			}
 
