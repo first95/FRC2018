@@ -13,10 +13,18 @@ public class TestArm extends Subsystem {
 	private TalonSRX motor = new TalonSRX(7);
 	
 	public static final double ENCODER_TICKS_PER_ARM_REV = 8192.0;
+	public static final int PID_IDX = 0; // The Talons support multiple cascaded PID loops.  Here we're only using one.
+	public static final int CAN_TIMEOUT_MS = 10; // Timeout for each operation.
+	
+	// Velocity control constants, determined by following section 12.4 in the software reference manual.
+	public static final double K_F = 0.0354850853954534691;
 	
 	public TestArm() {
 		super();
-		motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		
+		// Configure Talon
+		motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, PID_IDX, CAN_TIMEOUT_MS);
+		motor.config_kF(PID_IDX, K_F, CAN_TIMEOUT_MS);
 //		motor.config_kP(0, value, timeoutMs)
 	}
 	
