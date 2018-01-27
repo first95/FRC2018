@@ -1,5 +1,7 @@
 package org.usfirst.frc.team95.robot.subsystems;
 
+import org.usfirst.frc.team95.robot.commands.Nothing;
+import org.usfirst.frc.team95.robot.commands.SlackTestArm;
 import org.usfirst.frc.team95.robot.commands.TestArmSet;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -48,7 +50,7 @@ public class TestArm extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		System.out.println("initDefaultCommand");
-		setDefaultCommand(new TestArmSet());
+		setDefaultCommand(new SlackTestArm());
 	}
 	
 	/**

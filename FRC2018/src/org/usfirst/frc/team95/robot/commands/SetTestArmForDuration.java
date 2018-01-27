@@ -22,10 +22,8 @@ public class SetTestArmForDuration extends TimedCommand {
 
 	@Override
 	protected void execute() {
-
 		// This method is called once every loop through the robot code.
-		double throttle = Constants.weaponStick.getRawAxis(Constants.TEST_ARM_AXIS);
-		Robot.testArm.setMotor(throttle);
+		Robot.testArm.setMotor(value);
 	}
 	
 	@Override

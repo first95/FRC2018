@@ -4,7 +4,10 @@ package org.usfirst.frc.team95.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
+import org.usfirst.frc.team95.robot.commands.SetTestArmForDuration;
 import org.usfirst.frc.team95.robot.subsystems.TestArm;
 
 /**
@@ -32,6 +35,10 @@ public class Robot extends IterativeRobot {
 
 		// Initialize all subsystems
 		testArm = new TestArm();
+		
+		CommandGroup sequence = new CommandGroup();
+		sequence.addSequential(new SetTestArmForDuration(5, 0.5));
+		autonomousCommand = sequence;
 	}
 
 	@Override
@@ -39,6 +46,8 @@ public class Robot extends IterativeRobot {
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Plate assignments are " + gameData);
+		
+		autonomousCommand.start();
 	}
 
 	/**
@@ -47,6 +56,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		testArm.updateSmartDash();
 		log();
 	}
 
@@ -66,7 +76,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-
+		autonomousCommand.cancel();
 	}
 
 	/**
