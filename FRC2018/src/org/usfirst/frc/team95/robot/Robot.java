@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team95.robot.commands.SetTestArmForDuration;
+import org.usfirst.frc.team95.robot.commands.SlackTestArm;
 import org.usfirst.frc.team95.robot.subsystems.TestArm;
 
 /**
@@ -38,6 +39,9 @@ public class Robot extends IterativeRobot {
 		
 		CommandGroup sequence = new CommandGroup();
 		sequence.addSequential(new SetTestArmForDuration(5, 0.5));
+		sequence.addSequential(new SetTestArmForDuration(5, -0.5));
+		sequence.addSequential(new SetTestArmForDuration(5, 0));
+		sequence.addSequential(new SlackTestArm());
 		autonomousCommand = sequence;
 	}
 

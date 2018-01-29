@@ -20,9 +20,12 @@ public class TestArm extends Subsystem {
 	// Velocity control constants, determined by following section 12.4 in the software reference manual.
 //	public static final double K_F = 0.24224484963296234904; // = 1023/4223, where 4223 was the velocity measured when the motor was full throttle
 	public static final double K_F = 0.0; // Don't use in position mode.
-	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 20% throttle
-	public static final double K_I = 0.0045;
-	public static final double K_D = 44.0;
+	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
+	public static final double K_I = 0.01 * K_P;
+	public static final double K_D = 20.0 * K_P;
+	public static final int I_ZONE = 100; // In closed loop error units
+	
+	private double twiddle = 0; // This is to workaround a super silly feature in SmartDashboard
 	
 	public TestArm() {
 		super();
@@ -33,6 +36,10 @@ public class TestArm extends Subsystem {
 		motor.config_kP(PID_IDX, K_P, CAN_TIMEOUT_MS);
 		motor.config_kI(PID_IDX, K_I, CAN_TIMEOUT_MS);
 		motor.config_kD(PID_IDX, K_D, CAN_TIMEOUT_MS);
+		
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the integrator.
+		motor.config_IntegralZone(PID_IDX, I_ZONE, CAN_TIMEOUT_MS);
 		
 		// Figure out where it thinks it is now
 //		initialArmPos = motor.getSelectedSensorPosition(PID_IDX);
@@ -49,8 +56,7 @@ public class TestArm extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		System.out.println("initDefaultCommand");
-		setDefaultCommand(new SlackTestArm());
+		setDefaultCommand(new TestArmSet());
 	}
 	
 	/**
@@ -69,15 +75,27 @@ public class TestArm extends Subsystem {
 			motor.set(ControlMode.Velocity, target_nupt);
 			System.out.println("Target: " + target_nupt + "\t Measured: " +
 					motor.getSelectedSensorVelocity(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
-			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
-			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
+			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX)  + twiddle);
+			SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX) + twiddle);
 		} else if (2 == STEP) {
 			double target_pos = value * ENCODER_TICKS_PER_ARM_REV / 2.0; // In native units
 			motor.set(ControlMode.Position, target_pos);
 			System.out.println("Target: " + target_pos + "\t Measured: " +
 					motor.getSelectedSensorPosition(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
-			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX));
-			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX));
+			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX) + twiddle);
+		}
+		
+		// The SmartDashboard's graph utility doesn't add a new sample unless the value has changed since
+		// the last iteration.  So make sure all the values change every iteration.
+		if(twiddle > 0) {
+			twiddle = 0.0;
+		} else {
+			twiddle = 0.0000000001;
 		}
 	}
 	
@@ -86,8 +104,6 @@ public class TestArm extends Subsystem {
 	}
 	
 	public void updateSmartDash() {
-		SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX));
-		SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX));
 	}
 
 }
