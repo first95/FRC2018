@@ -23,8 +23,8 @@ public class ArcadeDriveWithJoystick extends Command {
 	@Override
 	protected void execute() {
 		
-		Robot.drivebase.arcade(Constants.driveStick, true);
-		Robot.drivebase.setGear(Robot.oi.getJoystick().getRawButton(Constants.SHIFT_BUTTON));
+		Robot.drivebase.arcade(Robot.oi.getDrivestick(), true);
+		Robot.drivebase.setGear(Robot.oi.getHighGear());
 		
 	}
 

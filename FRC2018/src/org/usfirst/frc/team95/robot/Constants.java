@@ -6,16 +6,6 @@ public class Constants
 	{
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
-		public static Joystick driveStick = new Joystick(0);
-		public static Joystick weaponStick = new Joystick(1);
-		
-		// Axes on drive stick
-		public static int COLLECTOR_IN_AXIS  = 2;
-		public static int COLLECTOR_OUT_AXIS = 3;
-		
-		// Buttons on drive stick
-		public static int SHIFT_BUTTON = 2; // B
-		public static int OPEN_COLLECTOR_BUTTON = 5; // left bumper
 
 		// Indices for solenoids
 		public static int SHIFTER_SOLENOID_NUM  = 0;
