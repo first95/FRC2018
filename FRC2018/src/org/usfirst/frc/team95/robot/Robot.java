@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
+import org.usfirst.frc.team95.robot.commands.RampTestArmOverDuration;
 import org.usfirst.frc.team95.robot.commands.SetTestArmForDuration;
 import org.usfirst.frc.team95.robot.commands.SlackTestArm;
 import org.usfirst.frc.team95.robot.subsystems.TestArm;
@@ -38,9 +39,32 @@ public class Robot extends IterativeRobot {
 		testArm = new TestArm();
 		
 		CommandGroup sequence = new CommandGroup();
+		
+		// Steps
 		sequence.addSequential(new SetTestArmForDuration(5, 0.5));
 		sequence.addSequential(new SetTestArmForDuration(5, -0.5));
-		sequence.addSequential(new SetTestArmForDuration(5, 0));
+		sequence.addSequential(new SetTestArmForDuration(5, -1));
+		sequence.addSequential(new SetTestArmForDuration(5, 1));
+		sequence.addSequential(new SetTestArmForDuration(0.5, 0));
+		
+		// Ramps
+		sequence.addSequential(new RampTestArmOverDuration(2.5, 0, 1));
+		sequence.addSequential(new RampTestArmOverDuration(2.5, 1, -1));
+		sequence.addSequential(new RampTestArmOverDuration(2.5, -1, 0));
+		sequence.addSequential(new RampTestArmOverDuration(.25, 0, 1));
+		sequence.addSequential(new RampTestArmOverDuration(.25, 1, -1));
+		
+		// Short steps
+		double dt = 0.5;
+		double num_steps = 12;
+		double dv = 2.0 / num_steps;
+		for(int i = 0; i < num_steps; ++i) {
+			sequence.addSequential(new SetTestArmForDuration(dt, -1 + dv * i));
+		}
+		for(int i = 0; i < num_steps; ++i) {
+			sequence.addSequential(new SetTestArmForDuration(dt,  1 - dv * i));
+		}
+
 		sequence.addSequential(new SlackTestArm());
 		autonomousCommand = sequence;
 	}

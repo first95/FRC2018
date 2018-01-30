@@ -23,7 +23,7 @@ public class TestArm extends Subsystem {
 	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
 	public static final double K_I = 0.01 * K_P;
 	public static final double K_D = 20.0 * K_P;
-	public static final int I_ZONE = 100; // In closed loop error units
+	public static final int I_ZONE = 200; // In closed loop error units
 	
 	private double twiddle = 0; // This is to workaround a super silly feature in SmartDashboard
 	
