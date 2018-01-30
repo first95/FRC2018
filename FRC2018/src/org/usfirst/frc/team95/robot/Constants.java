@@ -8,27 +8,30 @@ public class Constants
 		public static double joystickDeadbandH = 0.05;
 		public static Joystick driveStick = new Joystick(0);
 		public static Joystick weaponStick = new Joystick(1);
-		public static double poseidonNorthVal = 2.751;
-		public static double encoderTickPerFoot = 1002;
-		public static double encTicksPerRadian = 1110;
-		public static double robotWidth = 34.7;
-		public static double visionLength = 3;
-		public static double FLOOR_INTAKE_THROTTLE = 0.7;
-		public static int CLIMBER_AXIS = 1;
 		
+		// Axes on drive stick
+		public static int COLLECTOR_IN_AXIS  = 2;
+		public static int COLLECTOR_OUT_AXIS = 3;
+		
+		// Buttons on drive stick
+		public static int SHIFT_BUTTON = 2; // B
+		public static int OPEN_COLLECTOR_BUTTON = 4; // left bumper
+
+		// Indices for solenoids
 		public static int SHIFTER_SOLENOID_NUM  = 0;
-		// Shift button in IO
-		public static int SHIFT_BUTTON = 2; // TODO: Pick a good button
-		
-		public static int EXAMPLE_MOTOR_AXIS = 6; // there isn't actually an axis #6; this is just an example
-		
+		public static int COLLECTOR_SOLENOID_NUM  = 1;
+
 		// Indices for Talons
+		// Drive base
 		public static int LEFT_LEAD = 10;
 		public static int LEFT_F1 = 11;
 		public static int LEFT_F2 = 12;
 		public static int RIGHT_LEAD = 20;
 		public static int RIGHT_F1 = 21;
 		public static int RIGHT_F2 = 22;
+		// Collector
+		public static int LEFT_CHAIN_DRIVER  = 14;
+		public static int RIGHT_CHAIN_DRIVER = 24;
 
 		public static double RFVoltsToFt(double voltage)
 			{
