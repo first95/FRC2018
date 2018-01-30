@@ -16,7 +16,7 @@ public class Constants
 		public static double FLOOR_INTAKE_THROTTLE = 0.7;
 		public static int CLIMBER_AXIS = 1;
 		
-		public static int SHIFTER_SOLENOID_NUM  = 4;
+		public static int SHIFTER_SOLENOID_NUM  = 0;
 		// Shift button in IO
 		public static int SHIFT_BUTTON = 2; // TODO: Pick a good button
 		
