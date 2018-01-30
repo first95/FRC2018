@@ -1,9 +1,9 @@
 
 package org.usfirst.frc.team95.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
@@ -63,15 +63,6 @@ public class DriveBase extends Subsystem
 			{
 
 				tank(left, right);
-			}
-
-		/**
-		 * @param joy
-		 *            The ps3 style joystick to use to drive tank style.
-		 */
-		public void driveStick(Joystick stick)
-			{
-				arcade(stick, true);
 			}
 
 		/**
@@ -177,33 +168,11 @@ public class DriveBase extends Subsystem
 				tank(forward - spin, forward + spin);
 			}
 
-		public void halfArcade(double forward, double spin)
+
+		public void arcade()
 			{
-				tank((forward - spin) / 2, (forward + spin) / 2);
-			}
-
-		public void arcade(Joystick stick, boolean twostick)
-			{
-				double y = stick.getY();
-				double x;
-				if (twostick)
-					{
-						x = stick.getRawAxis(4);
-					}
-				else
-					{
-						x = stick.getX();
-					}
-
-				if (Math.abs(y) <= Constants.joystickDeadbandV)
-					{
-						y = 0;
-					}
-
-				if (Math.abs(x) <= Constants.joystickDeadbandH)
-					{
-						x = 0;
-					}
+				double y = Robot.oi.getForwardAxis();
+				double x = Robot.oi.getTurnAxis();
 
 				// "Exponential" drive, where the movements are more sensitive during slow
 				// movement,
@@ -211,36 +180,6 @@ public class DriveBase extends Subsystem
 				x = Math.pow(x, 3);
 				y = Math.pow(y, 3);
 				arcade(y, x);
-			}
-
-		public void halfArcade(Joystick stick, boolean twostick)
-			{
-				double y = stick.getY();
-				double x;
-				if (twostick)
-					{
-						x = stick.getRawAxis(4);
-					}
-				else
-					{
-						x = stick.getX();
-					}
-				if (Math.abs(y) <= Constants.joystickDeadbandV)
-					{
-						y = 0;
-					}
-
-				if (Math.abs(x) <= Constants.joystickDeadbandH)
-					{
-						x = 0;
-					}
-
-				// "Exponential" drive, where the movements are more sensitive during slow
-				// movement,
-				// permitting easier fine control
-				x = Math.pow(x, 3);
-				y = Math.pow(y, 3);
-				halfArcade(y, x);
 			}
 
 //		public void leftEncoderPos() {

@@ -56,6 +56,12 @@ public class OI {
 	}
 	
 	// Drive base controls
+	public double getForwardAxis() {
+		return driverController.getY();
+	}
+	public double getTurnAxis() {
+		return driverController.getRawAxis(4);
+	}
 	public boolean getHighGear() {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}

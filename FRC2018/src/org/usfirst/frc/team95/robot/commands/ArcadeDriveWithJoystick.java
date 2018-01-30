@@ -5,9 +5,6 @@
 package org.usfirst.frc.team95.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 
 /**
@@ -23,7 +20,7 @@ public class ArcadeDriveWithJoystick extends Command {
 	@Override
 	protected void execute() {
 		
-		Robot.drivebase.arcade(Robot.oi.getDrivestick(), true);
+		Robot.drivebase.arcade();
 		Robot.drivebase.setGear(Robot.oi.getHighGear());
 		
 	}
