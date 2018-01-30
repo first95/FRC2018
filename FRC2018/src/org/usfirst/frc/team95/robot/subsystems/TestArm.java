@@ -21,8 +21,8 @@ public class TestArm extends Subsystem {
 //	public static final double K_F = 0.24224484963296234904; // = 1023/4223, where 4223 was the velocity measured when the motor was full throttle
 	public static final double K_F = 0.0; // Don't use in position mode.
 	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
-	public static final double K_I = 0.01 * K_P;
-	public static final double K_D = 20.0 * K_P;
+	public static final double K_I = 0.04 * K_P;
+	public static final double K_D = 40.0 * K_P;
 	public static final int I_ZONE = 200; // In closed loop error units
 	
 	private double twiddle = 0; // This is to workaround a super silly feature in SmartDashboard
@@ -38,7 +38,7 @@ public class TestArm extends Subsystem {
 		motor.config_kD(PID_IDX, K_D, CAN_TIMEOUT_MS);
 		
 		// Prevent Integral Windup.
-		// Whenever the control loop error is outside this zone, zero out the integrator.
+		// Whenever the control loop error is outside this zone, zero out the I term accumulator.
 		motor.config_IntegralZone(PID_IDX, I_ZONE, CAN_TIMEOUT_MS);
 		
 		// Figure out where it thinks it is now
