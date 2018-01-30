@@ -15,7 +15,7 @@ public class Constants
 		
 		// Buttons on drive stick
 		public static int SHIFT_BUTTON = 2; // B
-		public static int OPEN_COLLECTOR_BUTTON = 4; // left bumper
+		public static int OPEN_COLLECTOR_BUTTON = 5; // left bumper
 
 		// Indices for solenoids
 		public static int SHIFTER_SOLENOID_NUM  = 0;

@@ -13,9 +13,11 @@ public class ManuallyControlCollector extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.collector.setMawOpen(Robot.oi.getJoystick().getRawButton(Constants.OPEN_COLLECTOR_BUTTON));
+		boolean open = Robot.oi.getJoystick().getRawButton(Constants.OPEN_COLLECTOR_BUTTON);
+		Robot.collector.setMawOpen(open);
 		double collector_speed = Robot.oi.getJoystick().getRawAxis(Constants.COLLECTOR_IN_AXIS)
 				- Robot.oi.getJoystick().getRawAxis(Constants.COLLECTOR_OUT_AXIS);
+		System.out.println("Setting intake to " + collector_speed + ", " + (open? "open": "closed"));
 		Robot.collector.setIntakeSpeed(collector_speed);
 	}
 	

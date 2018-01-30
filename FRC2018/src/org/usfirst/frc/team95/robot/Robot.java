@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot
 
 			// Initialize all subsystems
 			drivebase = new DriveBase();
+			collector = new Collector();
 			compressor = new Compressor();
 			oi = new OI();
 			

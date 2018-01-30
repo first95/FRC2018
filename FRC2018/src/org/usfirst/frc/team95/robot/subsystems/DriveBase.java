@@ -253,9 +253,7 @@ public class DriveBase extends Subsystem
 		
 		public void setGear(boolean isHighGear)
 			{
-				System.out.println("Gear is " + (isHighGear? "high": "low"));
 				this.isHighGear = isHighGear;
-				
 				shifter.set(isHighGear);
 			}
 	}

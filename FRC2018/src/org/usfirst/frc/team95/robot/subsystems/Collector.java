@@ -18,6 +18,7 @@ public class Collector extends Subsystem {
 	private SolenoidI mawOpener;
 	
 	public Collector() {
+		super();
 		leftChainDriver  = new AdjustedTalon(Constants.LEFT_CHAIN_DRIVER);
 		rightChainDriver = new AdjustedTalon(Constants.RIGHT_CHAIN_DRIVER);
 		mawOpener = new SolenoidWrapper(Constants.COLLECTOR_SOLENOID_NUM);
@@ -34,7 +35,7 @@ public class Collector extends Subsystem {
 	}
 	
 	public void setIntakeSpeed(double value) {
-		leftChainDriver.set(ControlMode.PercentOutput, value);
+		leftChainDriver.set(ControlMode.PercentOutput, -value);
 		rightChainDriver.set(ControlMode.PercentOutput, value);
 	}
 }
