@@ -12,13 +12,15 @@ import org.usfirst.frc.team95.robot.commands.*;
  */
 public class OI {
 	
-	// Axes on drive stick
+	// Axes on weapons controller
 	public static int COLLECTOR_IN_AXIS  = 2;
 	public static int COLLECTOR_OUT_AXIS = 3;
 	
-	// Buttons on drive stick
-	public static int SHIFT_BUTTON = 2; // B
-	public static int OPEN_COLLECTOR_BUTTON = 5; // left bumper
+	// Buttons on drive controller
+	public static int SHIFT_BUTTON = 5; // Left bumper
+	
+	// Buttons on weapons controller
+	public static int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
 
 	
 	private Joystick driverController  = new Joystick(0);
@@ -40,10 +42,6 @@ public class OI {
 		
 		
 		//a.whenPressed(new ShiftGear());
-	}
-
-	public Joystick getDrivestick() {
-		return driverController;
 	}
 	
 	// Collector controls
