@@ -62,13 +62,14 @@ public class DrivePod
 			{
 
 				encoder = FeedbackDevice.QuadEncoder;
+				
 				// Leaders have quadrature encoders connected to their inputs
 				leader.configSelectedFeedbackSensor(encoder, 0, 0);
 				
 				
-				
-				voltageCurrentLimit();
-				voltageCurrentComp();
+				// Not being used at the moment
+				// voltageCurrentLimit();
+				// voltageCurrentComp();
 
 				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
 				// Are all the speeds and distances expressed in ticks (/per second)?
