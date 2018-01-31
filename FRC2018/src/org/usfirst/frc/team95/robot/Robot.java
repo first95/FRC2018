@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
+import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
+	public static Elevator elevator;
 	public static Compressor compressor;
 	public static OI oi;	
 
@@ -47,6 +49,7 @@ public class Robot extends IterativeRobot
 			// Initialize all subsystems
 			drivebase = new DriveBase();
 			collector = new Collector();
+			elevator = new Elevator();
 			compressor = new Compressor();
 			oi = new OI();
 			

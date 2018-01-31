@@ -17,6 +17,9 @@ public class Constants
 		public static int RIGHT_LEAD = 20;
 		public static int RIGHT_F1 = 21;
 		public static int RIGHT_F2 = 22;
+		// Elevator
+		public static int LEFT_ELEV_DRIVER = 13;
+		public static int RIGHT_ELEV_DRIVER = 23;
 		// Collector
 		public static int LEFT_CHAIN_DRIVER  = 14;
 		public static int RIGHT_CHAIN_DRIVER = 24;
