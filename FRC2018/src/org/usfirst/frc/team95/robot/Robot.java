@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.commands.Rotate;
+import org.usfirst.frc.team95.robot.commands.ShiftGear;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
@@ -55,15 +57,15 @@ public class Robot extends IterativeRobot
 				
 			// Sendable Chooser
 			chooser = new SendableChooser();
-			SmartDashboard.putData("Auto mode", chooser);
+			SmartDashboard.putData("Auto Move", chooser);
 
 			a = new SendableChooser();
 			a.addDefault("None", new Nothing());
-			a.addObject("none", new DriveStraight(1));
+			a.addObject("Test Drive Stright", new DriveStraight(1));
+			a.addObject("Test Rotate", new Rotate(180, 5));
 
 			// DISPLAY CHOSERS TO DASHBOARD:
 			SmartDashboard.putData("1st", a);
-			
 			
 			drivebase.brake(false);
 			}
@@ -118,11 +120,12 @@ public class Robot extends IterativeRobot
 		public void teleopInit()
 			{
 				drivebase.brake(true);
+				
 				// This makes sure that the autonomous stops running when
 				// teleop starts running. If you want the autonomous to
 				// continue until interrupted by another command, remove
 				// this line or comment it out.
-				//autonomousCommand.cancel();
+				autonomousCommand.cancel();
 			}
 
 		/**
@@ -131,12 +134,8 @@ public class Robot extends IterativeRobot
 		@Override
 		public void teleopPeriodic()
 			{
-				
-				
 				Scheduler.getInstance().run();
-				log();
-				
-				
+				log();	
 			}
 
 		/**

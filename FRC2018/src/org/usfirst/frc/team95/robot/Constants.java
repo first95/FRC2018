@@ -20,9 +20,15 @@ public class Constants
 		public static int RIGHT_LEAD = 20;
 		public static int RIGHT_F1 = 21;
 		public static int RIGHT_F2 = 22;
+		
 		// Collector
 		public static int LEFT_CHAIN_DRIVER  = 14;
 		public static int RIGHT_CHAIN_DRIVER = 24;
+		
+		// Constants
+		// Encoder values recycled from last year
+		public final static double ENCODER_TICKS_PER_FOOT = 1002;
+		public final static double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
 
 		public static double RFVoltsToFt(double voltage)
 			{
