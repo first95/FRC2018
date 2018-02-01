@@ -9,6 +9,8 @@ public class Constants
 		// Indices for solenoids
 		public static int SHIFTER_SOLENOID_NUM  = 0;
 		public static int COLLECTOR_SOLENOID_NUM  = 1;
+		public static int WRIST_STAGE_ONE = 2;
+		public static int WRIST_STAGE_TWO = 3;
 
 		// Indices for Talons
 		// Drive base

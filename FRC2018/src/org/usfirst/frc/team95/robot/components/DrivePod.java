@@ -65,6 +65,7 @@ public class DrivePod
 				
 				// Leaders have quadrature encoders connected to their inputs
 				leader.configSelectedFeedbackSensor(encoder, 0, 0);
+				leader.setSensorPhase(false);
 				
 				
 				// Not being used at the moment
@@ -131,9 +132,8 @@ public class DrivePod
 				follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 			}
 
-		public double getQuadEncoders()
+		public double getQuadEncPos()
 			{			
-				
 				return leader.getSelectedSensorPosition(0);
 			}
 

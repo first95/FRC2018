@@ -14,6 +14,8 @@ public class ManuallyControlCollector extends Command {
 	protected void execute() {
 		Robot.collector.setMawOpen(Robot.oi.getCollectorOpen());
 		Robot.collector.setIntakeSpeed(Robot.oi.getCollectorSpeed());
+		Robot.collector.setWristStageOneExtended(Robot.oi.getWristStageOneExtended());
+		Robot.collector.setWristStageTwoExtended(Robot.oi.getWristStageTwoExtended());
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ public class DriveBase extends Subsystem
 		
 		private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 		private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
+		private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
 		private DrivePod leftPod, rightPod;
 		private SolenoidI shifter;
 
@@ -137,7 +138,7 @@ public class DriveBase extends Subsystem
 		// Call this once to command distance - do not call repeatedly, as this will
 		// reset the
 		// distance remaining.
-		public void pivotRadians(double radiansToPivot, double speedRadiansPerSecond)
+		public void pivotDegrees(double degreesToPivot, double speedDegreesPerSecond)
 			{
 				// TODO: Command left and right pods to go opposite directions for a given speed
 				// and distance
@@ -146,9 +147,9 @@ public class DriveBase extends Subsystem
 			}
 
 		// Provide default value
-		public void pivotRadians(double radiansToPivot)
+		public void pivotDegrees(double degreesToPivot)
 			{
-				pivotRadians(radiansToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
+				pivotDegrees(degreesToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
 			}
 
 		public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond)
@@ -182,13 +183,15 @@ public class DriveBase extends Subsystem
 				arcade(y, x);
 			}
 
-//		public void leftEncoderPos() {
-//			
-//		}
-//		
-//		public void rightEncoderPos() {
-//			
-//		}
+		public double getLeftEncoderPos() {
+			
+			return leftPod.getQuadEncPos();
+		}
+		
+		public double getRightEncoderPos() {
+			
+			return rightPod.getQuadEncPos();
+		}
 		
 		public void setGear(boolean isHighGear)
 			{

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.ManuallyControlCollector;
 import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
@@ -10,28 +11,44 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Collector extends Subsystem {
 	private IMotorControllerEnhanced leftChainDriver, rightChainDriver;
 	
-	// The solenoid for the piston that opens the maw
-	private SolenoidI mawOpener;
+	// The solenoids for the piston that opens the maw, and operates the wrist
+	private SolenoidI mawOpener, wristStageOne, wristStageTwo;
 	
 	public Collector() {
 		super();
 		leftChainDriver  = new AdjustedTalon(Constants.LEFT_CHAIN_DRIVER);
 		rightChainDriver = new AdjustedTalon(Constants.RIGHT_CHAIN_DRIVER);
 		mawOpener = new SolenoidWrapper(Constants.COLLECTOR_SOLENOID_NUM);
+		wristStageOne = new SolenoidWrapper(Constants.WRIST_STAGE_ONE);
+		wristStageTwo = new SolenoidWrapper(Constants.WRIST_STAGE_TWO);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ManuallyControlCollector());
-
+	}
+	
+	public void log() {
+		SmartDashboard.putBoolean("Maw Open?" , Robot.oi.getCollectorOpen());
+		SmartDashboard.putBoolean("Wrist Stage One Extended?", Robot.oi.getWristStageOneExtended());
+		SmartDashboard.putBoolean("Wrist Stage Two Extended?", Robot.oi.getWristStageTwoExtended());
 	}
 
 	public void setMawOpen(boolean open) {
 		mawOpener.set(open);
+	}
+	
+	public void setWristStageOneExtended(boolean extended) {
+		wristStageOne.set(extended);
+	}
+	
+	public void setWristStageTwoExtended(boolean extended) {
+		wristStageTwo.set(extended);
 	}
 	
 	public void setIntakeSpeed(double value) {
