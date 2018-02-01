@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.commands.Rotate;
+//import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.ShiftGear;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot
 			a = new SendableChooser();
 			a.addDefault("None", new Nothing());
 			a.addObject("Test Drive Stright", new DriveStraight(1));
-			a.addObject("Test Rotate", new Rotate(180, 5));
+//			a.addObject("Test Rotate", new Rotate(180, 5));
 
 			// DISPLAY CHOSERS TO DASHBOARD:
 			SmartDashboard.putData("1st", a);

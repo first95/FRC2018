@@ -124,7 +124,7 @@ public class DriveBase extends Subsystem {
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
-	public boolean pivotDegrees(double degreesToPivot, double speedDegreesPerSecond) {
+/*	public boolean pivotDegrees(double degreesToPivot, double speedDegreesPerSecond) {
 
 		double m_degreesToPivot, m_speedDegreesPerSecond, startPos, finalPos, startingSpeed, finalSpeed, error, P;
 		boolean complete;
@@ -202,7 +202,7 @@ public class DriveBase extends Subsystem {
 
 	public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond) {
 		// TODO: Command each side of the robot to sweep out the appropriate arc
-	}
+	}*/
 
 	// Corresponded to the Drive class in the 2017 code
 	public void tank(double leftsp, double rightsp) {
