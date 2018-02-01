@@ -15,6 +15,7 @@ public class OI {
 	// Axes on weapons controller
 	public static int COLLECTOR_IN_AXIS = 2;
 	public static int COLLECTOR_OUT_AXIS = 3;
+	public static int ELEVATOR_AXIS = 4;
 
 	// Buttons on drive controller
 	public static int SHIFT_BUTTON = 5; // Left bumper
@@ -86,6 +87,13 @@ public class OI {
 		return isExtended;
 	}
 
+	// Elevator controls
+	public double getElevatorSpeed() {
+		double speed = weaponsController.getRawAxis(ELEVATOR_AXIS);
+		System.out.println(speed);
+		return speed;
+	}
+	
 	// Drive base controls
 	public double getForwardAxis() {
 		return driverController.getY();

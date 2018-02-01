@@ -10,6 +10,7 @@ public class Rotate extends Command
 
 	public Rotate(double degree, double speed) {
 		Robot.drivebase.pivotDegrees(degree, speed);
+		isFinished();
 	}
 	
 	@Override
