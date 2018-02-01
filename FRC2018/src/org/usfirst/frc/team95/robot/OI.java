@@ -22,9 +22,12 @@ public class OI {
 	// Buttons on weapons controller
 	public static int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
 
-	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!! UP IS 0
-	public static int EXTEND_WRIST_STAGE_ONE_POV = 0;
-	public static int EXTEND_WRIST_STAGE_TWO_POV = 90;
+	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!! 
+	public static int EXTEND_WRIST_STAGE_ONE_POV = 0; // DPAD UP
+	public static int EXTEND_WRIST_STAGE_TWO_POV = 90; // DPAD RIGHT
+	public static int RESET_WRIST = 180; // DPAD DOWN
+	private boolean stageOneExtended = false;
+	private boolean stageTwoExtended = false;
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
@@ -58,41 +61,50 @@ public class OI {
 	// Wrist controls
 	public boolean getWristStageOneExtended() {
 
-		boolean isExtended = false;
-
 		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_ONE_POV) {
-			if (isExtended == true) {
-				isExtended = false;
+			if (stageOneExtended == true) {
+				stageOneExtended = false;
 			} else {
-				isExtended = true;
+				stageOneExtended = true;
 			}
 		}
 
-		return isExtended;
+		return stageOneExtended;
 	}
 
 	public boolean getWristStageTwoExtended() {
 
-		boolean isExtended = false;
-
 		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_TWO_POV) {
-			if (isExtended == true) {
-				isExtended = false;
+			if (stageTwoExtended == true) {
+				stageTwoExtended = false;
 			} else {
-				isExtended = true;
+				stageTwoExtended = true;
 			}
 		}
 
-		return isExtended;
+		return stageTwoExtended;
+	}
+
+	public void getWristReset() {
+
+		if (weaponsController.getPOV() == RESET_WRIST) {
+			Robot.collector.resetWrists();
+		}
+		
 	}
 
 	// Elevator controls
 	public double getElevatorSpeed() {
-		double speed = weaponsController.getRawAxis(ELEVATOR_AXIS);
-		System.out.println(speed);
-		return speed;
+		
+		double elevatorSpeed = 0;
+		
+		if(weaponsController.getRawAxis(ELEVATOR_AXIS) > .18) {
+			elevatorSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
+		}
+		
+		return elevatorSpeed;
 	}
-	
+
 	// Drive base controls
 	public double getForwardAxis() {
 		return driverController.getY();

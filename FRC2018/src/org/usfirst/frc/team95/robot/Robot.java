@@ -26,135 +26,125 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  * directory.
  */
 
-public class Robot extends IterativeRobot
-{
+public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser chooser;
 	SendableChooser a, b, c;
-	
+
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
 	public static Elevator elevator;
 	public static Compressor compressor;
-	public static OI oi;	
+	public static OI oi;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
-	public void robotInit()
-		{
+	public void robotInit() {
 
-			// Initialize all subsystems
-			drivebase = new DriveBase();
-			collector = new Collector();
-			elevator = new Elevator();
-			compressor = new Compressor();
-			oi = new OI();
-			
-			// Show what command your subsystem is running on the SmartDashboard
-			SmartDashboard.putData(drivebase);
-				
-			// Sendable Chooser
-			chooser = new SendableChooser();
-			SmartDashboard.putData("Auto Move", chooser);
+		// Initialize all subsystems
+		drivebase = new DriveBase();
+		collector = new Collector();
+		elevator = new Elevator();
+		compressor = new Compressor();
+		oi = new OI();
 
-			a = new SendableChooser();
-			a.addDefault("None", new Nothing());
-			a.addObject("Test Drive Stright", new DriveStraight(1));
-//			a.addObject("Test Rotate", new Rotate(180, 5));
+		// Show what command your subsystem is running on the SmartDashboard
+		SmartDashboard.putData(drivebase);
 
-			// DISPLAY CHOSERS TO DASHBOARD:
-			SmartDashboard.putData("1st", a);
-			
-			drivebase.brake(false);
-			}
+		// Sendable Chooser
+		chooser = new SendableChooser();
+		SmartDashboard.putData("Auto Move", chooser);
 
-		@Override
-		public void autonomousInit()
-			{
-				String gameData;
-				gameData = DriverStation.getInstance().getGameSpecificMessage();
-				System.out.println("Plate assignments are "+gameData);
-				
-//				if(gameData.charAt(0) == 'L')
-//				{
-//					//Put left auto code here
-//				} else {
-//					//Put right auto code here
-//				}
-//				drivebase.brake(true);
-//				
-				// instantiate the command used for the autonomous period
-				autonomousCommand = (Command) a.getSelected();
-				autonomousCommand.start();
-			}
+		a = new SendableChooser();
+		a.addDefault("None", new Nothing());
+		a.addObject("Test Drive Stright", new DriveStraight(1));
+		// a.addObject("Test Rotate", new Rotate(180, 5));
 
-		/**
-		 * This function is called periodically during autonomous
-		 */
-		@Override
-		public void autonomousPeriodic()
-			{
-//				Scheduler.getInstance().run();
-				log();
-			}
+		// DISPLAY CHOSERS TO DASHBOARD:
+		SmartDashboard.putData("1st", a);
 
-		/**
-		 * This function is called once each time the robot enters Disabled mode. You can use it to reset any subsystem
-		 * information you want to clear when the robot is disabled.
-		 */
-		public void disabledInit()
-			{
-				drivebase.brake(false);
-			}
-
-		public void disabledPeriodic()
-			{
-				drivebase.log();
-				Scheduler.getInstance().run();
-			}
-		
-		
-		@Override
-		public void teleopInit()
-			{
-				drivebase.brake(true);
-				
-				// This makes sure that the autonomous stops running when
-				// teleop starts running. If you want the autonomous to
-				// continue until interrupted by another command, remove
-				// this line or comment it out.
-				// autonomousCommand.cancel();
-			}
-
-		/**
-		 * This function is called periodically during operator control
-		 */
-		@Override
-		public void teleopPeriodic()
-			{
-				Scheduler.getInstance().run();
-				log();	
-			}
-
-		/**
-		 * This function is called periodically during test mode
-		 */
-		@Override
-		public void testPeriodic()
-			{
-				LiveWindow.run();
-			}
-
-		/**
-		 * The log method puts interesting information to the SmartDashboard.
-		 */
-		private void log()
-			{
-				drivebase.log();
-			}
+		drivebase.brake(false);
 	}
+
+	@Override
+	public void autonomousInit() {
+		String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		System.out.println("Plate assignments are " + gameData);
+
+		// if(gameData.charAt(0) == 'L')
+		// {
+		// //Put left auto code here
+		// } else {
+		// //Put right auto code here
+		// }
+		// drivebase.brake(true);
+		//
+		// instantiate the command used for the autonomous period
+		autonomousCommand = (Command) a.getSelected();
+		autonomousCommand.start();
+	}
+
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	@Override
+	public void autonomousPeriodic() {
+		// Scheduler.getInstance().run();
+		log();
+	}
+
+	/**
+	 * This function is called once each time the robot enters Disabled mode. You
+	 * can use it to reset any subsystem information you want to clear when the
+	 * robot is disabled.
+	 */
+	public void disabledInit() {
+		drivebase.brake(false);
+	}
+
+	public void disabledPeriodic() {
+		drivebase.log();
+		Scheduler.getInstance().run();
+	}
+
+	@Override
+	public void teleopInit() {
+		drivebase.brake(true);
+
+		// This makes sure that the autonomous stops running when
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
+		// autonomousCommand.cancel();
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	@Override
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+		log();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+
+	/**
+	 * The log method puts interesting information to the SmartDashboard.
+	 */
+	private void log() {
+		drivebase.log();
+	}
+}

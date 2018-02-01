@@ -12,6 +12,7 @@ public class ManuallyControlCollector extends Command {
 
 	@Override
 	protected void execute() {
+		// Reset Wrists operator is located within the OI class
 		Robot.collector.setMawOpen(Robot.oi.getCollectorOpen());
 		Robot.collector.setIntakeSpeed(Robot.oi.getCollectorSpeed());
 		Robot.collector.setWristStageOneExtended(Robot.oi.getWristStageOneExtended());
