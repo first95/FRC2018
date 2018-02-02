@@ -21,7 +21,7 @@ public class TestArm extends Subsystem {
 //	public static final double K_F = 0.24224484963296234904; // = 1023/4223, where 4223 was the velocity measured when the motor was full throttle
 	public static final double K_F = 0.0; // Don't use in position mode.
 	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
-	public static final double K_I = 0.04 * K_P;
+	public static final double K_I = 0.02 * K_P;
 	public static final double K_D = 40.0 * K_P;
 	public static final int I_ZONE = 200; // In closed loop error units
 	
