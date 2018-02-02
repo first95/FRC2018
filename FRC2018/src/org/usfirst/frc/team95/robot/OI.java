@@ -22,12 +22,14 @@ public class OI {
 	// Buttons on weapons controller
 	public static int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
 
-	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!! 
+	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!!
 	public static int EXTEND_WRIST_STAGE_ONE_POV = 0; // DPAD UP
 	public static int EXTEND_WRIST_STAGE_TWO_POV = 90; // DPAD RIGHT
 	public static int RESET_WRIST = 180; // DPAD DOWN
 	private boolean stageOneExtended = false;
 	private boolean stageTwoExtended = false;
+	private boolean stageOneWasNotPressed = true;
+	private boolean stageTwoWasNotPressed = true;
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
@@ -62,26 +64,39 @@ public class OI {
 	public boolean getWristStageOneExtended() {
 
 		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_ONE_POV) {
-			if (stageOneExtended == true) {
-				stageOneExtended = false;
-			} else {
-				stageOneExtended = true;
+			if (stageOneWasNotPressed) {
+				if (stageOneExtended == true) {
+					stageOneExtended = false;
+				} else {
+					stageOneExtended = true;
+				}
+				stageOneWasNotPressed = false;
 			}
+			
 		}
-
+		else {
+			stageOneWasNotPressed = true;
+		}
 		return stageOneExtended;
 	}
 
 	public boolean getWristStageTwoExtended() {
 
 		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_TWO_POV) {
-			if (stageTwoExtended == true) {
-				stageTwoExtended = false;
-			} else {
-				stageTwoExtended = true;
+			if (stageTwoWasNotPressed) {
+				if (stageTwoExtended == true) {
+					stageTwoExtended = false;
+				} else {
+					stageTwoExtended = true;
+				}
+				stageTwoWasNotPressed = false;
 			}
+			
 		}
-
+		else {
+			stageTwoWasNotPressed = true;
+		}
+		
 		return stageTwoExtended;
 	}
 
@@ -90,18 +105,19 @@ public class OI {
 		if (weaponsController.getPOV() == RESET_WRIST) {
 			Robot.collector.resetWrists();
 		}
-		
+
 	}
 
 	// Elevator controls
 	public double getElevatorSpeed() {
-		
+
 		double elevatorSpeed = 0;
-		
-		if(weaponsController.getRawAxis(ELEVATOR_AXIS) > .18) {
+
+		if ((weaponsController.getRawAxis(ELEVATOR_AXIS) > .18)
+				|| (weaponsController.getRawAxis(ELEVATOR_AXIS) < -.18)) {
 			elevatorSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
 		}
-		
+
 		return elevatorSpeed;
 	}
 

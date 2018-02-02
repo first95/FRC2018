@@ -24,6 +24,8 @@ public class Collector extends Subsystem {
 		leftChainDriver  = new AdjustedTalon(Constants.LEFT_CHAIN_DRIVER);
 		rightChainDriver = new AdjustedTalon(Constants.RIGHT_CHAIN_DRIVER);
 		mawOpener = new SolenoidWrapper(Constants.COLLECTOR_SOLENOID_NUM);
+		
+		// False means it is extended
 		wristStageOne = new SolenoidWrapper(Constants.WRIST_STAGE_ONE);
 		wristStageTwo = new SolenoidWrapper(Constants.WRIST_STAGE_TWO);
 	}
@@ -52,8 +54,8 @@ public class Collector extends Subsystem {
 	}
 	
 	public void resetWrists() {
-		wristStageOne.set(false);
-		wristStageTwo.set(false);
+		wristStageOne.set(true);
+		wristStageTwo.set(true);
 	}
 	
 	public void setIntakeSpeed(double value) {

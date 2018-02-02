@@ -2,6 +2,8 @@
 package org.usfirst.frc.team95.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
@@ -46,6 +48,9 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
+		
+		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 	}
 
 	/**
@@ -124,70 +129,6 @@ public class DriveBase extends Subsystem {
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
-/*	public boolean pivotDegrees(double degreesToPivot, double speedDegreesPerSecond) {
-
-		double m_degreesToPivot, m_speedDegreesPerSecond, startPos, finalPos, startingSpeed, finalSpeed, error, P;
-		boolean complete;
-		boolean rotating = true;
-
-		m_degreesToPivot = degreesToPivot;
-		m_speedDegreesPerSecond = speedDegreesPerSecond;
-		P = 0.35;
-
-		if (m_degreesToPivot >= 0) {
-			startPos = getLeftEncoderPos();
-		} else {
-			startPos = getRightEncoderPos();
-		}
-
-		finalPos = startPos + (Constants.ENCODER_TICKS_PER_RADIAN * degreesToPivot);
-		startingSpeed = 0;
-
-		if (degreesToPivot >= 0) {
-			error = finalPos - getLeftEncoderPos();
-		} else {
-			error = finalPos - getRightEncoderPos();
-		}
-
-		speedDegreesPerSecond = P * error;
-		complete = false;
-
-		while (rotating) {
-			if (Math.abs(error) <= Constants.ENCODER_TICKS_PER_RADIAN * .04) {
-				complete = true;
-				rotating = false;
-			} else {
-				if (degreesToPivot >= 0) {
-					error = finalPos - getLeftEncoderPos();
-				} else {
-					error = finalPos - getRightEncoderPos();
-				}
-
-				speedDegreesPerSecond = (P * error) / 200;// divide to make speed value reasonable
-				if (speedDegreesPerSecond > .5) {
-					speedDegreesPerSecond = .5;
-				} else if (speedDegreesPerSecond < -.5) {
-					speedDegreesPerSecond = -.5;
-				}
-
-				if (speedDegreesPerSecond > (startingSpeed + .08)) {
-					speedDegreesPerSecond = startingSpeed + .08;
-				}
-
-				tank(-speedDegreesPerSecond, speedDegreesPerSecond);
-
-				startingSpeed = speedDegreesPerSecond;
-			}
-		}
-
-		return complete;
-	}
-
-	// Provide default value
-	public void pivotDegrees(double degreesToPivot) {
-		pivotDegrees(degreesToPivot, DEFAULT_PIVOT_SPEED_DEGREE_PER_S);
-	}
-
 	public void pivotRadians(double radiansToPivot, double speedRadiansPerSecond) {
 		// TODO: Command left and right pods to go opposite directions for a given speed
 		// and distance
@@ -197,12 +138,12 @@ public class DriveBase extends Subsystem {
 
 	// Provide default value
 	public void pivotRadians(double radiansToPivot) {
-		pivotDegrees(radiansToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
+		pivotRadians(radiansToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
 	}
 
 	public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond) {
 		// TODO: Command each side of the robot to sweep out the appropriate arc
-	}*/
+	}
 
 	// Corresponded to the Drive class in the 2017 code
 	public void tank(double leftsp, double rightsp) {

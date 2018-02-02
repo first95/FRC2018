@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
 
 		// Show what command your subsystem is running on the SmartDashboard
 		SmartDashboard.putData(drivebase);
+		SmartDashboard.putData(elevator);
+		SmartDashboard.putData(collector);
 
 		// Sendable Chooser
 		chooser = new SendableChooser();
@@ -105,10 +107,17 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
+
+		collector.setWristStageOneExtended(oi.getWristStageOneExtended());
+		collector.setWristStageTwoExtended(oi.getWristStageTwoExtended());
+		
 		drivebase.brake(false);
 	}
 
 	public void disabledPeriodic() {
+		
+		collector.setWristStageOneExtended(oi.getWristStageOneExtended());
+		collector.setWristStageTwoExtended(oi.getWristStageTwoExtended());
 		drivebase.log();
 		Scheduler.getInstance().run();
 	}
@@ -146,5 +155,7 @@ public class Robot extends IterativeRobot {
 	 */
 	private void log() {
 		drivebase.log();
+		elevator.log();
+		collector.log();
 	}
 }

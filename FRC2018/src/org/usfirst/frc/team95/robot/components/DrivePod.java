@@ -85,8 +85,6 @@ public class DrivePod
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
-				SmartDashboard.putNumber("Encoder", leader.getSelectedSensorPosition(0));
-				
 			}
 
 		public void reset()
