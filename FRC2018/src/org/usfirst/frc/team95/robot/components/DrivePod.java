@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team95.robot.components;
 
+import org.usfirst.frc.team95.robot.Constants;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
@@ -64,7 +66,7 @@ public class DrivePod
 				encoder = FeedbackDevice.QuadEncoder;
 				
 				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(encoder, 0, 0);
+				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				leader.setSensorPhase(false);
 				
 				
@@ -132,7 +134,7 @@ public class DrivePod
 
 		public double getQuadEncPos()
 			{			
-				return leader.getSelectedSensorPosition(0);
+				return leader.getSelectedSensorPosition(Constants.PID_IDX);
 			}
 
 		public void voltageCurrentLimit()

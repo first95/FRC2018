@@ -6,6 +6,10 @@ public class Constants
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
 
+		// Used with Talons
+		public static int PID_IDX = 0; // The Talons support up to 2 PID loops, with indexes 0 and 1.  We only use 0.
+		public static int CAN_TIMEOUT_MS = 10; // The amount of time to wait for the CAN transaction to finish
+		
 		// Indices for solenoids
 		public static int SHIFTER_SOLENOID_NUM  = 0;
 		public static int COLLECTOR_SOLENOID_NUM  = 1;
