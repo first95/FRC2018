@@ -15,10 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Subsystem {
 	private static final double K_F = 0.0; // Don't use in position mode.
-	private static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
-	private static final double K_I = 0.01 * K_P;
-	private static final double K_D = 0; //40.0 * K_P;
+	private double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
+	private double K_I = 0.01 * K_P;
+	private double K_D = 0; //40.0 * K_P;
 	private static final int I_ZONE = 200; // In closed loop error units
+	private final String pLabel = "Winch P";
+	private final String iLabel = "Winch I";
+	private final String dLabel = "Winch D";
 	
 	private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
 	
@@ -37,14 +40,16 @@ public class Elevator extends Subsystem {
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.setSensorPhase(true);
 		rightElevDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term accumulator.
 		rightElevDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
 		// Consider the winch's current position to be the elevator bottom
 		setCurrentPosToZero();
+		
+		// Send the initial PID constant values to the smartdash
+		SmartDashboard.putNumber(pLabel, K_P);
+		SmartDashboard.putNumber(iLabel, K_I);
+		SmartDashboard.putNumber(dLabel, K_D);
 	}
 
 	/**
@@ -105,5 +110,17 @@ public class Elevator extends Subsystem {
 	 */
 	public void stopMotor() {
 		rightElevDriver.set(ControlMode.PercentOutput, 0.0);
+	}
+	
+	public void pullPidConstantsFromSmartDash() {
+		// Retrieve
+		K_P = SmartDashboard.getNumber(pLabel, K_P);
+		K_I = SmartDashboard.getNumber(iLabel, K_I);
+		K_D = SmartDashboard.getNumber(dLabel, K_D);
+		
+		// Apply
+		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 	}
 }

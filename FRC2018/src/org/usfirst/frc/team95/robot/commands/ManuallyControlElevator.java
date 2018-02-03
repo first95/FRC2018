@@ -22,6 +22,7 @@ public class ManuallyControlElevator extends Command {
 		double speed_feet_per_iteration = Robot.oi.getElevatorSpeed() * SPEED_CONTROL_SENSITIVITY;
 		targetPosition += speed_feet_per_iteration;
 		Robot.elevator.setElevatorHeight(targetPosition); 
+		Robot.elevator.pullPidConstantsFromSmartDash();
 		SmartDashboard.putNumber("Target elevator height", targetPosition);
 	}
 	
