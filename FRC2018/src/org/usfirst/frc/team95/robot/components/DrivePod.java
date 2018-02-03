@@ -22,7 +22,7 @@ public class DrivePod
 		private static final double K_D = 0; //40.0 * K_P;
 		private static final int I_ZONE = 200; // In closed loop error units
 		private IMotorControllerEnhanced leader, follower1, follower2;
-		private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
+		private static final double INCHES_PER_ENCODER_TICK = 1.0; // TODO
 		private String name;
 		private FeedbackDevice encoder;
 
@@ -52,6 +52,8 @@ public class DrivePod
 				// Prevent Integral Windup.
 				// Whenever the control loop error is outside this zone, zero out the I term accumulator.
 				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
+				
+				// TODO: figure out what to do with 'reverse' and do it here
 				
 				init();
 			}
@@ -93,18 +95,20 @@ public class DrivePod
 				// TODO: How do we reverse a drive pod?
 
 			}
+
 		
 		/**
-		 * Command the DrivePod to a specific height
-		 * @param feet - the target height in feet up from lowest possible position
+		 * Command the DrivePod to a position relative to current position
+		 * @param inches - the target position in inches from current position
 		 */
-		public void setDrivePodPosition(double feet) {
-			double encoderTicks = feet / FEET_PER_ENCODER_TICK;
-			leader.set(ControlMode.Position, encoderTicks);
+		public void setCLPosition(double inches) {
+			double delta = inches / INCHES_PER_ENCODER_TICK;
+			double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
+			leader.set(ControlMode.Position, current+delta);
 		}
 		
-		public double getDrivePodPosition() {
-			return leader.getSelectedSensorPosition(Constants.PID_IDX) * FEET_PER_ENCODER_TICK;
+		public double getPositionInches() {
+			return leader.getSelectedSensorPosition(Constants.PID_IDX) * INCHES_PER_ENCODER_TICK;
 		}
 		
 
@@ -137,19 +141,6 @@ public class DrivePod
 				// TODO: this won't work without some settings getting applied first
 				// leader.set(ControlMode.Velocity, speedInchesPerSecond);
 				// followers follow
-			}
-
-		// Command that this side of the robot should travel a specific distance along
-		// the carpet.
-		// Note that unless the other pod is commanded to travel the same distance, this
-		// will not
-		// sweep out a straight line.
-		// Call this once to command distance - do not call repeatedly, as this will
-		// reset the
-		// distance remaining.
-		public void travelDistance(double inchesToTravel, double speedInchesPerSecond)
-			{
-				// TODO
 			}
 
 		public void enableBrakeMode(boolean isEnabled)

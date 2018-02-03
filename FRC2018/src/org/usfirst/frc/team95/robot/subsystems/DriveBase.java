@@ -19,7 +19,7 @@ public class DriveBase extends Subsystem {
 
 	private boolean isHighGear = false;
 
-	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
+	//private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
 	private DrivePod leftPod, rightPod;
@@ -88,8 +88,7 @@ public class DriveBase extends Subsystem {
 	public double getDistance() {
 		// TODO: Some of the commands call this in order to travel a set distance.
 		// We want to move that functionality into this class instead.
-		// return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-		return (0.0);
+		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
 
 	/**
@@ -109,14 +108,10 @@ public class DriveBase extends Subsystem {
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
-	public void travelStraight(double inchesToTravel, double speedInchesPerSecond) {
-		leftPod.travelDistance(inchesToTravel, speedInchesPerSecond);
-		rightPod.travelDistance(inchesToTravel, speedInchesPerSecond);
-	}
-
-	// Provide a default value for travel speed
 	public void travelStraight(double inchesToTravel) {
-		travelStraight(inchesToTravel, DEFAULT_TRAVEL_SPEED_INCHES_PER_S);
+		leftPod.setCLPosition(inchesToTravel);
+		// TODO: do the inputs to these need to have opposite signs?
+		rightPod.setCLPosition(inchesToTravel);
 	}
 
 	// Talon Brake system
@@ -165,16 +160,6 @@ public class DriveBase extends Subsystem {
 		x = Math.pow(x, 3);
 		y = Math.pow(y, 3);
 		arcade(y, x);
-	}
-
-	public double getLeftEncoderPos() {
-
-		return leftPod.getQuadEncPos();
-	}
-
-	public double getRightEncoderPos() {
-
-		return rightPod.getQuadEncPos();
 	}
 
 	public void setGear(boolean isHighGear) {
