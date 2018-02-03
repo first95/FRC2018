@@ -23,7 +23,7 @@ public class Elevator extends Subsystem {
 	private final String iLabel = "Winch I";
 	private final String dLabel = "Winch D";
 	public  static final double FEET_FULL_RANGE = 71.0 / 12.0; // How many feet the elevator can move.  Measured 2018-2-3 on practice robot
-	public  static final double ENCODER_TICKS_FULL_RANGE = 81741.0; // How many encoder ticks the elevator can move.  Measured 2018-2-2 on practice robot
+	public  static final double ENCODER_TICKS_FULL_RANGE = 78400.0; // How many encoder ticks the elevator can move.  Measured 2018-2-3 on practice robot
 	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
 	
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
