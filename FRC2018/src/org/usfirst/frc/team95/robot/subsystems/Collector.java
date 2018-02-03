@@ -37,20 +37,20 @@ public class Collector extends Subsystem {
 	
 	public void log() {
 		SmartDashboard.putBoolean("Maw Open?" , Robot.oi.getCollectorOpen());
-		SmartDashboard.putBoolean("Wrist Stage One Extended?", Robot.oi.getWristStageOneExtended());
-		SmartDashboard.putBoolean("Wrist Stage Two Extended?", Robot.oi.getWristStageTwoExtended());
+		SmartDashboard.putBoolean("Wrist Stage One Extended?", Robot.oi.getWristStageOneRetracted());
+		SmartDashboard.putBoolean("Wrist Stage Two Extended?", Robot.oi.getWristStageTwoRetracted());
 	}
 
 	public void setMawOpen(boolean open) {
 		mawOpener.set(open);
 	}
 	
-	public void setWristStageOneExtended(boolean extended) {
-		wristStageOne.set(extended);
+	public void setWristStageOneRetracted(boolean retracted) {
+		wristStageOne.set(retracted);
 	}
 	
-	public void setWristStageTwoExtended(boolean extended) {
-		wristStageTwo.set(extended);
+	public void setWristStageTwoRetracted(boolean retracted) {
+		wristStageTwo.set(retracted);
 	}
 	
 	

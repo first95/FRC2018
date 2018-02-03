@@ -13,8 +13,8 @@ public class Constants
 		// Indices for solenoids
 		public static final int SHIFTER_SOLENOID_NUM  = 0;
 		public static final int COLLECTOR_SOLENOID_NUM  = 1;
-		public static final int WRIST_STAGE_ONE = 2; // The longer piston
-		public static final int WRIST_STAGE_TWO = 3; // The shorter piston
+		public static final int WRIST_STAGE_ONE = 3; // The longer piston
+		public static final int WRIST_STAGE_TWO = 2; // The shorter piston
 
 		// Indices for Talons
 		// Drive base
