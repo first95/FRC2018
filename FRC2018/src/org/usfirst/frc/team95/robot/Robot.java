@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		// Scheduler.getInstance().run();
+		Scheduler.getInstance().run(); // Runs all active commands
 		log();
 	}
 
@@ -106,19 +106,13 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
-
-		collector.setWristStageOneExtended(oi.getWristStageOneExtended());
-		collector.setWristStageTwoExtended(oi.getWristStageTwoExtended());
 		
 		drivebase.brake(false);
 	}
 
-	public void disabledPeriodic() {
-		
-		collector.setWristStageOneExtended(oi.getWristStageOneExtended());
-		collector.setWristStageTwoExtended(oi.getWristStageTwoExtended());
-		drivebase.log();
-		Scheduler.getInstance().run();
+	public void disabledPeriodic() {		
+		Scheduler.getInstance().run(); // Runs all active commands
+		log();
 	}
 
 	@Override
@@ -129,7 +123,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		// autonomousCommand.cancel();
+		 autonomousCommand.cancel();
 	}
 
 	/**
@@ -137,7 +131,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		Scheduler.getInstance().run(); // Runs all active commands
 		log();
 	}
 
