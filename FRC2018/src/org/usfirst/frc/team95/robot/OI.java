@@ -14,7 +14,7 @@ public class OI {
 	// Axes on weapons controller
 	public static final int COLLECTOR_IN_AXIS = 2;
 	public static final int COLLECTOR_OUT_AXIS = 3;
-	public static final int ELEVATOR_AXIS = 4;
+	public static final int ELEVATOR_AXIS = 5; // Right stick Y
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
