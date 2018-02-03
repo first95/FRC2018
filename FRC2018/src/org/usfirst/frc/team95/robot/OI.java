@@ -37,6 +37,8 @@ public class OI {
 	public static final int POV_LEFT       = 270;
 	public static final int POV_LEFT_UP    = 315;
 	
+    private boolean stageOneRetracted = false;
+    private boolean stageTwoRetracted = false;
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
@@ -78,14 +80,20 @@ public class OI {
 	// some up    extended  retracted Up, up/right, left/up
 	// some down  retracted extended  Right, left
 	// full down  retracted retracted Down , right/down, left/down
+	public void updateWristSettings() {
+		if(weaponsController.getPOV() != POV_NONE) {
+			// Per table above, retract stage one if the POV hat is right or down
+			stageOneRetracted = (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
+			// Retract if the POV hat is up or down-ish
+			stageTwoRetracted = (weaponsController.getPOV() == POV_UP || (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT));
+		}
+	}
 	public boolean getWristStageOneRetracted() {
-		// Retract if it's right or down
-		return (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
+		return stageOneRetracted;
 	}
 
 	public boolean getWristStageTwoRetracted() {
-		// Per the above table, this wants to return true if the POV hat is up or down-ish
-		return (weaponsController.getPOV() == POV_UP || (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT));
+		return stageTwoRetracted;
 	}
 
 	// Elevator controls
