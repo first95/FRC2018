@@ -8,25 +8,41 @@ import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Subsystem {
+	private static final double K_F = 0.0; // Don't use in position mode.
+	private static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
+	private static final double K_I = 0.01 * K_P;
+	private static final double K_D = 40.0 * K_P;
+	private static final int I_ZONE = 200; // In closed loop error units
+	
+	private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
+	
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
-	private FeedbackDevice leftElevEncoder, rightElevEncoder;
 	
 	public Elevator() {
 		super();
 		leftElevDriver  = new AdjustedTalon(Constants.LEFT_ELEV_DRIVER);
 		rightElevDriver = new AdjustedTalon(Constants.RIGHT_ELEV_DRIVER);
-		leftElevEncoder = FeedbackDevice.CTRE_MagEncoder_Absolute;
-		rightElevEncoder = FeedbackDevice.CTRE_MagEncoder_Absolute;
 
+		// Configure the left talon to follow the right talon, but backwards
 		leftElevDriver.setInverted(true); // Inverted here refers to the output 
 		leftElevDriver.set(ControlMode.Follower, Constants.RIGHT_ELEV_DRIVER);
-		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 		
+		// Configure the right talon for closed loop control
+		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term accumulator.
+		rightElevDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
+		// Consider the winch's current position to be the elevator bottom
 		setCurrentPosToZero();
 	}
 
@@ -58,21 +74,35 @@ public class Elevator extends Subsystem {
 		SmartDashboard.putNumber("Elevator Speed", Robot.oi.getElevatorSpeed());
 //		SmartDashboard.putNumber("leftElevEncoder Value:", leftElevEncoder.PulseWidthEncodedPosition.value);
 		SmartDashboard.putNumber("rightElevEncoder Value:", rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX));
+		SmartDashboard.putNumber("Height in feet:", getElevatorHeightFeet());
 	}
-	
-	/**
-	 * Command the elevator to run at a specific speed
-	 * @param value - the throttle value to apply to the motors
-	 */
-	public void setElevatorSpeed(double value) {
-		rightElevDriver.set(ControlMode.PercentOutput, value);
-	}
-	
+//	
+//	/**
+//	 * Command the elevator to run at a specific speed
+//	 * @param value - the throttle value to apply to the motors
+//	 */
+//	public void setElevatorSpeed(double value) {
+//		rightElevDriver.set(ControlMode.PercentOutput, value);
+//	}
+//	
 	/**
 	 * Command the elevator to a specific height
 	 * @param feet - the target height in feet up from lowest possible position
 	 */
-	public void setElevatorPosition(double feet) {
-		
+	public void setElevatorHeight(double feet) {
+		double encoderTicks = feet / FEET_PER_ENCODER_TICK;
+		rightElevDriver.set(ControlMode.Position, encoderTicks);
+	}
+	
+	public double getElevatorHeightFeet() {
+		return rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX) * FEET_PER_ENCODER_TICK;
+	}
+	
+	/**
+	 * Commands the motor to stop driving itself, but not to disable.
+	 * Turns off closed-loop control completely.
+	 */
+	public void stopMotor() {
+		rightElevDriver.set(ControlMode.PercentOutput, 0.0);
 	}
 }
