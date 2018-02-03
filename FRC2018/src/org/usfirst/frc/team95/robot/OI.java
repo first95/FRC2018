@@ -27,13 +27,10 @@ public class OI {
 	public static final int ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON = 4; // Y
 
 	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!!
-	public static final int EXTEND_WRIST_STAGE_ONE_POV = 0; // DPAD UP
-	public static final int EXTEND_WRIST_STAGE_TWO_POV = 90; // DPAD RIGHT
-	public static final int RESET_WRIST = 180; // DPAD DOWN
-	private boolean stageOneExtended = false;
-	private boolean stageTwoExtended = false;
-	private boolean stageOneWasNotPressed = true;
-	private boolean stageTwoWasNotPressed = true;
+	public static final int POV_NONE  = -1;  // No DPAD button pressed
+	public static final int POV_UP    = 0;   // DPAD UP
+	public static final int POV_RIGHT = 90;  // DPAD RIGHT
+	public static final int POV_DOWN  = 180; // DPAD DOWN
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
@@ -69,51 +66,20 @@ public class OI {
 	}
 
 	// Wrist controls
+	// We support 4 positions:
+	//            Stage 1   Stage 2   POV position
+	// Full up    extended  extended  Up
+	// some up    extended  retracted Right
+	// some down  retracted extended  Down
+	// full down  retracted retracted Released
 	public boolean getWristStageOneExtended() {
-
-		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_ONE_POV) {
-			if (stageOneWasNotPressed) {
-				if (stageOneExtended == true) {
-					stageOneExtended = false;
-				} else {
-					stageOneExtended = true;
-				}
-				stageOneWasNotPressed = false;
-			}
-			
-		}
-		else {
-			stageOneWasNotPressed = true;
-		}
-		return stageOneExtended;
+		// Per the above table, this wants to return true if the POV hat is up or down
+		return (weaponsController.getPOV() == POV_UP || weaponsController.getPOV() == POV_DOWN);
 	}
 
 	public boolean getWristStageTwoExtended() {
-
-		if (weaponsController.getPOV() == EXTEND_WRIST_STAGE_TWO_POV) {
-			if (stageTwoWasNotPressed) {
-				if (stageTwoExtended == true) {
-					stageTwoExtended = false;
-				} else {
-					stageTwoExtended = true;
-				}
-				stageTwoWasNotPressed = false;
-			}
-			
-		}
-		else {
-			stageTwoWasNotPressed = true;
-		}
-		
-		return stageTwoExtended;
-	}
-
-	public void getWristReset() {
-
-		if (weaponsController.getPOV() == RESET_WRIST) {
-			Robot.collector.resetWrists();
-		}
-
+		// Per the above table, this wants to return true if the POV hat is right or not pressed
+		return (weaponsController.getPOV() == POV_RIGHT || weaponsController.getPOV() == POV_NONE);
 	}
 
 	// Elevator controls

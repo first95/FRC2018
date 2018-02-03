@@ -53,10 +53,6 @@ public class Collector extends Subsystem {
 		wristStageTwo.set(extended);
 	}
 	
-	public void resetWrists() {
-		wristStageOne.set(true);
-		wristStageTwo.set(true);
-	}
 	
 	public void setIntakeSpeed(double value) {
 		leftChainDriver.set(ControlMode.PercentOutput, -value);
