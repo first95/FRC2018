@@ -23,7 +23,7 @@ public class Elevator extends Subsystem {
 		leftElevEncoder = FeedbackDevice.CTRE_MagEncoder_Absolute;
 		rightElevEncoder = FeedbackDevice.CTRE_MagEncoder_Absolute;
 
-		leftElevDriver.setInverted(true);
+		leftElevDriver.setInverted(true); // Inverted here refers to the output 
 		leftElevDriver.set(ControlMode.Follower, Constants.RIGHT_ELEV_DRIVER);
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 		
@@ -51,7 +51,7 @@ public class Elevator extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ManuallyControlElevator());
+		setDefaultCommand(new ManuallyControlElevator()); 
 	}
 	
 	public void log() {
