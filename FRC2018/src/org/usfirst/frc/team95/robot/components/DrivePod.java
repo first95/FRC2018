@@ -17,8 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
+		private static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
+		private static final double K_I = 0.01 * K_P;
+		private static final double K_D = 0; //40.0 * K_P;
+		private static final int I_ZONE = 200; // In closed loop error units
 		private IMotorControllerEnhanced leader, follower1, follower2;
-
+		private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
 		private String name;
 		private FeedbackDevice encoder;
 
@@ -39,7 +43,16 @@ public class DrivePod
 				follower1.set(ControlMode.Follower, leaderCanNum);
 				follower2.set(ControlMode.Follower, leaderCanNum);
 				
-
+				// Configure the right talon for closed loop control
+				leader.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.setSensorPhase(true);
+				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+				leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+				// Prevent Integral Windup.
+				// Whenever the control loop error is outside this zone, zero out the I term accumulator.
+				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
+				
 				init();
 			}
 
@@ -80,6 +93,20 @@ public class DrivePod
 				// TODO: How do we reverse a drive pod?
 
 			}
+		
+		/**
+		 * Command the DrivePod to a specific height
+		 * @param feet - the target height in feet up from lowest possible position
+		 */
+		public void setDrivePodPosition(double feet) {
+			double encoderTicks = feet / FEET_PER_ENCODER_TICK;
+			leader.set(ControlMode.Position, encoderTicks);
+		}
+		
+		public double getDrivePodPosition() {
+			return leader.getSelectedSensorPosition(Constants.PID_IDX) * FEET_PER_ENCODER_TICK;
+		}
+		
 
 		public void log()
 			{
