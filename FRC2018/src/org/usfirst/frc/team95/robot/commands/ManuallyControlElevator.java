@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlElevator extends Command {
 	// In (feet per iteration)/(joystick units)
-	private static final double SPEED_CONTROL_SENSITIVITY = 200;
+	private static final double SPEED_CONTROL_SENSITIVITY = 4000;
 	private double targetPosition;
 	
 	public ManuallyControlElevator() {
