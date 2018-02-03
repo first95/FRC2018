@@ -12,20 +12,24 @@ import org.usfirst.frc.team95.robot.commands.*;
 public class OI {
 
 	// Axes on weapons controller
-	public static int COLLECTOR_IN_AXIS = 2;
-	public static int COLLECTOR_OUT_AXIS = 3;
-	public static int ELEVATOR_AXIS = 4;
+	public static final int COLLECTOR_IN_AXIS = 2;
+	public static final int COLLECTOR_OUT_AXIS = 3;
+	public static final int ELEVATOR_AXIS = 4;
 
 	// Buttons on drive controller
-	public static int SHIFT_BUTTON = 5; // Left bumper
+	public static final int SHIFT_BUTTON = 5; // Left bumper
 
 	// Buttons on weapons controller
-	public static int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
+	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
+	public static final int ELEV_SEEK_FLOOR_BUTTON = 1; // A
+	public static final int ELEV_SEEK_SWITCH_SCORE_BUTTON = 2; // B
+	public static final int ELEV_SEEK_SCALE_SCORE_LOW_BUTTON = 3; // X
+	public static final int ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON = 4; // Y
 
 	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!!
-	public static int EXTEND_WRIST_STAGE_ONE_POV = 0; // DPAD UP
-	public static int EXTEND_WRIST_STAGE_TWO_POV = 90; // DPAD RIGHT
-	public static int RESET_WRIST = 180; // DPAD DOWN
+	public static final int EXTEND_WRIST_STAGE_ONE_POV = 0; // DPAD UP
+	public static final int EXTEND_WRIST_STAGE_TWO_POV = 90; // DPAD RIGHT
+	public static final int RESET_WRIST = 180; // DPAD DOWN
 	private boolean stageOneExtended = false;
 	private boolean stageTwoExtended = false;
 	private boolean stageOneWasNotPressed = true;
@@ -33,7 +37,7 @@ public class OI {
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
-	// private XboxController xbox = new XboxController(0);
+//	 private XboxController xbox = new XboxController(0);
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
@@ -120,6 +124,19 @@ public class OI {
 
 		return elevatorSpeed;
 	}
+	public boolean isElevatorFloorButtonPressed() {
+		return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
+	}
+	public boolean isElevatorSwitchScoreButtonPressed() {
+		return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
+	}
+	public boolean isElevatorScaleScoreLowButtonPressed() {
+		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_LOW_BUTTON);
+	}
+	public boolean isElevatorScaleScoreHighButtonPressed() {
+		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON);
+	}
+	
 
 	// Drive base controls
 	public double getForwardAxis() {
