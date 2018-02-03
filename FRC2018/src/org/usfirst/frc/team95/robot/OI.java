@@ -76,16 +76,16 @@ public class OI {
 	//            Stage 1   Stage 2   POV position
 	// Full up    extended  extended  released or any other
 	// some up    extended  retracted Up, up/right, left/up
-	// some down  retracted extended  Right, right/down, left, left/down
-	// full down  retracted retracted Down 
+	// some down  retracted extended  Right, left
+	// full down  retracted retracted Down , right/down, left/down
 	public boolean getWristStageOneRetracted() {
 		// Retract if it's right or down
-		return (weaponsController.getPOV() >= POV_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
+		return (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
 	}
 
 	public boolean getWristStageTwoRetracted() {
-		// Per the above table, this wants to return true if the POV hat is up or down
-		return (weaponsController.getPOV() == POV_UP || weaponsController.getPOV() == POV_DOWN);
+		// Per the above table, this wants to return true if the POV hat is up or down-ish
+		return (weaponsController.getPOV() == POV_UP || (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT));
 	}
 
 	// Elevator controls
