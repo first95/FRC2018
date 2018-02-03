@@ -27,10 +27,16 @@ public class OI {
 	public static final int ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON = 4; // Y
 
 	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!!
-	public static final int POV_NONE  = -1;  // No DPAD button pressed
-	public static final int POV_UP    = 0;   // DPAD UP
-	public static final int POV_RIGHT = 90;  // DPAD RIGHT
-	public static final int POV_DOWN  = 180; // DPAD DOWN
+	public static final int POV_NONE       = -1;  // No DPAD button pressed
+	public static final int POV_UP         = 0;  
+	public static final int POV_UP_RIGHT   = 45; 
+	public static final int POV_RIGHT      = 90; 
+	public static final int POV_RIGHT_DOWN = 135;
+	public static final int POV_DOWN       = 180;
+	public static final int POV_DOWN_LEFT  = 225;
+	public static final int POV_LEFT       = 270;
+	public static final int POV_LEFT_UP    = 315;
+	
 
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
@@ -69,12 +75,12 @@ public class OI {
 	// We support 4 positions:
 	//            Stage 1   Stage 2   POV position
 	// Full up    extended  extended  released or any other
-	// some up    extended  retracted Up    
-	// some down  retracted extended  Right 
-	// full down  retracted retracted Down  
+	// some up    extended  retracted Up, up/right, left/up
+	// some down  retracted extended  Right, right/down, left, left/down
+	// full down  retracted retracted Down 
 	public boolean getWristStageOneRetracted() {
 		// Retract if it's right or down
-		return (weaponsController.getPOV() == POV_RIGHT || weaponsController.getPOV() == POV_DOWN);
+		return (weaponsController.getPOV() >= POV_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
 	}
 
 	public boolean getWristStageTwoRetracted() {
