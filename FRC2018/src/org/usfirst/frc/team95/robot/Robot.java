@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.commands.*;
 //import org.usfirst.frc.team95.robot.commands.Rotate;
-import org.usfirst.frc.team95.robot.commands.ShiftGear;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;

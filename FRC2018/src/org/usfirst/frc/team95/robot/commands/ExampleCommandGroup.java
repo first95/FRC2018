@@ -5,12 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ExampleCommandGroup extends CommandGroup {
 
 	DriveStraight DR;
-	ShiftGear SG;
 	
 	public ExampleCommandGroup() {
 		
 		DR = new DriveStraight(4000);
-		SG = new ShiftGear();
+		
 		isFinished();
 		
 	}
