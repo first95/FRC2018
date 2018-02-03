@@ -55,6 +55,10 @@ public class OI {
 		// a.whenPressed(new ShiftGear());
 	}
 
+	public void log() {
+		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
+	}
+	
 	// Collector controls
 	public boolean getCollectorOpen() {
 		return weaponsController.getRawButton(OPEN_COLLECTOR_BUTTON);

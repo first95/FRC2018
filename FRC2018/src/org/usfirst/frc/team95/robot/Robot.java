@@ -157,5 +157,6 @@ public class Robot extends IterativeRobot {
 		drivebase.log();
 		elevator.log();
 		collector.log();
+		oi.log();
 	}
 }
