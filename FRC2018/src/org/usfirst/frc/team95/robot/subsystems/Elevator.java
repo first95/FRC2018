@@ -22,8 +22,9 @@ public class Elevator extends Subsystem {
 	private final String pLabel = "Winch P";
 	private final String iLabel = "Winch I";
 	private final String dLabel = "Winch D";
-	
-	private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
+	public  static final double FEET_FULL_RANGE = 71.0 / 12.0; // How many feet the elevator can move.  Measured 2018-2-3 on practice robot
+	public  static final double ENCODER_TICKS_FULL_RANGE = 81741.0; // How many encoder ticks the elevator can move.  Measured 2018-2-2 on practice robot
+	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
 	
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
 	
@@ -82,26 +83,30 @@ public class Elevator extends Subsystem {
 		SmartDashboard.putNumber("rightElevEncoder Value:", rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX));
 		SmartDashboard.putNumber("Height in feet:", getElevatorHeightFeet());
 	}
-//	
-//	/**
-//	 * Command the elevator to run at a specific speed
-//	 * @param value - the throttle value to apply to the motors
-//	 */
-//	public void setElevatorSpeed(double value) {
-//		rightElevDriver.set(ControlMode.PercentOutput, value);
-//	}
-//	
+	
+	/**
+	 * Command the elevator to run at a specific speed
+	 * @param value - the throttle value to apply to the motors, between -1 and +1
+	 */
+	public void setElevatorSpeed(double value) {
+		rightElevDriver.set(ControlMode.PercentOutput, value);
+	}
+	
 	/**
 	 * Command the elevator to a specific height
 	 * @param feet - the target height in feet up from lowest possible position
 	 */
 	public void setElevatorHeight(double feet) {
-		double encoderTicks = feet / FEET_PER_ENCODER_TICK;
-		rightElevDriver.set(ControlMode.Position, encoderTicks);
+		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 	}
 	
+	/**
+	 * Gets the elevator's present actual height, in feet.
+	 * This may not be the same as the last height commanded to the elevator.
+	 * @return 0 for against the floor, about 5.91 for its highest extent.
+	 */
 	public double getElevatorHeightFeet() {
-		return rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX) * FEET_PER_ENCODER_TICK;
+		return rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX) / TICKS_PER_FOOT;
 	}
 	
 	/**
@@ -112,6 +117,10 @@ public class Elevator extends Subsystem {
 		rightElevDriver.set(ControlMode.PercentOutput, 0.0);
 	}
 	
+	/**
+	 * Retrieve the values of P, I and D from the smartdashboard and apply them
+	 * to the motor controllers.
+	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve
 		K_P = SmartDashboard.getNumber(pLabel, K_P);
