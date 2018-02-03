@@ -3,21 +3,26 @@ package org.usfirst.frc.team95.robot.commands;
 import org.usfirst.frc.team95.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlElevator extends Command {
 	// In (feet per iteration)/(joystick units)
-	private static final double SPEED_CONTROL_SENSITIVITY = 100;
+	private static final double SPEED_CONTROL_SENSITIVITY = 200;
+	private double targetPosition;
 	
 	public ManuallyControlElevator() {
 		requires(Robot.elevator);
+		targetPosition = 0;
+		Robot.elevator.setCurrentPosToZero();
 	}
 
 	@Override
 	protected void execute() {
 //		Robot.elevator.setElevatorSpeed(Robot.oi.getElevatorSpeed());
 		double speed_feet_per_iteration = Robot.oi.getElevatorSpeed() * SPEED_CONTROL_SENSITIVITY;
-		double cur_height = Robot.elevator.getElevatorHeightFeet();
-		Robot.elevator.setElevatorHeight(cur_height + speed_feet_per_iteration); 
+		targetPosition += speed_feet_per_iteration;
+		Robot.elevator.setElevatorHeight(targetPosition); 
+		SmartDashboard.putNumber("Target elevator height", targetPosition);
 	}
 	
 	@Override

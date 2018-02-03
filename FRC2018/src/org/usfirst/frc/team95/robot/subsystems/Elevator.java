@@ -35,6 +35,7 @@ public class Elevator extends Subsystem {
 		
 		// Configure the right talon for closed loop control
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.setSensorPhase(true);
 		rightElevDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
@@ -61,7 +62,7 @@ public class Elevator extends Subsystem {
 	 * confirms that it's hit bottom.
 	 * 
 	 */
-	private void setCurrentPosToZero() {
+	public void setCurrentPosToZero() {
 		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 	}
 	
