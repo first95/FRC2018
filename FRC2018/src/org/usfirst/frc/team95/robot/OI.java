@@ -76,8 +76,8 @@ public class OI {
 	// Wrist controls
 	// We support 4 positions:
 	//            Stage 1   Stage 2   POV position
-	// Full up    extended  extended  released or any other
-	// some up    extended  retracted Up, up/right, left/up
+	// Full up    extended  extended  Up
+	// some up    extended  retracted Up/right, left/up
 	// some down  retracted extended  Right, left
 	// full down  retracted retracted Down , right/down, left/down
 	public void updateWristSettings() {
@@ -85,7 +85,9 @@ public class OI {
 			// Per table above, retract stage one if the POV hat is right or down
 			stageOneRetracted = (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
 			// Retract if the POV hat is up or down-ish
-			stageTwoRetracted = (weaponsController.getPOV() == POV_UP || (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT));
+			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT);
+		} else {
+			// When no D-Pad button is pressed, don't change the angle
 		}
 	}
 	public boolean getWristStageOneRetracted() {
