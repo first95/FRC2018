@@ -21,9 +21,13 @@ public class TestArm extends Subsystem {
 //	public static final double K_F = 0.24224484963296234904; // = 1023/4223, where 4223 was the velocity measured when the motor was full throttle
 	public static final double K_F = 0.0; // Don't use in position mode.
 	public static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
-	public static final double K_I = 0.02 * K_P;
+	public static final double K_I = 0.01 * K_P;
 	public static final double K_D = 40.0 * K_P;
 	public static final int I_ZONE = 200; // In closed loop error units
+	public static final int CONTROLLER_POS_SENSITIVITY = 100;
+	
+	
+	double target_modified = 0;
 	
 	private double twiddle = 0; // This is to workaround a super silly feature in SmartDashboard
 	
@@ -65,7 +69,8 @@ public class TestArm extends Subsystem {
 	 */
 	@SuppressWarnings("unused")
 	public void setMotor(double value) {
-		final int STEP = 2; // Step in the list of steps to determine the PID constants.
+		final int STEP = 3; // Step in the list of steps to determine the PID constants.
+		
 		
 		if(0 == STEP) {
 			motor.set(ControlMode.PercentOutput, value);
@@ -83,6 +88,19 @@ public class TestArm extends Subsystem {
 			double target_pos = value * ENCODER_TICKS_PER_ARM_REV / 2.0; // In native units
 			motor.set(ControlMode.Position, target_pos);
 			System.out.println("Target: " + target_pos + "\t Measured: " +
+					motor.getSelectedSensorPosition(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
+			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Position", motor.getSelectedSensorPosition(PID_IDX) + twiddle);
+			SmartDashboard.putNumber("Velocity", motor.getSelectedSensorVelocity(PID_IDX) + twiddle);
+		} else if (3 == STEP) {
+			
+			double target_pos = value; // In native units
+			target_modified = target_modified + target_pos;
+			
+			motor.set(ControlMode.Position, target_modified * CONTROLLER_POS_SENSITIVITY);
+			
+			System.out.println("Value: " + value + "\t Target: " + target_modified + "\t Measured: " +
 					motor.getSelectedSensorPosition(PID_IDX) + "\t Err: " + motor.getClosedLoopError(PID_IDX));
 			SmartDashboard.putNumber("Target",   motor.getClosedLoopTarget(PID_IDX) + twiddle);
 			SmartDashboard.putNumber("Error",    motor.getClosedLoopError(PID_IDX) + twiddle);

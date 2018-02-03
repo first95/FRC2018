@@ -6,11 +6,12 @@ import org.usfirst.frc.team95.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TestArmSet extends Command {
+
 	public TestArmSet() {
 		super();
 		requires(Robot.testArm);
 	}
-
+	
 	@Override
 	protected void execute() {
 
@@ -18,7 +19,7 @@ public class TestArmSet extends Command {
 		double throttle = Constants.weaponStick.getRawAxis(Constants.TEST_ARM_AXIS);
 		Robot.testArm.setMotor(throttle);
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		return false; // Runs until interrupted
