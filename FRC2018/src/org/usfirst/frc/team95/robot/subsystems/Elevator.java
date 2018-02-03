@@ -17,7 +17,7 @@ public class Elevator extends Subsystem {
 	private static final double K_F = 0.0; // Don't use in position mode.
 	private static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
 	private static final double K_I = 0.01 * K_P;
-	private static final double K_D = 40.0 * K_P;
+	private static final double K_D = 0; //40.0 * K_P;
 	private static final int I_ZONE = 200; // In closed loop error units
 	
 	private static final double FEET_PER_ENCODER_TICK = 1.0; // TODO
