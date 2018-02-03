@@ -98,7 +98,8 @@ public class OI {
 			elevatorSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
 		}
 
-		return elevatorSpeed;
+		// The Y axis is reversed, so that positive is down
+		return -elevatorSpeed;
 	}
 	public boolean isElevatorFloorButtonPressed() {
 		return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);

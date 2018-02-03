@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ManuallyControlElevator extends Command {
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
-	public static double SCALE_SCORE_LOW_HEIGHT_FEET = Elevator.FEET_FULL_RANGE - 1;
-	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = Elevator.FEET_FULL_RANGE ;
+	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 5;
+	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5;
 	public enum ElevatorHoldPoint {
 		FLOOR,            // Positioned at its lowest position
 		SWITCH_SCORE,     // Positioned to hold a cube above the fence around the Switch
@@ -30,7 +30,8 @@ public class ManuallyControlElevator extends Command {
 	@Override
 	public synchronized void start() {
 		// This method is called once when the command is activated
-		wasHoldingPresentPositionLastIteration = false;
+		seekHoldPoint(ElevatorHoldPoint.HERE);
+		wasHoldingPresentPositionLastIteration = true;
 	}
 	
 	@Override
