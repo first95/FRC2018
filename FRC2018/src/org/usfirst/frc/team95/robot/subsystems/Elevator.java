@@ -51,6 +51,12 @@ public class Elevator extends Subsystem {
 		// Consider the winch's current position to be the elevator bottom
 		setCurrentPosToZero();
 		
+		// Configure soft limits at ends of travel
+		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.configForwardSoftLimitThreshold((int) ENCODER_TICKS_FULL_RANGE, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.configReverseSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.configReverseSoftLimitThreshold(0, Constants.CAN_TIMEOUT_MS);
+		
 		// Send the initial PID constant values to the smartdash
 		SmartDashboard.putNumber(pLabel, K_P);
 		SmartDashboard.putNumber(iLabel, K_I);
