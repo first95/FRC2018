@@ -15,6 +15,9 @@ public class Constants
 		public static final int COLLECTOR_SOLENOID_NUM  = 1;
 		public static final int WRIST_STAGE_ONE = 3; // The longer piston
 		public static final int WRIST_STAGE_TWO = 2; // The shorter piston
+		
+		// Indices for sensors
+		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
 
 		// Indices for Talons
 		// Drive base

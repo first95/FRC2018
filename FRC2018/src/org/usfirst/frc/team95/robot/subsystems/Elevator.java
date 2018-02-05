@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,9 +27,13 @@ public class Elevator extends Subsystem {
 	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
 	
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
+	private DigitalInput homeSwitch;
 	
 	public Elevator() {
 		super();
+		// Set up the digital IO object to read the home switch
+		homeSwitch = new DigitalInput(Constants.ELEVATOR_HOME_SWITCH_DIO_NUM);
+		
 		leftElevDriver  = new AdjustedTalon(Constants.LEFT_ELEV_DRIVER);
 		rightElevDriver = new AdjustedTalon(Constants.RIGHT_ELEV_DRIVER);
 
@@ -52,6 +57,15 @@ public class Elevator extends Subsystem {
 		SmartDashboard.putNumber(dLabel, K_D);
 	}
 
+	public void checkAndApplyHomingSwitch() {
+		// Pin floats high by default, due to an internal pull-up resistor.
+		// When the magnet gets close enough to the reed switch, the pin is
+		// connected to ground.  Thus, get() starts returning false.
+		if(!homeSwitch.get()) {
+			setCurrentPosToZero();
+		}
+	}
+	
 	/**
 	 * Update the Talon's definition of zero to be its present position.
 	 * 
@@ -78,9 +92,10 @@ public class Elevator extends Subsystem {
 	
 	public void log() {
 		SmartDashboard.putNumber("Elevator Speed", Robot.oi.getElevatorSpeed());
+		SmartDashboard.putBoolean("Elevator Home Switch", homeSwitch.get());
 //		SmartDashboard.putNumber("leftElevEncoder Value:", leftElevEncoder.PulseWidthEncodedPosition.value);
 		SmartDashboard.putNumber("rightElevEncoder Value:", rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX));
-		SmartDashboard.putNumber("Height in feet:", getElevatorHeightFeet());
+		SmartDashboard.putNumber("Elevator height in feet:", getElevatorHeightFeet());
 	}
 	
 	/**
@@ -88,6 +103,7 @@ public class Elevator extends Subsystem {
 	 * @param value - the throttle value to apply to the motors, between -1 and +1
 	 */
 	public void setElevatorSpeed(double value) {
+		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.PercentOutput, value);
 	}
 	
@@ -96,6 +112,7 @@ public class Elevator extends Subsystem {
 	 * @param feet - the target height in feet up from lowest possible position
 	 */
 	public void setElevatorHeight(double feet) {
+		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 	}
 	
