@@ -21,6 +21,9 @@ public class DrivePod
 		private static final double K_I = 0.01 * K_P;
 		private static final double K_D = 0; //40.0 * K_P;
 		private static final int I_ZONE = 200; // In closed loop error units
+		private final String pLabel = "DrivePod P";
+		private final String iLabel = "DrivePod I";
+		private final String dLabel = "DrivePod D";		
 		private IMotorControllerEnhanced leader, follower1, follower2;
 		private static final double INCHES_PER_ENCODER_TICK = 1.0; // TODO
 		private String name;
@@ -41,19 +44,9 @@ public class DrivePod
 
 				// Tell the followers to follow the leader
 				follower1.set(ControlMode.Follower, leaderCanNum);
-				follower2.set(ControlMode.Follower, leaderCanNum);
+				follower2.set(ControlMode.Follower, leaderCanNum);			
 				
-				// Configure the right talon for closed loop control
-				leader.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-				leader.setSensorPhase(true);
-				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-				leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
-				// Prevent Integral Windup.
-				// Whenever the control loop error is outside this zone, zero out the I term accumulator.
-				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
-				
-				// TODO: figure out what to do with 'reverse' and do it here
+				// TODO: figure out what to do with 'reverse' and do it here						
 				
 				init();
 			}
@@ -83,7 +76,18 @@ public class DrivePod
 				// Leaders have quadrature encoders connected to their inputs
 				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				leader.setSensorPhase(false);
-				
+			
+				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+				leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+				// Prevent Integral Windup.
+				// Whenever the control loop error is outside this zone, zero out the I term accumulator.
+				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);				
+			
+				// Send the initial PID constant values to the smartdash
+				SmartDashboard.putNumber(pLabel, K_P);
+				SmartDashboard.putNumber(iLabel, K_I);
+				SmartDashboard.putNumber(dLabel, K_D);						
 				
 				// Not being used at the moment
 				// voltageCurrentLimit();
@@ -118,6 +122,7 @@ public class DrivePod
 				SmartDashboard.putNumber(name + " debug value", 1);
 				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+				
 			}
 
 		public void reset()
