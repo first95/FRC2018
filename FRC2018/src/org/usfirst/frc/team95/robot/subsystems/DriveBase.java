@@ -16,9 +16,6 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-
-	private boolean isHighGear = false;
-
 	//private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
@@ -163,7 +160,6 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void setGear(boolean isHighGear) {
-		this.isHighGear = isHighGear;
 		shifter.set(isHighGear);
 	}
 }
