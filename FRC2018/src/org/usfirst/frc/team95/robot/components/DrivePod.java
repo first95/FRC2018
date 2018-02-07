@@ -17,15 +17,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private static final double K_P = 0.4 * 1023.0 / 900.0; // Respond to an error of 900 with 40% throttle
-		private static final double K_I = 0.01 * K_P;
+		private static final double ENCODER_TICKS_PER_INCH = 1000; // TODO
+		private static final double K_P = 0.3 * 1023.0 / (12*ENCODER_TICKS_PER_INCH); // Respond to an error of 12" with 30% throttle
+		private static final double K_I = 0; //0.01 * K_P;
 		private static final double K_D = 0; //40.0 * K_P;
-		private static final int I_ZONE = 200; // In closed loop error units
+		private static final int I_ZONE = 20; // In closed loop error units
 		private final String pLabel = "DrivePod P";
 		private final String iLabel = "DrivePod I";
 		private final String dLabel = "DrivePod D";		
 		private IMotorControllerEnhanced leader, follower1, follower2;
-		private static final double INCHES_PER_ENCODER_TICK = 1.0; // TODO
 		private String name;
 		private FeedbackDevice encoder;
 
@@ -106,13 +106,13 @@ public class DrivePod
 		 * @param inches - the target position in inches from current position
 		 */
 		public void setCLPosition(double inches) {
-			double delta = inches / INCHES_PER_ENCODER_TICK;
+			double delta = ENCODER_TICKS_PER_INCH * inches;
 			double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
 			leader.set(ControlMode.Position, current+delta);
 		}
 		
 		public double getPositionInches() {
-			return leader.getSelectedSensorPosition(Constants.PID_IDX) * INCHES_PER_ENCODER_TICK;
+			return leader.getSelectedSensorPosition(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
 		}
 		
 

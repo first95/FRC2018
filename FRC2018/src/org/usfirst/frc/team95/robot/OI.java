@@ -47,6 +47,7 @@ public class OI {
 	public OI() {
 		// Put Some buttons on the SmartDashboard
 		SmartDashboard.putData("Go to Switch", new GoToSwitch());
+		SmartDashboard.putData("Move 1 Foot Forward", new DriveStraight(12));
 
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
