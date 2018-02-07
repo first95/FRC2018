@@ -40,6 +40,11 @@ public class Constants
 		public static final double ENCODER_TICKS_PER_FOOT = 1002;
 		public static final double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
 
+		// Current limiting parameters
+		public static final int DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS = 10;
+		public static final int DRIVEPOD_MAX_CURRENT_PEAK_AMPS = 5;
+		public static final int DRIVEPOD_MAX_CURRENT_PEAK_DURATION_MS = 100;		
+		
 		public static double RFVoltsToFt(double voltage)
 			{
 				double distance;
