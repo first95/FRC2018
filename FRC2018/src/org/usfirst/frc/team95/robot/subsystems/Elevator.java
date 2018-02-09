@@ -25,6 +25,7 @@ public class Elevator extends Subsystem {
 	public  static final double FEET_FULL_RANGE = 71.0 / 12.0; // How many feet the elevator can move.  Measured 2018-2-3 on practice robot
 	public  static final double ENCODER_TICKS_FULL_RANGE = 78400.0; // How many encoder ticks the elevator can move.  Measured 2018-2-3 on practice robot
 	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
+	private static final double SOFT_FWD_LIMIT = ENCODER_TICKS_FULL_RANGE * 0.96;
 	
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
 	private DigitalInput homeSwitch;
@@ -53,7 +54,7 @@ public class Elevator extends Subsystem {
 		
 		// Configure soft limits at ends of travel
 		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configForwardSoftLimitThreshold((int) ENCODER_TICKS_FULL_RANGE, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.configReverseSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.configReverseSoftLimitThreshold(0, Constants.CAN_TIMEOUT_MS);
 		
