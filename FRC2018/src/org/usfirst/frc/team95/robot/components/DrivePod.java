@@ -27,7 +27,6 @@ public class DrivePod
 		private final String dLabel = "DrivePod D";		
 		private IMotorControllerEnhanced leader, follower1, follower2;
 		private String name;
-		private FeedbackDevice encoder;
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -70,11 +69,8 @@ public class DrivePod
 
 		private void init()
 			{
-
-				encoder = FeedbackDevice.QuadEncoder;
-				
 				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				leader.setSensorPhase(true);
 			
 				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
