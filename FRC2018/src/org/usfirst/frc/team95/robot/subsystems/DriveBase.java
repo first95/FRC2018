@@ -107,7 +107,7 @@ public class DriveBase extends Subsystem {
 	// reset the
 	// distance remaining.
 	public void travelStraight(double inchesToTravel) {
-		leftPod.setCLPosition(inchesToTravel);
+		leftPod.setCLPosition(-inchesToTravel);
 		// TODO: do the inputs to these need to have opposite signs?
 		rightPod.setCLPosition(inchesToTravel);
 	}
