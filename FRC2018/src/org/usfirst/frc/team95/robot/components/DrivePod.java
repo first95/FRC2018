@@ -75,7 +75,7 @@ public class DrivePod
 				
 				// Leaders have quadrature encoders connected to their inputs
 				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-				leader.setSensorPhase(false);
+				leader.setSensorPhase(true);
 			
 				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
 				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
