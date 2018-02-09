@@ -18,6 +18,8 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
+	public static final int DRIVE_FWD_BUTTON = 1; // A
+	public static final int DRIVE_BCK_BUTTON = 2; // B
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -138,4 +140,12 @@ public class OI {
 	public boolean getHighGear() {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
+	
+	public boolean isDriveFwdPressed() {
+		return driverController.getRawButton(DRIVE_FWD_BUTTON);
+	}
+	
+	public boolean isDriveBckPressed() {
+		return driverController.getRawButton(DRIVE_BCK_BUTTON);
+	}	
 }
