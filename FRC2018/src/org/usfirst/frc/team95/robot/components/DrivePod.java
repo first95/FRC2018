@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private static final double ENCODER_TICKS_PER_INCH = 1000; // TODO
+		private static final double ENCODER_TICKS_PER_INCH = 80; // TODO
 		private static final double K_P = 0.3 * 1023.0 / (12*ENCODER_TICKS_PER_INCH); // Respond to an error of 12" with 30% throttle
 		private static final double K_I = 0; //0.01 * K_P;
 		private static final double K_D = 0; //40.0 * K_P;
