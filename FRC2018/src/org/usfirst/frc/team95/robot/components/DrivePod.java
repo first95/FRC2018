@@ -76,6 +76,9 @@ public class DrivePod
 				// Leaders have quadrature encoders connected to their inputs
 				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				leader.setSensorPhase(true);
+				
+				leader.configForwardSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
+				leader.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);				
 			
 				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
 				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
@@ -94,7 +97,7 @@ public class DrivePod
 				
 				// Zero out the encoder to start out.
 				// This isn't strictly necessary but it makes for a nice odometer.
-				leader.setSelectedSensorPosition(1000, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.setSelectedSensorPosition(10000, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				
 				
 				// Not being used at the moment
