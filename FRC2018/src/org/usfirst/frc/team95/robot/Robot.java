@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	private String gameData;
 	
 	Command autonomousCommand;
-	SendableChooser<Command> chooser;
+	SendableChooser<Command> autoMoveChooser;
 	SendableChooser<FieldSide> robotStartingPosition;
 //	SendableChooser a, b, c;
 
@@ -66,13 +66,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(collector);
 
 		// Sendable Chooser
-		chooser = new SendableChooser<Command>();
-		chooser.addDefault("Nothing", new Nothing());
-		chooser.addObject("Forward 1 foot", new DriveStraight(12.0));
-		chooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
-		chooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
-		chooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
-		SmartDashboard.putData("Auto Moves?", chooser);
+		autoMoveChooser = new SendableChooser<Command>();
+		autoMoveChooser.addDefault("Nothing", new Nothing());
+		autoMoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
+		autoMoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
+		autoMoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
+		autoMoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
+		SmartDashboard.putData("Auto Moves?", autoMoveChooser);
 		
 		robotStartingPosition = new SendableChooser<FieldSide>();
 		robotStartingPosition.addDefault("Center", FieldSide.CENTER);
@@ -88,7 +88,9 @@ public class Robot extends IterativeRobot {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Plate assignments are " + gameData);
 
-		autonomousCommand = (Command) chooser.getSelected();
+		robotStartSide = robotStartingPosition.getSelected();
+		
+		autonomousCommand = autoMoveChooser.getSelected();
 		autonomousCommand.start();
 	}
 
