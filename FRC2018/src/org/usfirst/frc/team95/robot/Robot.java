@@ -25,12 +25,6 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  */
 
 public class Robot extends IterativeRobot {
-	public enum FieldSide {
-		LEFT,
-		CENTER, // The robot can start in the center, but the scale and switches can't be there
-		RIGHT,
-		UNKNOWN,
-	};
 	private FieldSide robotStartSide;       // The location where the robot began
 	private String gameData;
 	
