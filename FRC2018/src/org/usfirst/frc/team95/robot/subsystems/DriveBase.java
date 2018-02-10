@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team95.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,8 +20,13 @@ public class DriveBase extends Subsystem {
 	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
+	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 5;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
+	private Timer accelerationLimitTimer = new Timer();
+	private double limitAccelerationDrive = 0;
+	private double limitAccelerationTurn = 0;
+	private boolean timerNotActivated = true;
 
 	public DriveBase() {
 		super();
@@ -45,7 +51,7 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-		
+
 		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
@@ -155,15 +161,61 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void arcade() {
-		double y = Robot.oi.getForwardAxis();
-		double x = Robot.oi.getTurnAxis();
 
-		// "Exponential" drive, where the movements are more sensitive during slow
-		// movement,
-		// permitting easier fine control
-		x = Math.pow(x, 3);
-		y = Math.pow(y, 3);
-		arcade(y, x);
+		if (Robot.oi.getForwardAxis() > .18 || Robot.oi.getForwardAxis() < -.18) {
+			double y = Robot.oi.getForwardAxis();
+			double x = Robot.oi.getTurnAxis();
+
+			if (Robot.elevator.getElevatorHeightFeet() > 0) {
+				if (timerNotActivated) {
+					accelerationLimitTimer.reset();
+					accelerationLimitTimer.start();
+					timerNotActivated = false;
+
+					limitAccelerationDrive = limitAccelerationDrive + (Robot.oi.getForwardAxis()
+							/ ((Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY)));
+
+					limitAccelerationTurn = limitAccelerationTurn + (Robot.oi.getForwardAxis()
+							/ ((Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY)));
+
+				}
+
+				if (accelerationLimitTimer.get() > 0.2) {
+
+					limitAccelerationDrive = limitAccelerationDrive + (Robot.oi.getForwardAxis()
+							/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
+
+					limitAccelerationTurn = limitAccelerationTurn + (Robot.oi.getForwardAxis()
+							/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
+
+					accelerationLimitTimer.reset();
+
+				}
+
+				//x = Math.pow(limitAccelerationTurn, 3);
+				//y = Math.pow(limitAccelerationDrive, 3);
+				System.out.println("LIMITED ACCELERATION TURN VALUE: " + limitAccelerationTurn);
+				System.out.println("LIMITED ACCELERATION DRIVE VALIE: " + limitAccelerationDrive);
+				arcade(limitAccelerationTurn, limitAccelerationDrive);
+			} else {
+
+				accelerationLimitTimer.stop();
+				timerNotActivated = false;
+				limitAccelerationDrive = 0;
+				limitAccelerationTurn = 0;
+
+				x = Math.pow(x, 3);
+				y = Math.pow(y, 3);
+				arcade(y, x);
+			}
+		} else {
+			accelerationLimitTimer.stop();
+			timerNotActivated = false;
+			limitAccelerationDrive = 0;
+			limitAccelerationTurn = 0;
+
+			arcade(0, 0);
+		}
 	}
 
 	public double getLeftEncoderPos() {
