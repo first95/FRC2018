@@ -183,7 +183,9 @@ public class DriveBase extends Subsystem {
 				leftPod.setVoltageRamp(VOLTAGE_RAMP_SOLPE);
 				rightPod.setVoltageRamp(VOLTAGE_RAMP_SOLPE);
 
-				arcade(limitAccelerationDrive, limitAccelerationTurn);
+				x = Math.pow(x, 3);
+				y = Math.pow(y, 3);
+				arcade(y, x);
 			} else {
 
 				// Power allows for more sensativity at lower #s
