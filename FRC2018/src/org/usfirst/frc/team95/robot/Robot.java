@@ -51,6 +51,7 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
+		ramps = new Ramps();
 		compressor = new Compressor();
 		oi = new OI();
 
