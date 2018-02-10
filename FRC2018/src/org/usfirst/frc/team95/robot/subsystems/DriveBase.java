@@ -20,9 +20,9 @@ public class DriveBase extends Subsystem {
 	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20.0;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
-	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 2.0; // The BIGGER the # the less it will increase each
-																	// iteration
-	private final double ANTI_TIP_DECELERATION_SENSATIVITY = 0.9;
+	private final double RAMP_RATE_MINIMUM = 0.01;
+	private final double RAMP_RATE_MAXIMUM = 0.5;
+	private final double VOLTAGE_RAMP_SOLPE = (RAMP_RATE_MAXIMUM - RAMP_RATE_MINIMUM)/Robot.elevator.FEET_FULL_RANGE;
 	private final double DRIVE_CONTROLLER_DEADBAND = 0.18;
 	private final double LIMIT_ACCELERATION_TIMER_INTERVAL = 0.2; // In Seconds
 	private DrivePod leftPod, rightPod;
@@ -56,6 +56,7 @@ public class DriveBase extends Subsystem {
 		leftPod.log();
 		rightPod.log();
 
+		SmartDashboard.putNumber("Voltage Ramp Rate:", VOLTAGE_RAMP_SOLPE);
 		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
@@ -179,27 +180,8 @@ public class DriveBase extends Subsystem {
 
 			if (Robot.elevator.getElevatorHeightFeet() > 0) {
 
-				// Each interval increase acceleration by the previous amount
-
-				limitAccelerationDrive = limitAccelerationDrive
-						+ (y / (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
-
-				limitAccelerationTurn = limitAccelerationTurn
-						+ (x / (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
-
-				// If values are greater than 1 or less than -1 set to 1 or -1 because we don't
-				// want values above 1 or below -1
-				if (limitAccelerationDrive > 1) {
-					limitAccelerationDrive = 1;
-				} else if (limitAccelerationDrive < -1) {
-					limitAccelerationDrive = -1;
-				}
-
-				if (limitAccelerationTurn > 1) {
-					limitAccelerationTurn = 1;
-				} else if (limitAccelerationTurn < -1) {
-					limitAccelerationTurn = -1;
-				}
+				leftPod.setVoltageRamp(VOLTAGE_RAMP_SOLPE);
+				rightPod.setVoltageRamp(VOLTAGE_RAMP_SOLPE);
 
 				arcade(limitAccelerationDrive, limitAccelerationTurn);
 			} else {
@@ -211,19 +193,7 @@ public class DriveBase extends Subsystem {
 			}
 		} else {
 
-			if ((limitAccelerationDrive == 0) && (limitAccelerationTurn == 0)) {
-				x = Math.pow(x, 3);
-				y = Math.pow(y, 3);
-				arcade(y, x);
-			} else {
-				limitAccelerationDrive = limitAccelerationDrive - (limitAccelerationDrive
-						/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_DECELERATION_SENSATIVITY));
-
-				limitAccelerationTurn = limitAccelerationTurn - (limitAccelerationTurn
-						/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_DECELERATION_SENSATIVITY));
-
-				arcade(limitAccelerationDrive, limitAccelerationTurn);
-			}
+			arcade(0, 0);
 		}
 
 	}
