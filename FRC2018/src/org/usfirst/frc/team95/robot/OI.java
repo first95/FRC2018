@@ -83,9 +83,9 @@ public class OI {
 	public void updateWristSettings() {
 		if(weaponsController.getPOV() != POV_NONE) {
 			// Per table above, retract stage one if the POV hat is right or down
-			stageOneRetracted = (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
+			stageOneRetracted = (weaponsController.getPOV() >= POV_RIGHT && weaponsController.getPOV() <= POV_DOWN_LEFT);
 			// Retract if the POV hat is up or down-ish
-			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT);
+			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_LEFT);
 		} else {
 			// When no D-Pad button is pressed, don't change the angle
 		}
