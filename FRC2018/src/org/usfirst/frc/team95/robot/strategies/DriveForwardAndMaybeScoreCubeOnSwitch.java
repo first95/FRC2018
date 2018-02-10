@@ -3,7 +3,7 @@ package org.usfirst.frc.team95.robot.strategies;
 import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.commands.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.ScoreCollectedCube;
+import org.usfirst.frc.team95.robot.commands.ScoreCollectedCubeOnSwitch;
 
 public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure
@@ -14,7 +14,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	// If the robot started on the "hot" side of the switch, score the
 	// cube afterward.
 	
-	
+	public static final String DESCRIPTION = "Drive Forward and Decide to Score Cube on Switch";
 	
 	public DriveForwardAndMaybeScoreCubeOnSwitch() {
 		// We always drive forward, regardless of location
@@ -29,7 +29,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH));
-			addSequential(new ScoreCollectedCube());
+			addSequential(new ScoreCollectedCubeOnSwitch());
 		} else {
 			// Do nothing additional
 		}

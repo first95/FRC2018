@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.strategies.DriveForwardAndMaybeScoreCubeOnSwitch;
+import org.usfirst.frc.team95.robot.strategies.ScoreCubeOnScaleOrSwitch;
+import org.usfirst.frc.team95.robot.strategies.SitStill;
+import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -29,8 +33,9 @@ public class Robot extends IterativeRobot {
 	private String gameData;
 	
 	Command autonomousCommand;
-	SendableChooser<Command> autoMoveChooser;
+	SendableChooser<Command> singleAutomoveChooser;
 	SendableChooser<FieldSide> robotStartingPosition;
+	SendableChooser<Strategy> strategyChooser;
 //	SendableChooser a, b, c;
 
 	// Components of the robot
@@ -59,20 +64,30 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
-		// Sendable Chooser
-		autoMoveChooser = new SendableChooser<Command>();
-		autoMoveChooser.addDefault("Nothing", new Nothing());
-		autoMoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
-		autoMoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
-		autoMoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
-		autoMoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
-		SmartDashboard.putData("Auto Moves?", autoMoveChooser);
+		// Sendable Chooser for single commands
+		singleAutomoveChooser = new SendableChooser<Command>();
+		singleAutomoveChooser.addDefault("Nothing", new Nothing());
+		singleAutomoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
+		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
+		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
+		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
+		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
+		// For the operators to indicate on which side of the field they placed the robot
 		robotStartingPosition = new SendableChooser<FieldSide>();
 		robotStartingPosition.addDefault("Center", FieldSide.CENTER);
 		robotStartingPosition.addObject("Left", FieldSide.LEFT);
 		robotStartingPosition.addObject("Right", FieldSide.RIGHT);
 		SmartDashboard.putData("Starting side", robotStartingPosition);
+		
+		// Choose strategy
+		strategyChooser = new SendableChooser<>();
+		strategyChooser.addDefault(SitStill.DESCRIPTION, new SitStill());
+		strategyChooser.addDefault(DriveForwardAndMaybeScoreCubeOnSwitch.DESCRIPTION,
+				new DriveForwardAndMaybeScoreCubeOnSwitch());
+		strategyChooser.addDefault(ScoreCubeOnScaleOrSwitch.DESCRIPTION, 
+				new ScoreCubeOnScaleOrSwitch());
+		SmartDashboard.putData(strategyChooser);
 
 		drivebase.brake(false);
 	}
@@ -88,7 +103,17 @@ public class Robot extends IterativeRobot {
 		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
 		System.out.println("The " + getWhichSideOfTheFarSwitchIsOurColor() + " side of the far switch is our color.");
 		
-		autonomousCommand = autoMoveChooser.getSelected();
+		autonomousCommand = singleAutomoveChooser.getSelected();
+		Strategy chosenStrategy = strategyChooser.getSelected();
+		chosenStrategy.AdjustStrategy(getWhichSideOfTheNearSwitchIsOurColor(),
+				getWhichSideOfTheScaleIsOurColor(), 
+				getWhichSideOfTheFarSwitchIsOurColor(),
+				robotStartSide);
+		
+		// When we've done some testing on single commands and are ready to do
+		// strategies, enable the following line.
+//		autonomousCommand = chosenStrategy;
+		
 		autonomousCommand.start();
 	}
 
