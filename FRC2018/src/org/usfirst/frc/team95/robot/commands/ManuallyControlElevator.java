@@ -24,7 +24,6 @@ public class ManuallyControlElevator extends Command {
 	public ManuallyControlElevator() {
 		// This method is run once during robot startup
 		requires(Robot.elevator);
-		Robot.elevator.setCurrentPosToZero();
 	}
 
 	@Override

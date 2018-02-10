@@ -108,7 +108,6 @@ public class Elevator extends Subsystem {
 	 * @param value - the throttle value to apply to the motors, between -1 and +1
 	 */
 	public void setElevatorSpeed(double value) {
-		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.PercentOutput, value);
 	}
 	
@@ -117,7 +116,6 @@ public class Elevator extends Subsystem {
 	 * @param feet - the target height in feet up from lowest possible position
 	 */
 	public void setElevatorHeight(double feet) {
-		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 	}
 	
