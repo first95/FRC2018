@@ -133,6 +133,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		drivebase.pullPidConstantsFromSmartDash();
+
 		Scheduler.getInstance().run(); // Runs all active commands
 		log();
 	}

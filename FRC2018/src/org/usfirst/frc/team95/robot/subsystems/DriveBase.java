@@ -163,4 +163,9 @@ public class DriveBase extends Subsystem {
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
 	}
+	
+	public void pullPidConstantsFromSmartDash() {
+		leftPod.pullPidConstantsFromSmartDash();
+		rightPod.pullPidConstantsFromSmartDash();
+	}
 }
