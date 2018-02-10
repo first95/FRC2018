@@ -21,7 +21,8 @@ public class DriveStraight extends Command {
 	public DriveStraight(double inches) {
 		requires(Robot.drivebase);
 		
-		this.distanceInches = inches;
+		// Not sure why this is reversed
+		this.distanceInches = -inches;
 		
 	}
 
