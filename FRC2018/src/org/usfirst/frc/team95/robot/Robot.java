@@ -25,16 +25,18 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  */
 
 public class Robot extends IterativeRobot {
-	public enum RobotStartPosition {
+	public enum FieldSide {
 		LEFT,
-		CENTER,
+		CENTER, // The robot can start in the center, but the scale and switches can't be there
 		RIGHT,
-	}
-	
+		UNKNOWN,
+	};
+	private FieldSide robotStartSide;       // The location where the robot began
+	private String gameData;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser;
-	SendableChooser<RobotStartPosition> robotStartingPosition;
+	SendableChooser<FieldSide> robotStartingPosition;
 //	SendableChooser a, b, c;
 
 	// Components of the robot
@@ -72,10 +74,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
 		SmartDashboard.putData("Auto Moves?", chooser);
 		
-		robotStartingPosition = new SendableChooser<RobotStartPosition>();
-		robotStartingPosition.addDefault("Center", RobotStartPosition.CENTER);
-		robotStartingPosition.addObject("Left", RobotStartPosition.LEFT);
-		robotStartingPosition.addObject("Right", RobotStartPosition.RIGHT);
+		robotStartingPosition = new SendableChooser<FieldSide>();
+		robotStartingPosition.addDefault("Center", FieldSide.CENTER);
+		robotStartingPosition.addObject("Left", FieldSide.LEFT);
+		robotStartingPosition.addObject("Right", FieldSide.RIGHT);
 		SmartDashboard.putData("Starting side", robotStartingPosition);
 
 		drivebase.brake(false);
@@ -83,19 +85,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Plate assignments are " + gameData);
 
-		// if(gameData.charAt(0) == 'L')
-		// {
-		// //Put left auto code here
-		// } else {
-		// //Put right auto code here
-		// }
-		// drivebase.brake(true);
-		//
-		// instantiate the command used for the autonomous period
 		autonomousCommand = (Command) chooser.getSelected();
 		autonomousCommand.start();
 	}
@@ -163,4 +155,24 @@ public class Robot extends IterativeRobot {
 		collector.log();
 		oi.log();
 	}
+	
+	public FieldSide getRobotStartSide() {
+		return robotStartSide;
+	}
+	
+	private FieldSide sideFromChar(char side) {
+		if(side == 'L') {
+			return FieldSide.LEFT;
+		} else if(side == 'R') {
+			return FieldSide.RIGHT;
+		} else {
+			return FieldSide.UNKNOWN;
+		}
+	}
+	// The side of the near switch that belongs to us
+//	public  FieldSide getNearSwitchOurSide() {
+//	}
+//	public  FieldSide getFarSwitchOurSide;  // The side of the far  switch that belongs to us
+//	public  FieldSide getScaleOurSide;      // The side of the far  switch that belongs to us
+
 }
