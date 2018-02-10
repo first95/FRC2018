@@ -15,6 +15,7 @@ import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
+import org.usfirst.frc.team95.robot.subsystems.Ramps;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public static DriveBase drivebase;
 	public static Collector collector;
 	public static Elevator elevator;
+	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
 

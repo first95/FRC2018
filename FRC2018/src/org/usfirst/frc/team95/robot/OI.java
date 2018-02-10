@@ -18,6 +18,7 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
+	public static final int DEPLOY_RAMPS_BUTTON = 4; // Y
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -58,6 +59,9 @@ public class OI {
 		// }
 
 		// a.whenPressed(new ShiftGear());
+		
+		JoystickButton deployRampsButton = new JoystickButton(driverController, DEPLOY_RAMPS_BUTTON);
+		deployRampsButton.whenPressed(new DeployRamps());
 	}
 
 	public void log() {
