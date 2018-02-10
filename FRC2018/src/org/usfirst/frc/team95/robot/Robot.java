@@ -170,9 +170,16 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	// The side of the near switch that belongs to us
-//	public  FieldSide getNearSwitchOurSide() {
-//	}
-//	public  FieldSide getFarSwitchOurSide;  // The side of the far  switch that belongs to us
-//	public  FieldSide getScaleOurSide;      // The side of the far  switch that belongs to us
+	public  FieldSide getNearSwitchOurSide() {
+		return sideFromChar(gameData.charAt(0));
+	}
+	// The side of the far  switch that belongs to us
+	public  FieldSide getFarSwitchOurSide() {
+		return sideFromChar(gameData.charAt(0));
+	}
+	// The side of the far  switch that belongs to us
+	public  FieldSide getScaleOurSide() {
+		return sideFromChar(gameData.charAt(0));
+	}
 
 }
