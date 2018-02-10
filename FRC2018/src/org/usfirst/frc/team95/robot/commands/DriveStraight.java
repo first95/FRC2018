@@ -25,9 +25,9 @@ public class DriveStraight extends Command {
 		
 	}
 
-	// Called just before this Command runs the first time
+	// Called every time the command starts
 	@Override
-	protected void initialize() {
+	public void start() {
 		// Get everything in a safe starting state.
 		Robot.drivebase.reset();
 		
