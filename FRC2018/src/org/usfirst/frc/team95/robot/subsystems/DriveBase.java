@@ -17,18 +17,18 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
+	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20.0;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
-	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 5; // The Bigger the # the less it will increase each timer
+	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 5.0; // The Bigger the # the less it will increase each timer
 																// interval
-	private final double DRIVE_CONTROLLER_DEADBAND = .18;
-	private final double LIMIT_ACCELERATION_TIMER_INTERVAL = .2; // In Seconds
+	private final double DRIVE_CONTROLLER_DEADBAND = 0.18;
+	private final double LIMIT_ACCELERATION_TIMER_INTERVAL = 0.2; // In Seconds
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 	private Timer accelerationLimitTimer = new Timer();
-	private double limitAccelerationDrive = 0;
-	private double limitAccelerationTurn = 0;
+	private double limitAccelerationDrive = 0.0;
+	private double limitAccelerationTurn = 0.0;
 	private boolean timerNotActivated = true;
 
 	private double codeIteration = 0; // Test Variable for arcade drive
@@ -236,7 +236,7 @@ public class DriveBase extends Subsystem {
 					limitAccelerationTurn = -1;
 				}
 
-				arcade(limitAccelerationTurn, limitAccelerationDrive);
+				arcade(limitAccelerationDrive, limitAccelerationTurn);
 			} else {
 				
 				// If elevator is not raised then do normal drive
@@ -260,7 +260,7 @@ public class DriveBase extends Subsystem {
 			arcade(0, 0);
 		}
 	}
-
+	
 	public double getLeftEncoderPos() {
 
 		return leftPod.getQuadEncPos();
