@@ -89,6 +89,10 @@ public class Robot extends IterativeRobot {
 		System.out.println("Plate assignments are " + gameData);
 
 		robotStartSide = robotStartingPosition.getSelected();
+		System.out.println("Robot start side: " + robotStartSide);
+		System.out.println("The " + getWhichSideOfTheNearSwitchIsOurColor() + " side of the near switch is our color.");
+		System.out.println("The " + getWhichSideOfTheFarSwitchIsOurColor() + " side of the far switch is our color.");
+		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
 		
 		autonomousCommand = autoMoveChooser.getSelected();
 		autonomousCommand.start();

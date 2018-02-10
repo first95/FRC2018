@@ -117,7 +117,7 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void pivotDegreesClockwise(double degreesToPivot) {
-		double leftDistanceInches = -(degreesToPivot / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
+		double leftDistanceInches = (degreesToPivot / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
 		double rightDistanceInches = leftDistanceInches;
 		leftPod. setCLPosition(leftDistanceInches);
 		rightPod.setCLPosition(rightDistanceInches);
