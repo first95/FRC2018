@@ -20,13 +20,18 @@ public class DriveBase extends Subsystem {
 	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
-	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 5;
+	private final double ANTI_TIP_ACCELERATION_SENSATIVITY = 5; // The Bigger the # the less it will increase each timer
+																// interval
+	private final double DRIVE_CONTROLLER_DEADBAND = .18;
+	private final double LIMIT_ACCELERATION_TIMER_INTERVAL = .2; // In Seconds
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 	private Timer accelerationLimitTimer = new Timer();
 	private double limitAccelerationDrive = 0;
 	private double limitAccelerationTurn = 0;
 	private boolean timerNotActivated = true;
+
+	private double codeIteration = 0; // Test Variable for arcade drive
 
 	public DriveBase() {
 		super();
@@ -162,55 +167,93 @@ public class DriveBase extends Subsystem {
 
 	public void arcade() {
 
-		if (Robot.oi.getForwardAxis() > .18 || Robot.oi.getForwardAxis() < -.18) {
+		// Test Variable to get how many times arcade has looped
+		codeIteration++;
+
+		// Deadband for the joystick
+		if (Robot.oi.getForwardAxis() > .18 || Robot.oi.getForwardAxis() < -.18 || Robot.oi.getTurnAxis() > .18
+				|| Robot.oi.getTurnAxis() < -.18) {
+			
+			// Inital joystick axis
 			double y = Robot.oi.getForwardAxis();
 			double x = Robot.oi.getTurnAxis();
 
+			System.out.println(codeIteration + " - " + "Inital Forwards Axis: " + y);
+			System.out.println(codeIteration + " - " + "Inital Turn Axis: " + x);
+
 			if (Robot.elevator.getElevatorHeightFeet() > 0) {
+				
+				// Create timer to setup interval
 				if (timerNotActivated) {
 					accelerationLimitTimer.reset();
 					accelerationLimitTimer.start();
 					timerNotActivated = false;
 
-					limitAccelerationDrive = limitAccelerationDrive + (Robot.oi.getForwardAxis()
+					// Limit the first values
+					limitAccelerationDrive = limitAccelerationDrive + (y
 							/ ((Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY)));
 
-					limitAccelerationTurn = limitAccelerationTurn + (Robot.oi.getForwardAxis()
+					limitAccelerationTurn = limitAccelerationTurn + (x
 							/ ((Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY)));
+
+					System.out.println(codeIteration + " - " + "Limit Drive Timer Start: " + limitAccelerationDrive);
+					System.out.println(codeIteration + " - " + "Limit Turn Timer Start: " + limitAccelerationTurn);
 
 				}
 
+				// Each interval increase acceleration by the previous amount
 				if (accelerationLimitTimer.get() > 0.2) {
 
-					limitAccelerationDrive = limitAccelerationDrive + (Robot.oi.getForwardAxis()
+					limitAccelerationDrive = limitAccelerationDrive + (y
 							/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
 
-					limitAccelerationTurn = limitAccelerationTurn + (Robot.oi.getForwardAxis()
+					limitAccelerationTurn = limitAccelerationTurn + (x
 							/ (Robot.elevator.getElevatorHeightFeet() * ANTI_TIP_ACCELERATION_SENSATIVITY));
+
+					System.out.println(codeIteration + " - " + "Limit Drive: " + limitAccelerationDrive);
+					System.out.println(codeIteration + " - " + "Limit Turn: " + limitAccelerationTurn);
 
 					accelerationLimitTimer.reset();
-
+					System.out.println(codeIteration + " - " + "Timer Reset");
 				}
 
-				//x = Math.pow(limitAccelerationTurn, 3);
-				//y = Math.pow(limitAccelerationDrive, 3);
+				// x = Math.pow(limitAccelerationTurn, 3);
+				// y = Math.pow(limitAccelerationDrive, 3);
 				System.out.println("LIMITED ACCELERATION TURN VALUE: " + limitAccelerationTurn);
 				System.out.println("LIMITED ACCELERATION DRIVE VALIE: " + limitAccelerationDrive);
+
+				
+				// If values are greater than 1 or less than -1 set to 1 or -1 because we don't want values above 1 or below -1
+				if (limitAccelerationDrive > 1) {
+					limitAccelerationDrive = 1;
+				} else if (limitAccelerationDrive < -1) {
+					limitAccelerationDrive = -1;
+				}
+
+				if (limitAccelerationTurn > 1) {
+					limitAccelerationTurn = 1;
+				} else if (limitAccelerationTurn < -1) {
+					limitAccelerationTurn = -1;
+				}
+
 				arcade(limitAccelerationTurn, limitAccelerationDrive);
 			} else {
-
-				accelerationLimitTimer.stop();
-				timerNotActivated = false;
+				
+				// If elevator is not raised then do normal drive
+				accelerationLimitTimer.reset();
 				limitAccelerationDrive = 0;
 				limitAccelerationTurn = 0;
 
+				// Power allows for more sensativity at lower #s
 				x = Math.pow(x, 3);
 				y = Math.pow(y, 3);
 				arcade(y, x);
 			}
 		} else {
-			accelerationLimitTimer.stop();
-			timerNotActivated = false;
+
+			System.out.println(codeIteration + " - " + "DEADBAND NOT REACHED!");
+
+			accelerationLimitTimer.reset();
 			limitAccelerationDrive = 0;
 			limitAccelerationTurn = 0;
 
