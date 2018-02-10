@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,16 +19,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
-		private static final double ENCODER_TICKS_PER_INCH = 80; // TODO
+		private static final double ENCODER_TICKS_PER_INCH = 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
 		private static final double K_P = 0.3 * 1023.0 / (12*ENCODER_TICKS_PER_INCH); // Respond to an error of 12" with 30% throttle
 		private static final double K_I = 0; //0.01 * K_P;
 		private static final double K_D = 0; //40.0 * K_P;
 		private static final int I_ZONE = 20; // In closed loop error units
-		private final String pLabel = "DrivePod P";
-		private final String iLabel = "DrivePod I";
-		private final String dLabel = "DrivePod D";		
+		private String pLabel = "DrivePod P";
+		private String iLabel = "DrivePod I";
+		private String dLabel = "DrivePod D";		
 		private IMotorControllerEnhanced leader, follower1, follower2;
 		private String name;
+		private double twiddle = 0;
+
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -81,9 +85,17 @@ public class DrivePod
 				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);				
 			
 				// Send the initial PID constant values to the smartdash
+				pLabel = name + " " + pLabel;
+				iLabel = name + " " + iLabel;
+				dLabel = name + " " + dLabel;
 				SmartDashboard.putNumber(pLabel, K_P);
 				SmartDashboard.putNumber(iLabel, K_I);
-				SmartDashboard.putNumber(dLabel, K_D);						
+				SmartDashboard.putNumber(dLabel, K_D);		
+				
+				// Zero out the encoder to start out.
+				// This isn't strictly necessary but it makes for a nice odometer.
+				leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				
 				
 				// Not being used at the moment
 				// voltageCurrentLimit();
@@ -111,13 +123,22 @@ public class DrivePod
 			return leader.getSelectedSensorPosition(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
 		}
 		
+		public double getTargetPositionInches() {
+			if(leader instanceof AdjustedTalon) {
+				return ((AdjustedTalon)leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+			} else {
+				return 0;
+			}
+		}
 
 		public void log()
 			{
-				// TODO: Anything we wanna see on the SmartDashboard, put here
-				SmartDashboard.putNumber(name + " debug value", 1);
-				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+				if (twiddle > 0) { twiddle = 0; } else { twiddle = 0.00000000000001; }
+				// Anything we wanna see on the SmartDashboard, put here.  Use "name", which should be "left" or "right".
+				SmartDashboard.putNumber(name + " position", twiddle + getPositionInches());
+				SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
+//				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
+//				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 				
 			}
 
