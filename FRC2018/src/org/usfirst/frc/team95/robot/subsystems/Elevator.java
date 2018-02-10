@@ -49,8 +49,6 @@ public class Elevator extends Subsystem {
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term accumulator.
 		rightElevDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
-		// Consider the winch's current position to be the elevator bottom
-		setCurrentPosToZero();
 		
 		// Configure soft limits at ends of travel
 		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
@@ -110,7 +108,6 @@ public class Elevator extends Subsystem {
 	 * @param value - the throttle value to apply to the motors, between -1 and +1
 	 */
 	public void setElevatorSpeed(double value) {
-		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.PercentOutput, value);
 	}
 	
@@ -119,7 +116,6 @@ public class Elevator extends Subsystem {
 	 * @param feet - the target height in feet up from lowest possible position
 	 */
 	public void setElevatorHeight(double feet) {
-		checkAndApplyHomingSwitch();
 		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 	}
 	

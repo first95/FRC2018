@@ -112,9 +112,14 @@ public class Robot extends IterativeRobot {
 		drivebase.brake(false);
 	}
 
-	public void disabledPeriodic() {		
+	public void disabledPeriodic() {	
+		commonPeriodic();
 		Scheduler.getInstance().run(); // Runs all active commands
 		log();
+	}
+	
+	public void commonPeriodic() {
+		elevator.checkAndApplyHomingSwitch();
 	}
 
 	@Override
@@ -135,6 +140,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		commonPeriodic();
 		Scheduler.getInstance().run(); // Runs all active commands
 		log();
 	}
