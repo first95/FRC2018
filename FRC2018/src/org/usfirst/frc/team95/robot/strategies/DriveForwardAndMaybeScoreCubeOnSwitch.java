@@ -5,7 +5,7 @@ import org.usfirst.frc.team95.robot.commands.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.ScoreCollectedCube;
 
-public class DriveForwardAndMaybeScoreCubeOnSwitch extends StrategyBase {
+public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure
 	
 	
@@ -31,7 +31,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends StrategyBase {
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH));
 			addSequential(new ScoreCollectedCube());
 		} else {
-			// Do nothing 
+			// Do nothing additional
 		}
 	}
 

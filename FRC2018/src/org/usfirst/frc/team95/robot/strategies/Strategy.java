@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team95.robot.FieldSide;
 
-public abstract class StrategyBase extends CommandGroup {
+public abstract class Strategy extends CommandGroup {
 	
 	/**
 	 * After calling this method, this strategy should be ready to run
