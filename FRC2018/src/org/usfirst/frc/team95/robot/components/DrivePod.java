@@ -94,7 +94,7 @@ public class DrivePod
 				
 				// Zero out the encoder to start out.
 				// This isn't strictly necessary but it makes for a nice odometer.
-				leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.setSelectedSensorPosition(1000, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				
 				
 				// Not being used at the moment
@@ -116,6 +116,7 @@ public class DrivePod
 		public void setCLPosition(double inches) {
 			double delta = ENCODER_TICKS_PER_INCH * inches;
 			double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
+			System.out.println(name + " delta="+delta + ", current = " + current);
 			leader.set(ControlMode.Position, current+delta);
 		}
 		
@@ -139,7 +140,6 @@ public class DrivePod
 				SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
 //				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 //				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
-				
 			}
 
 		public void reset()

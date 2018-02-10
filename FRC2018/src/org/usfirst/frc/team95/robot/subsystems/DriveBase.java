@@ -104,9 +104,12 @@ public class DriveBase extends Subsystem {
 	// reset the
 	// distance remaining.
 	public void travelStraight(double inchesToTravel) {
+		System.out.println("Setting left");
 		leftPod.setCLPosition(-inchesToTravel);
 		// TODO: do the inputs to these need to have opposite signs?
+		System.out.println("Setting right");
 		rightPod.setCLPosition(inchesToTravel);
+		System.out.println("Finished setting");
 	}
 
 	// Talon Brake system
