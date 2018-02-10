@@ -18,36 +18,11 @@ public class DriveStraight extends Command {
 //	private PIDController pid;
 	double distanceInches;
 	
-	public DriveStraight(double distance) {
+	public DriveStraight(double inches) {
 		requires(Robot.drivebase);
 		
-		this.distanceInches = distance;
+		this.distanceInches = inches;
 		
-//		pid = new PIDController(4, 0, 0, new PIDSource() {
-//			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
-//
-//			@Override
-//			public double pidGet() {
-//				return Robot.drivebase.getDistance();
-//			}
-//
-//			@Override
-//			public void setPIDSourceType(PIDSourceType pidSource) {
-//				m_sourceType = pidSource;
-//			}
-//
-//			@Override
-//			public PIDSourceType getPIDSourceType() {
-//				return m_sourceType;
-//			}
-//		}, new PIDOutput() {
-//			@Override
-//			public void pidWrite(double d) {
-//				Robot.drivebase.drive(d, d);
-//			}
-//		});
-//		pid.setAbsoluteTolerance(0.01);
-//		pid.setSetpoint(distance);
 	}
 
 	// Called just before this Command runs the first time
@@ -59,22 +34,17 @@ public class DriveStraight extends Command {
 		// Command the movement
 		Robot.drivebase.travelStraight(distanceInches);
 		
-//		pid.reset();
-//		pid.enable();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-//		return pid.onTarget();
 		return Robot.drivebase.onTarget();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		// Stop PID and the wheels
-//		pid.disable();
 		Robot.drivebase.drive(0, 0);
 	}
 }

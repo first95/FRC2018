@@ -10,9 +10,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team95.robot.commands.*;
 //import org.usfirst.frc.team95.robot.commands.Rotate;
-import org.usfirst.frc.team95.robot.commands.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -29,7 +28,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser chooser;
-	SendableChooser a, b, c;
+//	SendableChooser a, b, c;
 
 	// Components of the robot
 	public static DriveBase drivebase;
@@ -59,15 +58,11 @@ public class Robot extends IterativeRobot {
 
 		// Sendable Chooser
 		chooser = new SendableChooser();
-		SmartDashboard.putData("Auto Move", chooser);
-
-		a = new SendableChooser();
-		a.addDefault("None", new Nothing());
-		a.addObject("Test Drive Stright", new DriveStraight(1));
-		// a.addObject("Test Rotate", new Rotate(180, 5));
-
-		// DISPLAY CHOSERS TO DASHBOARD:
-		SmartDashboard.putData("1st", a);
+		chooser.addDefault("Nothing", new Nothing());
+		chooser.addObject("Forward 1 foot", new DriveStraight(12.0));
+		chooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
+		SmartDashboard.putData("Auto Moves?", chooser);
+		
 
 		drivebase.brake(false);
 	}
@@ -87,7 +82,7 @@ public class Robot extends IterativeRobot {
 		// drivebase.brake(true);
 		//
 		// instantiate the command used for the autonomous period
-		autonomousCommand = (Command) a.getSelected();
+		autonomousCommand = (Command) chooser.getSelected();
 		autonomousCommand.start();
 	}
 
