@@ -25,9 +25,16 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  */
 
 public class Robot extends IterativeRobot {
-
+	public enum RobotStartPosition {
+		LEFT,
+		CENTER,
+		RIGHT,
+	}
+	
+	
 	Command autonomousCommand;
-	SendableChooser chooser;
+	SendableChooser<Command> chooser;
+	SendableChooser<RobotStartPosition> robotStartingPosition;
 //	SendableChooser a, b, c;
 
 	// Components of the robot
@@ -57,12 +64,19 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(collector);
 
 		// Sendable Chooser
-		chooser = new SendableChooser();
+		chooser = new SendableChooser<Command>();
 		chooser.addDefault("Nothing", new Nothing());
 		chooser.addObject("Forward 1 foot", new DriveStraight(12.0));
 		chooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
+		chooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
+		chooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
 		SmartDashboard.putData("Auto Moves?", chooser);
 		
+		robotStartingPosition = new SendableChooser<RobotStartPosition>();
+		robotStartingPosition.addDefault("Center", RobotStartPosition.CENTER);
+		robotStartingPosition.addObject("Left", RobotStartPosition.LEFT);
+		robotStartingPosition.addObject("Right", RobotStartPosition.RIGHT);
+		SmartDashboard.putData("Starting side", robotStartingPosition);
 
 		drivebase.brake(false);
 	}

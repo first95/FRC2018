@@ -18,8 +18,6 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  */
 public class DriveBase extends Subsystem {
 	//private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
-	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
-	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -118,20 +116,11 @@ public class DriveBase extends Subsystem {
 		rightPod.enableBrakeMode(isEnabled);
 	}
 
-	// Command that the robot should travel a specific distance along the carpet.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
-	public void pivotRadians(double radiansToPivot, double speedRadiansPerSecond) {
-		// TODO: Command left and right pods to go opposite directions for a given speed
-		// and distance
-		// leftPod. travelDistance(inchesToTravel, speedInchesPerSecond);
-		// rightPod.travelDistance(inchesToTravel, speedInchesPerSecond);
-	}
-
-	// Provide default value
-	public void pivotRadians(double radiansToPivot) {
-		pivotRadians(radiansToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
+	public void pivotDegreesClockwise(double degreesToPivot) {
+		double leftDistanceInches = -(degreesToPivot / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
+		double rightDistanceInches = leftDistanceInches;
+		leftPod. setCLPosition(leftDistanceInches);
+		rightPod.setCLPosition(rightDistanceInches);
 	}
 
 	public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond) {
