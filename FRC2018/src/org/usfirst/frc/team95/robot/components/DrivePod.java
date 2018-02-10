@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivePod
 	{
 		private static final double ENCODER_TICKS_PER_INCH = 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
-		private static final double K_P = 0.3 * 1023.0 / (12*ENCODER_TICKS_PER_INCH); // Respond to an error of 12" with 30% throttle
-		private static final double K_I = 0; //0.01 * K_P;
-		private static final double K_D = 0; //40.0 * K_P;
+		private double K_P = 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+		private double K_I = 0; //0.01 * K_P;
+		private double K_D = 0; //40.0 * K_P;
 		private static final int I_ZONE = 20; // In closed loop error units
 		private String pLabel = "DrivePod P";
 		private String iLabel = "DrivePod I";
@@ -203,4 +203,21 @@ public class DrivePod
 				// TODO
 				return true;
 			}
+		
+
+		/**
+		 * Retrieve the values of P, I and D from the smartdashboard and apply them
+		 * to the motor controllers.
+		 */
+		public void pullPidConstantsFromSmartDash() {
+			// Retrieve
+			K_P = SmartDashboard.getNumber(pLabel, K_P);
+			K_I = SmartDashboard.getNumber(iLabel, K_I);
+			K_D = SmartDashboard.getNumber(dLabel, K_D);
+			
+			// Apply
+			leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+			leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+			leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		}
 	}
