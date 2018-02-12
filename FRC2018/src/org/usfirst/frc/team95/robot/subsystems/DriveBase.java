@@ -113,15 +113,44 @@ public class DriveBase extends Subsystem {
 		rightPod.enableBrakeMode(isEnabled);
 	}
 
-	public void pivotDegreesClockwise(double degreesToPivot) {
-		double leftDistanceInches = (degreesToPivot / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
+	public void pivotDegreesClockwise(double degreesToPivotCw) {
+		double leftDistanceInches = (degreesToPivotCw / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
 		double rightDistanceInches = leftDistanceInches;
 		leftPod. setCLPosition(leftDistanceInches);
 		rightPod.setCLPosition(rightDistanceInches);
 	}
 
-	public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond) {
-		// TODO: Command each side of the robot to sweep out the appropriate arc
+	/**
+	 * Cause the robot's center to sweep out an arc with given radius and angle.
+	 * A positive clockwise angle is forward and to the right, a negative clockwise
+	 * angle is forward and to the left.
+	 * 
+	 * This does not take into account the drivebase's tendency toward straight turns.
+	 * 
+	 * @param degreesToTurnCw
+	 * @param turnRadiusInches
+	 */
+	public void travelSweepingTurnForward(double degreesToTurnCw, double turnRadiusInches) {
+		double leftDistanceInches ;
+		double rightDistanceInches;
+		
+		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0); 
+		
+		if(degreesToTurnCw > 0) {
+			// Forward and to the right
+			leftDistanceInches  = fractionOfAFullCircumference * Math.PI 
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI 
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+		} else {
+			leftDistanceInches  = fractionOfAFullCircumference * Math.PI 
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI 
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+		}
+		
+		leftPod. setCLPosition(leftDistanceInches);
+		rightPod.setCLPosition(rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code
