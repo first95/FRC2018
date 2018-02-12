@@ -195,14 +195,14 @@ public class DrivePod
 				// leader.set(rate);
 			}
 
-		// Returns true if and only if the drive pod has achieved the distance commanded
-		// by
-		// the most recent call to travelDistance()
-		public boolean isOnTarget()
-			{
-				// TODO
-				return true;
-			}
+		/**
+		 * 
+		 * @return true when the drivepod is close enough to its target
+		 */
+		public boolean isOnTarget() {
+			// leader.configNeutralDeadband(percentDeadband, timeoutMs);
+			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.ON_TARGET_THRESHOLD_INCHES;
+		}
 		
 
 		/**
