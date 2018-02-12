@@ -8,10 +8,10 @@ import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.Elevator
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreCollectedCubeOnSwitch extends CommandGroup {
+public class ScoreStartingCubeOnSwitch extends CommandGroup {
 
 	// This command assumes the cube starts in the maw, with the wrist up
-	public ScoreCollectedCubeOnSwitch() {
+	public ScoreStartingCubeOnSwitch() {
 		addSequential(new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
 		addSequential(new EjectCube());

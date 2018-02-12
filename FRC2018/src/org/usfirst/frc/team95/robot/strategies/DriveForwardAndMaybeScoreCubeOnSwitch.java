@@ -1,7 +1,7 @@
 package org.usfirst.frc.team95.robot.strategies;
 
 import org.usfirst.frc.team95.robot.FieldSide;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
@@ -29,7 +29,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH));
-			addSequential(new ScoreCollectedCubeOnSwitch());
+			addSequential(new ScoreStartingCubeOnSwitch());
 		} else {
 			// Do nothing additional
 		}

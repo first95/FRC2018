@@ -1,8 +1,8 @@
 package org.usfirst.frc.team95.robot.strategies;
 
 import org.usfirst.frc.team95.robot.FieldSide;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnScale;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
@@ -26,11 +26,11 @@ public class ScoreCubeOnScaleOrSwitch extends Strategy {
 		if(robotStartingPosition == whichSideOfTheNearSwitchIsOurColor) {
 			// We're lined up for the switch; go there.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
-			addSequential(new ScoreCollectedCubeOnSwitch());
+			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if(robotStartingPosition == whichSideOfTheScaleIsOurColor) {
 			// We're lined up for the scale; go there.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SCALE + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
-			addSequential(new ScoreCollectedCubeOnScale());
+			addSequential(new ScoreStartingCubeOnScale());
 		} else {
 			// Fallback to an auto run
 			addSequential(new DriveFromWallToAutoLine());
