@@ -1,9 +1,9 @@
 package org.usfirst.frc.team95.robot.strategies;
 
 import org.usfirst.frc.team95.robot.FieldSide;
-import org.usfirst.frc.team95.robot.commands.DriveFromWallToAutoLine;
-import org.usfirst.frc.team95.robot.commands.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.ScoreCollectedCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
 public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure

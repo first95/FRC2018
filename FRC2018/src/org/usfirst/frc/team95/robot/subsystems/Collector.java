@@ -2,7 +2,7 @@ package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.commands.ManuallyControlCollector;
+import org.usfirst.frc.team95.robot.commands.collector.ManuallyControlCollector;
 import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;

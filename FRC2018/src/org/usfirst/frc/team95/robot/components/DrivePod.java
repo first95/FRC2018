@@ -201,7 +201,7 @@ public class DrivePod
 		 */
 		public boolean isOnTarget() {
 			// leader.configNeutralDeadband(percentDeadband, timeoutMs);
-			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.ON_TARGET_THRESHOLD_INCHES;
+			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
 		}
 		
 

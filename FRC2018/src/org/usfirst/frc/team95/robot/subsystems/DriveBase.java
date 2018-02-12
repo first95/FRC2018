@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
-//import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
-import org.usfirst.frc.team95.robot.commands.ManuallyControlDrivebase;
+import org.usfirst.frc.team95.robot.commands.drivebase.ManuallyControlDrivebase;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;

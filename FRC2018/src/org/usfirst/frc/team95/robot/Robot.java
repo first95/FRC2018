@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.strategies.DriveForwardAndMaybeScoreCubeOnSwitch;
 import org.usfirst.frc.team95.robot.strategies.ScoreCubeOnScaleOrSwitch;
 import org.usfirst.frc.team95.robot.strategies.SitStill;
