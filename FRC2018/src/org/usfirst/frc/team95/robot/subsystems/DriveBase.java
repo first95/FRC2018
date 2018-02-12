@@ -2,8 +2,6 @@
 package org.usfirst.frc.team95.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.drivebase.ManuallyControlDrivebase;

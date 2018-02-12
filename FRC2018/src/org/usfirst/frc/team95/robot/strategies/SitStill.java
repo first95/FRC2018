@@ -1,10 +1,6 @@
 package org.usfirst.frc.team95.robot.strategies;
 
 import org.usfirst.frc.team95.robot.FieldSide;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnScale;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreCollectedCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
 public class SitStill extends Strategy {
 	
