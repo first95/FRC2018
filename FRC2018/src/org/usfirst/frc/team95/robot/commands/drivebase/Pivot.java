@@ -15,7 +15,6 @@ import org.usfirst.frc.team95.robot.Robot;
  * encoders.
  */
 public class Pivot extends Command {
-//	private PIDController pid;
 	double degreesCw;
 	
 	public Pivot(double degreesCw) {

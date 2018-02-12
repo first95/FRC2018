@@ -15,7 +15,6 @@ import org.usfirst.frc.team95.robot.Robot;
  * encoders.
  */
 public class SweepTurn extends Command {
-//	private PIDController pid;
 	double degreesCw;
 	double turnRadiusInches;
 	

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.drivebase.GoToSwitch;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -50,7 +49,6 @@ public class OI {
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
-		SmartDashboard.putData("Go to Switch", new GoToSwitch());
 		SmartDashboard.putData("Move 1 Foot Forward", new DriveStraight(12));
 
 		// Create some buttons
