@@ -17,8 +17,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	public static final String DESCRIPTION = "Drive Forward and Decide to Score Cube on Switch";
 	
 	public DriveForwardAndMaybeScoreCubeOnSwitch() {
-		// We always drive forward, regardless of location
-		addSequential(new DriveFromWallToAutoLine());
+		
 	}
 
 	@Override
@@ -28,10 +27,12 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 		if(robotStartingPosition == whichSideOfTheNearSwitchIsOurColor) {
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
-			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH));
+			addSequential(new DriveStraight(DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE
+					+ INCHES_FROM_AUTO_LINE_TO_SWITCH));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else {
-			// Do nothing additional
+			// We always drive forward, regardless of location
+			addSequential(new DriveFromWallToAutoLine());
 		}
 	}
 
