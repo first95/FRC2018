@@ -47,126 +47,120 @@ public class DrivePod
 				init();
 			}
 
-		// Provide a default value for reverse parameter
-		public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum)
-			{
-				this(name, leaderCanNum, follower1CanNum, follower2CanNum, false);
-			}
-
-		// Constructor used for unit tests
-		public DrivePod(String name, IMotorControllerEnhanced leader, IMotorControllerEnhanced follower1, IMotorControllerEnhanced follower2, SolenoidI shifter)
-			{
-				this.name = name;
-				this.leader = leader;
-				this.follower1 = follower1;
-				this.follower2 = follower2;
-
-				init();
-			}
-
-		private void init()
-			{
-
-				encoder = FeedbackDevice.QuadEncoder;
-				
-				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-				leader.setSensorPhase(false);
-				
-				
-				// Not being used at the moment
-				// voltageCurrentLimit();
-				// voltageCurrentComp();
-
-				// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
-				// Are all the speeds and distances expressed in ticks (/per second)?
-
-				// TODO: How do we reverse a drive pod?
-
-			}
-
-		public void log()
-			{
-				// TODO: Anything we wanna see on the SmartDashboard, put here
-				SmartDashboard.putNumber(name + " debug value", 1);
-				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
-			}
-
-		public void reset()
-			{
-				// TODO: anything that needs to be reset on an initialization should go here.
-				// Namely, zero out any record of distance traveled.
-			}
-
-		// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
-		// much power should
-		// be applied to the motor. It corresponds well to speed.
-		public void setThrottle(double throttle)
-			{
-				leader.set(ControlMode.PercentOutput, throttle);
-				// followers follow
-			}
-
-		// Command a specific speed, to be enforced via PID control
-		public void setSpeed(double speedInchesPerSecond)
-			{
-				// TODO: this won't work without some settings getting applied first
-				// leader.set(ControlMode.Velocity, speedInchesPerSecond);
-				// followers follow
-			}
-
-		// Command that this side of the robot should travel a specific distance along
-		// the carpet.
-		// Note that unless the other pod is commanded to travel the same distance, this
-		// will not
-		// sweep out a straight line.
-		// Call this once to command distance - do not call repeatedly, as this will
-		// reset the
-		// distance remaining.
-		public void travelDistance(double inchesToTravel, double speedInchesPerSecond)
-			{
-				// TODO
-			}
-
-		public void enableBrakeMode(boolean isEnabled)
-			{
-				leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
-				follower1.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
-				follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
-			}
-
-		public double getQuadEncPos()
-			{			
-				return leader.getSelectedSensorPosition(Constants.PID_IDX);
-			}
-
-		public double getLeadCurrent()
-			{
-				return leader.getOutputCurrent();
-			}
-		
-		public static void applyCurrentLimitSettings(IMotorControllerEnhanced mc)
-			{
-				mc.configContinuousCurrentLimit(Constants.DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS  , Constants.CAN_TIMEOUT_MS);
-				mc.configPeakCurrentLimit      (Constants.DRIVEPOD_MAX_CURRENT_PEAK_AMPS       , Constants.CAN_TIMEOUT_MS);
-				mc.configPeakCurrentDuration   (Constants.DRIVEPOD_MAX_CURRENT_PEAK_DURATION_MS, Constants.CAN_TIMEOUT_MS);				
-			}
-
-		public void voltageCurrentComp()
-			{
-				// Notes of GitHub
-				// leader.setControlMode(TalonControlMode.Voltage);
-				// leader.setVoltageCompensationRampRate(rampRate);
-				// leader.set(rate);
-			}
-
-		// Returns true if and only if the drive pod has achieved the distance commanded
-		// by
-		// the most recent call to travelDistance()
-		public boolean isOnTarget()
-			{
-				// TODO
-				return true;
-			}
+	// Provide a default value for reverse parameter
+	public DrivePod(String name, int leaderCanNum, int follower1CanNum, int follower2CanNum) {
+		this(name, leaderCanNum, follower1CanNum, follower2CanNum, false);
 	}
+
+	// Constructor used for unit tests
+	public DrivePod(String name, IMotorControllerEnhanced leader, IMotorControllerEnhanced follower1,
+			IMotorControllerEnhanced follower2, SolenoidI shifter) {
+		this.name = name;
+		this.leader = leader;
+		this.follower1 = follower1;
+		this.follower2 = follower2;
+
+		init();
+	}
+
+	private void init() {
+
+		encoder = FeedbackDevice.QuadEncoder;
+
+		// Leaders have quadrature encoders connected to their inputs
+		leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+		leader.setSensorPhase(false);
+
+		// Not being used at the moment
+		// voltageCurrentLimit();
+		// voltageCurrentComp();
+
+		// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
+		// Are all the speeds and distances expressed in ticks (/per second)?
+
+		// TODO: How do we reverse a drive pod?
+
+	}
+
+	public void log() {
+		// TODO: Anything we wanna see on the SmartDashboard, put here
+		SmartDashboard.putNumber(name + " debug value", 1);
+		SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
+		SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+	}
+
+	public void reset() {
+		// TODO: anything that needs to be reset on an initialization should go here.
+		// Namely, zero out any record of distance traveled.
+	}
+
+	// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
+	// much power should
+	// be applied to the motor. It corresponds well to speed.
+	public void setThrottle(double throttle) {
+		leader.set(ControlMode.PercentOutput, throttle);
+		// followers follow
+	}
+
+	public void setVoltageRamp(double rampRate) {
+		leader.configOpenloopRamp(rampRate, Constants.CAN_TIMEOUT_MS);
+	}
+
+	// Command a specific speed, to be enforced via PID control
+	public void setSpeed(double speedInchesPerSecond) {
+		// TODO: this won't work without some settings getting applied first
+		// leader.set(ControlMode.Velocity, speedInchesPerSecond);
+		// followers follow
+	}
+
+	// Command that this side of the robot should travel a specific distance along
+	// the carpet.
+	// Note that unless the other pod is commanded to travel the same distance, this
+	// will not
+	// sweep out a straight line.
+	// Call this once to command distance - do not call repeatedly, as this will
+	// reset the
+	// distance remaining.
+	public void travelDistance(double inchesToTravel, double speedInchesPerSecond) {
+		// TODO
+	}
+
+	public void enableBrakeMode(boolean isEnabled) {
+		leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		follower1.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+	}
+
+	public double getQuadEncPos() {
+		return leader.getSelectedSensorPosition(Constants.PID_IDX);
+	}
+	
+	public double getTalonSpeed() {
+		return leader.getSelectedSensorVelocity(0); 
+	}
+
+	public double getLeadCurrent() {
+		return leader.getOutputCurrent();
+	}
+
+	public static void applyCurrentLimitSettings(IMotorControllerEnhanced mc) {
+		mc.configContinuousCurrentLimit(Constants.DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS, Constants.CAN_TIMEOUT_MS);
+		mc.configPeakCurrentLimit(Constants.DRIVEPOD_MAX_CURRENT_PEAK_AMPS, Constants.CAN_TIMEOUT_MS);
+		mc.configPeakCurrentDuration(Constants.DRIVEPOD_MAX_CURRENT_PEAK_DURATION_MS, Constants.CAN_TIMEOUT_MS);
+	}
+
+	public void voltageCurrentComp() {
+		// Notes of GitHub
+		// leader.setControlMode(TalonControlMode.Voltage);
+		// leader.setVoltageCompensationRampRate(rampRate);
+		// leader.set(rate);
+	}
+
+	// Returns true if and only if the drive pod has achieved the distance commanded
+	// by
+	// the most recent call to travelDistance()
+	public boolean isOnTarget() {
+		// TODO
+		return true;
+	}
+}

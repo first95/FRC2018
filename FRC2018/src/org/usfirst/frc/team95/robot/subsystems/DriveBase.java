@@ -166,6 +166,14 @@ public class DriveBase extends Subsystem {
 		arcade(y, x);
 	}
 
+	public double getLeftSpeed() {
+		return leftPod.getTalonSpeed();
+	}
+	
+	public double getRightSpeed() {
+		return rightPod.getTalonSpeed();
+	}
+	
 	public double getLeftEncoderPos() {
 
 		return leftPod.getQuadEncPos();
