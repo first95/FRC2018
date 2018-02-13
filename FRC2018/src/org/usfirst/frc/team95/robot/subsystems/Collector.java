@@ -58,6 +58,9 @@ public class Collector extends Subsystem {
 		SmartDashboard.putBoolean("Maw Open?" , Robot.oi.getCollectorOpen());
 		SmartDashboard.putBoolean("Wrist Stage One Extended?", Robot.oi.getWristStageOneRetracted());
 		SmartDashboard.putBoolean("Wrist Stage Two Extended?", Robot.oi.getWristStageTwoRetracted());
+		SmartDashboard.putBoolean("Left maw photosensor detects?", isLeftMawPhotosensorTripped());
+		SmartDashboard.putBoolean("Middle maw photosensor detects?", isMiddleMawPhotosensorTripped());
+		SmartDashboard.putBoolean("Right maw photosensor detects?", isRightMawPhotosensorTripped());
 	}
 
 	public void setMawOpen(boolean open) {
@@ -79,10 +82,10 @@ public class Collector extends Subsystem {
 	}
 	
 	/**
-	 * @return the number of optical rangefinders that are reporting
+	 * @return the number of maw photosensors that are reporting
 	 * the presence of a reflective object within range.
 	 */
-	public int getNumberOfRangefindersDetectingObjects() {
+	public int getNumberOfMawPhotosensorsTripped() {
 		int num_rfs = 0;
 		
 		for (DigitalInput orf : photosensors) {
@@ -94,13 +97,13 @@ public class Collector extends Subsystem {
 		return num_rfs;
 	}
 	
-	public boolean isLeftRangefinderDetectingAnObject() {
+	public boolean isLeftMawPhotosensorTripped() {
 		return (leftPhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
-	public boolean isMiddeRangefinderDetectingAnObject() {
+	public boolean isMiddleMawPhotosensorTripped() {
 		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
-	public boolean isRightRangefinderDetectingAnObject() {
+	public boolean isRightMawPhotosensorTripped() {
 		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
 }
