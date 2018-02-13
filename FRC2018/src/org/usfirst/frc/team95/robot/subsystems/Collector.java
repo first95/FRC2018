@@ -19,7 +19,7 @@ public class Collector extends Subsystem {
 	// Here we specify the Digital IO value that will be returned
 	// by DigitalInput.get() when a reflective object is present.
 	// (we're using Banner part number QS18VN6LV)
-	private static final boolean DIO_VALUE_FOR_DETECTION = false;
+	private static final boolean DIO_VALUE_FOR_DETECTION = true;
 	
 	// Motor controllers for the intake/expel chains
 	private IMotorControllerEnhanced leftChainDriver, rightChainDriver;
@@ -104,6 +104,6 @@ public class Collector extends Subsystem {
 		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
 	public boolean isRightMawPhotosensorTripped() {
-		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
+		return (rightPhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
 }
