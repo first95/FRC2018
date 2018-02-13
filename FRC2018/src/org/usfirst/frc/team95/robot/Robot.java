@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.strategies.DriveForwardAndMaybeScoreCubeOnSwitch;
@@ -116,6 +117,7 @@ public class Robot extends IterativeRobot {
 		// strategies, enable the following line.
 //		autonomousCommand = chosenStrategy;
 		
+		autonomousCommand = new AutoCloseMawOnCube();
 		autonomousCommand.start();
 	}
 

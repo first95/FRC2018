@@ -28,19 +28,33 @@ public class AutoCloseMawOnCube extends Command {
 	@Override
 	public synchronized void start() {
 		// Make it be open
+		System.out.println("Opening maw");
 		Robot.collector.setMawOpen(true);
 	}
 	
 	@Override
 	protected boolean isFinished() {
 		// Need at least two to be tripped to count as done
-		return Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2;
+		if(Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
+			System.out.println("Got " + Robot.collector.getNumberOfMawPhotosensorsTripped() + "sensors. Closing.");
+			return true; 
+		} else {
+			System.out.println("Remaining open.");
+			return false;
+		}
 	}
 	
 	@Override
 	protected void end() {
 		// Make it be shut
+		System.out.println("Closing maw");
+
 		Robot.collector.setMawOpen(false);
+	}
+	
+	@Override
+	public synchronized void cancel() {
+		System.out.println("Canceling");
 	}
 
 }

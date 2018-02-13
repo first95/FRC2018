@@ -49,7 +49,7 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 //	 private XboxController xbox = new XboxController(0);
 	
-	private AutoCloseMawOnCube acmoc = new AutoCloseMawOnCube();
+	
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
@@ -60,8 +60,6 @@ public class OI {
 		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
 
 		// Connect the buttons to commands
-		autograbButton.whenPressed(acmoc);
-		
 
 		// if (xbox.getAButtonPressed()) {
 		// new Nothing();
