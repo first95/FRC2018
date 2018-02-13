@@ -23,6 +23,9 @@ public class Constants
 		
 		// Indices for sensors
 		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
+		public static final int LEFT_COLLECTOR_PHOTOSENSOR_DIO_NUM = 0;
+		public static final int MIDDLE_COLLECTOR_PHOTOSENSOR_DIO_NUM = 0;
+		public static final int RIGHT_COLLECTOR_PHOTOSENSOR_DIO_NUM = 0;
 
 		// Indices for Talons
 		// Drive base

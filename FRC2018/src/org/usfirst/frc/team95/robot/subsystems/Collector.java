@@ -10,14 +10,26 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Collector extends Subsystem {
+	// We can wire the Banner photoelectric sensors in a few ways.
+	// Here we specify the Digital IO value that will be returned
+	// by DigitalInput.get() when a reflective object is present.
+	// (we're using Banner part number QS18VN6LV)
+	private static final boolean DIO_VALUE_FOR_DETECTION = false;
+	
+	// Motor controllers for the intake/expel chains
 	private IMotorControllerEnhanced leftChainDriver, rightChainDriver;
 	
-	// The solenoids for the piston that opens the maw, and operates the wrist
+	// The solenoids for the cylinder that opens the maw, and operates the wrist
 	private SolenoidI mawOpener, wristStageOne, wristStageTwo;
+	
+	// The optical rangefinders that report the presence of a reflective object
+	private DigitalInput leftPhotosensor, middlePhotosensor, rightPhotosensor;
+	private DigitalInput photosensors[]; // An array of all 3
 	
 	public Collector() {
 		super();
@@ -28,6 +40,13 @@ public class Collector extends Subsystem {
 		// False means it is extended
 		wristStageOne = new SolenoidWrapper(Constants.WRIST_STAGE_ONE);
 		wristStageTwo = new SolenoidWrapper(Constants.WRIST_STAGE_TWO);
+		
+		// False means a sufficiently reflective object is within range (hopefully the cube)
+		leftPhotosensor   = new DigitalInput(Constants.LEFT_COLLECTOR_PHOTOSENSOR_DIO_NUM);
+		middlePhotosensor = new DigitalInput(Constants.MIDDLE_COLLECTOR_PHOTOSENSOR_DIO_NUM);
+		rightPhotosensor  = new DigitalInput(Constants.RIGHT_COLLECTOR_PHOTOSENSOR_DIO_NUM);
+		// This is just a container for the existing objects
+		photosensors = new DigitalInput[] {leftPhotosensor, middlePhotosensor, rightPhotosensor};
 	}
 
 	@Override
@@ -57,5 +76,31 @@ public class Collector extends Subsystem {
 	public void setIntakeSpeed(double value) {
 		leftChainDriver.set(ControlMode.PercentOutput, -value);
 		rightChainDriver.set(ControlMode.PercentOutput, value);
+	}
+	
+	/**
+	 * @return the number of optical rangefinders that are reporting
+	 * the presence of a reflective object within range.
+	 */
+	public int getNumberOfRangefindersDetectingObjects() {
+		int num_rfs = 0;
+		
+		for (DigitalInput orf : photosensors) {
+			if(orf.get() == DIO_VALUE_FOR_DETECTION) {
+				num_rfs++;
+			}
+		}
+		
+		return num_rfs;
+	}
+	
+	public boolean isLeftRangefinderDetectingAnObject() {
+		return (leftPhotosensor.get() == DIO_VALUE_FOR_DETECTION);
+	}
+	public boolean isMiddeRangefinderDetectingAnObject() {
+		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
+	}
+	public boolean isRightRangefinderDetectingAnObject() {
+		return (middlePhotosensor.get() == DIO_VALUE_FOR_DETECTION);
 	}
 }
