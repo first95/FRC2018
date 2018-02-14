@@ -22,7 +22,7 @@ public class DrivePod
 		private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4*12); // Measured 2/13/18 on practice robot on "field" carpet
 		// 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
 		private double K_P = 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
-		private double K_I = 0.01 * K_P;
+		private double K_I = 0.25 * K_P;
 		private double K_D = 15.0 * K_P;
 		private static final int I_ZONE = 20; // In closed loop error units
 		private String pLabel = "DrivePod P";
