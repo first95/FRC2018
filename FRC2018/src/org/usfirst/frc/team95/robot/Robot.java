@@ -15,6 +15,7 @@ import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.strategies.AnyForward;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
 import org.usfirst.frc.team95.robot.strategies.SitStill;
@@ -99,7 +100,7 @@ public class Robot extends IterativeRobot {
 		
 		// Choose strategy
 		strategyChooser = new SendableChooser<>();
-		strategyChooser.addDefault(SitStill.DESCRIPTION, new SitStill());
+		strategyChooser.addDefault(AnyForward.DESCRIPTION, new AnyForward());
 		strategyChooser.addDefault(AnyOurSideSF.DESCRIPTION,
 				new AnyOurSideSF());
 		strategyChooser.addDefault(AnyOurSideSLF.DESCRIPTION, 
