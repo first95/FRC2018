@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot.strategies;
 
 import org.usfirst.frc.team95.robot.FieldSide;
+import org.usfirst.frc.team95.robot.Robot;
 
 public class SitStill extends Strategy {
 	
@@ -14,8 +15,9 @@ public class SitStill extends Strategy {
 	}
 
 	@Override
-	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor, FieldSide whichSideOfTheScaleIsOurColor,
-			FieldSide whichSideOfTheFarSwitchIsOurColor, FieldSide robotStartingPosition) {
+	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor,
+			FieldSide whichSideOfTheScaleIsOurColor,
+			Robot.StartPosition robotStartingPosition) {
 		// Do nothing
 	}
 

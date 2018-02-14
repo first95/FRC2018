@@ -32,12 +32,24 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  */
 
 public class Robot extends IterativeRobot {
-	private FieldSide robotStartSide;       // The location where the robot began
+	/**
+	 * Robot position at match start.
+	 * Robot is assumed to have its bumper flush against the alliance wall
+	 * in all these cases.
+	 */
+	public enum StartPosition {
+		LEFT,      // Rear left corner of the bumper touches the diagonal of the left portal
+		MID_LEFT,  // Robot's center is centered on the left switch plate
+		CENTER,    // Robot is centered on the field centerline
+		MID_RIGHT, // Robot's center is centered on the right switch plate
+		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
+	}
+	private StartPosition robotStartSide;       // The location where the robot began
 	private String gameData;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> singleAutomoveChooser;
-	SendableChooser<FieldSide> robotStartingPosition;
+	SendableChooser<StartPosition> robotStartingPosition;
 	SendableChooser<Strategy> strategyChooser;
 //	SendableChooser a, b, c;
 
@@ -77,11 +89,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
 		// For the operators to indicate on which side of the field they placed the robot
-		robotStartingPosition = new SendableChooser<FieldSide>();
-		robotStartingPosition.addDefault("Center", FieldSide.CENTER);
-		robotStartingPosition.addObject("Left", FieldSide.LEFT);
-		robotStartingPosition.addObject("Right", FieldSide.RIGHT);
-		SmartDashboard.putData("Starting side", robotStartingPosition);
+		robotStartingPosition = new SendableChooser<StartPosition>();
+		robotStartingPosition.addObject("Left",      StartPosition.LEFT);
+		robotStartingPosition.addObject("Mid left",  StartPosition.MID_LEFT);
+		robotStartingPosition.addDefault("Center",   StartPosition.CENTER);
+		robotStartingPosition.addObject("Mid right", StartPosition.MID_RIGHT);
+		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
+		SmartDashboard.putData("Starting position", robotStartingPosition);
 		
 		// Choose strategy
 		strategyChooser = new SendableChooser<>();
@@ -109,8 +123,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = singleAutomoveChooser.getSelected();
 		Strategy chosenStrategy = strategyChooser.getSelected();
 		chosenStrategy.AdjustStrategy(getWhichSideOfTheNearSwitchIsOurColor(),
-				getWhichSideOfTheScaleIsOurColor(), 
-				getWhichSideOfTheFarSwitchIsOurColor(),
+				getWhichSideOfTheScaleIsOurColor(),
 				robotStartSide);
 		
 		// When we've done some testing on single commands and are ready to do
@@ -191,8 +204,8 @@ public class Robot extends IterativeRobot {
 		collector.log();
 		oi.log();
 	}
-	
-	public FieldSide getRobotStartSide() {
+
+	public Robot.StartPosition getRobotStartSide() {
 		return robotStartSide;
 	}
 	

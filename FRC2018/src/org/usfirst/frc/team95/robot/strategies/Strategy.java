@@ -2,6 +2,7 @@ package org.usfirst.frc.team95.robot.strategies;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team95.robot.FieldSide;
+import org.usfirst.frc.team95.robot.Robot;
 
 public abstract class Strategy extends CommandGroup {
 	
@@ -20,6 +21,5 @@ public abstract class Strategy extends CommandGroup {
 	 */
 	public abstract void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor,
 			FieldSide whichSideOfTheScaleIsOurColor,
-			FieldSide whichSideOfTheFarSwitchIsOurColor,
-			FieldSide robotStartingPosition);
+			Robot.StartPosition robotStartingPosition);
 }
