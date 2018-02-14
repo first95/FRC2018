@@ -8,7 +8,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
-public class ScoreCubeOnScaleOrSwitch extends Strategy {
+public class AnyOurSideSLF extends Strategy {
 	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure
 	private static final double INCHES_FROM_AUTO_LINE_TO_SCALE = 48; // TODO: Measure
 	
@@ -18,7 +18,7 @@ public class ScoreCubeOnScaleOrSwitch extends Strategy {
 	
 	public static final String DESCRIPTION = "Drag race to scale if hot, collect second cube and score in scale";
 	
-	public ScoreCubeOnScaleOrSwitch() {
+	public AnyOurSideSLF() {
 		// Add all the moves in AdjustStrategy
 	}
 

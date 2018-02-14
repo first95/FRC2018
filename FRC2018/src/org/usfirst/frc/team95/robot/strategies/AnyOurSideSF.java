@@ -7,7 +7,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
-public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
+public class AnyOurSideSF extends Strategy {
 	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure
 	
 	
@@ -18,7 +18,7 @@ public class DriveForwardAndMaybeScoreCubeOnSwitch extends Strategy {
 	
 	public static final String DESCRIPTION = "Drive Forward and Decide to Score Cube on Switch";
 	
-	public DriveForwardAndMaybeScoreCubeOnSwitch() {
+	public AnyOurSideSF() {
 		
 	}
 

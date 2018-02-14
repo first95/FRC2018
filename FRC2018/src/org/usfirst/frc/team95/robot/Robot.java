@@ -15,8 +15,8 @@ import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
-import org.usfirst.frc.team95.robot.strategies.DriveForwardAndMaybeScoreCubeOnSwitch;
-import org.usfirst.frc.team95.robot.strategies.ScoreCubeOnScaleOrSwitch;
+import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
+import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
 import org.usfirst.frc.team95.robot.strategies.SitStill;
 import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
@@ -100,10 +100,10 @@ public class Robot extends IterativeRobot {
 		// Choose strategy
 		strategyChooser = new SendableChooser<>();
 		strategyChooser.addDefault(SitStill.DESCRIPTION, new SitStill());
-		strategyChooser.addDefault(DriveForwardAndMaybeScoreCubeOnSwitch.DESCRIPTION,
-				new DriveForwardAndMaybeScoreCubeOnSwitch());
-		strategyChooser.addDefault(ScoreCubeOnScaleOrSwitch.DESCRIPTION, 
-				new ScoreCubeOnScaleOrSwitch());
+		strategyChooser.addDefault(AnyOurSideSF.DESCRIPTION,
+				new AnyOurSideSF());
+		strategyChooser.addDefault(AnyOurSideSLF.DESCRIPTION, 
+				new AnyOurSideSLF());
 		SmartDashboard.putData(strategyChooser);
 
 		drivebase.brake(false);
