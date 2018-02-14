@@ -23,10 +23,10 @@ public class ManuallyControlDrivebase extends Command {
 		// This method is called every iteration
 		
 		if(Robot.oi.isDriveFwdPressed() && wasPressedLastIteration == false) {
-			Robot.drivebase.travelStraight(12);
+			Robot.drivebase.travelStraight(12*4);
 			wasPressedLastIteration = true;
 		} else if(Robot.oi.isDriveBckPressed() && wasPressedLastIteration == false) {
-			Robot.drivebase.travelStraight(-12);
+			Robot.drivebase.travelStraight(-12*4);
 			wasPressedLastIteration = true;
 		} else if(Robot.oi.isDriveFwdPressed()==false && Robot.oi.isDriveBckPressed()==false) {
 			wasPressedLastIteration = false;
