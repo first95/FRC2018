@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
-//import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
-import org.usfirst.frc.team95.robot.commands.ManuallyControlDrivebase;
+import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
@@ -37,7 +36,7 @@ public class DriveBase extends Subsystem {
 	 */
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new ManuallyControlDrivebase());
+        setDefaultCommand(new ArcadeDriveWithJoystick());		
 	}
 
 	/**
@@ -46,8 +45,8 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-        SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-        SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+//        SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+//        SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 
 	}
 
@@ -107,12 +106,8 @@ public class DriveBase extends Subsystem {
 	// reset the
 	// distance remaining.
 	public void travelStraight(double inchesToTravel) {
-		System.out.println("Setting left");
 		leftPod.setCLPosition(-inchesToTravel);
-		// TODO: do the inputs to these need to have opposite signs?
-		System.out.println("Setting right");
 		rightPod.setCLPosition(inchesToTravel);
-		System.out.println("Finished setting");
 	}
 
 	// Talon Brake system

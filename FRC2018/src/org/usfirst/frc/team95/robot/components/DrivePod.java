@@ -98,7 +98,7 @@ public class DrivePod
 				
 				// Zero out the encoder to start out.
 				// This isn't strictly necessary but it makes for a nice odometer.
-				leader.setSelectedSensorPosition(10000, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				
 				
 				// Not being used at the moment
@@ -142,8 +142,6 @@ public class DrivePod
 				// Anything we wanna see on the SmartDashboard, put here.  Use "name", which should be "left" or "right".
 				SmartDashboard.putNumber(name + " position", twiddle + getPositionInches());
 				SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
-//				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-//				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
 
 		public void reset()
