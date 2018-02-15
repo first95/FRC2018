@@ -26,7 +26,7 @@ public class AutoCloseMawOnCube extends Command {
 	}
 	
 	@Override
-	public synchronized void start() {
+	public synchronized void initialize() {
 		// Make it be open
 		System.out.println("Opening maw");
 		Robot.collector.setMawOpen(true);
