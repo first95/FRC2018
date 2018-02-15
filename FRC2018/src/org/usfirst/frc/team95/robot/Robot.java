@@ -13,8 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
+import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
+import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
+import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.strategies.AnyForward;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
@@ -87,6 +92,10 @@ public class Robot extends IterativeRobot {
 		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
 		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
 		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
+		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
+		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
+		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 72));
+		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
 		// For the operators to indicate on which side of the field they placed the robot
