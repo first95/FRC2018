@@ -52,6 +52,11 @@ public class DrivePod
 				
 				// TODO: figure out what to do with 'reverse' and do it here						
 				
+				// Apply current limit settings	to each AdjustedTalon
+				applyCurrentLimitSettings(leader);
+				applyCurrentLimitSettings(follower1);
+				applyCurrentLimitSettings(follower2);
+
 				init();
 			}
 
@@ -179,11 +184,16 @@ public class DrivePod
 				return leader.getSelectedSensorPosition(Constants.PID_IDX);
 			}
 
-		public void voltageCurrentLimit()
+		public double getLeadCurrent()
 			{
-				// Notes of GitHub
-				// leader.setCurrentLimit(amps);
-				// leader.EnableCurrentLimit(boolean);
+				return leader.getOutputCurrent();
+			}
+		
+		public static void applyCurrentLimitSettings(IMotorControllerEnhanced mc)
+			{
+				mc.configContinuousCurrentLimit(Constants.DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS  , Constants.CAN_TIMEOUT_MS);
+				mc.configPeakCurrentLimit      (Constants.DRIVEPOD_MAX_CURRENT_PEAK_AMPS       , Constants.CAN_TIMEOUT_MS);
+				mc.configPeakCurrentDuration   (Constants.DRIVEPOD_MAX_CURRENT_PEAK_DURATION_MS, Constants.CAN_TIMEOUT_MS);				
 			}
 
 		public void voltageCurrentComp()
