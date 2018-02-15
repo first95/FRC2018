@@ -8,7 +8,9 @@ import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
 public class AnyOurSideSF extends Strategy {
-	private static final double INCHES_FROM_AUTO_LINE_TO_SWITCH = 12; // TODO: Measure
+	// The distance the robot must move to go from having its back flush with the wall
+	// to having its front flush with the switch.
+	private static final double INCHES_FROM_WALL_TO_SWITCH = 101.6; // Measured in solidworks, 2018-2-15
 	
 	
 	// This strategy assumes we have a cube pre-loaded on the robot.
@@ -33,12 +35,19 @@ public class AnyOurSideSF extends Strategy {
 				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)) {
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
-			addSequential(new DriveStraight(DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE
-					+ INCHES_FROM_AUTO_LINE_TO_SWITCH));
+			addSequential(new DriveStraight(INCHES_FROM_WALL_TO_SWITCH));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else {
-			// We always drive forward, regardless of location
+		} else if((robotStartingPosition == StartPosition.LEFT &&
+				whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) || 
+				(robotStartingPosition == StartPosition.RIGHT &&
+				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)) {
+			// Robot is on the correct side, score the cube after reaching
+			// the auto line.
+		} else if (robotStartingPosition != StartPosition.CENTER) { 
+			// There's a side mismatch but we can at least cross the auto line
 			addSequential(new DriveFromWallToAutoLine());
+		} else {
+			// We're in the center; do nothing
 		}
 	}
 
