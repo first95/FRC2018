@@ -91,9 +91,9 @@ public class DrivePod
 				pLabel = name + " " + pLabel;
 				iLabel = name + " " + iLabel;
 				dLabel = name + " " + dLabel;
-				SmartDashboard.putNumber(pLabel, K_P);
-				SmartDashboard.putNumber(iLabel, K_I);
-				SmartDashboard.putNumber(dLabel, K_D);		
+//				SmartDashboard.putNumber(pLabel, K_P);
+//				SmartDashboard.putNumber(iLabel, K_I);
+//				SmartDashboard.putNumber(dLabel, K_D);		
 				
 				// Zero out the encoder to start out.
 				// This isn't strictly necessary but it makes for a nice odometer.
@@ -145,11 +145,10 @@ public class DrivePod
 //				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
 
-		public void reset()
-			{
-				// TODO: anything that needs to be reset on an initialization should go here.
-				// Namely, zero out any record of distance traveled.
-			}
+		public void reset() {
+			// Nothing at the moment is required.
+			// If we ever start expecting distance to be zeroed out, this is where it goes.
+		}
 
 		// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
 		// much power should

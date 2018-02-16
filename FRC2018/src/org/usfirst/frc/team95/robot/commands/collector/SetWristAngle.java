@@ -23,7 +23,7 @@ public class SetWristAngle extends TimedCommand {
 	}
 	
 	@Override
-	public synchronized void start() {
+	public synchronized void initialize() {
 		// Apply the appropriate states to the wrist cylinders
 		boolean stage1r = false, stage2r = false;
 		

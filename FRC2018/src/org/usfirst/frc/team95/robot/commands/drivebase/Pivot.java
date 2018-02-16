@@ -21,18 +21,18 @@ public class Pivot extends Command {
 		requires(Robot.drivebase);
 		
 		this.degreesCw = degreesCw;
-		
 	}
 
 	// Called every time the command starts
 	@Override
-	public void start() {
+	public void initialize() {
+		System.out.println("Starting Pivot (" + degreesCw + " degrees)");
+
 		// Get everything in a safe starting state.
 		Robot.drivebase.reset();
 		
 		// Command the movement
 		Robot.drivebase.pivotDegreesClockwise(degreesCw);
-		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -44,6 +44,7 @@ public class Pivot extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		System.out.println("Ending Pivot (" + degreesCw + " degrees)");
 		Robot.drivebase.drive(0, 0);
 	}
 }

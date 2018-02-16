@@ -142,8 +142,8 @@ public class Robot extends IterativeRobot {
 		// When we've done some testing on single commands and are ready to do
 		// strategies, enable the following line.
 //		autonomousCommand = chosenStrategy;
-		
 		//autonomousCommand = new AutoCloseMawOnCube();
+//		autonomousCommand = new AutoCloseMawOnCube();
 		autonomousCommand.start();
 	}
 
