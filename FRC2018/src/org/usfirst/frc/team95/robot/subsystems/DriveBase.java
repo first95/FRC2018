@@ -16,7 +16,7 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	//private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
+	// private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
 	private DrivePod leftPod, rightPod;
@@ -36,7 +36,7 @@ public class DriveBase extends Subsystem {
 	 */
 	@Override
 	public void initDefaultCommand() {
-        setDefaultCommand(new ArcadeDriveWithJoystick());		
+		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 
 	/**
@@ -45,10 +45,11 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-//        SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-//        SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
-//		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-//		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+		// SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		// SmartDashboard.putNumber("rightDriveEncoder Value:",
+		// rightPod.getQuadEncPos());
+		// SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+		// SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
 
 	}
 
@@ -163,7 +164,7 @@ public class DriveBase extends Subsystem {
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
 	}
-	
+
 	public void pullPidConstantsFromSmartDash() {
 		leftPod.pullPidConstantsFromSmartDash();
 		rightPod.pullPidConstantsFromSmartDash();
