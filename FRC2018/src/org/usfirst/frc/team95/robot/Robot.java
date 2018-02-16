@@ -140,7 +140,7 @@ public class Robot extends IterativeRobot {
 		// strategies, enable the following line.
 //		autonomousCommand = chosenStrategy;
 		
-		autonomousCommand = new AutoCloseMawOnCube();
+//		autonomousCommand = new AutoCloseMawOnCube();
 		autonomousCommand.start();
 	}
 

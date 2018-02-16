@@ -58,9 +58,9 @@ public class Elevator extends Subsystem {
 		rightElevDriver.configReverseSoftLimitThreshold(0, Constants.CAN_TIMEOUT_MS);
 		
 		// Send the initial PID constant values to the smartdash
-		SmartDashboard.putNumber(pLabel, K_P);
-		SmartDashboard.putNumber(iLabel, K_I);
-		SmartDashboard.putNumber(dLabel, K_D);
+//		SmartDashboard.putNumber(pLabel, K_P);
+//		SmartDashboard.putNumber(iLabel, K_I);
+//		SmartDashboard.putNumber(dLabel, K_D);
 	}
 
 	public void checkAndApplyHomingSwitch() {

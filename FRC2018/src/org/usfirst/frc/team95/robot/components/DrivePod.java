@@ -91,9 +91,9 @@ public class DrivePod
 				pLabel = name + " " + pLabel;
 				iLabel = name + " " + iLabel;
 				dLabel = name + " " + dLabel;
-				SmartDashboard.putNumber(pLabel, K_P);
-				SmartDashboard.putNumber(iLabel, K_I);
-				SmartDashboard.putNumber(dLabel, K_D);		
+//				SmartDashboard.putNumber(pLabel, K_P);
+//				SmartDashboard.putNumber(iLabel, K_I);
+//				SmartDashboard.putNumber(dLabel, K_D);		
 				
 				// Zero out the encoder to start out.
 				// This isn't strictly necessary but it makes for a nice odometer.

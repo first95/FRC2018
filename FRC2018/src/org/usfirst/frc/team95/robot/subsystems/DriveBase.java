@@ -180,7 +180,7 @@ public class DriveBase extends Subsystem {
 	}
 	
 	public void pullPidConstantsFromSmartDash() {
-		leftPod.pullPidConstantsFromSmartDash();
-		rightPod.pullPidConstantsFromSmartDash();
+//		leftPod.pullPidConstantsFromSmartDash();
+//		rightPod.pullPidConstantsFromSmartDash();
 	}
 }
