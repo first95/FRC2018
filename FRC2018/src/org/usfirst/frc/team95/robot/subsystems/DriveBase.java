@@ -45,12 +45,14 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-		// SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-		// SmartDashboard.putNumber("rightDriveEncoder Value:",
-		// rightPod.getQuadEncPos());
-		// SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-		// SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
 
+		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+
+		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
+		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
 	}
 
 	/**
@@ -159,6 +161,24 @@ public class DriveBase extends Subsystem {
 		x = Math.pow(x, 3);
 		y = Math.pow(y, 3);
 		arcade(y, x);
+	}
+
+	public double getLeftSpeed() {
+		return leftPod.getEncoderVelocity();
+	}
+
+	public double getRightSpeed() {
+		return rightPod.getEncoderVelocity();
+	}
+
+	public double getLeftEncoderPos() {
+
+		return leftPod.getQuadEncPos();
+	}
+
+	public double getRightEncoderPos() {
+
+		return rightPod.getQuadEncPos();
 	}
 
 	public void setGear(boolean isHighGear) {
