@@ -135,8 +135,8 @@ public class DrivePod
 		return leader.getSelectedSensorPosition(Constants.PID_IDX);
 	}
 	
-	public double getTalonSpeed() {
-		return leader.getSelectedSensorVelocity(0); 
+	public double getEncoderVelocity() {
+		return leader.getSelectedSensorVelocity(Constants.PID_IDX);
 	}
 
 	public double getLeadCurrent() {

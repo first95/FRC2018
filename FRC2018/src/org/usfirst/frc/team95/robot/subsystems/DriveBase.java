@@ -50,6 +50,9 @@ public class DriveBase extends Subsystem {
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
 		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+		
+		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
+		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
 	}
 
 	/**
@@ -167,11 +170,11 @@ public class DriveBase extends Subsystem {
 	}
 
 	public double getLeftSpeed() {
-		return leftPod.getTalonSpeed();
+		return leftPod.getEncoderVelocity();
 	}
 	
 	public double getRightSpeed() {
-		return rightPod.getTalonSpeed();
+		return rightPod.getEncoderVelocity();
 	}
 	
 	public double getLeftEncoderPos() {

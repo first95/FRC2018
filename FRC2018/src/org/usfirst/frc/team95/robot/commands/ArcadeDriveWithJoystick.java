@@ -29,7 +29,6 @@ public class ArcadeDriveWithJoystick extends Command {
 		Robot.drivebase.arcade();
 
 		// Autoshift framework based off speed
-
 		if (allowShift) {
 			if ((leftSpeed < 5.0) && (rightSpeed < 5.0)) {
 
