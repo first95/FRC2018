@@ -8,14 +8,16 @@ import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.Elevator
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScoreStartingCubeOnScale extends CommandGroup {
+public class ScoreStartingCubeOnScale extends CommandGroup
+{
 
 	// This command assumes the cube starts in the maw, with the wrist up.
 	// It affects when we move the elevator - we wouldn't want to lift the elevator
 	// up to the scale with the wrist in a flat position.
-	public ScoreStartingCubeOnScale() {
+	public ScoreStartingCubeOnScale()
+	{
+		addSequential(new SetWristAngle(WristAngle.UP));
 		addSequential(new SetElevatorHeight(ElevatorHoldPoint.SCALE_SCORE_HIGH));
-		addSequential(new SetWristAngle(WristAngle.MID_UP));
 		addSequential(new EjectCube());
 	}
 }

@@ -18,12 +18,15 @@ public class AnyForward extends Strategy {
 	@Override
 	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor,
 			FieldSide whichSideOfTheScaleIsOurColor,
-			Robot.StartPosition robotStartingPosition) {
-		if(robotStartingPosition != Robot.StartPosition.CENTER) {
+			Robot.StartPosition robotStartingPosition)
+	{
+		if(robotStartingPosition != Robot.StartPosition.CENTER)
+		{
 			addSequential(new DriveFromWallToAutoLine());
-		} else {
+		}
+		else
+		{
 			// Don't want to crash into the cubes
 		}
 	}
-
 }

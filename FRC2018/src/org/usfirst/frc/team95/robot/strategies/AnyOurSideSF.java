@@ -34,36 +34,48 @@ public class AnyOurSideSF extends Strategy {
 	@Override
 	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor,
 			FieldSide whichSideOfTheScaleIsOurColor,
-			Robot.StartPosition robotStartingPosition) {
+			Robot.StartPosition robotStartingPosition)
+	{
 		// We've already added the segment that drives to the switch.
 		if((robotStartingPosition == StartPosition.MID_LEFT &&
 				whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) || 
 				(robotStartingPosition == StartPosition.MID_RIGHT &&
-				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)) {
+				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT))
+		{
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
 			addSequential(new DriveStraight(INCHES_FROM_WALL_TO_SWITCH_NEAR_WALL
 					- Constants.AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if((robotStartingPosition == StartPosition.LEFT &&
+		}
+		else if((robotStartingPosition == StartPosition.LEFT &&
 				whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) || 
 				(robotStartingPosition == StartPosition.RIGHT &&
-				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)) {
+				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT))
+		{
 			// Robot is on the correct side, score the cube after reaching
 			// the auto line.
 			addSequential(new DriveStraight(INCHES_FROM_WALL_TO_SWITCH_MIDDLE));
-			if(robotStartingPosition == StartPosition.LEFT) {
+			
+			if(robotStartingPosition == StartPosition.LEFT)
+			{
 				addSequential(new Pivot(90)); // Clockwise, "turn to the right"
-			} else { // Must be right
+			}
+			else
+			{ // Must be right
 				addSequential(new Pivot(-90)); // Counterclockwise, "turn to the left"
 			}
 			addSequential(new DriveStraight(INCHES_FROM_DRIVE_TO_SWITCH_SIDE
 					- Constants.AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition != StartPosition.CENTER) { 
+		}
+		else if (robotStartingPosition != StartPosition.CENTER)
+		{ 
 			// There's a side mismatch but we can at least cross the auto line
 			addSequential(new DriveFromWallToAutoLine());
-		} else {
+		}
+		else
+		{
 			// We're in the center; do nothing
 		}
 	}

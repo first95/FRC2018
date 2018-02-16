@@ -23,6 +23,7 @@ import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.Elevator
 import org.usfirst.frc.team95.robot.strategies.AnyForward;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
+import org.usfirst.frc.team95.robot.strategies.CenterScale;
 import org.usfirst.frc.team95.robot.strategies.SitStill;
 import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
@@ -114,6 +115,8 @@ public class Robot extends IterativeRobot {
 				new AnyOurSideSF());
 		strategyChooser.addDefault(AnyOurSideSLF.DESCRIPTION, 
 				new AnyOurSideSLF());
+		strategyChooser.addDefault(CenterScale.DESCRIPTION,
+				new CenterScale());
 		SmartDashboard.putData(strategyChooser);
 
 		drivebase.brake(false);
@@ -140,7 +143,7 @@ public class Robot extends IterativeRobot {
 		// strategies, enable the following line.
 //		autonomousCommand = chosenStrategy;
 		
-		autonomousCommand = new AutoCloseMawOnCube();
+		//autonomousCommand = new AutoCloseMawOnCube();
 		autonomousCommand.start();
 	}
 
@@ -232,7 +235,7 @@ public class Robot extends IterativeRobot {
 	public  FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(0));
 	}
-	// The side of the far  switch that belongs to us
+	// The side of the scale that belongs to us
 	public  FieldSide getWhichSideOfTheScaleIsOurColor() {
 		return sideFromChar(gameData.charAt(1));
 	}

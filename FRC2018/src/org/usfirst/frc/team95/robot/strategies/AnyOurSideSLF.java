@@ -25,22 +25,28 @@ public class AnyOurSideSLF extends Strategy {
 	@Override
 	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor,
 			FieldSide whichSideOfTheScaleIsOurColor,
-			Robot.StartPosition robotStartingPosition) {
+			Robot.StartPosition robotStartingPosition)
+	{
         if((robotStartingPosition == StartPosition.MID_LEFT &&
 				whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) || 
 				(robotStartingPosition == StartPosition.MID_RIGHT &&
-				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)) {
+				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT))
+        {
 			// We're lined up for the switch; go there.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if((robotStartingPosition == StartPosition.MID_LEFT &&
+		}
+        else if((robotStartingPosition == StartPosition.MID_LEFT &&
 				whichSideOfTheScaleIsOurColor == FieldSide.LEFT) || 
 				(robotStartingPosition == StartPosition.MID_RIGHT &&
-				whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)) {
+				whichSideOfTheScaleIsOurColor == FieldSide.RIGHT))
+        {
 			// We're lined up for the scale; go there.
 			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SCALE + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
 			addSequential(new ScoreStartingCubeOnScale());
-		} else {
+		}
+        else
+        {
 			// Fallback to an auto run
 			addSequential(new DriveFromWallToAutoLine());
 		}
