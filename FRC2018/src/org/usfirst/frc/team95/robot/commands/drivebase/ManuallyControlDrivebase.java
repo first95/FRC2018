@@ -12,7 +12,7 @@ public class ManuallyControlDrivebase extends Command {
 	}
 
 	@Override
-	public synchronized void start() {
+	public synchronized void initialize() {
 		// This method is called once when the command is activated
 		wasPressedLastIteration = false;
 	}	

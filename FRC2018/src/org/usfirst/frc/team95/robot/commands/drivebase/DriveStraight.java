@@ -28,7 +28,8 @@ public class DriveStraight extends Command {
 
 	// Called every time the command starts
 	@Override
-	public void start() {
+	public void initialize() {
+		System.out.println("Starting DriveStraight (" + distanceInches + " inches)");
 		// Get everything in a safe starting state.
 		Robot.drivebase.reset();
 		
@@ -46,6 +47,7 @@ public class DriveStraight extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		System.out.println("Ending DriveStraight (" + distanceInches + " inches)");
 		Robot.drivebase.drive(0, 0);
 	}
 }

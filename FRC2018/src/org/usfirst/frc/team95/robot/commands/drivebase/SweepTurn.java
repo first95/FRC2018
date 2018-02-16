@@ -27,7 +27,9 @@ public class SweepTurn extends Command {
 
 	// Called every time the command starts
 	@Override
-	public void start() {
+	public void initialize() {
+		System.out.println("Starting SweepTurn (" + degreesCw + " degrees at " + turnRadiusInches + " inches radius)");
+
 		// Get everything in a safe starting state.
 		Robot.drivebase.reset();
 		
@@ -44,6 +46,7 @@ public class SweepTurn extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		System.out.println("Ending SweepTurn (" + degreesCw + " degrees at " + turnRadiusInches + " inches radius)");
 		Robot.drivebase.drive(0, 0);
 	}
 }
