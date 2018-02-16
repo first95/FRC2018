@@ -16,7 +16,7 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
+	// private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
 	private DrivePod leftPod, rightPod;
@@ -45,11 +45,12 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-		
-		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
-		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+		// SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		// SmartDashboard.putNumber("rightDriveEncoder Value:",
+		// rightPod.getQuadEncPos());
+		// SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+		// SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+
 	}
 
 	/**
@@ -87,8 +88,7 @@ public class DriveBase extends Subsystem {
 	public double getDistance() {
 		// TODO: Some of the commands call this in order to travel a set distance.
 		// We want to move that functionality into this class instead.
-		// return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-		return (0.0);
+		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
 
 	/**
@@ -108,14 +108,9 @@ public class DriveBase extends Subsystem {
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
-	public void travelStraight(double inchesToTravel, double speedInchesPerSecond) {
-		leftPod.travelDistance(inchesToTravel, speedInchesPerSecond);
-		rightPod.travelDistance(inchesToTravel, speedInchesPerSecond);
-	}
-
-	// Provide a default value for travel speed
 	public void travelStraight(double inchesToTravel) {
-		travelStraight(inchesToTravel, DEFAULT_TRAVEL_SPEED_INCHES_PER_S);
+		leftPod.setCLPosition(-inchesToTravel);
+		rightPod.setCLPosition(inchesToTravel);
 	}
 
 	// Talon Brake system
@@ -166,17 +161,12 @@ public class DriveBase extends Subsystem {
 		arcade(y, x);
 	}
 
-	public double getLeftEncoderPos() {
-
-		return leftPod.getQuadEncPos();
-	}
-
-	public double getRightEncoderPos() {
-
-		return rightPod.getQuadEncPos();
-	}
-
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
+	}
+
+	public void pullPidConstantsFromSmartDash() {
+		leftPod.pullPidConstantsFromSmartDash();
+		rightPod.pullPidConstantsFromSmartDash();
 	}
 }

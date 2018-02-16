@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,10 +19,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod
 	{
+		private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4*12); // Measured 2/13/18 on practice robot on "field" carpet
+		// 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
+		private double K_P = 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+		private double K_I = 0.25 * K_P;
+		private double K_D = 15.0 * K_P;
+		private static final int I_ZONE = 20; // In closed loop error units
+		private String pLabel = "DrivePod P";
+		private String iLabel = "DrivePod I";
+		private String dLabel = "DrivePod D";		
 		private IMotorControllerEnhanced leader, follower1, follower2;
-
 		private String name;
-		private FeedbackDevice encoder;
+		private double twiddle = 0;
+
 
 		// Provide the CAN addresses of the three motor controllers.
 		// Set reverse to true if positive throttle values correspond to moving the
@@ -37,7 +48,9 @@ public class DrivePod
 
 				// Tell the followers to follow the leader
 				follower1.set(ControlMode.Follower, leaderCanNum);
-				follower2.set(ControlMode.Follower, leaderCanNum);
+				follower2.set(ControlMode.Follower, leaderCanNum);			
+				
+				// TODO: figure out what to do with 'reverse' and do it here						
 				
 				// Apply current limit settings	to each AdjustedTalon
 				applyCurrentLimitSettings(leader);
@@ -66,12 +79,31 @@ public class DrivePod
 
 		private void init()
 			{
-
-				encoder = FeedbackDevice.QuadEncoder;
-				
 				// Leaders have quadrature encoders connected to their inputs
-				leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-				leader.setSensorPhase(false);
+				leader.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+				leader.setSensorPhase(true);
+				
+				leader.configForwardSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
+				leader.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);				
+			
+				leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+				leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+				leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+				// Prevent Integral Windup.
+				// Whenever the control loop error is outside this zone, zero out the I term accumulator.
+				leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);				
+			
+				// Send the initial PID constant values to the smartdash
+				pLabel = name + " " + pLabel;
+				iLabel = name + " " + iLabel;
+				dLabel = name + " " + dLabel;
+				SmartDashboard.putNumber(pLabel, K_P);
+				SmartDashboard.putNumber(iLabel, K_I);
+				SmartDashboard.putNumber(dLabel, K_D);		
+				
+				// Zero out the encoder to start out.
+				// This isn't strictly necessary but it makes for a nice odometer.
+				leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 				
 				
 				// Not being used at the moment
@@ -85,12 +117,36 @@ public class DrivePod
 
 			}
 
+		
+		/**
+		 * Command the DrivePod to a position relative to current position
+		 * @param inches - the target position in inches from current position
+		 */
+		public void setCLPosition(double inches) {
+			double delta = ENCODER_TICKS_PER_INCH * inches;
+			double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
+			System.out.println(name + " delta="+delta + ", current = " + current);
+			leader.set(ControlMode.Position, current+delta);
+		}
+		
+		public double getPositionInches() {
+			return leader.getSelectedSensorPosition(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+		}
+		
+		public double getTargetPositionInches() {
+			if(leader instanceof AdjustedTalon) {
+				return ((AdjustedTalon)leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+			} else {
+				return 0;
+			}
+		}
+
 		public void log()
 			{
-				// TODO: Anything we wanna see on the SmartDashboard, put here
-				SmartDashboard.putNumber(name + " debug value", 1);
-				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
-				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+				if (twiddle > 0) { twiddle = 0; } else { twiddle = 0.00000000000001; }
+				// Anything we wanna see on the SmartDashboard, put here.  Use "name", which should be "left" or "right".
+				SmartDashboard.putNumber(name + " position", twiddle + getPositionInches());
+				SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
 			}
 
 		public void reset()
@@ -114,19 +170,6 @@ public class DrivePod
 				// TODO: this won't work without some settings getting applied first
 				// leader.set(ControlMode.Velocity, speedInchesPerSecond);
 				// followers follow
-			}
-
-		// Command that this side of the robot should travel a specific distance along
-		// the carpet.
-		// Note that unless the other pod is commanded to travel the same distance, this
-		// will not
-		// sweep out a straight line.
-		// Call this once to command distance - do not call repeatedly, as this will
-		// reset the
-		// distance remaining.
-		public void travelDistance(double inchesToTravel, double speedInchesPerSecond)
-			{
-				// TODO
 			}
 
 		public void enableBrakeMode(boolean isEnabled)
@@ -169,4 +212,21 @@ public class DrivePod
 				// TODO
 				return true;
 			}
+		
+
+		/**
+		 * Retrieve the values of P, I and D from the smartdashboard and apply them
+		 * to the motor controllers.
+		 */
+		public void pullPidConstantsFromSmartDash() {
+			// Retrieve
+			K_P = SmartDashboard.getNumber(pLabel, K_P);
+			K_I = SmartDashboard.getNumber(iLabel, K_I);
+			K_D = SmartDashboard.getNumber(dLabel, K_D);
+			
+			// Apply
+			leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+			leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+			leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		}
 	}
