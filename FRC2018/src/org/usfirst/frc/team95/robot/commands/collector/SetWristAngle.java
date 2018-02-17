@@ -32,10 +32,10 @@ public class SetWristAngle extends TimedCommand {
 			stage1r = false; stage2r = false;
 			break;
 		case MID_UP:
-			stage1r = true;  stage2r = false;
+			stage1r = false; stage2r = true;
 			break;
 		case MID_DOWN:
-			stage1r = false; stage2r = true;
+			stage1r = true;  stage2r = false;
 			break;
 		case DOWN:
 			stage1r = true;  stage2r = true;
