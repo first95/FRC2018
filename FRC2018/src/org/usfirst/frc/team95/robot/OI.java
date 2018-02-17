@@ -3,11 +3,9 @@ package org.usfirst.frc.team95.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
 /**
  * This class is the glue that binds the controls on the physical operator

@@ -1,10 +1,7 @@
 package org.usfirst.frc.team95.robot.commands.elevator;
 
 import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.subsystems.Elevator;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlElevator extends Command {
 	// Note that a different set of constants is used in autonomous control

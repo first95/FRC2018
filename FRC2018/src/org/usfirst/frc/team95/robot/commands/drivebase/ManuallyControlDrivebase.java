@@ -5,7 +5,6 @@ import org.usfirst.frc.team95.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlDrivebase extends Command {
 	
