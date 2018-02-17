@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoCloseMawOnCube extends Command {
-	private static final double INTAKE_THROTTLE = -1.0;
+	public static final double INTAKE_THROTTLE = -1.0;
 	
 	public AutoCloseMawOnCube() {
 		requires(Robot.collector);

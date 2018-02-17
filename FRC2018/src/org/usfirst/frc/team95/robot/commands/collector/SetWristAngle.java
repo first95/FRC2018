@@ -42,9 +42,14 @@ public class SetWristAngle extends TimedCommand {
 			break;
 		default:
 			break;
-			
 		}
-		Robot.collector.setWristStageOneRetracted(stage1r);
-		Robot.collector.setWristStageTwoRetracted(stage2r);
+		if(Robot.collector.getWristStageOneRetracted() == stage1r && 
+				Robot.collector.getWristStageTwoRetracted() == stage2r) {
+			// We're already at the commanded wrist angle, don't do anything
+			setTimeout(0);
+		} else {
+			Robot.collector.setWristStageOneRetracted(stage1r);
+			Robot.collector.setWristStageTwoRetracted(stage2r);
+		}
 	}
 }
