@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
@@ -15,9 +16,10 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
  * Have the robot drive tank style using the PS3 Joystick until interrupted.
  */
 public class ArcadeDriveWithJoystick extends Command {
-
+	
 	private double leftSpeed;
 	private double rightSpeed;
+	
 	private Timer shiftTimer = new Timer();
 	private boolean allowShift = true;
 	private boolean allowDeshift = true;
@@ -32,12 +34,12 @@ public class ArcadeDriveWithJoystick extends Command {
 	protected void execute() {
 		Robot.drivebase.arcade();
 
-		leftSpeed = Robot.drivebase.getLeftSpeed();
-		rightSpeed = Robot.drivebase.getRightSpeed();
+		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
+		rightSpeed = Math.abs(Robot.drivebase.getRightSpeed());
 
 		// Autoshift framework based off speed
 		if (allowShift) {
-			if ((leftSpeed < 5.0) && (rightSpeed < 5.0)) {
+			if ((leftSpeed < Constants.SPEED_TO_SHIFT_DOWN) && (rightSpeed < Constants.SPEED_TO_SHIFT_DOWN)) {
 				Robot.drivebase.setGear(false);
 
 				if (hasAlreadyShifted) {
@@ -45,7 +47,7 @@ public class ArcadeDriveWithJoystick extends Command {
 					hasAlreadyShifted = false;
 				}
 
-			} else if ((leftSpeed > 5.0) && (rightSpeed > 5.0)) {
+			} else if ((leftSpeed > Constants.SPEED_TO_SHIFT_UP) && (rightSpeed > Constants.SPEED_TO_SHIFT_UP)) {
 				if (allowDeshift) {
 					shiftTimer.reset();
 					shiftTimer.start();
@@ -61,17 +63,15 @@ public class ArcadeDriveWithJoystick extends Command {
 			hasAlreadyShifted = true;
 		}
 
+		// For button shifting
 		// Robot.drivebase.setGear(Robot.oi.getHighGear());
+		
 		SmartDashboard.putBoolean("Allow Shift:", allowShift);
 		SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
 		SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
 
 	}
-
-	public void log() {
-		
-	}
-
+	
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {

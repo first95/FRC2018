@@ -46,8 +46,6 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-
-		
 		
 		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());

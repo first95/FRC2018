@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivePod {
 	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12); // Measured 2/13/18 on practice robot on
 																				// "field" carpet
-	
+
 	// 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
 	private double K_P = 0.6 * 1023.0 / (6 * ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private double K_I = 0.25 * K_P;
@@ -221,7 +221,7 @@ public class DrivePod {
 	}
 
 	public double getEncoderVelocity() {
-		return leader.getSelectedSensorVelocity(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH * 12;
+		return (leader.getSelectedSensorVelocity(Constants.PID_IDX)) * (1/(ENCODER_TICKS_PER_INCH * 12)) * (10/1);
 	}
 
 	public double getLeadCurrent() {
