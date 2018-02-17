@@ -14,7 +14,9 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we command the pods to move to account for slippage
+	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we
+													// command the pods to move
+													// to account for slippage
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -27,8 +29,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * When no other command is running let the operator drive around using the PS3
-	 * joystick.
+	 * When no other command is running let the operator drive around using the
+	 * PS3 joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
@@ -68,7 +70,8 @@ public class DriveBase extends Subsystem {
 	 * @return The distance driven (average of left and right encoders).
 	 */
 	public double getDistance() {
-		// TODO: Some of the commands call this in order to travel a set distance.
+		// TODO: Some of the commands call this in order to travel a set
+		// distance.
 		// We want to move that functionality into this class instead.
 		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
@@ -86,7 +89,8 @@ public class DriveBase extends Subsystem {
 		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
 
-	// Command that the robot should travel a specific distance along the carpet.
+	// Command that the robot should travel a specific distance along the
+	// carpet.
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
@@ -108,42 +112,43 @@ public class DriveBase extends Subsystem {
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
 		double leftDistanceInches = (degreesToPivotCw / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
 		double rightDistanceInches = leftDistanceInches;
-		leftDistanceInches  *=  PIVOT_FUDGE_FACTOR;
-		rightDistanceInches *=  PIVOT_FUDGE_FACTOR;
-		leftPod. setCLPosition(leftDistanceInches);
+		leftDistanceInches *= PIVOT_FUDGE_FACTOR;
+		rightDistanceInches *= PIVOT_FUDGE_FACTOR;
+		leftPod.setCLPosition(leftDistanceInches);
 		rightPod.setCLPosition(rightDistanceInches);
 	}
 
 	/**
 	 * Cause the robot's center to sweep out an arc with given radius and angle.
-	 * A positive clockwise angle is forward and to the right, a negative clockwise
-	 * angle is forward and to the left.
+	 * A positive clockwise angle is forward and to the right, a negative
+	 * clockwise angle is forward and to the left.
 	 * 
-	 * This does not take into account the drivebase's tendency toward straight turns.
+	 * This does not take into account the drivebase's tendency toward straight
+	 * turns.
 	 * 
 	 * @param degreesToTurnCw
 	 * @param turnRadiusInches
 	 */
 	public void travelSweepingTurnForward(double degreesToTurnCw, double turnRadiusInches) {
-		double leftDistanceInches ;
+		double leftDistanceInches;
 		double rightDistanceInches;
-		
-		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0); 
-		
-		if(degreesToTurnCw > 0) {
+
+		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
+
+		if (degreesToTurnCw > 0) {
 			// Forward and to the right
-			leftDistanceInches  = fractionOfAFullCircumference * Math.PI 
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI 
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		} else {
-			leftDistanceInches  = fractionOfAFullCircumference * Math.PI 
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI 
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		}
-		
-		leftPod. setCLPosition(leftDistanceInches);
+
+		leftPod.setCLPosition(leftDistanceInches);
 		rightPod.setCLPosition(rightDistanceInches);
 	}
 
@@ -161,7 +166,8 @@ public class DriveBase extends Subsystem {
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
-		// "Exponential" drive, where the movements are more sensitive during slow
+		// "Exponential" drive, where the movements are more sensitive during
+		// slow
 		// movement,
 		// permitting easier fine control
 		x = Math.pow(x, 3);
@@ -172,7 +178,7 @@ public class DriveBase extends Subsystem {
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
 	}
-	
+
 	public void pullPidConstantsFromSmartDash() {
 		leftPod.pullPidConstantsFromSmartDash();
 		rightPod.pullPidConstantsFromSmartDash();
