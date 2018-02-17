@@ -18,5 +18,10 @@ public class RunChainsForDuration extends TimedCommand {
 	protected void execute() {
 		Robot.collector.setIntakeSpeed(throttleOutward);
 	}
+	
+	@Override
+	protected void end() {
+		Robot.collector.setIntakeSpeed(0);
+	}
 
 }

@@ -28,7 +28,6 @@ public class AutoCloseMawOnCube extends Command {
 	@Override
 	public synchronized void initialize() {
 		// Make it be open
-		System.out.println("Opening maw");
 		Robot.collector.setMawOpen(true);
 		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);
 	}
@@ -40,7 +39,6 @@ public class AutoCloseMawOnCube extends Command {
 			System.out.println("Got " + Robot.collector.getNumberOfMawPhotosensorsTripped() + "sensors. Closing.");
 			return true; 
 		} else {
-			System.out.println("Remaining open.");
 			return false;
 		}
 	}
