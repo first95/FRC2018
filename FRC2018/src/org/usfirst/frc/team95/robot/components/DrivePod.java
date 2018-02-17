@@ -132,10 +132,10 @@ public class DrivePod
 
 		public void log()
 			{
-				if (twiddle > 0) { twiddle = 0; } else { twiddle = 0.00000000000001; }
+				if (twiddle > 1.0) { twiddle = 1.0; } else { twiddle = 1.000001; }
 				// Anything we wanna see on the SmartDashboard, put here.  Use "name", which should be "left" or "right".
-				SmartDashboard.putNumber(name + " position", twiddle + getPositionInches());
-				SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
+				SmartDashboard.putNumber(name + " position (in)", twiddle * getPositionInches());
+				SmartDashboard.putNumber(name + " target (in)", twiddle * getTargetPositionInches());
 //				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 //				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
