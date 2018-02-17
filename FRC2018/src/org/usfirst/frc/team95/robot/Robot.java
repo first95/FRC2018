@@ -89,14 +89,15 @@ public class Robot extends IterativeRobot {
 		// Sendable Chooser for single commands
 		singleAutomoveChooser = new SendableChooser<Command>();
 		singleAutomoveChooser.addDefault("Nothing", new Nothing());
-		singleAutomoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
-		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
-		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
-		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
-		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
-		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
-		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
-		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
+		singleAutomoveChooser.addDefault("Test sequence", new TestCommandSequence());
+//		singleAutomoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
+//		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
+//		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
+//		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
+//		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
+//		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
+//		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
+//		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
 		// For the operators to indicate on which side of the field they placed the robot
