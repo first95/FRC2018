@@ -14,7 +14,7 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	//private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
+	private final double PIVOT_FUDGE_FACTOR = 1.25; // This is how much extra we command the pods to move to account for slippage
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -65,14 +65,6 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * Reset the robots sensors to the zero states.
-	 */
-	public void reset() {
-		leftPod.reset();
-		rightPod.reset();
-	}
-
-	/**
 	 * @return The distance driven (average of left and right encoders).
 	 */
 	public double getDistance() {
@@ -116,6 +108,8 @@ public class DriveBase extends Subsystem {
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
 		double leftDistanceInches = (degreesToPivotCw / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
 		double rightDistanceInches = leftDistanceInches;
+		leftDistanceInches  *=  PIVOT_FUDGE_FACTOR;
+		rightDistanceInches *=  PIVOT_FUDGE_FACTOR;
 		leftPod. setCLPosition(leftDistanceInches);
 		rightPod.setCLPosition(rightDistanceInches);
 	}

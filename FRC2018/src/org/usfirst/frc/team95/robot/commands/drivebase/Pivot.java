@@ -28,9 +28,6 @@ public class Pivot extends Command {
 	public void initialize() {
 		System.out.println("Starting Pivot (" + degreesCw + " degrees)");
 
-		// Get everything in a safe starting state.
-		Robot.drivebase.reset();
-		
 		// Command the movement
 		Robot.drivebase.pivotDegreesClockwise(degreesCw);
 	}

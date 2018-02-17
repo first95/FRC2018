@@ -30,9 +30,6 @@ public class SweepTurn extends Command {
 	public void initialize() {
 		System.out.println("Starting SweepTurn (" + degreesCw + " degrees at " + turnRadiusInches + " inches radius)");
 
-		// Get everything in a safe starting state.
-		Robot.drivebase.reset();
-		
 		// Command the movement
 		Robot.drivebase.travelSweepingTurnForward(degreesCw, turnRadiusInches);
 	}

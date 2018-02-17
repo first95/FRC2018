@@ -30,8 +30,6 @@ public class DriveStraight extends Command {
 	@Override
 	public void initialize() {
 		System.out.println("Starting DriveStraight (" + distanceInches + " inches)");
-		// Get everything in a safe starting state.
-		Robot.drivebase.reset();
 		
 		// Command the movement
 		Robot.drivebase.travelStraight(distanceInches);

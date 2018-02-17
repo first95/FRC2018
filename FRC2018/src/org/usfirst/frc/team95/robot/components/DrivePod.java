@@ -94,9 +94,7 @@ public class DrivePod
 				SmartDashboard.putNumber(pLabel, K_P);
 				SmartDashboard.putNumber(iLabel, K_I);
 				SmartDashboard.putNumber(dLabel, K_D);		
-				
-				reset();
-				
+
 				// Not being used at the moment
 				// voltageCurrentLimit();
 				// voltageCurrentComp();
@@ -116,7 +114,7 @@ public class DrivePod
 		public void setCLPosition(double inches) {
 			double delta = ENCODER_TICKS_PER_INCH * inches;
 			double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
-			System.out.println(name + " delta="+delta + ", current = " + current);
+			System.out.println(name + " going " + inches + " inches, or delta="+delta + ", current = " + current);
 			leader.set(ControlMode.Position, current+delta);
 		}
 		
@@ -141,10 +139,6 @@ public class DrivePod
 //				SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 //				SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 			}
-
-		public void reset() {
-			leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-		}
 
 		// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
 		// much power should
