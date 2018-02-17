@@ -10,6 +10,7 @@ public class TestCommandD extends Command {
 
 	public TestCommandD() {
 		requires(Robot.drivebase);
+		requires(Robot.collector);
 
 		// Printouts are unreliable.  Let's try smartdashboard.
 		SmartDashboard.putBoolean(name, true);

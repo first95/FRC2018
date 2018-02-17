@@ -9,7 +9,7 @@ public class TestCommandB extends Command {
 	String name = "B";
 	
 	public TestCommandB() {
-		requires(Robot.drivebase);
+		requires(Robot.collector);
 
 		// Printouts are unreliable.  Let's try smartdashboard.
 		SmartDashboard.putBoolean(name, true);
