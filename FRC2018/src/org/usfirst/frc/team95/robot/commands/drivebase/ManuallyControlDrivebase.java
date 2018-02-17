@@ -58,9 +58,9 @@ public class ManuallyControlDrivebase extends Command {
 		// For button shifting
 		// Robot.drivebase.setGear(Robot.oi.getHighGear());
 		
-		SmartDashboard.putBoolean("Allow Shift:", allowShift);
-		SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
-		SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
+//		SmartDashboard.putBoolean("Allow Shift:", allowShift);
+//		SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
+//		SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
 
 	}
 	

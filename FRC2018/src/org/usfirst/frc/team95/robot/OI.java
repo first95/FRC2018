@@ -67,7 +67,7 @@ public class OI {
 	}
 
 	public void log() {
-		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
+//		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
 	}
 	
 	// Collector controls
