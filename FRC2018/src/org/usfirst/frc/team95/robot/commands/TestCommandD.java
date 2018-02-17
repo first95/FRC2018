@@ -5,9 +5,9 @@ import org.usfirst.frc.team95.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TestCommandD extends Command {
-//	public TestCommandD() {
-//		requires(Robot.drivebase);
-//	}
+	public TestCommandD() {
+		requires(Robot.drivebase);
+	}
 	
 
 	@Override
@@ -20,6 +20,15 @@ public class TestCommandD extends Command {
 	@Override
 	protected void initialize() {
 		System.out.println("Starting D");
+	}
+	
+	private boolean firstExecution = true;
+	@Override
+	protected void execute() {
+		if(firstExecution) {
+			System.out.println("First execution of D");
+			firstExecution = false;
+		}
 	}
 	
 	@Override

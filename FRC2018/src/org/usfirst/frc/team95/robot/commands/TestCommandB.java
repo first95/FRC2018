@@ -5,10 +5,10 @@ import org.usfirst.frc.team95.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TestCommandB extends Command {
-//	public TestCommandB() {
-//		requires(Robot.drivebase);
-//	}
-//	
+	public TestCommandB() {
+		requires(Robot.drivebase);
+	}
+	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
@@ -21,6 +21,15 @@ public class TestCommandB extends Command {
 		System.out.println("Starting B");
 	}
 	
+	private boolean firstExecution = true;
+	@Override
+	protected void execute() {
+		if(firstExecution) {
+			System.out.println("First execution of B");
+			firstExecution = false;
+		}
+	}
+
 	@Override
 	protected void end() {
 		System.out.println("Ending B");

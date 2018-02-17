@@ -8,12 +8,21 @@ public class TestCommandC extends TimedCommand {
 
 	public TestCommandC() {
 		super(5); // Run 5 seconds
-//		requires(Robot.drivebase);
+		requires(Robot.drivebase);
 	}
 	
 	@Override
 	protected void initialize() {
 		System.out.println("Starting C");
+	}
+	
+	private boolean firstExecution = true;
+	@Override
+	protected void execute() {
+		if(firstExecution) {
+			System.out.println("First execution of C");
+			firstExecution = false;
+		}
 	}
 	
 	@Override
