@@ -152,8 +152,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run(); // Runs all active commands
-		log();
+		commonPeriodic();
 	}
 
 	/**
@@ -168,13 +167,13 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic() {	
 		commonPeriodic();
-		Scheduler.getInstance().run(); // Runs all active commands
-		log();
 	}
 	
 	public void commonPeriodic() {
+		Scheduler.getInstance().run(); // Runs all active commands
 		elevator.checkAndApplyHomingSwitch();
         drivebase.pullPidConstantsFromSmartDash();
+		log();
 	}
 
 	@Override
@@ -196,8 +195,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		commonPeriodic();
-		Scheduler.getInstance().run(); // Runs all active commands
-		log();
 	}
 
 	/**
@@ -205,6 +202,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		commonPeriodic();
 		LiveWindow.run();
 	}
 

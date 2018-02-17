@@ -14,7 +14,7 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	private final double PIVOT_FUDGE_FACTOR = 1.25; // This is how much extra we command the pods to move to account for slippage
+	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we command the pods to move to account for slippage
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
