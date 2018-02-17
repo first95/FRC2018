@@ -6,17 +6,22 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestCommandD extends Command {
-	String name = "D";
-
+	private static final String NAME = "D";
+	private static final String STATUS_LABEL = NAME + " ran: ";
+	
 	public TestCommandD() {
 		requires(Robot.drivebase);
 		requires(Robot.collector);
 
 		// Printouts are unreliable.  Let's try smartdashboard.
-		SmartDashboard.putBoolean(name, true);
+		SmartDashboard.putBoolean(NAME, true);
+		SmartDashboard.putString(STATUS_LABEL, "");
 	}
 	
-
+	private void appendState(String state) {
+		SmartDashboard.putString(STATUS_LABEL, SmartDashboard.getString(STATUS_LABEL, "") + " " + state);
+	}
+	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
@@ -26,28 +31,27 @@ public class TestCommandD extends Command {
 	
 	@Override
 	protected void initialize() {
-		System.out.println("Starting D");
+		appendState("I");
 	}
 	
 	private boolean firstExecution = true;
 	@Override
 	protected void execute() {
 		if(firstExecution) {
-			System.out.println("First execution of D");
+			appendState("X");
 			firstExecution = false;
 		}
-		SmartDashboard.putBoolean(name, !SmartDashboard.getBoolean(name, false));
-	}
-	
-	@Override
-	public synchronized void cancel() {
-		System.out.println("Cancelling D");
-		super.cancel();
+		SmartDashboard.putBoolean(NAME, !SmartDashboard.getBoolean(NAME, false));
 	}
 	
 	@Override
 	protected void end() {
-		System.out.println("Ending D");
+		appendState("E");
 	}
-
+	
+	@Override
+	public synchronized void cancel() {
+		appendState("C");
+		super.cancel();
+	}
 }

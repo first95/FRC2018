@@ -6,39 +6,46 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestCommandC extends TimedCommand {
-	String name = "C";
-
+	private static final String NAME = "C";
+	private static final String STATUS_LABEL = NAME + " ran: ";
+	
 	public TestCommandC() {
 		super(5); // Run 5 seconds
 		requires(Robot.drivebase);
 
 		// Printouts are unreliable.  Let's try smartdashboard.
-		SmartDashboard.putBoolean(name, true);
+		SmartDashboard.putBoolean(NAME, true);
+		SmartDashboard.putString(STATUS_LABEL, "");
 	}
+	
+	private void appendState(String state) {
+		SmartDashboard.putString(STATUS_LABEL, SmartDashboard.getString(STATUS_LABEL, "") + " " + state);
+	}
+	
 	
 	@Override
 	protected void initialize() {
-		System.out.println("Starting C");
+		appendState("I");
 	}
 	
 	private boolean firstExecution = true;
 	@Override
 	protected void execute() {
 		if(firstExecution) {
-			System.out.println("First execution of C");
+			appendState("X");
 			firstExecution = false;
 		}
-		SmartDashboard.putBoolean(name, !SmartDashboard.getBoolean(name, false));
+		SmartDashboard.putBoolean(NAME, !SmartDashboard.getBoolean(NAME, false));
 	}
 	
 	@Override
 	protected void end() {
-		System.out.println("Ending C");
+		appendState("E");
 	}
 	
 	@Override
 	public synchronized void cancel() {
-		System.out.println("Cancelling C");
+		appendState("C");
 		super.cancel();
 	}
 
