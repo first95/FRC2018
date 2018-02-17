@@ -13,6 +13,10 @@ public class Constants
 		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point
 		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
 
+		// Manual Drive
+		public static final double SPEED_TO_SHIFT_UP = 6.0; // ft per sec
+		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
+
 		// Used with Talons
 		public static final int PID_IDX = 0; // The Talons support up to 2 PID loops, with indexes 0 and 1.  We only use 0.
 		public static final int CAN_TIMEOUT_MS = 10; // The amount of time to wait for the CAN transaction to finish
@@ -50,6 +54,11 @@ public class Constants
 		public static final double ENCODER_TICKS_PER_FOOT = 1002;
 		public static final double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
 
+		// Current limiting parameters
+		public static final int DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS = 10;
+		public static final int DRIVEPOD_MAX_CURRENT_PEAK_AMPS = 5;
+		public static final int DRIVEPOD_MAX_CURRENT_PEAK_DURATION_MS = 100;		
+		
 		public static double RFVoltsToFt(double voltage)
 			{
 				double distance;

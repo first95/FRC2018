@@ -20,8 +20,6 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
-	public static final int DRIVE_FWD_BUTTON = 1; // A
-	public static final int DRIVE_BCK_BUTTON = 2; // B
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -91,9 +89,9 @@ public class OI {
 	public void updateWristSettings() {
 		if(weaponsController.getPOV() != POV_NONE) {
 			// Per table above, retract stage one if the POV hat is right or down
-			stageOneRetracted = (weaponsController.getPOV() >= POV_UP_RIGHT && weaponsController.getPOV() <= POV_LEFT_UP);
+			stageOneRetracted = (weaponsController.getPOV() >= POV_RIGHT && weaponsController.getPOV() <= POV_DOWN_LEFT);
 			// Retract if the POV hat is up or down-ish
-			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_DOWN_LEFT);
+			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN && weaponsController.getPOV() <= POV_LEFT);
 		} else {
 			// When no D-Pad button is pressed, don't change the angle
 		}
@@ -145,12 +143,5 @@ public class OI {
 	public boolean getHighGear() {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
-	
-	public boolean isDriveFwdPressed() {
-		return driverController.getRawButton(DRIVE_FWD_BUTTON);
-	}
-	
-	public boolean isDriveBckPressed() {
-		return driverController.getRawButton(DRIVE_BCK_BUTTON);
-	}	
+		
 }
