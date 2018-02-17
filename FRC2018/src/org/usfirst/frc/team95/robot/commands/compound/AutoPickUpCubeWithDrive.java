@@ -15,6 +15,7 @@ public class AutoPickUpCubeWithDrive extends CommandGroup {
 		addSequential(new SetWristAngle(WristAngle.DOWN));
 		addParallel(new DriveAtThrottle(FORWARD_THROTTLE));
 		addSequential(new AutoCloseMawOnCube()); // This one waits until the cube is detected
+		addParallel(new DriveAtThrottle(0)); // This only exists to cancel the last DriveAtThrottle.  It will remain active until another move takes over the drivebase.
 		addSequential(new TimedIngestCube());
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
 	}
