@@ -7,19 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * 
  * Open the maw, wait for a cube to trip optical rangefinders,
- * then close the maw.
+ * then close the maw.  Chains are run inward the whole time.
  * 
  * This move does not:
  * - Approach the cube
  * - Position the wrist
  * - Position the elevator
  * - Move onto the cube
- * - Run the chains inward
  * 
  * Other commands and/or teleoperated control must be responsible for that.
  *
  */
 public class AutoCloseMawOnCube extends Command {
+	private static final double INTAKE_THROTTLE = -1.0;
 	
 	public AutoCloseMawOnCube() {
 		requires(Robot.collector);
@@ -30,6 +30,7 @@ public class AutoCloseMawOnCube extends Command {
 		// Make it be open
 		System.out.println("Opening maw");
 		Robot.collector.setMawOpen(true);
+		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);
 	}
 	
 	@Override
@@ -50,5 +51,6 @@ public class AutoCloseMawOnCube extends Command {
 		System.out.println("Closing maw");
 
 		Robot.collector.setMawOpen(false);
+		Robot.collector.setIntakeSpeed(0);
 	}
 }
