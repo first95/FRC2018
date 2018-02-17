@@ -7,7 +7,7 @@ public class TestCommandSequence extends CommandGroup {
 	public TestCommandSequence() {
 		addSequential(new TestCommandA());
 		addParallel(new TestCommandB());
-		addParallel(new TestCommandC());
+		addSequential(new TestCommandC());
 		addSequential(new TestCommandD());
 	}
 }

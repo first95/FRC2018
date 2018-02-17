@@ -3,10 +3,16 @@ package org.usfirst.frc.team95.robot.commands;
 import org.usfirst.frc.team95.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestCommandB extends Command {
+	String name = "B";
+	
 	public TestCommandB() {
 		requires(Robot.drivebase);
+
+		// Printouts are unreliable.  Let's try smartdashboard.
+		SmartDashboard.putBoolean(name, true);
 	}
 	
 	@Override
@@ -28,6 +34,7 @@ public class TestCommandB extends Command {
 			System.out.println("First execution of B");
 			firstExecution = false;
 		}
+		SmartDashboard.putBoolean(name, !SmartDashboard.getBoolean(name, false));
 	}
 
 	@Override
