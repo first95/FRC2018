@@ -12,12 +12,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoPickUpCubeManualDrive extends CommandGroup {
-
 	public AutoPickUpCubeManualDrive() {
 		addSequential(new SetWristAngle(WristAngle.DOWN));
-		addSequential(new AutoCloseMawOnCube());
+		addSequential(new AutoCloseMawOnCube()); // This one waits until the cube is detected
 		addSequential(new TimedIngestCube());
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
 	}
-
 }

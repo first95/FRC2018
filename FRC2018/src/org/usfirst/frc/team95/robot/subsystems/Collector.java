@@ -76,9 +76,9 @@ public class Collector extends Subsystem {
 	}
 	
 	
-	public void setIntakeSpeed(double value) {
-		leftChainDriver.set(ControlMode.PercentOutput, -value);
-		rightChainDriver.set(ControlMode.PercentOutput, value);
+	public void setIntakeSpeed(double outwardThrottle) {
+		leftChainDriver.set(ControlMode.PercentOutput, -outwardThrottle);
+		rightChainDriver.set(ControlMode.PercentOutput, outwardThrottle);
 	}
 	
 	/**

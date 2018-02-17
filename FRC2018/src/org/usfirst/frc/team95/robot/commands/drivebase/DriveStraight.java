@@ -9,13 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team95.robot.Robot;
 
 /**
- * Drive the given distance straight (negative values go backwards). Uses a
- * local PID controller to run a simple PID loop that is only enabled while this
- * command is running. The input is the averaged values of the left and right
- * encoders.
+ * Drive the given distance straight (negative values go backwards). 
+ * Uses the 
  */
 public class DriveStraight extends Command {
-//	private PIDController pid;
 	double distanceInches;
 	
 	public DriveStraight(double inches) {
