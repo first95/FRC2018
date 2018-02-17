@@ -1,4 +1,4 @@
-package org.usfirst.frc.team95.robot.commands;
+package org.usfirst.frc.team95.robot.commands.elevator;
 
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlElevator extends Command {
+	// Note that a different set of constants is used in autonomous control
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
 	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 5;

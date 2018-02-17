@@ -1,21 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.usfirst.frc.team95.robot.commands;
+package org.usfirst.frc.team95.robot.commands.drivebase;
+
+import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team95.robot.Constants;
-import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.subsystems.DriveBase;
-
-/**
- * Have the robot drive tank style using the PS3 Joystick until interrupted.
- */
-public class ArcadeDriveWithJoystick extends Command {
+public class ManuallyControlDrivebase extends Command {
 	
 	private double leftSpeed;
 	private double rightSpeed;
@@ -25,7 +17,7 @@ public class ArcadeDriveWithJoystick extends Command {
 	private boolean allowDeshift = true;
 	private boolean hasAlreadyShifted = false;
 
-	public ArcadeDriveWithJoystick() {
+	public ManuallyControlDrivebase() {
 		requires(Robot.drivebase);
 	}
 

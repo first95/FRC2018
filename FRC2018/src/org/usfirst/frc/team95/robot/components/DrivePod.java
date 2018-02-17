@@ -19,16 +19,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod {
 	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12); // Measured 2/13/18 on practice robot on
-																				// "field" carpet
-
-	// 31396.0 / (4*12); // Measured 2018-2-9 on the practice robot
-	private double K_P = 0.6 * 1023.0 / (6 * ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
-	private double K_I = 0.25 * K_P;
-	private double K_D = 15.0 * K_P;
+																			// "field" carpet
+	private double K_P = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private double K_I = 0.1; //0.01 * K_P;
+	private double K_D = 0; //40.0 * K_P;
 	private static final int I_ZONE = 20; // In closed loop error units
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
-	private String dLabel = "DrivePod D";
+	private String dLabel = "DrivePod D";		
 	private IMotorControllerEnhanced leader, follower1, follower2;
 	private String name;
 	private double twiddle = 0;
@@ -99,13 +97,6 @@ public class DrivePod {
 		SmartDashboard.putNumber(iLabel, K_I);
 		SmartDashboard.putNumber(dLabel, K_D);
 
-		// Zero out the encoder to start out.
-		// This isn't strictly necessary but it makes for a nice odometer.
-		leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-
-		// Not being used at the moment
-		// voltageCurrentLimit();
-		// voltageCurrentComp();
 	}
 	// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
 	// Are all the speeds and distances expressed in ticks (/per second)?
@@ -119,7 +110,7 @@ public class DrivePod {
 	public void setCLPosition(double inches) {
 		double delta = ENCODER_TICKS_PER_INCH * inches;
 		double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
-		System.out.println(name + " delta=" + delta + ", current = " + current);
+		System.out.println(name + " going " + inches + " inches, or delta=" + delta + ", current = " + current);
 		leader.set(ControlMode.Position, current + delta);
 	}
 
@@ -136,27 +127,21 @@ public class DrivePod {
 	}
 
 	public void log() {
-		if (twiddle > 0) {
-			twiddle = 0;
+		if (twiddle > 1.0) {
+			twiddle = 1.0;
 		} else {
-			twiddle = 0.00000000000001;
+			twiddle = 1.000001;
 		}
-		// Anything we wanna see on the SmartDashboard, put here. Use "name", which
-		// should be "left" or "right".
-		SmartDashboard.putNumber(name + " position", twiddle + getPositionInches());
-		SmartDashboard.putNumber(name + " target", twiddle + getTargetPositionInches());
-		SmartDashboard.putNumber(name + " debug value", 1);
+		// Anything we wanna see on the SmartDashboard, put here. Use "name",
+		// which should be "left" or "right".
+		SmartDashboard.putNumber(name + " position (in)", twiddle * getPositionInches());
+		SmartDashboard.putNumber(name + " target (in)", twiddle * getTargetPositionInches());
 		SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 		SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 	}
 
-	public void reset() {
-		// TODO: anything that needs to be reset on an initialization should go here.
-		// Namely, zero out any record of distance traveled.
-	}
-
-	// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
-	// much power should
+	// Throttle here is the traditional value, between -1.0 and 1.0, indicating
+	// how  much power should
 	// be applied to the motor. It corresponds well to speed.
 	public void setThrottle(double throttle) {
 		leader.set(ControlMode.PercentOutput, throttle);
@@ -174,17 +159,6 @@ public class DrivePod {
 		// followers follow
 	}
 
-	// Command that this side of the robot should travel a specific distance along
-	// the carpet.
-	// Note that unless the other pod is commanded to travel the same distance, this
-	// will not
-	// sweep out a straight line.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
-	public void travelDistance(double inchesToTravel, double speedInchesPerSecond) {
-		// TODO
-	}
 
 	public void enableBrakeMode(boolean isEnabled) {
 		leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
@@ -192,17 +166,18 @@ public class DrivePod {
 		follower2.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 	}
 
-	// Returns true if and only if the drive pod has achieved the distance commanded
-	// by
-	// the most recent call to travelDistance()
+	/**
+	 * 
+	 * @return true when the drivepod is close enough to its target
+	 */
 	public boolean isOnTarget() {
-		// TODO
-		return true;
+		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
+		return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
 	}
 
 	/**
-	 * Retrieve the values of P, I and D from the smartdashboard and apply them to
-	 * the motor controllers.
+	 * Retrieve the values of P, I and D from the smartdashboard and apply them
+	 * to the motor controllers.
 	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve

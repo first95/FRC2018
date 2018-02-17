@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.commands.ArcadeDriveWithJoystick;
+import org.usfirst.frc.team95.robot.commands.drivebase.ManuallyControlDrivebase;
 import org.usfirst.frc.team95.robot.components.DrivePod;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
@@ -16,10 +16,9 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	
-	// private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20;
-	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
-	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
+	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we
+													// command the pods to move
+													// to account for slippage
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -32,12 +31,12 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * When no other command is running let the operator drive around using the PS3
-	 * joystick.
+	 * When no other command is running let the operator drive around using the
+	 * PS3 joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new ArcadeDriveWithJoystick());
+		setDefaultCommand(new ManuallyControlDrivebase());
 	}
 
 	/**
@@ -78,18 +77,11 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * Reset the robots sensors to the zero states.
-	 */
-	public void reset() {
-		leftPod.reset();
-		rightPod.reset();
-	}
-
-	/**
 	 * @return The distance driven (average of left and right encoders).
 	 */
 	public double getDistance() {
-		// TODO: Some of the commands call this in order to travel a set distance.
+		// TODO: Some of the commands call this in order to travel a set
+		// distance.
 		// We want to move that functionality into this class instead.
 		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
@@ -107,7 +99,8 @@ public class DriveBase extends Subsystem {
 		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
 
-	// Command that the robot should travel a specific distance along the carpet.
+	// Command that the robot should travel a specific distance along the
+	// carpet.
 	// Call this once to command distance - do not call repeatedly, as this will
 	// reset the
 	// distance remaining.
@@ -122,24 +115,47 @@ public class DriveBase extends Subsystem {
 		rightPod.enableBrakeMode(isEnabled);
 	}
 
-	// Command that the robot should travel a specific distance along the carpet.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
-	public void pivotRadians(double radiansToPivot, double speedRadiansPerSecond) {
-		// TODO: Command left and right pods to go opposite directions for a given speed
-		// and distance
-		// leftPod. travelDistance(inchesToTravel, speedInchesPerSecond);
-		// rightPod.travelDistance(inchesToTravel, speedInchesPerSecond);
+	public void pivotDegreesClockwise(double degreesToPivotCw) {
+		double leftDistanceInches = (degreesToPivotCw / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
+		double rightDistanceInches = leftDistanceInches;
+		leftDistanceInches *= PIVOT_FUDGE_FACTOR;
+		rightDistanceInches *= PIVOT_FUDGE_FACTOR;
+		leftPod.setCLPosition(leftDistanceInches);
+		rightPod.setCLPosition(rightDistanceInches);
 	}
 
-	// Provide default value
-	public void pivotRadians(double radiansToPivot) {
-		pivotRadians(radiansToPivot, DEFAULT_PIVOT_SPEED_RADS_PER_S);
-	}
+	/**
+	 * Cause the robot's center to sweep out an arc with given radius and angle.
+	 * A positive clockwise angle is forward and to the right, a negative
+	 * clockwise angle is forward and to the left.
+	 * 
+	 * This does not take into account the drivebase's tendency toward straight
+	 * turns.
+	 * 
+	 * @param degreesToTurnCw
+	 * @param turnRadiusInches
+	 */
+	public void travelSweepingTurnForward(double degreesToTurnCw, double turnRadiusInches) {
+		double leftDistanceInches;
+		double rightDistanceInches;
 
-	public void travelSweepingTurn(double radiansToTurn, double turningRadius, double speedRadiansPerSecond) {
-		// TODO: Command each side of the robot to sweep out the appropriate arc
+		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
+
+		if (degreesToTurnCw > 0) {
+			// Forward and to the right
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+		} else {
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+		}
+
+		leftPod.setCLPosition(leftDistanceInches);
+		rightPod.setCLPosition(rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code
@@ -156,7 +172,8 @@ public class DriveBase extends Subsystem {
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
-		// "Exponential" drive, where the movements are more sensitive during slow
+		// "Exponential" drive, where the movements are more sensitive during
+		// slow
 		// movement,
 		// permitting easier fine control
 		x = Math.pow(x, 3);
