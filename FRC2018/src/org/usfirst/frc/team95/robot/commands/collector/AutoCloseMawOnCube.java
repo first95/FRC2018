@@ -51,10 +51,4 @@ public class AutoCloseMawOnCube extends Command {
 
 		Robot.collector.setMawOpen(false);
 	}
-	
-	@Override
-	public synchronized void cancel() {
-		System.out.println("Canceling");
-	}
-
 }

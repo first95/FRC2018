@@ -58,6 +58,7 @@ public class OI {
 		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
 
 		// Connect the buttons to commands
+		autograbButton.whileHeld(new AutoCloseMawOnCube());
 
 		// if (xbox.getAButtonPressed()) {
 		// new Nothing();
