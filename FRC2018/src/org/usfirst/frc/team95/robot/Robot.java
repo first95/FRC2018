@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
 		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
 		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
-		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 72));
+		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
 		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		

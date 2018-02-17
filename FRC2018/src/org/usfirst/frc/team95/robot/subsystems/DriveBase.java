@@ -144,14 +144,16 @@ public class DriveBase extends Subsystem {
 		if (degreesToTurnCw > 0) {
 			// Forward and to the right
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		} else {
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		}
 
 		leftPod.setCLPosition(leftDistanceInches);
