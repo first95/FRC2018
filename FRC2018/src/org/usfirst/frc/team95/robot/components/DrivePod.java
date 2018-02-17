@@ -95,10 +95,7 @@ public class DrivePod
 				SmartDashboard.putNumber(iLabel, K_I);
 				SmartDashboard.putNumber(dLabel, K_D);		
 				
-				// Zero out the encoder to start out.
-				// This isn't strictly necessary but it makes for a nice odometer.
-				leader.setSelectedSensorPosition(10000, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-				
+				reset();
 				
 				// Not being used at the moment
 				// voltageCurrentLimit();
@@ -146,8 +143,7 @@ public class DrivePod
 			}
 
 		public void reset() {
-			// Nothing at the moment is required.
-			// If we ever start expecting distance to be zeroed out, this is where it goes.
+			leader.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 		}
 
 		// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
