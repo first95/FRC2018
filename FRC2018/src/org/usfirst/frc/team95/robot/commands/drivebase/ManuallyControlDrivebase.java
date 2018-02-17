@@ -20,16 +20,9 @@ public class ManuallyControlDrivebase extends Command {
 	@Override
 	protected void execute() {
 		// This method is called every iteration
+		Robot.drivebase.arcade();
+		Robot.drivebase.setGear(Robot.oi.getHighGear());
 		
-		if(Robot.oi.isDriveFwdPressed() && wasPressedLastIteration == false) {
-			Robot.drivebase.travelStraight(12);
-			wasPressedLastIteration = true;
-		} else if(Robot.oi.isDriveBckPressed() && wasPressedLastIteration == false) {
-			Robot.drivebase.travelStraight(-12);
-			wasPressedLastIteration = true;
-		} else if(Robot.oi.isDriveFwdPressed()==false && Robot.oi.isDriveBckPressed()==false) {
-			wasPressedLastIteration = false;
-		}		
 	}
 	
 	@Override
