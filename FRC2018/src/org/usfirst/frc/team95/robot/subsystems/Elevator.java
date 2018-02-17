@@ -2,7 +2,7 @@ package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
-import org.usfirst.frc.team95.robot.commands.ManuallyControlElevator;
+import org.usfirst.frc.team95.robot.commands.elevator.ManuallyControlElevator;
 import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -57,9 +57,9 @@ public class Elevator extends Subsystem {
 		rightElevDriver.configReverseSoftLimitThreshold(0, Constants.CAN_TIMEOUT_MS);
 		
 		// Send the initial PID constant values to the smartdash
-		SmartDashboard.putNumber(pLabel, K_P);
-		SmartDashboard.putNumber(iLabel, K_I);
-		SmartDashboard.putNumber(dLabel, K_D);
+//		SmartDashboard.putNumber(pLabel, K_P);
+//		SmartDashboard.putNumber(iLabel, K_I);
+//		SmartDashboard.putNumber(dLabel, K_D);
 	}
 
 	public void checkAndApplyHomingSwitch() {
@@ -129,6 +129,19 @@ public class Elevator extends Subsystem {
 	}
 	
 	/**
+	 * Gets the elevator's target height, in feet.
+	 * This may not be the same as the actual height of the elevator.
+	 * @return 0 for against the floor, about 5.91 for its highest extent.
+	 */
+	public double getTargetHeightFeet() {
+		if(rightElevDriver instanceof AdjustedTalon) {
+			return ((AdjustedTalon)rightElevDriver).getClosedLoopTarget(Constants.PID_IDX) / TICKS_PER_FOOT;
+		} else {
+			return 0;
+		}
+	}
+	
+	/**
 	 * Commands the motor to stop driving itself, but not to disable.
 	 * Turns off closed-loop control completely.
 	 */
@@ -150,5 +163,11 @@ public class Elevator extends Subsystem {
 		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+	}
+
+	public boolean isOnTarget() {
+		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
+		return Math.abs(getElevatorHeightFeet() - getTargetHeightFeet()) 
+				< (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES * 12.0);
 	}
 }

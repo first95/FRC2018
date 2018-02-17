@@ -1,4 +1,4 @@
-package org.usfirst.frc.team95.robot.commands;
+package org.usfirst.frc.team95.robot.commands.elevator;
 
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ManuallyControlElevator extends Command {
+	// Note that a different set of constants is used in autonomous control
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
 	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 5;
@@ -40,25 +41,25 @@ public class ManuallyControlElevator extends Command {
 		final String ELEV_MODE = "Elevator mode";
 		// First priority: Is the user holding down one of the seek buttons?
 		if(Robot.oi.isElevatorFloorButtonPressed()) {
-			SmartDashboard.putString(ELEV_MODE, "Seek floor");
+//			SmartDashboard.putString(ELEV_MODE, "Seek floor");
 			seekHoldPoint(ElevatorHoldPoint.FLOOR);
 			wasHoldingPresentPositionLastIteration = false;
 		} else if(Robot.oi.isElevatorSwitchScoreButtonPressed()) {
-			SmartDashboard.putString(ELEV_MODE, "Seek switch scoring position");
+//			SmartDashboard.putString(ELEV_MODE, "Seek switch scoring position");
 			seekHoldPoint(ElevatorHoldPoint.SWITCH_SCORE);
 			wasHoldingPresentPositionLastIteration = false;
 		} else if(Robot.oi.isElevatorScaleScoreLowButtonPressed()) {
-			SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (low)");
+//			SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (low)");
 			seekHoldPoint(ElevatorHoldPoint.SCALE_SCORE_LOW);
 			wasHoldingPresentPositionLastIteration = false;
 		} else if(Robot.oi.isElevatorScaleScoreHighButtonPressed()) {
-			SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (high)");
+//			SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (high)");
 			seekHoldPoint(ElevatorHoldPoint.SCALE_SCORE_HIGH);
 			wasHoldingPresentPositionLastIteration = false;
 		} else {
 			// Second priority: Is the stick outside the deadband?
 			if(Math.abs(Robot.oi.getElevatorSpeed()) > 0) {
-				SmartDashboard.putString(ELEV_MODE, "Set speed");
+//				SmartDashboard.putString(ELEV_MODE, "Set speed");
 				Robot.elevator.setElevatorSpeed(Robot.oi.getElevatorSpeed());
 				wasHoldingPresentPositionLastIteration = false;
 			} else {
@@ -70,7 +71,7 @@ public class ManuallyControlElevator extends Command {
 					// We already commanded the elevator to hold its present
 					// position, so we don't need to command it to do so again.
 				}
-				SmartDashboard.putString(ELEV_MODE, "Hold present position");
+//				SmartDashboard.putString(ELEV_MODE, "Hold present position");
 			}
 		}
 	}

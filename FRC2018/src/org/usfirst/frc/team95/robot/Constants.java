@@ -6,6 +6,17 @@ public class Constants
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
 
+		public static final double ROBOT_WHEELBASE_WIDTH_INCHES = 23.0; // Distance between the centers of the wheels
+		
+		// Used in closed-loop control
+		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
+		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point
+		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
+
+		// Manual Drive
+		public static final double SPEED_TO_SHIFT_UP = 6.0; // ft per sec
+		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
+
 		// Used with Talons
 		public static final int PID_IDX = 0; // The Talons support up to 2 PID loops, with indexes 0 and 1.  We only use 0.
 		public static final int CAN_TIMEOUT_MS = 10; // The amount of time to wait for the CAN transaction to finish
@@ -20,6 +31,9 @@ public class Constants
 		
 		// Indices for sensors
 		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
+		public static final int LEFT_COLLECTOR_PHOTOSENSOR_DIO_NUM = 3;
+		public static final int MIDDLE_COLLECTOR_PHOTOSENSOR_DIO_NUM = 1;
+		public static final int RIGHT_COLLECTOR_PHOTOSENSOR_DIO_NUM = 2;
 
 		// Indices for Talons
 		// Drive base
