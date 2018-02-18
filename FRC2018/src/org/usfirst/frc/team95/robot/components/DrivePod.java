@@ -18,6 +18,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivePod {
 	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12); // Measured 2/13/18 on practice robot on
 																			// "field" carpet
+	// Feedforward term (K_F) is only used in closed-loop speed control.
+	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
+	// the P, I, and D terms.
+	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
+	private static final double K_F_SPEED_MODE = 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
+	private static final double K_F_POSITION_MODE = 0.0;
 	private double K_P = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private double K_I = 0.1; //0.01 * K_P;
 	private double K_D = 0; //40.0 * K_P;
@@ -109,9 +115,23 @@ public class DrivePod {
 		double delta = ENCODER_TICKS_PER_INCH * inches;
 		double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
 		System.out.println(name + " going " + inches + " inches, or delta=" + delta + ", current = " + current);
+		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.set(ControlMode.Position, current + delta);
 	}
 
+	/**
+	 * Command the DrivePod to take on a specific velocity until commanded to stop
+	 * 
+	 * @param inchesPerSecond
+	 *            - the target velocity in inches per second
+	 */
+	public void setCLSpeed(double inchesPerSecond) {
+		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second.");
+		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.set(ControlMode.Velocity, speedTicksPer100ms);
+	}
+	
 	public double getPositionInches() {
 		return leader.getSelectedSensorPosition(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
 	}
@@ -149,14 +169,6 @@ public class DrivePod {
 	public void setVoltageRamp(double rampRate) {
 		leader.configOpenloopRamp(rampRate, Constants.CAN_TIMEOUT_MS);
 	}
-
-	// Command a specific speed, to be enforced via PID control
-	public void setSpeed(double speedInchesPerSecond) {
-		// TODO: this won't work without some settings getting applied first
-		// leader.set(ControlMode.Velocity, speedInchesPerSecond);
-		// followers follow
-	}
-
 
 	public void enableBrakeMode(boolean isEnabled) {
 		leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
