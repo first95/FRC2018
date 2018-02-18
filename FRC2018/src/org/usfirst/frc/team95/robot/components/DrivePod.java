@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class DrivePod {
-	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12); // Measured 2/13/18 on practice robot on
-																			// "field" carpet
+	// Measured 2/13/18 on practice robot on "field" carpet
+	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12);
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
