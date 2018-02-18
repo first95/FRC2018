@@ -33,7 +33,9 @@ public class DrivePod {
 	private String dLabel = "DrivePod D";		
 	private IMotorControllerEnhanced leader, follower1, follower2;
 	private String name;
-	private double twiddle = 0;
+	private double twiddle = 1.0; // This value is used to force SmartDashboard line graphs to update by slightly changing the value
+	private double targetDistanceAtSpeed; // When commanded both a distance and a speed, this object needs to remember the target distance
+	private double targetDeltaSign; // When commanded both a distance and a speed, remember if the target is numerically greater or less than the present position.
 
 	// Provide the CAN addresses of the three motor controllers.
 	// Set reverse to true if positive throttle values correspond to moving the
@@ -128,8 +130,26 @@ public class DrivePod {
 	public void setCLSpeed(double inchesPerSecond) {
 		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
 		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second.");
-		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.set(ControlMode.Velocity, speedTicksPer100ms);
+	}
+	
+	/**
+	 * Drive for a given distance at a given speed.
+	 * This method will use closed-loop control on the speed,
+	 * but only a simple threshold on the distance - it'll drive until the threshold is passed.
+	 * 
+	 * @param inchesPerSecond - the target velocity in inches per second
+	 * @param inches - the target distance in inches
+	 */
+	public void driveForDistanceAtSpeed(double inchesPerSecond, double inches) {
+		targetDistanceAtSpeed = getPositionInches() + inches;
+		if(inches > 0) {
+			targetDeltaSign = 1.0;
+		} else {
+			targetDeltaSign = -1.0;
+		}
+		setCLSpeed(inchesPerSecond);
 	}
 	
 	public double getPositionInches() {
@@ -137,13 +157,32 @@ public class DrivePod {
 	}
 
 	public double getTargetPositionInches() {
-		if (leader instanceof AdjustedTalon) {
-			return ((AdjustedTalon) leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+		if (getControlMode() == ControlMode.Position) {
+			return ((TalonSrxWrapper) leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+		} else if (getControlMode() == ControlMode.Velocity) {
+			return targetDistanceAtSpeed;
 		} else {
 			return 0;
 		}
 	}
-
+	
+	public double getTargetVelocityInchesPerSecond() {
+		if (getControlMode() == ControlMode.Velocity) {
+			double speedTicksPer100ms = ((TalonSrxWrapper) leader).getClosedLoopTarget(Constants.PID_IDX);
+			return (speedTicksPer100ms / ENCODER_TICKS_PER_INCH) * 10.0;
+		} else {
+			return 0;
+		}
+	}
+	
+	public ControlMode getControlMode() {
+		if(leader instanceof TalonSrxWrapper) {
+			return ((TalonSrxWrapper) leader).getControlMode();
+		} else {
+			return ControlMode.PercentOutput; // Return something somewhat reasonable
+		}
+	}
+	
 	public void log() {
 		if (twiddle > 1.0) {
 			twiddle = 1.0;
@@ -182,7 +221,13 @@ public class DrivePod {
 	 */
 	public boolean isOnTarget() {
 		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
-		return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
+		if(getControlMode() == ControlMode.Position) {
+			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
+		} else if (getControlMode() == ControlMode.Velocity) {
+			return getPositionInches() > (targetDistanceAtSpeed * targetDeltaSign);
+		} else {
+			return true; // When you're not seeking anything, you're already at your destination.
+		}
 	}
 
 	/**
