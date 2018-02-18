@@ -2,10 +2,14 @@ package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
+import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -47,6 +51,8 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 //	 private XboxController xbox = new XboxController(0);
 	
+	SendableChooser<StartPosition> robotStartingPosition;
+	MutableSendableChooser<String> testSwitcher;
 	
 
 	public OI() {
@@ -66,8 +72,57 @@ public class OI {
 		// }
 
 		// a.whenPressed(new ShiftGear());
+		
+
+		// For the operators to indicate on which side of the field they placed the robot
+		robotStartingPosition = new SendableChooser<StartPosition>();
+		robotStartingPosition.addObject("Left",      StartPosition.LEFT);
+		robotStartingPosition.addObject("Mid left",  StartPosition.MID_LEFT);
+		robotStartingPosition.addDefault("Center",   StartPosition.CENTER);
+		robotStartingPosition.addObject("Mid right", StartPosition.MID_RIGHT);
+		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
+		SmartDashboard.putData("Starting position", robotStartingPosition);
+		
+		testSwitcher = new MutableSendableChooser<>();
+		testSwitcher.addDefault("yah", "");
+		testSwitcher.addObject("this", "");
+		testSwitcher.addDefault("is", "");
+		SmartDashboard.putData("meh", testSwitcher);
+	}
+	
+	// There are a few things the OI wants to revisit every time around
+	public void visit() {
+		updateWristSettings();
+		updateSmartChoosers();
 	}
 
+	// We've got some SendableChooserse that need updating based on the selected robot position
+	public void updateSmartChoosers() {
+		
+		
+		switch(robotStartingPosition.getSelected()) {
+		case CENTER:
+			System.out.println("Updating");
+			testSwitcher.test();
+			break;
+		case LEFT:
+			break;
+		case MID_LEFT:
+			break;
+		case MID_RIGHT:
+			break;
+		case RIGHT:
+			break;
+		default:
+			break;
+		
+		}
+		
+	}
+	public StartPosition getRobotStartPosition() {
+		return robotStartingPosition.getSelected();
+	}
+	
 	public void log() {
 //		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
 	}

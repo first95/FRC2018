@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 	
 	Command autonomousCommand;
 	SendableChooser<Command> singleAutomoveChooser;
-	SendableChooser<StartPosition> robotStartingPosition;
 	SendableChooser<Strategy> strategyChooser;
 //	SendableChooser a, b, c;
 
@@ -97,15 +96,6 @@ public class Robot extends IterativeRobot {
 		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
-		// For the operators to indicate on which side of the field they placed the robot
-		robotStartingPosition = new SendableChooser<StartPosition>();
-		robotStartingPosition.addObject("Left",      StartPosition.LEFT);
-		robotStartingPosition.addObject("Mid left",  StartPosition.MID_LEFT);
-		robotStartingPosition.addDefault("Center",   StartPosition.CENTER);
-		robotStartingPosition.addObject("Mid right", StartPosition.MID_RIGHT);
-		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
-		SmartDashboard.putData("Starting position", robotStartingPosition);
-		
 		// Choose strategy
 		strategyChooser = new SendableChooser<>();
 		strategyChooser.addDefault(AnyForward.DESCRIPTION, new AnyForward());
@@ -125,7 +115,7 @@ public class Robot extends IterativeRobot {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Plate assignments are " + gameData);
 
-		robotStartSide = robotStartingPosition.getSelected();
+		robotStartSide = oi.getRobotStartPosition();
 		System.out.println("Robot start side: " + robotStartSide);
 		System.out.println("The " + getWhichSideOfTheNearSwitchIsOurColor() + " side of the near switch is our color.");
 		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
@@ -170,6 +160,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run(); // Runs all active commands
 		elevator.checkAndApplyHomingSwitch();
         drivebase.pullPidConstantsFromSmartDash();
+        oi.visit();
 		log();
 	}
 
