@@ -7,23 +7,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//import org.usfirst.frc.team95.robot.commands.Rotate;
-import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
-import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
-import org.usfirst.frc.team95.robot.strategies.AnyForward;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
-import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -53,9 +38,6 @@ public class Robot extends IterativeRobot {
 	private String gameData;
 	
 	Command autonomousCommand;
-	SendableChooser<Command> singleAutomoveChooser;
-	SendableChooser<Strategy> strategyChooser;
-//	SendableChooser a, b, c;
 
 	// Components of the robot
 	public static DriveBase drivebase;
@@ -83,30 +65,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
-		// Sendable Chooser for single commands
-		singleAutomoveChooser = new SendableChooser<Command>();
-		singleAutomoveChooser.addDefault("Nothing", new Nothing());
-		singleAutomoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
-		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
-		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
-		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
-		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
-		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
-		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
-		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
-		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
-		
-		// Choose strategy
-		strategyChooser = new SendableChooser<>();
-		strategyChooser.addDefault(AnyForward.DESCRIPTION, new AnyForward());
-		strategyChooser.addDefault(AnyOurSideSF.DESCRIPTION,
-				new AnyOurSideSF());
-		strategyChooser.addDefault(AnyOurSideSLF.DESCRIPTION, 
-				new AnyOurSideSLF());
-		strategyChooser.addDefault(CenterScale.DESCRIPTION,
-				new CenterScale());
-		SmartDashboard.putData(strategyChooser);
-
 		drivebase.brake(false);
 	}
 
@@ -121,16 +79,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
 		System.out.println("The " + getWhichSideOfTheFarSwitchIsOurColor() + " side of the far switch is our color.");
 		
-		autonomousCommand = singleAutomoveChooser.getSelected();
-		Strategy chosenStrategy = strategyChooser.getSelected();
-		chosenStrategy.AdjustStrategy(getWhichSideOfTheNearSwitchIsOurColor(),
-				getWhichSideOfTheScaleIsOurColor(),
-				robotStartSide);
-		
-		// When we've done some testing on single commands and are ready to do
-		// strategies, enable the following line.
-//		autonomousCommand = chosenStrategy;
-
+		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
 		autonomousCommand.start();
 	}
 

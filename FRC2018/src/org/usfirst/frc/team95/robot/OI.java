@@ -2,11 +2,12 @@ package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
-import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
+import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
@@ -51,9 +52,12 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 //	 private XboxController xbox = new XboxController(0);
 	
-	SendableChooser<StartPosition> robotStartingPosition;
-	MutableSendableChooser<String> testSwitcher;
-	
+	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
+	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
+	MutableSendableChooser<Command> moveSwitchLScaleR = new MutableSendableChooser<>();
+	MutableSendableChooser<Command> moveSwitchRScaleL = new MutableSendableChooser<>();
+	MutableSendableChooser<Command> moveSwitchRScaleR = new MutableSendableChooser<>();
+	StartPosition lastSelectedPosition = null; // The position that was selected last iteration
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
@@ -75,19 +79,13 @@ public class OI {
 		
 
 		// For the operators to indicate on which side of the field they placed the robot
-		robotStartingPosition = new SendableChooser<StartPosition>();
 		robotStartingPosition.addObject("Left",      StartPosition.LEFT);
 		robotStartingPosition.addObject("Mid left",  StartPosition.MID_LEFT);
 		robotStartingPosition.addDefault("Center",   StartPosition.CENTER);
 		robotStartingPosition.addObject("Mid right", StartPosition.MID_RIGHT);
 		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
 		SmartDashboard.putData("Starting position", robotStartingPosition);
-		
-		testSwitcher = new MutableSendableChooser<>();
-		testSwitcher.addDefault("yah", "");
-		testSwitcher.addObject("this", "");
-		testSwitcher.addDefault("is", "");
-		SmartDashboard.putData("meh", testSwitcher);
+
 	}
 	
 	// There are a few things the OI wants to revisit every time around
@@ -95,32 +93,151 @@ public class OI {
 		updateWristSettings();
 		updateSmartChoosers();
 	}
+	
+	public StartPosition getRobotStartPosition() {
+		return robotStartingPosition.getSelected();
+	}
 
 	// We've got some SendableChooserse that need updating based on the selected robot position
 	public void updateSmartChoosers() {
+		StartPosition curPos = robotStartingPosition.getSelected();
 		
+		if(curPos != lastSelectedPosition) {
+			System.out.println("Updating auto move choices list");
+			updateLLAutoMoveChooser(curPos);
+			updateLRAutoMoveChooser(curPos);
+			updateRLAutoMoveChooser(curPos);
+			updateRRAutoMoveChooser(curPos);
+		}
 		
-		switch(robotStartingPosition.getSelected()) {
-		case CENTER:
-			System.out.println("Updating");
-			testSwitcher.test();
-			break;
+		lastSelectedPosition = curPos;
+		
+	}
+	
+	private void updateLLAutoMoveChooser(StartPosition robotStartPosition) {
+		// Clear it out
+		moveSwitchLScaleL.clear();
+		
+		// Default move is also the closest thing we have to a label
+		moveSwitchLScaleL.addDefault("SW L, SC L: Nothing", new Nothing());
+		
+		switch(robotStartPosition) {
 		case LEFT:
+			moveSwitchLScaleL.addObject("LL L", new Nothing());
 			break;
 		case MID_LEFT:
+			moveSwitchLScaleL.addObject("LL ML", new Nothing());
+			break;
+		case CENTER:
+			moveSwitchLScaleL.addObject("LL C", new Nothing());
 			break;
 		case MID_RIGHT:
+			moveSwitchLScaleL.addObject("LL MR", new Nothing());
 			break;
 		case RIGHT:
+			moveSwitchLScaleL.addObject("LL R", new Nothing());
 			break;
 		default:
 			break;
-		
 		}
-		
 	}
-	public StartPosition getRobotStartPosition() {
-		return robotStartingPosition.getSelected();
+	
+	private void updateLRAutoMoveChooser(StartPosition robotStartPosition) {
+		// Clear it out
+		moveSwitchLScaleR.clear();
+		
+		// Default move is also the closest thing we have to a label
+		moveSwitchLScaleR.addDefault("SW L, SC R: Nothing", new Nothing());
+		
+		switch(robotStartPosition) {
+		case LEFT:
+			moveSwitchLScaleR.addObject("LR L", new Nothing());
+			break;
+		case MID_LEFT:
+			moveSwitchLScaleR.addObject("LR ML", new Nothing());
+			break;
+		case CENTER:
+			moveSwitchLScaleR.addObject("LR C", new Nothing());
+			break;
+		case MID_RIGHT:
+			moveSwitchLScaleR.addObject("LR MR", new Nothing());
+			break;
+		case RIGHT:
+			moveSwitchLScaleR.addObject("LR R", new Nothing());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void updateRLAutoMoveChooser(StartPosition robotStartPosition) {
+		// Clear it out
+		moveSwitchRScaleL.clear();
+		
+		// Default move is also the closest thing we have to a label
+		moveSwitchRScaleL.addDefault("SW R, SC L: Nothing", new Nothing());
+		
+		switch(robotStartPosition) {
+		case LEFT:
+			moveSwitchRScaleL.addObject("RL L", new Nothing());
+			break;
+		case MID_LEFT:
+			moveSwitchRScaleL.addObject("RL ML", new Nothing());
+			break;
+		case CENTER:
+			moveSwitchRScaleL.addObject("RL C", new Nothing());
+			break;
+		case MID_RIGHT:
+			moveSwitchRScaleL.addObject("RL MR", new Nothing());
+			break;
+		case RIGHT:
+			moveSwitchRScaleL.addObject("RL R", new Nothing());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void updateRRAutoMoveChooser(StartPosition robotStartPosition) {
+		// Clear it out
+		moveSwitchRScaleR.clear();
+		
+		// Default move is also the closest thing we have to a label
+		moveSwitchRScaleR.addDefault("SW R, SC R: Nothing", new Nothing());
+		
+		switch(robotStartPosition) {
+		case LEFT:
+			moveSwitchRScaleR.addObject("RR L", new Nothing());
+			break;
+		case MID_LEFT:
+			moveSwitchRScaleR.addObject("RR ML", new Nothing());
+			break;
+		case CENTER:
+			moveSwitchRScaleR.addObject("RR C", new Nothing());
+			break;
+		case MID_RIGHT:
+			moveSwitchRScaleR.addObject("RR MR", new Nothing());
+			break;
+		case RIGHT:
+			moveSwitchRScaleR.addObject("RR R", new Nothing());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public Command getSelectedCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
+		if(switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchLScaleL.getSelected();
+		} else if(switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchLScaleR.getSelected();
+		} else if(switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchRScaleL.getSelected();
+		} else if(switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchRScaleR.getSelected();
+		} else {
+			return new Nothing();
+		}
 	}
 	
 	public void log() {

@@ -105,9 +105,7 @@ public class MutableSendableChooser<V> extends SendableBase implements Sendable 
 		return m_map.get(selected);
 	}
 
-	private NetworkTableEntry m_tableDefault;
 	private NetworkTableEntry m_tableSelected;
-	private NetworkTableEntry m_tableOptions;
 
 	@Override
 	public void initSendable(SendableBuilder builder) {
@@ -118,23 +116,15 @@ public class MutableSendableChooser<V> extends SendableBase implements Sendable 
 		builder.addStringArrayProperty(OPTIONS, () -> {
 			return m_map.keySet().toArray(new String[0]);
 		}, null);
-		m_tableDefault  = builder.getEntry(DEFAULT);
 		m_tableSelected = builder.getEntry(SELECTED);
-		m_tableOptions  = builder.getEntry(OPTIONS);
 	}
 
-	public void test() {
-//		String test[] = new String[] { "i'm", "blue", "ya", "ba", "dee", "yabadi" };
-//		m_tableDefault.setString(test[0]);
-//		if (m_tableOptions.setStringArray(test)) {
-//			System.out.println(m_tableOptions.getStringArray(new String[] {})[0]);
-//		} else {
-//			System.out.println("Failed to set!");
-//		}
+	/** 
+	 * Remove all items from the SendableChooser.
+	 * Note that the SmartDashboard won't see the update until you
+	 * add, at minimum, a default object.
+	 */
+	public void clear() {
 		m_map.clear();
-//		m_map.put("hey", (V) "there");
-//		Object val = m_map.get("yah");
-//		m_map.remove(val); // kill the first one
-		addDefault("again", (V)"yes");
 	}
 }
