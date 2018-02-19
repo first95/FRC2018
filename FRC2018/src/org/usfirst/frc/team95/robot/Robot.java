@@ -15,6 +15,7 @@ import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
@@ -93,7 +94,9 @@ public class Robot extends IterativeRobot {
 		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
 		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
 		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
-		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
+		singleAutomoveChooser.addObject("Drive forward 2 feet in 1 second", new DriveStraightAtSpeed(24, 24));
+		singleAutomoveChooser.addObject("Drive backward 6 feet in 3 seconds", new DriveStraightAtSpeed(-24, -6*12));
+		singleAutomoveChooser.addObject("Sweep turn, 4ft radius, 90 degrees CW", new SweepTurn(90, 48));
 		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		
