@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
@@ -24,7 +23,6 @@ import org.usfirst.frc.team95.robot.strategies.AnyForward;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
 import org.usfirst.frc.team95.robot.strategies.CenterScale;
-import org.usfirst.frc.team95.robot.strategies.SitStill;
 import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -145,8 +143,7 @@ public class Robot extends IterativeRobot {
 		// When we've done some testing on single commands and are ready to do
 		// strategies, enable the following line.
 //		autonomousCommand = chosenStrategy;
-		//autonomousCommand = new AutoCloseMawOnCube();
-//		autonomousCommand = new AutoCloseMawOnCube();
+
 		autonomousCommand.start();
 	}
 

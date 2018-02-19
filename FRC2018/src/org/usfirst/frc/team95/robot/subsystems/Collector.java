@@ -75,10 +75,18 @@ public class Collector extends Subsystem {
 		wristStageTwo.set(retracted);
 	}
 	
+	public boolean getWristStageOneRetracted() {
+		return wristStageOne.get();
+	}
 	
-	public void setIntakeSpeed(double value) {
-		leftChainDriver.set(ControlMode.PercentOutput, -value);
-		rightChainDriver.set(ControlMode.PercentOutput, value);
+	public boolean getWristStageTwoRetracted() {
+		return wristStageTwo.get();
+	}
+	
+	
+	public void setIntakeSpeed(double outwardThrottle) {
+		leftChainDriver.set(ControlMode.PercentOutput, -outwardThrottle);
+		rightChainDriver.set(ControlMode.PercentOutput, outwardThrottle);
 	}
 	
 	/**

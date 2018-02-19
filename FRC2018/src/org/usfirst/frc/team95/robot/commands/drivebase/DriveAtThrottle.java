@@ -9,40 +9,39 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team95.robot.Robot;
 
 /**
- * Drive the given distance straight (negative values go backwards). 
- * Uses the 
+ * Drive the given distance straight at a given throttle value.
  */
-public class DriveStraight extends Command {
-	double distanceInches;
+public class DriveAtThrottle extends Command {
+	double throttleFwd;
 	
-	public DriveStraight(double inches) {
+	public DriveAtThrottle(double throttleFwd) {
 		requires(Robot.drivebase);
 		
 		// Not sure why this is reversed
-		this.distanceInches = -inches;
+		this.throttleFwd = -throttleFwd;
 		
 	}
 
 	// Called every time the command starts
 	@Override
 	public void initialize() {
-		System.out.println("Starting DriveStraight (" + distanceInches + " inches)");
+		System.out.println("Starting DriveAtThrottle (" + throttleFwd + ")");
 		
 		// Command the movement
-		Robot.drivebase.travelStraight(distanceInches);
+		Robot.drivebase.travelStraight(throttleFwd);
 		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.drivebase.onTarget();
+		return false; // continue until stoppes
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		System.out.println("Ending DriveStraight (" + distanceInches + " inches)");
+		System.out.println("Ending DriveAtThrottle (" + throttleFwd + ")");
 		Robot.drivebase.drive(0, 0);
 	}
 }

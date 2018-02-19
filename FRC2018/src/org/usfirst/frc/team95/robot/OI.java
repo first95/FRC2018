@@ -3,9 +3,9 @@ package org.usfirst.frc.team95.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team95.robot.commands.*;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
+import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,13 +52,15 @@ public class OI {
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
-		SmartDashboard.putData("Move 1 Foot Forward", new DriveStraight(12));
+		SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
+		SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
 
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
 		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
 
 		// Connect the buttons to commands
+		autograbButton.whileHeld(new AutoPickUpCubeManualDrive());
 
 		// if (xbox.getAButtonPressed()) {
 		// new Nothing();
