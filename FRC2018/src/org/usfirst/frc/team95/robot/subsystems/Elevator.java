@@ -2,6 +2,8 @@ package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
+import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
+import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
 import org.usfirst.frc.team95.robot.commands.elevator.ManuallyControlElevator;
 import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 
@@ -129,9 +131,8 @@ public class Elevator extends Subsystem {
 	public void setElevatorHeight(double feet) {
 		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 
-		if (getElevatorHeightFeet() > (FEET_FULL_RANGE * 12) - 2) {
-			Robot.collector.setWristStageOneRetracted(false);
-			Robot.collector.setWristStageTwoRetracted(false);
+		if (getElevatorHeightFeet() >= FEET_FULL_RANGE) {
+			new SetWristAngle(WristAngle.MID_UP);
 		}
 	}
 
