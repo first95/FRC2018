@@ -51,6 +51,19 @@ public class TalonSrxWrapper implements IMotorControllerEnhanced {
 	public TalonSrxWrapper(IMotorControllerEnhanced wrapped) {
 		this.wrapped = wrapped;
 	}
+	
+	public int getClosedLoopTarget(int pidIdx) {
+		if(wrapped instanceof TalonSRX) {
+			if(((TalonSRX)wrapped).getControlMode() == ControlMode.Position) {
+				return ((TalonSRX)wrapped).getClosedLoopTarget(pidIdx);
+			} else {
+				return 0;
+			}
+		} else {
+			return 0;
+		}
+	}
+	
 	@Override
 	public void set(ControlMode Mode, double demand) { wrapped.set(Mode, demand); }
 	@Override

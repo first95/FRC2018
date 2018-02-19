@@ -36,51 +36,55 @@ public class AdjustedTalon extends TalonSrxWrapper
 		}
 
 		@Override
-		public void set(ControlMode mode,  double rate)
+		public void set(ControlMode mode,  double value)
 			{
-				// TODO: Right now we're checking voltage once per AdjustedTalon, when we technically only need to do it once per iteration for the whole robot
-				double current = super.getOutputCurrent();
-				double voltage = panel.getVoltage();
-				double newAtten;
-				
-				voltageRec.add(voltage);
-				if (voltageRec.size() > NUM_RECENT_SAMPLES) {
-					voltageRec.remove();
+				if (mode == ControlMode.PercentOutput) {
+					// In this mode, the value is a rate
+					// TODO: Right now we're checking voltage once per AdjustedTalon, when we technically only need to do it once per iteration for the whole robot
+					double current = super.getOutputCurrent();
+					double voltage = panel.getVoltage();
+					double newAtten;
+					
+					voltageRec.add(voltage);
+					if (voltageRec.size() > NUM_RECENT_SAMPLES) {
+						voltageRec.remove();
+					}
+					
+					voltage = Collections.min(voltageRec);
+					
+					if (value < 0.0)
+						{
+						value *= BACKWARDS_MULTIPLIER;
+	
+							value = Math.min(value, 1);
+							value = Math.max(value, -1);
+						}
+					
+					if (voltage < MIN_VOLTAGE) {
+						voltage = MIN_VOLTAGE;
+					}
+					if (voltage < MAX_VOLTAGE)
+						{
+							newAtten = (SLOPEV * voltage) + INTERCEPTV;
+							newAtten = Math.max(newAtten, MIN_ATTENV);
+							value *= newAtten;
+							// System.out.println("Atenn" + newAtten);
+						}else {
+							newAtten = 1;
+						}
+	//				SmartDashboard.putNumber("Atten", newAtten);
+					/*else if (current < MAX_CURRENT)
+						{
+							newAtten = (SLOPEC * current) + INTERCEPTC;
+							newAtten = Math.max(newAtten, MAX_ATTENC);
+							rate *= newAtten;
+							// System.out.println("Atenn" + newAtten);
+						}*/
+					// System.out.println("Voltage" + panel.getVoltage());
+					// System.out.println("Rate" + rate);
 				}
 				
-				voltage = Collections.min(voltageRec);
-				
-				if (rate < 0.0)
-					{
-						rate *= BACKWARDS_MULTIPLIER;
-
-						rate = Math.min(rate, 1);
-						rate = Math.max(rate, -1);
-					}
-				
-				if (voltage < MIN_VOLTAGE) {
-					voltage = MIN_VOLTAGE;
-				}
-				if (voltage < MAX_VOLTAGE)
-					{
-						newAtten = (SLOPEV * voltage) + INTERCEPTV;
-						newAtten = Math.max(newAtten, MIN_ATTENV);
-						rate *= newAtten;
-						// System.out.println("Atenn" + newAtten);
-					}else {
-						newAtten = 1;
-					}
-//				SmartDashboard.putNumber("Atten", newAtten);
-				/*else if (current < MAX_CURRENT)
-					{
-						newAtten = (SLOPEC * current) + INTERCEPTC;
-						newAtten = Math.max(newAtten, MAX_ATTENC);
-						rate *= newAtten;
-						// System.out.println("Atenn" + newAtten);
-					}*/
-				// System.out.println("Voltage" + panel.getVoltage());
-				// System.out.println("Rate" + rate);
-				super.set(mode, rate);
+				super.set(mode, value);
 			}
 
 	}

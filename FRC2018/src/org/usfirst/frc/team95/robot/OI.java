@@ -3,7 +3,9 @@ package org.usfirst.frc.team95.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team95.robot.commands.*;
+import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
+import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
+import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,6 +23,7 @@ public class OI {
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
+	public static final int MAW_AUTOGRAB_BUTTON = 6; // Right bumper
 	public static final int ELEV_SEEK_FLOOR_BUTTON = 1; // A
 	public static final int ELEV_SEEK_SWITCH_SCORE_BUTTON = 2; // B
 	public static final int ELEV_SEEK_SCALE_SCORE_LOW_BUTTON = 3; // X
@@ -43,16 +46,21 @@ public class OI {
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
 //	 private XboxController xbox = new XboxController(0);
+	
+	
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
-		SmartDashboard.putData("Go to Switch", new GoToSwitch());
+		SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
+		SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
 
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
+		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
 
 		// Connect the buttons to commands
-		joy_A.whenPressed(new Nothing());
+		autograbButton.whileHeld(new AutoPickUpCubeManualDrive());
+
 		// if (xbox.getAButtonPressed()) {
 		// new Nothing();
 		// }
@@ -61,7 +69,7 @@ public class OI {
 	}
 
 	public void log() {
-		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
+//		SmartDashboard.putNumber("Weapons stick POV", weaponsController.getPOV());
 	}
 	
 	// Collector controls
@@ -90,6 +98,15 @@ public class OI {
 			// When no D-Pad button is pressed, don't change the angle
 		}
 	}
+	
+	public void setWristStageOneRectractedStatus(boolean retracted) {
+		stageOneRetracted = retracted;
+	}
+	
+	public void setWristStageTwoRetractedStatus(boolean retracted) {
+		stageTwoRetracted = retracted;
+	}
+	
 	public boolean getWristStageOneRetracted() {
 		return stageOneRetracted;
 	}
@@ -137,4 +154,5 @@ public class OI {
 	public boolean getHighGear() {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
+		
 }
