@@ -14,7 +14,7 @@ public class Constants
 		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
 
 		// Manual Drive
-		public static final double SPEED_TO_SHIFT_UP = 6.0; // ft per sec
+		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec
 		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
 
 		// Used with Talons

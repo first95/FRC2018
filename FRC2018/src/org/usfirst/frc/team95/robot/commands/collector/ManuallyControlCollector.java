@@ -16,8 +16,8 @@ public class ManuallyControlCollector extends Command {
 		Robot.collector.setMawOpen(Robot.oi.getCollectorOpen());
 		Robot.collector.setIntakeSpeed(Robot.oi.getCollectorSpeed());
 		Robot.oi.updateWristSettings();
-		//Robot.collector.setWristStageOneRetracted(Robot.oi.getWristStageOneRetracted());
-		//Robot.collector.setWristStageTwoRetracted(Robot.oi.getWristStageTwoRetracted());
+		Robot.collector.setWristStageOneRetracted(Robot.oi.getWristStageOneRetracted());
+		Robot.collector.setWristStageTwoRetracted(Robot.oi.getWristStageTwoRetracted());
 	}
 	
 	@Override
