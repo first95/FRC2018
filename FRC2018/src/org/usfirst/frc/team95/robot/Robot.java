@@ -208,7 +208,7 @@ public class Robot extends IterativeRobot {
 	 */
 	private void log() {
 		drivebase.log();
-//		elevator.log();
+		elevator.log();
 //		collector.log();
 		oi.log();
 	}
