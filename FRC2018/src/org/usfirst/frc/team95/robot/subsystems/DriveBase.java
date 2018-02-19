@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team95.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,6 +23,14 @@ public class DriveBase extends Subsystem {
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
+	private double leftSpeed;
+	private double rightSpeed;
+
+	private Timer shiftTimer = new Timer();
+	private boolean allowShift = true;
+	private boolean allowDeshift = true;
+	private boolean hasAlreadyShifted = false;
+
 	public DriveBase() {
 		super();
 
@@ -31,8 +40,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * When no other command is running let the operator drive around using the
-	 * PS3 joystick.
+	 * When no other command is running let the operator drive around using the PS3
+	 * joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
@@ -45,7 +54,7 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-		
+
 		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
@@ -125,9 +134,9 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * Cause the robot's center to sweep out an arc with given radius and angle.
-	 * A positive clockwise angle is forward and to the right, a negative
-	 * clockwise angle is forward and to the left.
+	 * Cause the robot's center to sweep out an arc with given radius and angle. A
+	 * positive clockwise angle is forward and to the right, a negative clockwise
+	 * angle is forward and to the left.
 	 * 
 	 * This does not take into account the drivebase's tendency toward straight
 	 * turns.
@@ -143,16 +152,16 @@ public class DriveBase extends Subsystem {
 
 		if (degreesToTurnCw > 0) {
 			// Forward and to the right
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		} else {
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		}
 
@@ -203,6 +212,45 @@ public class DriveBase extends Subsystem {
 
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
+	}
+
+	public void autoShift() {
+		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
+		rightSpeed = Math.abs(Robot.drivebase.getRightSpeed());
+
+		// Autoshift framework based off speed
+		if (allowShift) {
+			if ((leftSpeed < Constants.SPEED_TO_SHIFT_DOWN) && (rightSpeed < Constants.SPEED_TO_SHIFT_DOWN)) {
+				Robot.drivebase.setGear(false);
+
+				if (hasAlreadyShifted) {
+					allowDeshift = true;
+					hasAlreadyShifted = false;
+				}
+
+			} else if ((leftSpeed > Constants.SPEED_TO_SHIFT_UP) && (rightSpeed > Constants.SPEED_TO_SHIFT_UP)) {
+				if (allowDeshift) {
+					shiftTimer.reset();
+					shiftTimer.start();
+					allowShift = false;
+					Robot.drivebase.setGear(true);
+				}
+			}
+		} else if (shiftTimer.get() > 1.0) {
+			allowShift = true;
+			shiftTimer.stop();
+			shiftTimer.reset();
+			allowDeshift = false;
+			hasAlreadyShifted = true;
+		}
+
+		// SmartDashboard.putBoolean("Allow Shift:", allowShift);
+		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
+		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
+	}
+	
+	public void visit() {
+		autoShift();
 	}
 
 	public void pullPidConstantsFromSmartDash() {

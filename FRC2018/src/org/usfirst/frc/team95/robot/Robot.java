@@ -170,6 +170,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run(); // Runs all active commands
 		elevator.checkAndApplyHomingSwitch();
         drivebase.pullPidConstantsFromSmartDash();
+        drivebase.visit();
 		log();
 	}
 
