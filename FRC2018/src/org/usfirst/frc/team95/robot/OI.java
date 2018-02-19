@@ -86,6 +86,11 @@ public class OI {
 		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
 		SmartDashboard.putData("Starting position", robotStartingPosition);
 
+		// Add the move choosers, which will be populated the first call to visit()
+		SmartDashboard.putData("LL", moveSwitchLScaleL);
+		SmartDashboard.putData("LR", moveSwitchLScaleR);
+		SmartDashboard.putData("RL", moveSwitchRScaleL);
+		SmartDashboard.putData("RR", moveSwitchRScaleR);
 	}
 	
 	// There are a few things the OI wants to revisit every time around
