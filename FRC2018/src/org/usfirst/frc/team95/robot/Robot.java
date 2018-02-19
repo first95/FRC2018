@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 
 //import org.usfirst.frc.team95.robot.commands.Rotate;
 import org.usfirst.frc.team95.robot.commands.*;
@@ -122,7 +123,19 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		int maxTime_sec = 8;
+		double startTime_sec = Timer.getFPGATimestamp();
+		double elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
+		gameData = "";
+		while ((gameData.length() < 3) & (elapTime_sec < maxTime_sec)) {
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+			elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
+		}
+		if (gameData == "") {
+			gameData = "UUU";
+		} else {
+			System.out.println("Time to get game data was "+elapTime_sec+" seconds.");
+		}
 		System.out.println("Plate assignments are " + gameData);
 
 		robotStartSide = robotStartingPosition.getSelected();
