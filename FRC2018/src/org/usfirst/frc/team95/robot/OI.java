@@ -10,6 +10,7 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
+import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
 /**
@@ -128,19 +129,18 @@ public class OI {
 		
 		switch(robotStartPosition) {
 		case LEFT:
-			moveSwitchLScaleL.addObject("LL L", new Nothing());
+			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case MID_LEFT:
-			moveSwitchLScaleL.addObject("LL ML", new Nothing());
+			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case CENTER:
-			moveSwitchLScaleL.addObject("LL C", new Nothing());
 			break;
 		case MID_RIGHT:
-			moveSwitchLScaleL.addObject("LL MR", new Nothing());
+			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case RIGHT:
-			moveSwitchLScaleL.addObject("LL R", new Nothing());
+			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		default:
 			break;
@@ -156,19 +156,18 @@ public class OI {
 		
 		switch(robotStartPosition) {
 		case LEFT:
-			moveSwitchLScaleR.addObject("LR L", new Nothing());
+			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case MID_LEFT:
-			moveSwitchLScaleR.addObject("LR ML", new Nothing());
+			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case CENTER:
-			moveSwitchLScaleR.addObject("LR C", new Nothing());
 			break;
 		case MID_RIGHT:
-			moveSwitchLScaleR.addObject("LR MR", new Nothing());
+			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case RIGHT:
-			moveSwitchLScaleR.addObject("LR R", new Nothing());
+			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		default:
 			break;
@@ -184,19 +183,18 @@ public class OI {
 		
 		switch(robotStartPosition) {
 		case LEFT:
-			moveSwitchRScaleL.addObject("RL L", new Nothing());
+			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case MID_LEFT:
-			moveSwitchRScaleL.addObject("RL ML", new Nothing());
+			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case CENTER:
-			moveSwitchRScaleL.addObject("RL C", new Nothing());
 			break;
 		case MID_RIGHT:
-			moveSwitchRScaleL.addObject("RL MR", new Nothing());
+			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		case RIGHT:
-			moveSwitchRScaleL.addObject("RL R", new Nothing());
+			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			break;
 		default:
 			break;
@@ -212,19 +210,18 @@ public class OI {
 		
 		switch(robotStartPosition) {
 		case LEFT:
-			moveSwitchRScaleR.addObject("RR L", new Nothing());
+			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case MID_LEFT:
-			moveSwitchRScaleR.addObject("RR ML", new Nothing());
+			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case CENTER:
-			moveSwitchRScaleR.addObject("RR C", new Nothing());
 			break;
 		case MID_RIGHT:
-			moveSwitchRScaleR.addObject("RR MR", new Nothing());
+			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case RIGHT:
-			moveSwitchRScaleR.addObject("RR R", new Nothing());
+			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		default:
 			break;

@@ -5,7 +5,7 @@ import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
+import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 
@@ -72,7 +72,7 @@ public class AnyOurSideSF extends Strategy {
 		else if (robotStartingPosition != StartPosition.CENTER)
 		{ 
 			// There's a side mismatch but we can at least cross the auto line
-			addSequential(new DriveFromWallToAutoLine());
+			addSequential(new AnyForward());
 		}
 		else
 		{
