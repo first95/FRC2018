@@ -98,6 +98,15 @@ public class OI {
 			// When no D-Pad button is pressed, don't change the angle
 		}
 	}
+	
+	public void setWristStageOneRectractedStatus(boolean retracted) {
+		stageOneRetracted = retracted;
+	}
+	
+	public void setWristStageTwoRetractedStatus(boolean retracted) {
+		stageTwoRetracted = retracted;
+	}
+	
 	public boolean getWristStageOneRetracted() {
 		return stageOneRetracted;
 	}
