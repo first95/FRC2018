@@ -6,7 +6,10 @@ public class Constants
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
 
+		// Properties of the robot design 
 		public static final double ROBOT_WHEELBASE_WIDTH_INCHES = 23.0; // Distance between the centers of the wheels
+		public static final double ROBOT_TOP_SPEED_LOW_GEAR_FPS = 7; 
+		public static final double ROBOT_TOP_SPEED_HIGH_GEAR_FPS = 17; 
 		
 		// Used in closed-loop control
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
@@ -14,7 +17,7 @@ public class Constants
 		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
 
 		// Manual Drive
-		public static final double SPEED_TO_SHIFT_UP = 6.0; // ft per sec
+		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec
 		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
 
 		// Used with Talons

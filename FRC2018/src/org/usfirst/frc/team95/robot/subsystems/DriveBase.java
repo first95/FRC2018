@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team95.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,11 +17,22 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we
-													// command the pods to move
-													// to account for slippage
+	// This is how much extra we command the pods to move to account for slippage
+	private final double PIVOT_FUDGE_FACTOR = 1.5; 
+	// The speed at which we want the center of the robot to travel
+//	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
+	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24; 
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
+
+	private double leftSpeed;
+	private double rightSpeed;
+
+	private Timer shiftTimer = new Timer();
+	private boolean allowShift = true;
+	private boolean allowDeshift = true;
+	private boolean hasAlreadyShifted = false;
+	private boolean shiftOverrideNotToggled = true;
 
 	public DriveBase() {
 		super();
@@ -31,8 +43,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * When no other command is running let the operator drive around using the
-	 * PS3 joystick.
+	 * When no other command is running let the operator drive around using the PS3
+	 * joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
@@ -45,7 +57,7 @@ public class DriveBase extends Subsystem {
 	public void log() {
 		leftPod.log();
 		rightPod.log();
-		
+
 		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
 		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
 		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
@@ -99,16 +111,29 @@ public class DriveBase extends Subsystem {
 		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
 
-	// Command that the robot should travel a specific distance along the
-	// carpet.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
+	/**
+	 * Command that the robot should travel a specific distance along the
+	 * carpet.  Call this once to command distance - do not call repeatedly, as
+	 * this will reset the distance remaining.
+	 * 
+	 * @param inchesToTravel - number of inches forward to travel
+	 */
 	public void travelStraight(double inchesToTravel) {
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
 	}
-
+	/**
+	 * Command that the robot should travel a specific distance along the
+	 * carpet.  Call this once to command distance - do not call repeatedly, as
+	 * this will reset the distance remaining.
+	 * 
+	 * @param inchesToTravel - number of inches forward to travel
+	 * @param inchesPerSecond - speed at which to travel
+	 */
+	public void travelStraight(double inchesPerSecond, double inchesToTravel) {
+		leftPod.driveForDistanceAtSpeed(-inchesPerSecond, -inchesToTravel);
+		rightPod.driveForDistanceAtSpeed(inchesPerSecond, inchesToTravel);
+	}
 	// Talon Brake system
 	public void brake(boolean isEnabled) {
 		leftPod.enableBrakeMode(isEnabled);
@@ -125,9 +150,9 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * Cause the robot's center to sweep out an arc with given radius and angle.
-	 * A positive clockwise angle is forward and to the right, a negative
-	 * clockwise angle is forward and to the left.
+	 * Cause the robot's center to sweep out an arc with given radius and angle. A
+	 * positive clockwise angle is forward and to the right, a negative clockwise
+	 * angle is forward and to the left.
 	 * 
 	 * This does not take into account the drivebase's tendency toward straight
 	 * turns.
@@ -140,24 +165,27 @@ public class DriveBase extends Subsystem {
 		double rightDistanceInches;
 
 		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
-
+		double sweepTimeS = (fractionOfAFullCircumference * turnRadiusInches * 2.0 * Math.PI)
+				/ SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 		if (degreesToTurnCw > 0) {
-			// Forward and to the right
+			// Forward and to the right - CW
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		} else {
+			// Forward and to the left - CCW
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		}
+		double leftSpeedInchesPerSecond  = leftDistanceInches / sweepTimeS;
+		double rightSpeedInchesPerSecond = rightDistanceInches / sweepTimeS;
+		
 
-		leftPod.setCLPosition(leftDistanceInches);
-		rightPod.setCLPosition(rightDistanceInches);
+		leftPod. driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(-rightSpeedInchesPerSecond, -rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code
@@ -203,6 +231,55 @@ public class DriveBase extends Subsystem {
 
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
+	}
+
+	public void autoShift() {
+		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
+		rightSpeed = Math.abs(Robot.drivebase.getRightSpeed());
+
+		// Autoshift framework based off speed
+		if (allowShift) {
+			if ((leftSpeed < Constants.SPEED_TO_SHIFT_DOWN) && (rightSpeed < Constants.SPEED_TO_SHIFT_DOWN)) {
+				Robot.drivebase.setGear(false);
+
+				if (hasAlreadyShifted) {
+					allowDeshift = true;
+					hasAlreadyShifted = false;
+				}
+
+			} else if ((leftSpeed > Constants.SPEED_TO_SHIFT_UP) && (rightSpeed > Constants.SPEED_TO_SHIFT_UP)) {
+				if (allowDeshift) {
+					shiftTimer.reset();
+					shiftTimer.start();
+					allowShift = false;
+					Robot.drivebase.setGear(true);
+				}
+			}
+		} else if (shiftTimer.get() > 1.0) {
+			allowShift = true;
+			shiftTimer.stop();
+			shiftTimer.reset();
+			allowDeshift = false;
+			hasAlreadyShifted = true;
+		}
+
+		// SmartDashboard.putBoolean("Allow Shift:", allowShift);
+		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
+		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
+	}
+
+	public void visit() {
+		if (Robot.oi.getShiftOverride()) {
+			if (shiftOverrideNotToggled) {
+				shiftOverrideNotToggled = false;
+			} else {
+				shiftOverrideNotToggled = true;
+			}
+		}
+
+		if (shiftOverrideNotToggled) {
+			autoShift();
+		}
 	}
 
 	public void pullPidConstantsFromSmartDash() {

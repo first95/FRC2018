@@ -50,6 +50,8 @@ public class SetWristAngle extends TimedCommand {
 		} else {
 			Robot.collector.setWristStageOneRetracted(stage1r);
 			Robot.collector.setWristStageTwoRetracted(stage2r);
+			Robot.oi.setWristStageOneRectractedStatus(stage1r);
+			Robot.oi.setWristStageTwoRetractedStatus(stage2r);
 		}
 	}
 }
