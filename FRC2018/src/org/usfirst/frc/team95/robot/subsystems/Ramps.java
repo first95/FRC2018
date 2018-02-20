@@ -1,7 +1,7 @@
 package org.usfirst.frc.team95.robot.subsystems;
 
 import org.usfirst.frc.team95.robot.Constants;
-import org.usfirst.frc.team95.robot.commands.DeployRamps;
+import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;

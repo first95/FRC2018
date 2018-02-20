@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
-import org.usfirst.frc.team95.robot.commands.DeployRamps;
+import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
@@ -103,7 +103,7 @@ public class OI {
 		// a.whenPressed(new ShiftGear());
 		
 		JoystickButton deployRampsButton = new JoystickButton(driverController, DEPLOY_RAMPS_BUTTON);
-		deployRampsButton.whenPressed(new DeployRamps());
+		deployRampsButton.whileHeld(new TriggerRampRelease());
 
 		// Sendable Chooser for single commands
 		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
