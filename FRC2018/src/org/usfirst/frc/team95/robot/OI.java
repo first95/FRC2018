@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
+import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
@@ -41,6 +42,7 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
+	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
 	public static final int TOGGLE_SHIFT_STATE_BUTTON = 1;
 
 	// Buttons on weapons controller
@@ -99,6 +101,10 @@ public class OI {
 		// }
 
 		// a.whenPressed(new ShiftGear());
+		
+		JoystickButton deployRampsButton = new JoystickButton(driverController, DEPLOY_RAMPS_BUTTON);
+		deployRampsButton.whileHeld(new TriggerRampRelease());
+
 		// Sendable Chooser for single commands
 		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
 		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));

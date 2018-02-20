@@ -25,6 +25,7 @@ import org.usfirst.frc.team95.robot.strategies.CenterScale;
 import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
+import org.usfirst.frc.team95.robot.subsystems.Ramps;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -57,6 +58,7 @@ public class Robot extends IterativeRobot {
 	public static DriveBase drivebase;
 	public static Collector collector;
 	public static Elevator elevator;
+	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
 
@@ -71,6 +73,7 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
+		ramps = new Ramps();
 		compressor = new Compressor();
 		oi = new OI();
 
