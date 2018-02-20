@@ -10,18 +10,15 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
-<<<<<<< HEAD
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
-=======
 import org.usfirst.frc.team95.robot.commands.compound.LeftOrRightSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.MidRightSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
->>>>>>> f75a5266512fefaed677a99a0b429ed0f63bbbcc
 
 /**
  * This class is the glue that binds the controls on the physical operator
