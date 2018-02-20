@@ -1,17 +1,14 @@
-package org.usfirst.frc.team95.robot.strategies;
+package org.usfirst.frc.team95.robot.commands.compound;
 
 import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class SwitchAttack extends Strategy {
-	public SwitchAttack() {
-		// all of the instructions for this auto move are in AdjustStrategy
-	}
+public class SwitchAttack extends CommandGroup {
 
 	// These strategies assumes we have a cube pre-loaded on the robot.
 
@@ -42,28 +39,30 @@ public class SwitchAttack extends Strategy {
 	private static final double R_INCHES_FOR_SWEEP_TURN_RADIUS = 32.0;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
-	@Override
-	public void AdjustStrategy(FieldSide whichSideOfTheNearSwitchIsOurColor, FieldSide whichSideOfTheScaleIsOurColor,
+	public SwitchAttack(FieldSide whichSideOfTheNearSwitchIsOurColor, FieldSide whichSideOfTheScaleIsOurColor,
 			StartPosition robotStartingPosition) {
-
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.LEFT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 		}
 
 		// CENTER MOVE:
-		else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.CENTER
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.CENTER
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 		}
 
 		// RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.RIGHT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 		}
 
@@ -72,4 +71,5 @@ public class SwitchAttack extends Strategy {
 			addSequential(new AnyForward());
 		}
 	}
+
 }
