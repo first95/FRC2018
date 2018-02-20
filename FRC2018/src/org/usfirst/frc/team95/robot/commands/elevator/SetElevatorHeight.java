@@ -32,7 +32,7 @@ public class SetElevatorHeight extends Command {
 	}
 
 	@Override
-	public synchronized void start() {
+	public synchronized void initialize() {
 		// This method is called once when the command is activated
 		if(targetPoint != null) {
 			seekHoldPoint(targetPoint);
@@ -45,7 +45,7 @@ public class SetElevatorHeight extends Command {
 	protected void execute() {
 		// This method is called every iteration
 		
-		// Nothing needed; we did everything we needed in start()
+		// Nothing needed; we did everything we needed in initialize()
 	}
 	
 	@Override

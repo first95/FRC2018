@@ -180,6 +180,6 @@ public class Elevator extends Subsystem {
 	public boolean isOnTarget() {
 		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
 		return Math.abs(getElevatorHeightFeet()
-				- getTargetHeightFeet()) < (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES * 12.0);
+				- getTargetHeightFeet()) < (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES / 12.0);
 	}
 }
