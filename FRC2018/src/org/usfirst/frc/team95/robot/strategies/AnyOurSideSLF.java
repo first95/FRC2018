@@ -5,7 +5,7 @@ import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
+import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 
 public class AnyOurSideSLF extends Strategy {
@@ -33,7 +33,7 @@ public class AnyOurSideSLF extends Strategy {
 				whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT))
         {
 			// We're lined up for the switch; go there.
-			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
+			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SWITCH + AnyForward.INCHES_TO_AUTO_LINE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
         else if((robotStartingPosition == StartPosition.MID_LEFT &&
@@ -42,13 +42,13 @@ public class AnyOurSideSLF extends Strategy {
 				whichSideOfTheScaleIsOurColor == FieldSide.RIGHT))
         {
 			// We're lined up for the scale; go there.
-			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SCALE + DriveFromWallToAutoLine.INCHES_TO_AUTO_LINE));
+			addSequential(new DriveStraight(INCHES_FROM_AUTO_LINE_TO_SCALE + AnyForward.INCHES_TO_AUTO_LINE));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
         else
         {
 			// Fallback to an auto run
-			addSequential(new DriveFromWallToAutoLine());
+			addSequential(new AnyForward());
 		}
 	}
 

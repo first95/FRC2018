@@ -3,7 +3,7 @@ package org.usfirst.frc.team95.robot.strategies;
 import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveFromWallToAutoLine;
+import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
@@ -57,7 +57,7 @@ public class CenterScale extends Strategy
 		}
 		else
 		{
-			addSequential(new DriveFromWallToAutoLine());
+			addSequential(new AnyForward());
 		}
 	}	
 }
