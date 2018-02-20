@@ -64,6 +64,14 @@ public class TalonSrxWrapper implements IMotorControllerEnhanced {
 		}
 	}
 	
+	public ControlMode getControlMode() {
+		if(wrapped instanceof TalonSRX) {
+			return ((TalonSRX) wrapped).getControlMode();
+		} else {
+			return ControlMode.PercentOutput; // Return something somewhat reasonable
+		}
+	}
+	
 	@Override
 	public void set(ControlMode Mode, double demand) { wrapped.set(Mode, demand); }
 	@Override

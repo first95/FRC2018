@@ -8,17 +8,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
+import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.compound.LeftOrRightSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.MidRightSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
+import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
+import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
+import org.usfirst.frc.team95.robot.strategies.CenterScale;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -91,6 +99,11 @@ public class OI {
 		// }
 
 		// a.whenPressed(new ShiftGear());
+		// Sendable Chooser for single commands
+		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
+		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
+		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
+		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
 		
 
 		// For the operators to indicate on which side of the field they placed the robot
