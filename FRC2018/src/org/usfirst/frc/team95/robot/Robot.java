@@ -97,6 +97,7 @@ public class Robot extends IterativeRobot {
 		singleAutomoveChooser.addObject("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
 		singleAutomoveChooser.addObject("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
 		singleAutomoveChooser.addObject("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
+		singleAutomoveChooser.addObject("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
 		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
 		

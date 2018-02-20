@@ -102,7 +102,7 @@ public class DriveBase extends Subsystem {
 
 	/**
 	 * Command that the robot should travel a specific distance along the
-	 * carpet. all this once to command distance - do not call repeatedly, as
+	 * carpet.  Call this once to command distance - do not call repeatedly, as
 	 * this will reset the distance remaining.
 	 * 
 	 * @param inchesToTravel - number of inches forward to travel
@@ -111,7 +111,18 @@ public class DriveBase extends Subsystem {
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
 	}
-
+	/**
+	 * Command that the robot should travel a specific distance along the
+	 * carpet.  Call this once to command distance - do not call repeatedly, as
+	 * this will reset the distance remaining.
+	 * 
+	 * @param inchesToTravel - number of inches forward to travel
+	 * @param inchesPerSecond - speed at which to travel
+	 */
+	public void travelStraight(double inchesPerSecond, double inchesToTravel) {
+		leftPod.driveForDistanceAtSpeed(-inchesPerSecond, -inchesToTravel);
+		rightPod.driveForDistanceAtSpeed(inchesPerSecond, inchesToTravel);
+	}
 	// Talon Brake system
 	public void brake(boolean isEnabled) {
 		leftPod.enableBrakeMode(isEnabled);
@@ -141,17 +152,25 @@ public class DriveBase extends Subsystem {
 	public void travelSweepingTurnForward(double degreesToTurnCw, double turnRadiusInches) {
 		double leftDistanceInches;
 		double rightDistanceInches;
+		double leftSpeedInchesPerSecond  = SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
+		double rightSpeedInchesPerSecond = SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 
 		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
+		double ratioOfSmallerToLarger =
+				  (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0)
+				/ (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 
 		if (degreesToTurnCw > 0) {
-			// Forward and to the right
+			// Forward and to the right - CW
+			rightSpeedInchesPerSecond *= ratioOfSmallerToLarger;
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		} else {
+			// Forward and to the left - CCW
+			leftSpeedInchesPerSecond *= ratioOfSmallerToLarger;
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
@@ -159,8 +178,8 @@ public class DriveBase extends Subsystem {
 			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		}
 
-		leftPod. driveForDistanceAtSpeed(SWEEPER_TURN_SPEED_INCHES_PER_SECOND, leftDistanceInches);
-		rightPod.driveForDistanceAtSpeed(SWEEPER_TURN_SPEED_INCHES_PER_SECOND, rightDistanceInches);
+		leftPod. driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(rightSpeedInchesPerSecond, rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code

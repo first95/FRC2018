@@ -30,7 +30,7 @@ public class DriveStraightAtSpeed extends Command {
 		System.out.println("Starting DriveStraight (" + distanceInches + " inches)");
 		
 		// Command the movement
-		Robot.drivebase.travelStraight(distanceInches);
+		Robot.drivebase.travelStraight(velocityInchesPerSecond, distanceInches);
 		
 	}
 
