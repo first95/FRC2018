@@ -12,7 +12,7 @@ public class ScoreStartingCubeOnSwitch extends CommandGroup {
 
 	// This command assumes the cube starts in the maw, with the wrist up
 	public ScoreStartingCubeOnSwitch() {
-		addSequential(new ElevateCubeToSwitchScore());
+		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
 		addSequential(new ResetElevatorAndWrist());
 	}
 }

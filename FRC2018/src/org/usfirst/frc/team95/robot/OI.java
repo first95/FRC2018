@@ -6,6 +6,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.commands.collector.AutoCloseMawOnCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
+import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
+import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
+import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
+import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,6 +25,7 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
+	public static final int TOGGLE_SHIFT_STATE_BUTTON = 1;
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -54,6 +60,12 @@ public class OI {
 		SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
 		SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
 
+		SmartDashboard.putData("ElevateCubeScaleScore", new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		SmartDashboard.putData("ElevateCubeToSwitch", new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
+		SmartDashboard.putData("ResetElevatorAndWrist", new ResetElevatorAndWrist());
+		SmartDashboard.putData("ScoreStartingCubeOnScale", new ScoreStartingCubeOnScale());
+		SmartDashboard.putData("ScoreStatingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
+		
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
 		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
@@ -153,6 +165,10 @@ public class OI {
 
 	public boolean getHighGear() {
 		return driverController.getRawButton(SHIFT_BUTTON);
+	}
+	
+	public boolean getShiftOverride() {
+		return driverController.getRawButton(TOGGLE_SHIFT_STATE_BUTTON);
 	}
 		
 }

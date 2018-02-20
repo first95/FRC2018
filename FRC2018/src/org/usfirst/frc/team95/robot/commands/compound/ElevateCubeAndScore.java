@@ -9,10 +9,10 @@ import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.Elevator
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ElevateCubeToScaleScore extends CommandGroup {
+public class ElevateCubeAndScore extends CommandGroup {
 
-	public ElevateCubeToScaleScore() {
-		addSequential(new SetElevatorHeight(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+	public ElevateCubeAndScore(ElevatorHoldPoint position) {
+		addSequential(new SetElevatorHeight(position));
 		addSequential(new SetWristAngle(WristAngle.MID_DOWN));
 		addSequential(new EjectCube());
 	}

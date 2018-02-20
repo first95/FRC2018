@@ -30,6 +30,7 @@ public class DriveBase extends Subsystem {
 	private boolean allowShift = true;
 	private boolean allowDeshift = true;
 	private boolean hasAlreadyShifted = false;
+	private boolean shiftOverrideNotToggled = true;
 
 	public DriveBase() {
 		super();
@@ -248,9 +249,19 @@ public class DriveBase extends Subsystem {
 		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
 		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
 	}
-	
+
 	public void visit() {
-		autoShift();
+		if (Robot.oi.getShiftOverride()) {
+			if (shiftOverrideNotToggled) {
+				shiftOverrideNotToggled = false;
+			} else {
+				shiftOverrideNotToggled = true;
+			}
+		}
+
+		if (shiftOverrideNotToggled) {
+			autoShift();
+		}
 	}
 
 	public void pullPidConstantsFromSmartDash() {
