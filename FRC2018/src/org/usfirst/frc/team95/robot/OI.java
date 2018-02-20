@@ -42,7 +42,7 @@ public class OI {
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
-	public static final int DEPLOY_RAMPS_BUTTON = 4; // Y
+	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
 	public static final int TOGGLE_SHIFT_STATE_BUTTON = 1;
 
 	// Buttons on weapons controller
