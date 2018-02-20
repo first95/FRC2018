@@ -8,13 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ManuallyControlDrivebase extends Command {
 	
-	private double leftSpeed;
-	private double rightSpeed;
 	
-	private Timer shiftTimer = new Timer();
-	private boolean allowShift = true;
-	private boolean allowDeshift = true;
-	private boolean hasAlreadyShifted = false;
 
 	public ManuallyControlDrivebase() {
 		requires(Robot.drivebase);
@@ -24,42 +18,12 @@ public class ManuallyControlDrivebase extends Command {
 	@Override
 	protected void execute() {
 		Robot.drivebase.arcade();
-
-		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
-		rightSpeed = Math.abs(Robot.drivebase.getRightSpeed());
-
-		// Autoshift framework based off speed
-		if (allowShift) {
-			if ((leftSpeed < Constants.SPEED_TO_SHIFT_DOWN) && (rightSpeed < Constants.SPEED_TO_SHIFT_DOWN)) {
-				Robot.drivebase.setGear(false);
-
-				if (hasAlreadyShifted) {
-					allowDeshift = true;
-					hasAlreadyShifted = false;
-				}
-
-			} else if ((leftSpeed > Constants.SPEED_TO_SHIFT_UP) && (rightSpeed > Constants.SPEED_TO_SHIFT_UP)) {
-				if (allowDeshift) {
-					shiftTimer.reset();
-					shiftTimer.start();
-					allowShift = false;
-					Robot.drivebase.setGear(true);
-				}
-			}
-		} else if (shiftTimer.get() > 1.0) {
-			allowShift = true;
-			shiftTimer.stop();
-			shiftTimer.reset();
-			allowDeshift = false;
-			hasAlreadyShifted = true;
-		}
+		//Robot.drivebase.autoShift();
+		
 
 		// For button shifting
 		// Robot.drivebase.setGear(Robot.oi.getHighGear());
-		
-//		SmartDashboard.putBoolean("Allow Shift:", allowShift);
-//		SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
-//		SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
+
 
 	}
 	

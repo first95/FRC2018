@@ -13,7 +13,7 @@ public class SetElevatorHeight extends Command {
 		FLOOR,            // Positioned at its lowest position
 		SWITCH_SCORE,     // Positioned to hold a cube above the fence around the Switch
 		SCALE_SCORE_HIGH, // Positioned at the lowest  sensible point to score a cube on the Scale
-		SCALE_SCORE_LOW,  // Positioned at the highest sensible point to score a cube on the Scalse
+		SCALE_SCORE_LOW,  // Positioned at the highest sensible point to score a cube on the Scale
 	};
 	
 	private ElevatorHoldPoint targetPoint = null;

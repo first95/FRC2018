@@ -8,7 +8,6 @@ import org.usfirst.frc.team95.robot.commands.collector.TimedIngestCube;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  * 
