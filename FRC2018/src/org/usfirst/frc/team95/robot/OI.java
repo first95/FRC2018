@@ -26,7 +26,7 @@ import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
+import org.usfirst.frc.team95.robot.strategies.ScaleAttack;
 
 /**
  * This class is the glue that binds the controls on the physical operator

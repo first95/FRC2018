@@ -21,7 +21,7 @@ import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
+import org.usfirst.frc.team95.robot.strategies.ScaleAttack;
 import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
