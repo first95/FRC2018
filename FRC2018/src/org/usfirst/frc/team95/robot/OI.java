@@ -12,6 +12,7 @@ import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
+import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
@@ -299,12 +300,13 @@ public class OI {
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			break;
 		case CENTER:
+			moveSwitchLScaleR.addObject("Score on Scale Center", new ScaleAttack(FieldSide.RIGHT, StartPosition.CENTER));
 			break;
 		case MID_RIGHT:
-			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
+			moveSwitchLScaleR.addObject("Score on Scale Mid-Right", new ScaleAttack(FieldSide.RIGHT, StartPosition.MID_RIGHT));
 			break;
 		case RIGHT:
-			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
+			moveSwitchLScaleR.addObject("Score on Scale Right", new ScaleAttack(FieldSide.RIGHT, StartPosition.RIGHT));
 			break;
 		default:
 			break;
@@ -320,12 +322,13 @@ public class OI {
 
 		switch (robotStartPosition) {
 		case LEFT:
-			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleL.addObject("Score on Scale Left", new ScaleAttack(FieldSide.LEFT, StartPosition.LEFT));
 			break;
 		case MID_LEFT:
-			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleL.addObject("Score on Scale Mid-Left", new ScaleAttack(FieldSide.LEFT, StartPosition.MID_LEFT));
 			break;
 		case CENTER:
+			moveSwitchRScaleL.addObject("Score on Scale Mid-Left", new ScaleAttack(FieldSide.LEFT, StartPosition.CENTER));
 			break;
 		case MID_RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
