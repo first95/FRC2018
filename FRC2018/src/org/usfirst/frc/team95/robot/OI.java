@@ -10,6 +10,8 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
+import org.usfirst.frc.team95.robot.commands.compound.LeftOrRightSwitch;
+import org.usfirst.frc.team95.robot.commands.compound.MidRightSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
@@ -130,6 +132,7 @@ public class OI {
 		switch(robotStartPosition) {
 		case LEFT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
+			moveSwitchLScaleL.addObject("Score on switch", new LeftOrRightSwitch(FieldSide.LEFT));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
@@ -157,6 +160,7 @@ public class OI {
 		switch(robotStartPosition) {
 		case LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
+			moveSwitchLScaleR.addObject("Score on switch", new LeftOrRightSwitch(FieldSide.LEFT));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
@@ -192,9 +196,11 @@ public class OI {
 			break;
 		case MID_RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleL.addObject("Score on switch",  new MidRightSwitch());
 			break;
 		case RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleL.addObject("Score on switch", new LeftOrRightSwitch(FieldSide.RIGHT));
 			break;
 		default:
 			break;
@@ -219,13 +225,19 @@ public class OI {
 			break;
 		case MID_RIGHT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleR.addObject("Score on switch",  new MidRightSwitch());
 			break;
 		case RIGHT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
+			moveSwitchRScaleL.addObject("Score on switch", new LeftOrRightSwitch(FieldSide.RIGHT));
 			break;
 		default:
 			break;
 		}
+	}
+	
+	private void addCommonMoves(MutableSendableChooser<Command> chooser, StartPosition robotStartPosition) {
+		
 	}
 	
 	public Command getSelectedCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
