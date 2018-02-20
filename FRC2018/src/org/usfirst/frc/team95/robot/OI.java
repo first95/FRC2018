@@ -8,22 +8,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
-import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
-import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
+import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.compound.LeftOrRightSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.MidRightSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
-import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
@@ -74,6 +70,8 @@ public class OI {
 	MutableSendableChooser<Command> moveSwitchRScaleL = new MutableSendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchRScaleR = new MutableSendableChooser<>();
 	StartPosition lastSelectedPosition = null; // The position that was selected last iteration
+	
+	private FieldSide m_switchPosOurColor, m_scalePosOurColor;
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
@@ -241,6 +239,24 @@ public class OI {
 		lastSelectedPosition = curPos;
 
 	}
+	
+	public Command getSelectedCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
+		
+		m_scalePosOurColor = scalePosOurColor;
+		m_switchPosOurColor = switchPosOurColor;
+		
+		if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchLScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchLScaleR.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchRScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchRScaleR.getSelected();
+		} else {
+			return new Nothing();
+		}
+	}
 
 	private void updateLLAutoMoveChooser(StartPosition robotStartPosition) {
 			// Clear it out
@@ -252,6 +268,7 @@ public class OI {
 			switch(robotStartPosition) {
 			case LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
+				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(m_switchPosOurColor, m_scalePosOurColor, robotStartPosition));
 				break;
 			case MID_LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
@@ -357,20 +374,6 @@ public class OI {
 
 	private void addCommonMoves(MutableSendableChooser<Command> chooser, StartPosition robotStartPosition) {
 
-	}
-
-	public Command getSelectedCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
-		if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.LEFT) {
-			return moveSwitchLScaleL.getSelected();
-		} else if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.RIGHT) {
-			return moveSwitchLScaleR.getSelected();
-		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.LEFT) {
-			return moveSwitchRScaleL.getSelected();
-		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.RIGHT) {
-			return moveSwitchRScaleR.getSelected();
-		} else {
-			return new Nothing();
-		}
 	}
 
 }
