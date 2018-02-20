@@ -23,8 +23,6 @@ public class SetElevatorHeight extends Command {
 		// This method is run once during robot startup
 		requires(Robot.elevator);
 		targetPoint = targetHoldPoint;
-		
-		initialize();
 	}
 
 	public SetElevatorHeight(double targetFeet) {
