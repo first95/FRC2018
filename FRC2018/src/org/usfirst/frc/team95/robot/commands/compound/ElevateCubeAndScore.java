@@ -13,9 +13,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ElevateCubeAndScore extends CommandGroup {
 
 	public ElevateCubeAndScore(ElevatorHoldPoint position) {
-		addParallel(new SetElevatorHeight(position));
+		addSequential(new SetElevatorHeight(position));
 		addParallel(new SetWristAngle(WristAngle.MID_UP));
-		addSequential(new Wait(0.5));
 		addSequential(new EjectCube());
 	}
 
