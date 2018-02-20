@@ -12,6 +12,7 @@ import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
+import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
