@@ -19,7 +19,8 @@ public class DriveBase extends Subsystem {
 	// This is how much extra we command the pods to move to account for slippage
 	private final double PIVOT_FUDGE_FACTOR = 1.5; 
 	// The speed at which we want the center of the robot to travel
-	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
+//	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
+	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24; 
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -152,34 +153,29 @@ public class DriveBase extends Subsystem {
 	public void travelSweepingTurnForward(double degreesToTurnCw, double turnRadiusInches) {
 		double leftDistanceInches;
 		double rightDistanceInches;
-		double leftSpeedInchesPerSecond  = SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
-		double rightSpeedInchesPerSecond = SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 
 		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
-		double ratioOfSmallerToLarger =
-				  (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0)
-				/ (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-
+		double sweepTimeS = (fractionOfAFullCircumference * turnRadiusInches * 2.0 * Math.PI)
+				/ SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 		if (degreesToTurnCw > 0) {
 			// Forward and to the right - CW
-			rightSpeedInchesPerSecond *= ratioOfSmallerToLarger;
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		} else {
 			// Forward and to the left - CCW
-			leftSpeedInchesPerSecond *= ratioOfSmallerToLarger;
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 			rightDistanceInches = fractionOfAFullCircumference * Math.PI
 					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
 		}
+		double leftSpeedInchesPerSecond  = leftDistanceInches / sweepTimeS;
+		double rightSpeedInchesPerSecond = rightDistanceInches / sweepTimeS;
+		
 
 		leftPod. driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
-		rightPod.driveForDistanceAtSpeed(rightSpeedInchesPerSecond, rightDistanceInches);
+		rightPod.driveForDistanceAtSpeed(-rightSpeedInchesPerSecond, -rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code
