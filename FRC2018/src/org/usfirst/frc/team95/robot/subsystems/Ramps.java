@@ -10,14 +10,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Ramps extends Subsystem {
 	// The solenoids for the piston that opens the maw, and operates the wrist
-	private SolenoidI leftRampLatch, rightRampLatch;
+	private SolenoidI rampLatch;
 	
 	public Ramps() {
 		super();
 		
 		// False means it is extended
-		leftRampLatch  = new SolenoidWrapper(Constants.LEFT_RAMP_LATCH );
-		rightRampLatch = new SolenoidWrapper(Constants.RIGHT_RAMP_LATCH);
+		rampLatch  = new SolenoidWrapper(Constants.RAMP_LATCH);
 	}
 
 	@Override
@@ -31,8 +30,7 @@ public class Ramps extends Subsystem {
 
 	
 	public void setLatches(boolean retracted) {
-		leftRampLatch.set(retracted);
-		rightRampLatch.set(retracted);
+		rampLatch.set(retracted);
 	}
 
 }
