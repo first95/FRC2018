@@ -145,8 +145,9 @@ public class DriveBase extends Subsystem {
 		double rightDistanceInches = leftDistanceInches;
 		leftDistanceInches *= PIVOT_FUDGE_FACTOR;
 		rightDistanceInches *= PIVOT_FUDGE_FACTOR;
-		leftPod.driveForDistanceAtSpeed( -TURN_SPEED_INCHES_PER_SECOND, -leftDistanceInches);
-		rightPod.driveForDistanceAtSpeed(-TURN_SPEED_INCHES_PER_SECOND, -rightDistanceInches);
+		double turnSign = (degreesToPivotCw > 0)? 1.0 : -1.0;
+		leftPod.driveForDistanceAtSpeed( turnSign * TURN_SPEED_INCHES_PER_SECOND, -leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(turnSign * TURN_SPEED_INCHES_PER_SECOND, -rightDistanceInches);
 	}
 
 	/**
