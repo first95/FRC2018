@@ -33,6 +33,15 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT, // Rear right corner of the bumper touches the diagonal of the right portal
 	}
+	/**
+	 * Robot position after scoring on the switch. Robot is assumed to be centered
+	 * on the switch and have it's front bumper flush with the far side fence of the switch in all
+	 * these cases.
+	 */
+	public enum SwitchPosition {
+		LEFT, // On the left side of the switch
+		RIGHT, // On the right side of the switch
+	}
 
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;

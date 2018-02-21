@@ -7,12 +7,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
+import org.usfirst.frc.team95.robot.Robot.SwitchPosition;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
 import org.usfirst.frc.team95.robot.commands.compound.ResetElevatorAndWrist;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
+import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackAfterScoreOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
@@ -298,6 +300,7 @@ public class OI {
 		case LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleR.addObject("Score on switch", new LeftOrRightSwitch(FieldSide.LEFT));
+			moveSwitchLScaleR.addObject("Score on Scale after Switch", new ScaleAttackAfterScoreOnSwitch(FieldSide.RIGHT, SwitchPosition.LEFT));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ScaleAttack extends CommandGroup {
 
-	// These strategies assumes we have a cube pre-loaded on the robot.
+	// These strategies assume we have a cube pre-loaded on the robot.
 	private static final double INCHES_TO_TRAVEL_BEFORE_OR_AFTER_ROTATION = 12;
 	private static final double R_INCHES_TO_TRAVEL_TO_SCALE = 303.71;
 	private static final double L_INCHES_TO_TRAVEL_TO_SCALE = 304.31;
