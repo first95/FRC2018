@@ -22,12 +22,13 @@ public class Elevator extends Subsystem {
 	private final String pLabel = "Winch P";
 	private final String iLabel = "Winch I";
 	private final String dLabel = "Winch D";
-	public static final double FEET_FULL_RANGE = 71.0 / 12.0; // How many feet the elevator can move. Measured 2018-2-3
-																// on practice robot
+	public static final double FEET_FULL_RANGE = 5.6; // How many feet the elevator can move. Measured 2018-2-20
 	public static final double ENCODER_TICKS_FULL_RANGE = 78400.0; // How many encoder ticks the elevator can move.
 																	// Measured 2018-2-3 on practice robot
 	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
 	private static final double SOFT_FWD_LIMIT = ENCODER_TICKS_FULL_RANGE * 0.96;
+	
+	private double elevatorBottomPositionTicks = 0;
 
 	private IMotorControllerEnhanced leftElevDriver, rightElevDriver;
 	private DigitalInput homeSwitch;
@@ -95,7 +96,8 @@ public class Elevator extends Subsystem {
 	 * 
 	 */
 	public void setCurrentPosToZero() {
-		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+//		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+		elevatorBottomPositionTicks = rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX);
 	}
 
 	@Override
@@ -110,6 +112,7 @@ public class Elevator extends Subsystem {
 		SmartDashboard.putNumber("rightElevEncoder Value:",
 				rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX));
 		SmartDashboard.putNumber("Elevator height in feet:", getElevatorHeightFeet());
+		SmartDashboard.putNumber("elevatorBottomPositionTicks", elevatorBottomPositionTicks);
 	}
 
 	/**
@@ -138,7 +141,7 @@ public class Elevator extends Subsystem {
 	 *            - the target height in feet up from lowest possible position
 	 */
 	public void setElevatorHeight(double feet) {
-		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
+		rightElevDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT - elevatorBottomPositionTicks);
 	}
 
 	/**
@@ -148,7 +151,7 @@ public class Elevator extends Subsystem {
 	 * @return 0 for against the floor, about 5.91 for its highest extent.
 	 */
 	public double getElevatorHeightFeet() {
-		return rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX) / TICKS_PER_FOOT;
+		return (rightElevDriver.getSelectedSensorPosition(Constants.PID_IDX) - elevatorBottomPositionTicks) / TICKS_PER_FOOT;
 	}
 
 	/**
