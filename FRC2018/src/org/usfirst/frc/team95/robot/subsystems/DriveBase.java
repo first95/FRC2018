@@ -18,10 +18,10 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  */
 public class DriveBase extends Subsystem {
 	// This is how much extra we command the pods to move to account for slippage
-	private final double PIVOT_FUDGE_FACTOR = 1.5; 
+	private static final double PIVOT_FUDGE_FACTOR = 1.5; 
 	// The speed at which we want the center of the robot to travel
 //	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
-	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24; 
+	private static final double TURN_SPEED_INCHES_PER_SECOND = 24; 
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -145,8 +145,8 @@ public class DriveBase extends Subsystem {
 		double rightDistanceInches = leftDistanceInches;
 		leftDistanceInches *= PIVOT_FUDGE_FACTOR;
 		rightDistanceInches *= PIVOT_FUDGE_FACTOR;
-		leftPod.setCLPosition(leftDistanceInches);
-		rightPod.setCLPosition(rightDistanceInches);
+		leftPod.driveForDistanceAtSpeed( -TURN_SPEED_INCHES_PER_SECOND, -leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(-TURN_SPEED_INCHES_PER_SECOND, -rightDistanceInches);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class DriveBase extends Subsystem {
 
 		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
 		double sweepTimeS = (fractionOfAFullCircumference * turnRadiusInches * 2.0 * Math.PI)
-				/ SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
+				/ TURN_SPEED_INCHES_PER_SECOND;
 		if (degreesToTurnCw > 0) {
 			// Forward and to the right - CW
 			leftDistanceInches = fractionOfAFullCircumference * Math.PI

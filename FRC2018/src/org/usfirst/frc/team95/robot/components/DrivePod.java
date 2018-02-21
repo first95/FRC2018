@@ -129,7 +129,6 @@ public class DrivePod {
 	 */
 	public void setCLSpeed(double inchesPerSecond) {
 		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
-		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second.");
 		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.set(ControlMode.Velocity, speedTicksPer100ms);
 	}
@@ -143,12 +142,13 @@ public class DrivePod {
 	 * @param inches - the target distance in inches
 	 */
 	public void driveForDistanceAtSpeed(double inchesPerSecond, double inches) {
-		targetDistanceAtSpeed = getPositionInches() + inches;
-		if(inches > 0) {
+		targetDistanceAtSpeed = getPositionInches() - inches;
+		if(inches < 0) {
 			targetDeltaSign = 1.0;
 		} else {
 			targetDeltaSign = -1.0;
 		}
+		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second for " + inches + ", sign=" + targetDeltaSign + ".");
 		setCLSpeed(inchesPerSecond);
 	}
 	
@@ -224,7 +224,7 @@ public class DrivePod {
 		if(getControlMode() == ControlMode.Position) {
 			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
 		} else if (getControlMode() == ControlMode.Velocity) {
-			return getPositionInches() > (targetDistanceAtSpeed * targetDeltaSign);
+			return (getPositionInches() * targetDeltaSign) > (targetDistanceAtSpeed * targetDeltaSign);
 		} else {
 			return true; // When you're not seeking anything, you're already at your destination.
 		}
