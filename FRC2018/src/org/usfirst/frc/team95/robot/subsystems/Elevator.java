@@ -57,6 +57,7 @@ public class Elevator extends Subsystem {
 		// Configure soft limit at top
 		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 
 		// Send the initial PID constant values to the smartdash
 		// SmartDashboard.putNumber(pLabel, K_P);
