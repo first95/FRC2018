@@ -192,7 +192,9 @@ public class DrivePod {
 		// Anything we wanna see on the SmartDashboard, put here. Use "name",
 		// which should be "left" or "right".
 		SmartDashboard.putNumber(name + " position (in)", twiddle * getPositionInches());
-		SmartDashboard.putNumber(name + " target (in)", twiddle * getTargetPositionInches());
+		SmartDashboard.putNumber(name + " target pos (in)", twiddle * getTargetPositionInches());
+		SmartDashboard.putNumber(name + " velocity (inps)", twiddle * getEncoderVelocityFeetPerSecond()*12.0);
+		SmartDashboard.putNumber(name + " target velocity (inps)", twiddle * getTargetVelocityInchesPerSecond());
 		SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 		SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
 	}
@@ -250,7 +252,7 @@ public class DrivePod {
 		return leader.getSelectedSensorPosition(Constants.PID_IDX);
 	}
 
-	public double getEncoderVelocity() {
+	public double getEncoderVelocityFeetPerSecond() {
 		return (leader.getSelectedSensorVelocity(Constants.PID_IDX)) * (1/(ENCODER_TICKS_PER_INCH * 12)) * (10/1);
 	}
 
