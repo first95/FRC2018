@@ -25,11 +25,12 @@ public class DrivePod {
 	private double K_D_POSITION_MODE = 0; //40.0 * K_P;
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
-	private static final double K_F_SPEED_MODE = 4.0 * 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
+	private double K_F_SPEED_MODE = 4.0 * 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
 	private double K_P_SPEED_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private double K_I_SPEED_MODE = 0.1; //0.01 * K_P;
 	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
 	private static final int I_ZONE = 20; // In closed loop error units
+	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
 	private String dLabel = "DrivePod D";		
@@ -95,9 +96,11 @@ public class DrivePod {
 		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
 
 		// Send the initial PID constant values to the smartdash
+		fLabel = name + " " + fLabel;
 		pLabel = name + " " + pLabel;
 		iLabel = name + " " + iLabel;
 		dLabel = name + " " + dLabel;
+		SmartDashboard.putNumber(fLabel, K_F_SPEED_MODE);
 		SmartDashboard.putNumber(pLabel, K_P_SPEED_MODE);
 		SmartDashboard.putNumber(iLabel, K_I_SPEED_MODE);
 		SmartDashboard.putNumber(dLabel, K_D_SPEED_MODE);
@@ -259,6 +262,7 @@ public class DrivePod {
 	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve
+		K_F_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_F_SPEED_MODE);
 		K_P_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_P_SPEED_MODE);
 		K_I_SPEED_MODE = SmartDashboard.getNumber(iLabel, K_I_SPEED_MODE);
 		K_D_SPEED_MODE = SmartDashboard.getNumber(dLabel, K_D_SPEED_MODE);
