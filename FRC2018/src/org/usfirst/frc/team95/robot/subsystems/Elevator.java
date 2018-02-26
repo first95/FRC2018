@@ -99,6 +99,7 @@ public class Elevator extends Subsystem {
 	 */
 	public void setCurrentPosToZero() {
 		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.set(ControlMode.PercentOutput, 0);
 	}
 
 	@Override
