@@ -18,15 +18,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivePod {
 	// Measured 2/13/18 on practice robot on "field" carpet
 	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12);
-	// Feedforward term (K_F) is only used in closed-loop speed control.
+	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
+	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
+	private double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
+	private double K_D_POSITION_MODE = 0; //40.0 * K_P;
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
-	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
-	private static final double K_F_SPEED_MODE = 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
-	private static final double K_F_POSITION_MODE = 0.0;
-	private double K_P = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
-	private double K_I = 0.1; //0.01 * K_P;
-	private double K_D = 0; //40.0 * K_P;
+	private static final double K_F_SPEED_MODE = 4.0 * 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
+	private double K_P_SPEED_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private double K_I_SPEED_MODE = 0.1; //0.01 * K_P;
+	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
 	private static final int I_ZONE = 20; // In closed loop error units
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
@@ -87,9 +89,6 @@ public class DrivePod {
 		leader.configForwardSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 		leader.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 
-		leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term
 		// accumulator.
@@ -99,14 +98,34 @@ public class DrivePod {
 		pLabel = name + " " + pLabel;
 		iLabel = name + " " + iLabel;
 		dLabel = name + " " + dLabel;
-		SmartDashboard.putNumber(pLabel, K_P);
-		SmartDashboard.putNumber(iLabel, K_I);
-		SmartDashboard.putNumber(dLabel, K_D);
+		SmartDashboard.putNumber(pLabel, K_P_SPEED_MODE);
+		SmartDashboard.putNumber(iLabel, K_I_SPEED_MODE);
+		SmartDashboard.putNumber(dLabel, K_D_SPEED_MODE);
 
 	}
 	// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?
 	// Are all the speeds and distances expressed in ticks (/per second)?
 
+	/**
+	 * Apply the PID+F constants that are used during closed-loop position mode
+	 */
+	private void applySpeedPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_P_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_I_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_D_POSITION_MODE, Constants.CAN_TIMEOUT_MS);		
+	}
+	
+	/**
+	 * Apply the PID+F constants that are used during closed-loop speed mode
+	 */
+	private void applyPositionPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_D_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+	}
+	
 	/**
 	 * Command the DrivePod to a position relative to current position
 	 * 
@@ -114,10 +133,10 @@ public class DrivePod {
 	 *            - the target position in inches from current position
 	 */
 	public void setCLPosition(double inches) {
+		applyPositionPidConsts();
 		double delta = ENCODER_TICKS_PER_INCH * inches;
 		double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
 		System.out.println(name + " going " + inches + " inches, or delta=" + delta + ", current = " + current);
-		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.set(ControlMode.Position, current + delta);
 	}
 
@@ -128,8 +147,8 @@ public class DrivePod {
 	 *            - the target velocity in inches per second
 	 */
 	public void setCLSpeed(double inchesPerSecond) {
+		applySpeedPidConsts();
 		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
-		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.set(ControlMode.Velocity, speedTicksPer100ms);
 	}
 	
@@ -203,6 +222,8 @@ public class DrivePod {
 	// how  much power should
 	// be applied to the motor. It corresponds well to speed.
 	public void setThrottle(double throttle) {
+		// This is the only set...() method where we don't need to call either 
+		// applySpeedPidConsts() or applyPositionPidConsts().
 		leader.set(ControlMode.PercentOutput, throttle);
 		// followers follow
 	}
@@ -238,14 +259,12 @@ public class DrivePod {
 	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve
-		K_P = SmartDashboard.getNumber(pLabel, K_P);
-		K_I = SmartDashboard.getNumber(iLabel, K_I);
-		K_D = SmartDashboard.getNumber(dLabel, K_D);
+		K_P_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_P_SPEED_MODE);
+		K_I_SPEED_MODE = SmartDashboard.getNumber(iLabel, K_I_SPEED_MODE);
+		K_D_SPEED_MODE = SmartDashboard.getNumber(dLabel, K_D_SPEED_MODE);
 
 		// Apply
-		leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		applySpeedPidConsts();
 	}
 
 	public double getQuadEncPos() {
