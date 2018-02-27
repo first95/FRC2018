@@ -21,7 +21,7 @@ public class DriveBase extends Subsystem {
 	private static final double PIVOT_FUDGE_FACTOR = 1.5; 
 	// The speed at which we want the center of the robot to travel
 //	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
-	private static final double TURN_SPEED_INCHES_PER_SECOND = 36; 
+	private static final double TURN_SPEED_INCHES_PER_SECOND = 12;//36; 
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
