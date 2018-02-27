@@ -112,7 +112,7 @@ public class DrivePod {
 	/**
 	 * Apply the PID+F constants that are used during closed-loop position mode
 	 */
-	private void applySpeedPidConsts() {
+	private void applyPositionPidConsts() {
 		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kP(Constants.PID_IDX, K_P_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kI(Constants.PID_IDX, K_I_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
@@ -122,7 +122,7 @@ public class DrivePod {
 	/**
 	 * Apply the PID+F constants that are used during closed-loop speed mode
 	 */
-	private void applyPositionPidConsts() {
+	private void applySpeedPidConsts() {
 		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kP(Constants.PID_IDX, K_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kI(Constants.PID_IDX, K_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
