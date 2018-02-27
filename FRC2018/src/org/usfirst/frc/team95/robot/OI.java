@@ -49,8 +49,9 @@ public class OI {
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
 	public static final int MAW_AUTOGRAB_BUTTON = 6; // Right bumper
 	public static final int ELEV_SEEK_FLOOR_BUTTON = 1; // A
-	public static final int ELEV_SEEK_SWITCH_SCORE_BUTTON = 2; // B
-	public static final int ELEV_SEEK_SCALE_SCORE_LOW_BUTTON = 3; // X
+	public static final int ELEV_SEEK_SWITCH_SCORE_BUTTON = 0;//2; // B
+	public static final int ELEV_SEEK_SCALE_SCORE_LOW_BUTTON =  2; // B
+	public static final int ELEV_SEEK_SCALE_SCORE_MED_BUTTON = 3; // X
 	public static final int ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON = 4; // Y
 
 	// POV/DPAD on the weapons controller || IT IS IN DEGREES!!!!!
@@ -349,10 +350,14 @@ public class OI {
 		return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
 	}
 	public boolean isElevatorSwitchScoreButtonPressed() {
-		return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
+		return false; // Not currently in use
+//		return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
 	}
 	public boolean isElevatorScaleScoreLowButtonPressed() {
 		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_LOW_BUTTON);
+	}
+	public boolean isElevatorScaleScoreMedButtonPressed() {
+		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_MED_BUTTON);
 	}
 	public boolean isElevatorScaleScoreHighButtonPressed() {
 		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON);
