@@ -13,8 +13,7 @@ public class Constants
 		
 		// Used in closed-loop control
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
-		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point
-		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
+		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point		
 
 		// Manual Drive
 		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec

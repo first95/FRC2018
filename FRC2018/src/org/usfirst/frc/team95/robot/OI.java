@@ -19,8 +19,6 @@ import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
-import org.usfirst.frc.team95.robot.commands.compound.LeftOrRightSwitch;
-import org.usfirst.frc.team95.robot.commands.compound.MidRightSwitch;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
@@ -356,7 +354,7 @@ public class OI {
 		case MID_RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleL.addObject("Score on switch", new MidRightSwitch());
+			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
