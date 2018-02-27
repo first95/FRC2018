@@ -49,6 +49,7 @@ public class SwitchAttack extends CommandGroup {
 	// IF MID-RIGHT LOGIC:
 	private static final double MR_FORMAT_PATTERN = 0.0;
 	private static final double MR_DISTANCE_STRIGHT = 100.82;
+	//private static final double MR_DISTANCE_STRIGHT = 24.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
 	public SwitchAttack(FieldSide whichSideOfTheNearSwitchIsOurColor, StartPosition robotStartingPosition) {
@@ -68,7 +69,7 @@ public class SwitchAttack extends CommandGroup {
 		
 		/*======================================*/
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
 			addSequential(new DriveStraight(ML_INITAL_MOVE));
 			addSequential(new SweepTurn(ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
@@ -76,7 +77,7 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new DriveStraight(ML_ENDING_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
-		} else if (robotStartingPosition == StartPosition.LEFT
+		} else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 			
 			// NO PATH MAPPED YET
@@ -108,6 +109,7 @@ public class SwitchAttack extends CommandGroup {
 			
 		}
 
+		/*======================================*/
 		// RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
@@ -126,14 +128,16 @@ public class SwitchAttack extends CommandGroup {
 
 		/*======================================*/
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
 			
-		} else if (robotStartingPosition == StartPosition.RIGHT
+		} else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
+			System.out.println("RAN MID_RIGHT AND RIGHT COLOR");
+			System.out.println("RAN MID_RIGHT AND RIGHT COLOR");
 			addSequential(new DriveStraight(MR_DISTANCE_STRIGHT));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
@@ -142,6 +146,7 @@ public class SwitchAttack extends CommandGroup {
 		/*======================================*/
 		// NO GAME DATA:
 		else {
+			System.out.println("NO GAME DATA FOUND");
 			addSequential(new AnyForward());
 		}
 	}

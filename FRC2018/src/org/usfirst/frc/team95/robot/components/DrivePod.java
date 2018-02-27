@@ -205,6 +205,12 @@ public class DrivePod {
 		// followers follow
 	}
 
+	// Max speed back and forward, always make this number positve when setting it.
+	public void setMaxSpeed(double maxSpeed) {
+		leader.configPeakOutputForward(maxSpeed, Constants.CAN_TIMEOUT_MS);
+		leader.configPeakOutputReverse(-maxSpeed, Constants.CAN_TIMEOUT_MS);
+	}
+	
 	public void setVoltageRamp(double rampRate) {
 		leader.configOpenloopRamp(rampRate, Constants.CAN_TIMEOUT_MS);
 	}

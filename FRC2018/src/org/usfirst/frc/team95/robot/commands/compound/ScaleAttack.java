@@ -81,7 +81,7 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
 			addSequential(new DriveStraight(ML_INITAL_MOVE));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
@@ -90,7 +90,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
 
-		} else if (robotStartingPosition == StartPosition.LEFT
+		} else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 			
 			// NO PATH MAPPED YET
@@ -142,12 +142,12 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
 			
-		} else if (robotStartingPosition == StartPosition.RIGHT
+		} else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(MR_INITAL_MOVE));

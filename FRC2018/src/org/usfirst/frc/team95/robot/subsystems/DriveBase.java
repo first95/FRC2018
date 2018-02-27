@@ -119,6 +119,10 @@ public class DriveBase extends Subsystem {
 	 * @param inchesToTravel - number of inches forward to travel
 	 */
 	public void travelStraight(double inchesToTravel) {
+		// Max speed back and forward, always make this number positve when setting it.
+		leftPod.setMaxSpeed(0.5);
+		rightPod.setMaxSpeed(0.5); 
+		
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
 	}
