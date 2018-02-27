@@ -8,9 +8,9 @@ public class ManuallyControlElevator extends Command {
 	// Note that a different set of constants is used in autonomous control
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
-	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 4.5;
-	public static double SCALE_SCORE_MED_HEIGHT_FEET = 5;
-	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5;
+	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 4.5 - 0.25;
+	public static double SCALE_SCORE_MED_HEIGHT_FEET = 5 - 0.25;
+	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5 - 0.25;
 
 	public enum ElevatorHoldPoint {
 		FLOOR, // Positioned at its lowest position
