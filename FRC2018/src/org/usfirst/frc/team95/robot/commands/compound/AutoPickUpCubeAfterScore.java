@@ -21,6 +21,7 @@ public class AutoPickUpCubeAfterScore extends CommandGroup
 		addSequential(new DriveStraight(driveIntoCube));
 		addSequential(new TimedIngestCube()); // This will stop the chains once it's done
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
+		addSequential(new DriveStraight(-driveIntoCube));
 		addSequential(new Nothing());
 	}
 }
