@@ -8,14 +8,16 @@ public class ManuallyControlElevator extends Command {
 	// Note that a different set of constants is used in autonomous control
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
-	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 5;
-	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5;
+	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 4.5 - 0.25;
+	public static double SCALE_SCORE_MED_HEIGHT_FEET = 5 - 0.25;
+	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5 - 0.25;
 
 	public enum ElevatorHoldPoint {
 		FLOOR, // Positioned at its lowest position
 		SWITCH_SCORE, // Positioned to hold a cube above the fence around the Switch
 		SCALE_SCORE_HIGH, // Positioned at the lowest sensible point to score a cube on the Scale
-		SCALE_SCORE_LOW, // Positioned at the highest sensible point to score a cube on the Scalse
+		SCALE_SCORE_MED, // Positioned at a medium point to score a cube on the Scale
+		SCALE_SCORE_LOW, // Positioned at the lowest sensible point to score a cube on the Scale
 		HERE, // Not a specific location - indicates holding whatever point the elevator is at
 				// now.
 	};
@@ -51,6 +53,10 @@ public class ManuallyControlElevator extends Command {
 		} else if (Robot.oi.isElevatorScaleScoreLowButtonPressed()) {
 			// SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (low)");
 			seekHoldPoint(ElevatorHoldPoint.SCALE_SCORE_LOW);
+			wasHoldingPresentPositionLastIteration = false;
+		} else if (Robot.oi.isElevatorScaleScoreMedButtonPressed()) {
+			// SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (med)");
+			seekHoldPoint(ElevatorHoldPoint.SCALE_SCORE_MED);
 			wasHoldingPresentPositionLastIteration = false;
 		} else if (Robot.oi.isElevatorScaleScoreHighButtonPressed()) {
 			// SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (high)");
@@ -105,6 +111,9 @@ public class ManuallyControlElevator extends Command {
 			break;
 		case SCALE_SCORE_HIGH:
 			desiredHeightFeet = SCALE_SCORE_HIGH_HEIGHT_FEET;
+			break;
+		case SCALE_SCORE_MED:
+			desiredHeightFeet = SCALE_SCORE_MED_HEIGHT_FEET;
 			break;
 		case SCALE_SCORE_LOW:
 			desiredHeightFeet = SCALE_SCORE_LOW_HEIGHT_FEET;
