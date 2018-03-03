@@ -37,7 +37,7 @@ public class OI {
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
 	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
-	public static final int TOGGLE_SHIFT_STATE_BUTTON = 1;
+	public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -75,14 +75,14 @@ public class OI {
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
-		SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
-		SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
+		//SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
+		//SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
 
-		SmartDashboard.putData("ElevateCubeScaleScore", new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
-		SmartDashboard.putData("ElevateCubeToSwitch", new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
-		SmartDashboard.putData("ResetElevatorAndWrist", new ResetElevatorAndWrist());
-		SmartDashboard.putData("ScoreStartingCubeOnScale", new ScoreStartingCubeOnScale());
-		SmartDashboard.putData("ScoreStatingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
+		//SmartDashboard.putData("ElevateCubeScaleScore", new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		//SmartDashboard.putData("ElevateCubeToSwitch", new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
+		//SmartDashboard.putData("ResetElevatorAndWrist", new ResetElevatorAndWrist());
+		//SmartDashboard.putData("ScoreStartingCubeOnScale", new ScoreStartingCubeOnScale());
+		//SmartDashboard.putData("ScoreStatingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
@@ -101,10 +101,10 @@ public class OI {
 		deployRampsButton.whileHeld(new TriggerRampRelease());
 
 		// Sendable Chooser for single commands
-		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
-		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
-		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
-		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
+		//SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
+		//SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
+		//SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
+		//SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
 		
 
 		// For the operators to indicate on which side of the field they placed the robot
@@ -406,8 +406,8 @@ public class OI {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
 	
-	public boolean getShiftOverride() {
-		return driverController.getRawButton(TOGGLE_SHIFT_STATE_BUTTON);
-	}
+//	public boolean getShiftOverrided() {
+//		return driverController.getRawButton(SHIFT_STATE_BUTTON);
+//	}
 		
 }
