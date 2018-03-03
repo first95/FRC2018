@@ -14,28 +14,26 @@ public class SwitchAttack extends CommandGroup {
 
 	// These strategies assumes we have a cube pre-loaded on the robot.
 	private static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 0; //2; // During auto moves to score on the switch, move up this close to the switch wall.
+	private static final double ONE_FOOT = 12.0;
 	
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
 	private static final double L_INITIAL_MOVE = 148.19;
 	private static final double L_TO_R_MOVE = 158.5;
 	private static final double L_TO_SWITCH_MOVE = 156;
-	private static final double L_ONE_FOOT = 12.0;
 	private static final double L_FINAL_MOVE = 19.56;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
-	private static final double ML_INITAL_MOVE = 12.0;
+	private static final double ML_TO_SWITCH_MOVE = 156;
+	private static final double ML_TO_R_MOVE = 153.5;
 	private static final double ML_SWEEPER_TURN_RADIUS = 71.61;
 	private static final double ML_SWEEPER_DEGREES = 32.73;
-	private static final double ML_ENDING_MOVE = 12.0;
 	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
 
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
-	private static final double C_INITAL_MOVE = 12.0;
-	private static final double C_ENDING_MOVE = 12.0;
 	private static final double C_R_SWEEPER_RADIUS = 36.0;
 	private static final double C_R_SWEEPER_ANGLE = 47.22;
 	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 35.66;
@@ -48,10 +46,14 @@ public class SwitchAttack extends CommandGroup {
 	private static final double R_FORMAT_PATTERN = 0.0;
 	private static final double R_INITAL_MOVE = 148.19;
 	private static final double R_FINAL_MOVE = 19.56;
+	private static final double R_TO_L_MOVE = 158.5;
+	private static final double R_TO_SWITCH_MOVE = 156;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
 	// IF MID-RIGHT LOGIC:
 	private static final double MR_FORMAT_PATTERN = 0.0;
+	private static final double MR_TO_SWITCH_MOVE = 156;
+	private static final double MR_TO_L_MOVE = 153.5;
 	private static final double MR_DISTANCE_STRIGHT = 101.6; // Measured in Solidworks, 2018-2-15 //100.82;
 	//private static final double MR_DISTANCE_STRIGHT = 24.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
@@ -67,7 +69,7 @@ public class SwitchAttack extends CommandGroup {
 		}
 		else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(L_ONE_FOOT));
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(L_TO_R_MOVE));
 			addSequential(new Pivot(-90));
@@ -79,18 +81,22 @@ public class SwitchAttack extends CommandGroup {
 		// MID-LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-			addSequential(new DriveStraight(ML_INITAL_MOVE));
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
 			addSequential(new SweepTurn(-ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
-			addSequential(new DriveStraight(ML_ENDING_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-
+		}
+		else if (robotStartingPosition == StartPosition.MID_LEFT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(ML_TO_R_MOVE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(ML_TO_SWITCH_MOVE));
+			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 		
 		/*======================================*/
@@ -98,50 +104,57 @@ public class SwitchAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-C_L_SWEEPER_ANGLE, C_L_SWEEPER_RADIUS));
 			addSequential(new DriveStraight(C_L_DISTANCE_IN_THE_MIDDLE));
 			addSequential(new SweepTurn(C_L_SWEEPER_ANGLE, C_L_SWEEPER_RADIUS));
-			addSequential(new DriveStraight(C_ENDING_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 		} else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(C_R_SWEEPER_ANGLE, C_R_SWEEPER_RADIUS));
 			addSequential(new DriveStraight(C_R_DISTANCE_IN_THE_MIDDLE));
 			addSequential(new SweepTurn(-C_R_SWEEPER_ANGLE, C_R_SWEEPER_RADIUS));
-			addSequential(new DriveStraight(C_ENDING_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
 		}
 
 		/*======================================*/
 		// RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
-		} else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-
+		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(R_TO_L_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(R_TO_SWITCH_MOVE));
+			addSequential(new ScoreStartingCubeOnSwitch());
+		}
+		else if (robotStartingPosition == StartPosition.RIGHT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
 			addSequential(new DriveStraight(R_INITAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(R_FINAL_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
-			
 		}
 
 		/*======================================*/
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
+		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(MR_TO_L_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(MR_TO_SWITCH_MOVE));
+			addSequential(new ScoreStartingCubeOnSwitch());
+		}
+		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 			System.out.println("RAN MID_RIGHT AND RIGHT COLOR");
