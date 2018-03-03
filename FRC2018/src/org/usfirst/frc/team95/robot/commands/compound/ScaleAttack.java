@@ -61,18 +61,18 @@ public class ScaleAttack extends CommandGroup {
 	private static final double MR_FINAL_MOVE = 167.01;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
-	public ScaleAttack(FieldSide whichSideOfTheNearSwitchIsOurColor,
+	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor,
 			StartPosition robotStartingPosition) {
 
 		// LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 
 			addSequential(new DriveStraight(L_INITAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 		} else if (robotStartingPosition == StartPosition.LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
@@ -81,7 +81,7 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 
 			addSequential(new DriveStraight(ML_INITAL_MOVE));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
@@ -91,7 +91,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnScale());
 
 		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
@@ -101,7 +101,7 @@ public class ScaleAttack extends CommandGroup {
 
 		// CENTER MOVE:
 		else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			
 			addSequential(new DriveStraight(C_INITAL_MOVE));
 			addSequential(new SweepTurn(-C_L_SWEEP_DEGREE, C_L_SWEEP_RADIUS));
@@ -112,7 +112,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnScale());
 
 		} else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(C_INITAL_MOVE));
 			addSequential(new SweepTurn(C_R_SWEEP_DEGREE, C_R_SWEEP_RADIUS));
@@ -126,13 +126,13 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
 			
 		} else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(R_INITAL_MOVE));
 			addSequential(new Pivot(-90));
@@ -142,13 +142,13 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 
 			// NO PATH MAPPED YET
 			System.out.println("NO PATH MAPPED!!!");
 			
 		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(MR_INITAL_MOVE));
 			addSequential(new SweepTurn(MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));

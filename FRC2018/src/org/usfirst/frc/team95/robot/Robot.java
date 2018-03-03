@@ -49,7 +49,18 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
-	private StartPosition robotStartSide;       // The location where the robot began
+
+	/**
+	 * Robot position after scoring on the scale. Robot is assumed to be centered
+	 * on the switch and have it's front bumper 10 inches back from the end of the scale
+	 * plate in all of these cases.
+	 */
+//	public enum ScalePosition {
+//		LEFT, // On the left side of the scale
+//		RIGHT, // One the right side of the scale
+//	}
+
+	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
 	
 	Command autonomousCommand;
