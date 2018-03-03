@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
-import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.ElevateCubeAndScore;
@@ -18,16 +17,11 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
-import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
 
 /**
  * This class is the glue that binds the controls on the physical operator
