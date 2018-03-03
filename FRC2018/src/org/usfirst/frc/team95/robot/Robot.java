@@ -10,19 +10,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
-//import org.usfirst.frc.team95.robot.commands.Rotate;
-import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
-import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
-import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
-import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Ramps;
@@ -49,7 +36,18 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
-	private StartPosition robotStartSide;       // The location where the robot began
+
+	/**
+	 * Robot position after scoring on the scale. Robot is assumed to be centered
+	 * on the switch and have it's front bumper 10 inches back from the end of the scale
+	 * plate in all of these cases.
+	 */
+//	public enum ScalePosition {
+//		LEFT, // On the left side of the scale
+//		RIGHT, // One the right side of the scale
+//	}
+
+	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
 	
 	Command autonomousCommand;
