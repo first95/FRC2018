@@ -17,12 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod {
 	// Measured 2/13/18 on practice robot on "field" carpet
-	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12);
+	private static final double ENCODER_TICKS_PER_INCH = 23840.0 / (4*12); //25560.0 / (4 * 12);
 	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
 	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
 	private static final double K_D_POSITION_MODE = 0; //40.0 * K_P;
+	
+	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
 	private double K_F_SPEED_MODE = 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
@@ -231,6 +233,12 @@ public class DrivePod {
 		// followers follow
 	}
 
+	// Max speed back and forward, always make this number positve when setting it.
+	public void setMaxSpeed(double maxSpeed) {
+		leader.configPeakOutputForward(maxSpeed, Constants.CAN_TIMEOUT_MS);
+		leader.configPeakOutputReverse(-maxSpeed, Constants.CAN_TIMEOUT_MS);
+	}
+	
 	public void setVoltageRamp(double rampRate) {
 		leader.configOpenloopRamp(rampRate, Constants.CAN_TIMEOUT_MS);
 	}
