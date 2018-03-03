@@ -277,20 +277,20 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void visit() {
-//		if (Robot.oi.getShiftOverrided()) {
-//
-//			allowShift = false;
-//			setGear(false);
-//			shiftOverrideToggled = true;
-//			
-//		} else {
-//
-//			if(shiftOverrideToggled) {
-//				allowShift = true;
-//				shiftOverrideToggled = false;
-//			}
-//
-//		}
+		if (Robot.oi.getShiftOverrided()) {
+
+			allowShift = false;
+			setGear(false);
+			shiftOverrideToggled = true;
+			
+		} else {
+
+			if(shiftOverrideToggled) {
+				allowShift = true;
+				shiftOverrideToggled = false;
+			}
+
+		}
 
 		autoShift();
 

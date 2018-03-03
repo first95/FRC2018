@@ -405,8 +405,8 @@ public class OI {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
 	
-//	public boolean getShiftOverrided() {
-//		return driverController.getRawButton(SHIFT_STATE_BUTTON);
-//	}
+	public boolean getShiftOverrided() {
+		return driverController.getRawButton(SHIFT_STATE_BUTTON);
+	}
 		
 }
