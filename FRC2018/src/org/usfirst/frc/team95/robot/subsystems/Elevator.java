@@ -8,6 +8,7 @@ import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -100,6 +101,11 @@ public class Elevator extends Subsystem {
 	public void setCurrentPosToZero() {
 		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 	}
+	
+	public void brake(boolean isEnabled) {
+		rightElevDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		leftElevDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		}
 
 	@Override
 	protected void initDefaultCommand() {
