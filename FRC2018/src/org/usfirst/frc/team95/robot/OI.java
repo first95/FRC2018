@@ -174,7 +174,7 @@ public class OI {
 			case LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 //				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			case MID_LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
@@ -230,7 +230,7 @@ public class OI {
 		case RIGHT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 //			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
@@ -248,7 +248,7 @@ public class OI {
 		case LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 //			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-//			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
@@ -304,7 +304,7 @@ public class OI {
 		case RIGHT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 //			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
