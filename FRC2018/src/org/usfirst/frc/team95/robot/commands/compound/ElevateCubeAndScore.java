@@ -17,6 +17,7 @@ public class ElevateCubeAndScore extends CommandGroup {
 		addSequential(new SetWristAngle(WristAngle.MID_DOWN));
 		addSequential(new Pause(1.0));
 		addSequential(new EjectCube());
+		
 	}
 
 }
