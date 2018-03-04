@@ -67,12 +67,20 @@ public class SwitchAttack extends CommandGroup {
 		}
 		else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(L_ONE_FOOT));
+			// This sequence crosses the open space in front of the switch.  We haven't tested it yet but it looks good.
+//			addSequential(new DriveStraight(L_ONE_FOOT));
+//			addSequential(new Pivot(90));
+//			addSequential(new DriveStraight(L_TO_R_MOVE));
+//			addSequential(new Pivot(-90));
+//			addSequential(new DriveStraight(L_TO_SWITCH_MOVE));
+//			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// This sequence throws the cube over the center of the switch, scoring on the opposite side.  We're not sure we have the range for it.
+			addSequential(new DriveStraight(L_INITIAL_MOVE));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_TO_R_MOVE));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(L_TO_SWITCH_MOVE));
-			addSequential(new ScoreStartingCubeOnSwitch());
+			// Intentionally try to go a little further than the actual distance
+			addSequential(new DriveStraight(L_FINAL_MOVE+AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new ScoreStartingCubeOverSwitch());
 		}
 		
 		/*======================================*/
