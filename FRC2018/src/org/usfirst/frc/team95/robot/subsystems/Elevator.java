@@ -8,6 +8,8 @@ import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -44,6 +46,8 @@ public class Elevator extends Subsystem {
 		// Configure the left talon to follow the right talon, but backwards
 		leftElevDriver.setInverted(true); // Inverted here refers to the output
 		leftElevDriver.set(ControlMode.Follower, Constants.RIGHT_ELEV_DRIVER);
+		
+		
 
 		// Configure the right talon for closed loop control
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
@@ -59,9 +63,12 @@ public class Elevator extends Subsystem {
 		rightElevDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
 
 		// Configure soft limit at top
-		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
+		//rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
+		//rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
+		//rightElevDriver.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
+		
+		//Tell talon a limit switch is connected
+		rightElevDriver.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, Constants.CAN_TIMEOUT_MS);
 
 		// Send the initial PID constant values to the smartdash
 		// SmartDashboard.putNumber(pLabel, K_P);
