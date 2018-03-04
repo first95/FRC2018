@@ -16,7 +16,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE = 304.31;
+	private static final double L_INITAL_MOVE = 304.31 + 10.0;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF MID-LEFT LOGIC:
@@ -47,7 +47,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
-	private static final double R_INITAL_MOVE = 303.71;
+	private static final double R_INITAL_MOVE = 304.31 + 10.0;;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
 	// IF MID-RIGHT LOGIC:
@@ -81,7 +81,7 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 
 			addSequential(new DriveStraight(ML_INITAL_MOVE));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));

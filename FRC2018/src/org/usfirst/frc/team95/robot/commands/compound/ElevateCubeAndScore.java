@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot.commands.compound;
 
 import org.usfirst.frc.team95.robot.Robot;
+import org.usfirst.frc.team95.robot.commands.Pause;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;

@@ -17,7 +17,10 @@ public class SwitchAttack extends CommandGroup {
 	
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE = 148.19;
+	private static final double L_INITIAL_MOVE = 148.19;
+	private static final double L_TO_R_MOVE = 158.5;
+	private static final double L_TO_SWITCH_MOVE = 156;
+	private static final double L_ONE_FOOT = 12.0;
 	private static final double L_FINAL_MOVE = 19.56;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
@@ -57,20 +60,24 @@ public class SwitchAttack extends CommandGroup {
 		
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraight(L_INITAL_MOVE));
+			addSequential(new DriveStraight(L_INITIAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(L_FINAL_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
+		}
+		else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraight(L_ONE_FOOT));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(L_TO_R_MOVE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(L_TO_SWITCH_MOVE));
+			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 		
 		/*======================================*/
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			
 			if(false) { 
 				// TODO: Fix sweeper moves and the enable this again
