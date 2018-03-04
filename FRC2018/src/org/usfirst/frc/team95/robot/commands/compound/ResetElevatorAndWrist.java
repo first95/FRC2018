@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ResetElevatorAndWrist extends CommandGroup {
 
 	public ResetElevatorAndWrist() {
-		addSequential(new DriveStraight(-12));
 		addSequential(new SetWristAngle(WristAngle.UP));
 		addSequential(new SetElevatorHeight(ElevatorHoldPoint.FLOOR));
 	}

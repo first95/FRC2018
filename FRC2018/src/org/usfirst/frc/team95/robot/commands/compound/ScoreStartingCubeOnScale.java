@@ -3,6 +3,7 @@ package org.usfirst.frc.team95.robot.commands.compound;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 
@@ -16,6 +17,7 @@ public class ScoreStartingCubeOnScale extends CommandGroup
 	// up to the scale with the wrist in a flat position.
 	public ScoreStartingCubeOnScale()
 	{
+		addSequential(new DriveStraight(-18.0));
 		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
 		addSequential(new ResetElevatorAndWrist());
 	}
