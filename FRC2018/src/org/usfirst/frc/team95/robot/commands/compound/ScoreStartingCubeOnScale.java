@@ -18,7 +18,7 @@ public class ScoreStartingCubeOnScale extends CommandGroup
 	public ScoreStartingCubeOnScale()
 	{
 		addSequential(new DriveStraight(-18.0));
-		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH, false));
 		addSequential(new ResetElevatorAndWrist());
 	}
 }
