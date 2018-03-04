@@ -136,8 +136,12 @@ public class SwitchAttack extends CommandGroup {
 		// RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
+			// This sequence throws the cube over the center of the switch, scoring on the opposite side.  We're not sure we have the range for it.
+			addSequential(new DriveStraight(R_INITAL_MOVE));
+			addSequential(new Pivot(-90));
+			// Intentionally try to go a little further than the actual distance
+			addSequential(new DriveStraight(R_FINAL_MOVE+AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new ScoreStartingCubeOverSwitch());
 			
 		} else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
