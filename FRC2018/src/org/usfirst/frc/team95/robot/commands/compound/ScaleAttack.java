@@ -13,23 +13,30 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScaleAttack extends CommandGroup {
 
 	// These strategies assumes we have a cube pre-loaded on the robot.
+	
+	//INDEPENDENT CONSTANTS:
+	private static final double ONE_FOOT = 12.0;
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
 	private static final double L_INITAL_MOVE = 304.31;
+	private static final double L_TO_R_INITIAL_MOVE = 231.0;
+	private static final double L_TO_R_ACROSS_MOVE = 264.0;
+	private static final double L_TO_R_NULL_ZONE = 33.0;
+	private static final double L_TO_R_FINAL_MOVE = 80.0;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
-	private static final double ML_INITAL_MOVE = 12.0;
 	private static final double ML_SWEEP_TURN_RADIUS = 162.29;
+	private static final double ML_TO_R_SWEEP_TURN_RADIUS = 0.0;
 	private static final double ML_SWEEP_TURN_DEGREE = 28.19;
+	private static final double ML_TO_R_SWEEP_TURN_DEGREE = 0.0;
 	private static final double ML_FINAL_MOVE = 139.1;
 	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
 
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
-	private static final double C_INITAL_MOVE = 12.0;
 	private static final double C_L_SWEEP_RADIUS = 48.0;
 	private static final double C_L_SWEEP_DEGREE = 54.34;
 	private static final double C_L_MIDDLE_MOVE = 80.58;
@@ -52,7 +59,6 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF MID-RIGHT LOGIC:
 	private static final double MR_FORMAT_PATTERN = 0.0;
-	private static final double MR_INITAL_MOVE = 12.0;
 	private static final double MR_SWEEP_RADIUS = 36.0;
 	private static final double MR_SWEEP_DEGREE = 45.0;
 	private static final double MR_MIDDLE_DISTANCE = 56.77;
@@ -65,73 +71,95 @@ public class ScaleAttack extends CommandGroup {
 			StartPosition robotStartingPosition) {
 
 		// LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-
+		if (robotStartingPosition == StartPosition.LEFT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
+		{
 			addSequential(new DriveStraight(L_INITAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-			
-		} else if (robotStartingPosition == StartPosition.LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
+		}
+		else if (robotStartingPosition == StartPosition.LEFT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+			addSequential(new ScoreStartingCubeOnScale());
 		}
 		/*======================================*/
 
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-
-			addSequential(new DriveStraight(ML_INITAL_MOVE));
+		if (robotStartingPosition == StartPosition.MID_LEFT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
 			addSequential(new SweepTurn(ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
 			addSequential(new DriveStraight(ML_FINAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-			
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-
+		}
+		else if (robotStartingPosition == StartPosition.MID_LEFT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new SweepTurn(-ML_TO_R_SWEEP_TURN_DEGREE, ML_TO_R_SWEEP_TURN_RADIUS));
+			addSequential(new DriveStraight(0));
+			addSequential(new SweepTurn(ML_TO_R_SWEEP_TURN_DEGREE, ML_TO_R_SWEEP_TURN_RADIUS));
+			addSequential(new DriveStraight(0));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+			addSequential(new ScoreStartingCubeOnScale());
 		}
 		/*======================================*/
 
 		// CENTER MOVE:
 		else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-			
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-C_L_SWEEP_DEGREE, C_L_SWEEP_RADIUS));
 			addSequential(new DriveStraight(C_L_MIDDLE_MOVE));
 			addSequential(new SweepTurn(C_L_SWEEP2_DEGREE, C_L_SWEEP2_RADIUS));
 			addSequential(new DriveStraight(C_L_FINAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-
-		} else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+		}
+		else if (robotStartingPosition == StartPosition.CENTER
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(C_R_SWEEP_DEGREE, C_R_SWEEP_RADIUS));
 			addSequential(new DriveStraight(C_R_MIDDLE_MOVE));
 			addSequential(new SweepTurn(-C_R_SWEEP2_DEGREE, C_R_SWEEP2_RADIUS));
 			addSequential(new DriveStraight(C_R_FINAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
-			
 		}
 		/*======================================*/
 
 		// RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
-		} else if (robotStartingPosition == StartPosition.RIGHT
+		else if (robotStartingPosition == StartPosition.RIGHT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraight(R_TO_L_INITIAL_MOVE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(-R_TO_L_ACROSS_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(R_TO_L_NULL_ZONE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(R_TO_L_FINAL_MOVE));
+			addSequential(new ScoreStartingCubeOnScale());
+		}
+		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(R_INITAL_MOVE));
@@ -150,7 +178,7 @@ public class ScaleAttack extends CommandGroup {
 		} else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 
-			addSequential(new DriveStraight(MR_INITAL_MOVE));
+			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
 			addSequential(new SweepTurn(-MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
 			addSequential(new DriveStraight(MR_FINAL_MOVE));
