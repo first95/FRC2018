@@ -77,7 +77,7 @@ public class SwitchAttack extends CommandGroup {
 		
 		/*======================================*/
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			
 			if(false) { 
 				// TODO: Fix sweeper moves and the enable this again

@@ -47,7 +47,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
-	private static final double R_INITAL_MOVE = 303.71;
+	private static final double R_INITAL_MOVE = 304.31 + 10.0;;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
 	// IF MID-RIGHT LOGIC:
