@@ -18,10 +18,10 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  */
 public class DriveBase extends Subsystem {
 	// This is how much extra we command the pods to move to account for slippage
-	private final double PIVOT_FUDGE_FACTOR = 1.5; 
+	private final double PIVOT_FUDGE_FACTOR = 1.5;
 	// The speed at which we want the center of the robot to travel
-//	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0; 
-	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24; 
+	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
+	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 
@@ -32,7 +32,7 @@ public class DriveBase extends Subsystem {
 	private boolean allowShift = true;
 	private boolean allowDeshift = true;
 	private boolean hasAlreadyShifted = false;
-	private boolean shiftOverrideNotToggled = true;
+	private boolean shiftOverrideToggled = false;
 
 	public DriveBase() {
 		super();
@@ -112,32 +112,37 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * Command that the robot should travel a specific distance along the
-	 * carpet.  Call this once to command distance - do not call repeatedly, as
-	 * this will reset the distance remaining.
+	 * Command that the robot should travel a specific distance along the carpet.
+	 * Call this once to command distance - do not call repeatedly, as this will
+	 * reset the distance remaining.
 	 * 
-	 * @param inchesToTravel - number of inches forward to travel
+	 * @param inchesToTravel
+	 *            - number of inches forward to travel
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		//leftPod.setMaxSpeed(0.5);
-		//rightPod.setMaxSpeed(0.5); 
-		
+		leftPod.setMaxSpeed(0.5);
+		rightPod.setMaxSpeed(0.5);
+
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
 	}
+
 	/**
-	 * Command that the robot should travel a specific distance along the
-	 * carpet.  Call this once to command distance - do not call repeatedly, as
-	 * this will reset the distance remaining.
+	 * Command that the robot should travel a specific distance along the carpet.
+	 * Call this once to command distance - do not call repeatedly, as this will
+	 * reset the distance remaining.
 	 * 
-	 * @param inchesToTravel - number of inches forward to travel
-	 * @param inchesPerSecond - speed at which to travel
+	 * @param inchesToTravel
+	 *            - number of inches forward to travel
+	 * @param inchesPerSecond
+	 *            - speed at which to travel
 	 */
 	public void travelStraight(double inchesPerSecond, double inchesToTravel) {
 		leftPod.driveForDistanceAtSpeed(-inchesPerSecond, -inchesToTravel);
 		rightPod.driveForDistanceAtSpeed(inchesPerSecond, inchesToTravel);
 	}
+
 	// Talon Brake system
 	public void brake(boolean isEnabled) {
 		leftPod.enableBrakeMode(isEnabled);
@@ -173,22 +178,21 @@ public class DriveBase extends Subsystem {
 				/ SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 		if (degreesToTurnCw > 0) {
 			// Forward and to the right - CW
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		} else {
 			// Forward and to the left - CCW
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		}
-		double leftSpeedInchesPerSecond  = leftDistanceInches / sweepTimeS;
+		double leftSpeedInchesPerSecond = leftDistanceInches / sweepTimeS;
 		double rightSpeedInchesPerSecond = rightDistanceInches / sweepTimeS;
-		
 
-		leftPod. driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
+		leftPod.driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
 		rightPod.driveForDistanceAtSpeed(-rightSpeedInchesPerSecond, -rightDistanceInches);
 	}
 
@@ -203,6 +207,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void arcade() {
+		leftPod.setMaxSpeed(1);
+		rightPod.setMaxSpeed(1);
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
@@ -273,17 +279,23 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void visit() {
-		if (Robot.oi.getShiftOverride()) {
-			if (shiftOverrideNotToggled) {
-				shiftOverrideNotToggled = false;
-			} else {
-				shiftOverrideNotToggled = true;
-			}
-		}
+//		if (Robot.oi.getShiftOverrided()) {
+//
+//			allowShift = false;
+//			setGear(false);
+//			shiftOverrideToggled = true;
+//			
+//		} else {
+//
+//			if(shiftOverrideToggled) {
+//				allowShift = true;
+//				shiftOverrideToggled = false;
+//			}
+//
+//		}
 
-		if (shiftOverrideNotToggled) {
-			autoShift();
-		}
+		autoShift();
+
 	}
 
 	public void pullPidConstantsFromSmartDash() {

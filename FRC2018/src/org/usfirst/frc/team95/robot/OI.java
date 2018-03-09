@@ -37,7 +37,7 @@ public class OI {
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
 	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
-	public static final int TOGGLE_SHIFT_STATE_BUTTON = 1;
+	public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -75,14 +75,14 @@ public class OI {
 
 	public OI() {
 		// Put Some buttons on the SmartDashboard
-		SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
-		SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
+		//SmartDashboard.putData("Automatic cube pickup (manual drive)", new AutoPickUpCubeManualDrive());
+		//SmartDashboard.putData("Automatic cube pickup (automatic drive)", new AutoPickUpCubeWithDrive());
 
-		SmartDashboard.putData("ElevateCubeScaleScore", new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
-		SmartDashboard.putData("ElevateCubeToSwitch", new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
-		SmartDashboard.putData("ResetElevatorAndWrist", new ResetElevatorAndWrist());
-		SmartDashboard.putData("ScoreStartingCubeOnScale", new ScoreStartingCubeOnScale());
-		SmartDashboard.putData("ScoreStatingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
+		//SmartDashboard.putData("ElevateCubeScaleScore", new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		//SmartDashboard.putData("ElevateCubeToSwitch", new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE));
+		//SmartDashboard.putData("ResetElevatorAndWrist", new ResetElevatorAndWrist());
+		//SmartDashboard.putData("ScoreStartingCubeOnScale", new ScoreStartingCubeOnScale());
+		//SmartDashboard.putData("ScoreStatingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
 		
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
@@ -90,6 +90,7 @@ public class OI {
 
 		// Connect the buttons to commands
 		autograbButton.whileHeld(new AutoPickUpCubeManualDrive());
+		
 
 		// if (xbox.getAButtonPressed()) {
 		// new Nothing();
@@ -101,10 +102,10 @@ public class OI {
 		deployRampsButton.whileHeld(new TriggerRampRelease());
 
 		// Sendable Chooser for single commands
-		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
-		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
-		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
-		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
+		//SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
+		//SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
+		//SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
+		//SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees cCW", new SweepTurn(-90, 6*12));
 		
 
 		// For the operators to indicate on which side of the field they placed the robot
@@ -172,27 +173,27 @@ public class OI {
 			switch(robotStartPosition) {
 			case LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
-				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			case MID_LEFT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			case CENTER:
-				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			case MID_RIGHT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			case RIGHT:
 				moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
-				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//				moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 				break;
 			default:
 				break;
@@ -209,27 +210,27 @@ public class OI {
 		switch(robotStartPosition) {
 		case LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case CENTER:
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case MID_RIGHT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));			
+//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));			
 			break;
 		case RIGHT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
@@ -246,27 +247,26 @@ public class OI {
 		switch(robotStartPosition) {
 		case LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		case CENTER:
-			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		case MID_RIGHT:
-			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		default:
 			break;
@@ -283,28 +283,28 @@ public class OI {
 		switch(robotStartPosition) {
 		case LEFT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
             //moveSwitchRScaleR.addObject("Score on Scale after Switch", new ScaleAttackAfterScoreOnSwitch(FieldSide.RIGHT, SwitchPosition.LEFT));
 			break;
 		case MID_LEFT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case CENTER:
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case MID_RIGHT:
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+//			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
@@ -406,8 +406,8 @@ public class OI {
 		return driverController.getRawButton(SHIFT_BUTTON);
 	}
 	
-	public boolean getShiftOverride() {
-		return driverController.getRawButton(TOGGLE_SHIFT_STATE_BUTTON);
-	}
+//	public boolean getShiftOverrided() {
+//		return driverController.getRawButton(SHIFT_STATE_BUTTON);
+//	}
 		
 }
