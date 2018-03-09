@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Ramps;
+import org.usfirst.frc.team95.robot.subsystems.Vision;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -59,6 +60,7 @@ public class Robot extends IterativeRobot {
 	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
+	public static Vision vision;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -74,11 +76,13 @@ public class Robot extends IterativeRobot {
 		ramps = new Ramps();
 		compressor = new Compressor();
 		oi = new OI();
-
+		vision = new Vision();
+		
 		// Show what command your subsystem is running on the SmartDashboard
 		SmartDashboard.putData(drivebase);
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
+		SmartDashboard.putData(vision);
 
 		drivebase.brake(false);
 		elevator.brake(false);
@@ -183,6 +187,7 @@ public class Robot extends IterativeRobot {
 		elevator.log();
 //		collector.log();
 		oi.log();
+		vision.log();
 	}
 
 	public Robot.StartPosition getRobotStartSide() {
