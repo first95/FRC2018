@@ -1,6 +1,7 @@
 package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
+import org.usfirst.frc.team95.robot.commands.testCommand;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
@@ -66,6 +68,10 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 	// private XboxController xbox = new XboxController(0);
 
+	private Double autoDelayValue = 0.0;
+	private Sendable aDValueFound;
+	SendableChooser<Command> testChooser = new SendableChooser<>();
+	
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleR = new MutableSendableChooser<>();
@@ -130,6 +136,10 @@ public class OI {
 		SmartDashboard.putData("LR", moveSwitchLScaleR);
 		SmartDashboard.putData("RL", moveSwitchRScaleL);
 		SmartDashboard.putData("RR", moveSwitchRScaleR);
+		
+		SmartDashboard.putNumber("Auto Delay", autoDelayValue);
+		testChooser.addObject("TEST", new testCommand());
+		SmartDashboard.putData("TestChooser", testChooser);
 	}
 
 	// There are a few things the OI wants to revisit every time around
@@ -257,6 +267,13 @@ public class OI {
 		}
 
 		lastSelectedPosition = curPos;
+
+		aDValueFound = SmartDashboard.getData("Auto Delay");
+	}
+	
+	public String getADValue() {
+		
+		return aDValueFound.toString();
 	}
 
 	public Command getSelectedCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
@@ -271,6 +288,10 @@ public class OI {
 		} else {
 			return new Nothing();
 		}
+	}
+	
+	public Command getTestCommand() {
+		return testChooser.getSelected();
 	}
 
 	// SWITCH LEFT || SCALE LEFT

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
+import org.usfirst.frc.team95.robot.commands.Pause;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Ramps;
@@ -25,32 +26,31 @@ import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 public class Robot extends IterativeRobot {
 	/**
-	 * Robot position at match start.
-	 * Robot is assumed to have its bumper flush against the alliance wall
-	 * in all these cases.
+	 * Robot position at match start. Robot is assumed to have its bumper flush
+	 * against the alliance wall in all these cases.
 	 */
 	public enum StartPosition {
-		LEFT,      // Rear left corner of the bumper touches the diagonal of the left portal
-		MID_LEFT,  // Robot's center is centered on the left switch plate
-		CENTER,    // Robot is centered on the field centerline
+		LEFT, // Rear left corner of the bumper touches the diagonal of the left portal
+		MID_LEFT, // Robot's center is centered on the left switch plate
+		CENTER, // Robot is centered on the field centerline
 		MID_RIGHT, // Robot's center is centered on the right switch plate
-		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
+		RIGHT, // Rear right corner of the bumper touches the diagonal of the right portal
 	}
 
 	/**
-	 * Robot position after scoring on the scale. Robot is assumed to be centered
-	 * on the switch and have it's front bumper 10 inches back from the end of the scale
-	 * plate in all of these cases.
+	 * Robot position after scoring on the scale. Robot is assumed to be centered on
+	 * the switch and have it's front bumper 10 inches back from the end of the
+	 * scale plate in all of these cases.
 	 */
-//	public enum ScalePosition {
-//		LEFT, // On the left side of the scale
-//		RIGHT, // One the right side of the scale
-//	}
+	// public enum ScalePosition {
+	// LEFT, // On the left side of the scale
+	// RIGHT, // One the right side of the scale
+	// }
 
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
-	
-	Command autonomousCommand;
+
+	Command autonomousCommand, autonomousWait;
 
 	// Components of the robot
 	public static DriveBase drivebase;
@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
 
 		drivebase.brake(false);
 		elevator.brake(false);
-		
+
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
 		if (gameData == "") {
 			gameData = "UUU";
 		} else {
-			System.out.println("Time to get game data was "+elapTime_sec+" seconds.");
+			System.out.println("Time to get game data was " + elapTime_sec + " seconds.");
 		}
 		System.out.println("Plate assignments are " + gameData);
 
@@ -107,9 +107,24 @@ public class Robot extends IterativeRobot {
 		System.out.println("The " + getWhichSideOfTheNearSwitchIsOurColor() + " side of the near switch is our color.");
 		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
 		System.out.println("The " + getWhichSideOfTheFarSwitchIsOurColor() + " side of the far switch is our color.");
-		
-		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
-		autonomousCommand.start();
+
+		if (oi.getADValue() != "") {
+			double valueToWait;
+			
+			valueToWait = Double.valueOf(oi.getADValue());
+			
+			autonomousWait = new Pause(valueToWait);
+			autonomousCommand = oi.getTestCommand();
+			//autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
+			autonomousCommand.start();
+
+		}
+		else {
+			autonomousCommand = oi.getTestCommand();
+			//autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
+			autonomousCommand.start();
+		}
+
 	}
 
 	/**
@@ -126,21 +141,21 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
-		
+
 		drivebase.brake(false);
 		elevator.brake(false);
 	}
 
-	public void disabledPeriodic() {	
+	public void disabledPeriodic() {
 		commonPeriodic();
 	}
-	
+
 	public void commonPeriodic() {
 		Scheduler.getInstance().run(); // Runs all active commands
 		elevator.checkAndApplyHomingSwitch();
-        drivebase.pullPidConstantsFromSmartDash();
-        oi.visit();
-        drivebase.visit();
+		drivebase.pullPidConstantsFromSmartDash();
+		oi.visit();
+		drivebase.visit();
 		log();
 	}
 
@@ -153,7 +168,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if(autonomousCommand != null) {
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
 	}
@@ -181,33 +196,36 @@ public class Robot extends IterativeRobot {
 	private void log() {
 		drivebase.log();
 		elevator.log();
-//		collector.log();
+		// collector.log();
 		oi.log();
 	}
 
 	public Robot.StartPosition getRobotStartSide() {
 		return robotStartSide;
 	}
-	
+
 	private FieldSide sideFromChar(char side) {
-		if(side == 'L') {
+		if (side == 'L') {
 			return FieldSide.LEFT;
-		} else if(side == 'R') {
+		} else if (side == 'R') {
 			return FieldSide.RIGHT;
 		} else {
 			return FieldSide.UNKNOWN;
 		}
 	}
+
 	// The side of the near switch that belongs to us
-	public  FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
+	public FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(0));
 	}
+
 	// The side of the scale that belongs to us
-	public  FieldSide getWhichSideOfTheScaleIsOurColor() {
+	public FieldSide getWhichSideOfTheScaleIsOurColor() {
 		return sideFromChar(gameData.charAt(1));
 	}
-	// The side of the far  switch that belongs to us
-	public  FieldSide getWhichSideOfTheFarSwitchIsOurColor() {
+
+	// The side of the far switch that belongs to us
+	public FieldSide getWhichSideOfTheFarSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(2));
 	}
 }
