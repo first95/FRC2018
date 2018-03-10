@@ -27,7 +27,7 @@ public class DrivePod {
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
-	private double K_F_SPEED_MODE = 1023.0 / (ROBOT_MAX_SPEED_TICKS_PER_100MS);// 1023/(speed the robot travels at max throttle, in ticks per 100ms)
+	private double K_F_SPEED_MODE = 0.32; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_P_SPEED_MODE = 1.6;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private double K_I_SPEED_MODE = 0.1; //0.01 * K_P;
 	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
