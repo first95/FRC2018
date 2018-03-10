@@ -53,6 +53,9 @@ public class Constants
 		public static final int LEFT_CHAIN_DRIVER  = 14;
 		public static final int RIGHT_CHAIN_DRIVER = 24;
 		
+		// Sensors attached via Talon
+		public static final int PIGEON_NUM = 30;		
+		
 		// Encoder values recycled from last year
 		public static final double ENCODER_TICKS_PER_FOOT = 1002;
 		public static final double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
