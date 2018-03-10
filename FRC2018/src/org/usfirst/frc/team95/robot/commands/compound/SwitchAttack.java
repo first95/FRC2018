@@ -26,6 +26,8 @@ public class SwitchAttack extends CommandGroup {
 
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
+	private static final double ML_INITIAL_MOVE = 0.0;
+	private static final double ML_ENDING_MOVE = 0.0;
 	private static final double ML_TO_SWITCH_MOVE = 156;
 	private static final double ML_TO_R_MOVE = 153.5;
 	private static final double ML_SWEEPER_TURN_RADIUS = 71.61;
@@ -89,7 +91,7 @@ public class SwitchAttack extends CommandGroup {
 			
 			if(false) { 
 				// TODO: Fix sweeper moves and the enable this again
-				addSequential(new DriveStraight(ML_INITAL_MOVE));
+				addSequential(new DriveStraight(ML_INITIAL_MOVE));
 				addSequential(new SweepTurn(ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
 				addSequential(new SweepTurn(-ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
 				addSequential(new DriveStraight(ML_ENDING_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));

@@ -29,9 +29,9 @@ public class ScaleAttack extends CommandGroup {
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
 	private static final double ML_SWEEP_TURN_RADIUS = 162.29;
-	private static final double ML_TO_R_SWEEP_TURN_RADIUS = 0.0;
+	private static final double ML_TO_R_SWEEP_TURN_RADIUS = 34.5;
 	private static final double ML_SWEEP_TURN_DEGREE = 28.19;
-	private static final double ML_TO_R_SWEEP_TURN_DEGREE = 0.0;
+	private static final double ML_TO_R_SWEEP_TURN_DEGREE = 90.0;
 	private static final double ML_FINAL_MOVE = 139.1;
 	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
 
@@ -65,6 +65,10 @@ public class ScaleAttack extends CommandGroup {
 	private static final double MR_SWEEP2_RADIUS = 36.0;
 	private static final double MR_SWEEP2_DEGREE = 45.0;
 	private static final double MR_FINAL_MOVE = 167.01;
+	private static final double MR_TO_L_INITIAL_MOVE = 64.0625;
+	private static final double MR_TO_L_ACROSS_MOVE = 182.8125;
+	private static final double MR_TO_L_NULL_ZONE = 139.9375;
+	private static final double MR_TO_L_ENDING_MOVE = 0.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
 	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor,
@@ -74,6 +78,7 @@ public class ScaleAttack extends CommandGroup {
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(L_INITAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
@@ -81,6 +86,7 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
@@ -96,6 +102,7 @@ public class ScaleAttack extends CommandGroup {
 		if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
 			addSequential(new SweepTurn(ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
@@ -106,6 +113,7 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
+			//this is not entirely calculated. The sweeper turns still need calculating.
 			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-ML_TO_R_SWEEP_TURN_DEGREE, ML_TO_R_SWEEP_TURN_RADIUS));
 			addSequential(new DriveStraight(0));
@@ -125,6 +133,7 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(-C_L_SWEEP_DEGREE, C_L_SWEEP_RADIUS));
 			addSequential(new DriveStraight(C_L_MIDDLE_MOVE));
@@ -136,6 +145,7 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(C_R_SWEEP_DEGREE, C_R_SWEEP_RADIUS));
 			addSequential(new DriveStraight(C_R_MIDDLE_MOVE));
@@ -150,18 +160,20 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(R_TO_L_INITIAL_MOVE));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(-R_TO_L_ACROSS_MOVE));
+			//this is calculated
+			addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(R_TO_L_NULL_ZONE));
+			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(R_TO_L_FINAL_MOVE));
+			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
+		{
+			//this is calculated
 			addSequential(new DriveStraight(R_INITAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
@@ -170,26 +182,35 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-
-			// NO PATH MAPPED YET
-			System.out.println("NO PATH MAPPED!!!");
-			
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-
+		else if (robotStartingPosition == StartPosition.MID_RIGHT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
+		{
+			//this is mostly calculated. The ending move still needs calculating.
+			addSequential(new DriveStraight(MR_TO_L_INITIAL_MOVE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(MR_TO_L_ACROSS_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(MR_TO_L_NULL_ZONE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(MR_TO_L_ENDING_MOVE));
+			addSequential(new ScoreStartingCubeOnSwitch());
+		}
+		else if (robotStartingPosition == StartPosition.MID_RIGHT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
+		{
+			//this is calculated
 			addSequential(new DriveStraight(ONE_FOOT));
 			addSequential(new SweepTurn(MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
 			addSequential(new SweepTurn(-MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
 			addSequential(new DriveStraight(MR_FINAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
-			
 		}
 		/*======================================*/
 
 		// NO GAME DATA:
-		else {
+		else
+		{
 			addSequential(new AnyForward());
 		}
 	}
