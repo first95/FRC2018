@@ -20,6 +20,7 @@ import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
+import org.usfirst.frc.team95.robot.commands.drivebase.PivotAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
@@ -112,6 +113,10 @@ public class OI {
 		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
 		SmartDashboard.putData("Drive forward at 24 inps", new DriveStraightAtSpeed(24, 1000));
 		SmartDashboard.putData("Drive backward at 24 inps", new DriveStraightAtSpeed(-24, 1000));
+		SmartDashboard.putData("Pivot CW at 12 inps", new PivotAtSpeed(12, 1000));
+		SmartDashboard.putData("Pivot CCW at 12 inps", new PivotAtSpeed(12, -1000));		
+		SmartDashboard.putData("Pivot 180 degrees CW at 12 inps", new PivotAtSpeed(12, 180));
+		SmartDashboard.putData("Pivot 90 degrees CCW at 12 inps", new PivotAtSpeed(12, -90));		
 		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new SweepTurn(-90, 6*12));
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new SweepTurn(90, 6*12));

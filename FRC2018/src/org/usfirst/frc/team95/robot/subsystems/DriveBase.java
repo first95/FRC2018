@@ -155,6 +155,14 @@ public class DriveBase extends Subsystem {
 		rightPod.enableBrakeMode(isEnabled);
 	}
 
+	public void pivotDegreesClockwise(double inchesPerSecond, double degreesToPivotCw) {
+		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
+		double rightDistanceInches = leftDistanceInches;
+		double turnSign = (degreesToPivotCw > 0)? 1.0 : -1.0;
+		leftPod.driveForDistanceAtSpeed( turnSign * inchesPerSecond, -leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(turnSign * inchesPerSecond, -rightDistanceInches);		
+	}
+	
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
 		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
 		double rightDistanceInches = leftDistanceInches;
