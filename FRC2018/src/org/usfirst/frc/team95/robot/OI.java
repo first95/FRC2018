@@ -110,6 +110,8 @@ public class OI {
 		// Sendable Chooser for single commands
 		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
 		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
+		SmartDashboard.putData("Drive forward at 24 inps", new DriveStraightAtSpeed(24, 1000));
+		SmartDashboard.putData("Drive backward at 24 inps", new DriveStraightAtSpeed(-24, 1000));
 		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new SweepTurn(-90, 6*12));
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new SweepTurn(90, 6*12));
