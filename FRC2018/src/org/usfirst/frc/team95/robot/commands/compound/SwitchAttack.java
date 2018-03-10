@@ -80,7 +80,7 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			// Intentionally try to go a little further than the actual distance
 			addSequential(new DriveStraight(L_FINAL_MOVE+AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
-			addSequential(new ScoreStartingCubeOverSwitch());
+			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 		
 		/*======================================*/
@@ -141,7 +141,7 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			// Intentionally try to go a little further than the actual distance
 			addSequential(new DriveStraight(R_FINAL_MOVE+AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
-			addSequential(new ScoreStartingCubeOverSwitch());
+			addSequential(new ScoreStartingCubeOnSwitch());
 			
 		} else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
