@@ -113,15 +113,6 @@ public class DriveBase extends Subsystem {
 		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
 
-	/**
-	 * @return The distance to the obstacle detected by the rangefinder.
-	 */
-	public double getDistanceToObstacle() {
-		// Really meters in simulation since it's a rangefinder...
-		// return rangefinder.getAverageVoltage();
-		return 0.0;
-	}
-
 	public boolean onTarget() {
 		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
@@ -182,6 +173,11 @@ public class DriveBase extends Subsystem {
 		rightPod.driveForDistanceAtSpeed(turnSign * TURN_SPEED_INCHES_PER_SECOND, -rightDistanceInches);
 	}
 
+	public void setPivotRate(double inchesPerSecond) {
+		leftPod.setCLSpeed(inchesPerSecond);
+		rightPod.setCLPosition(inchesPerSecond);
+	}
+	
 	/**
 	 * Cause the robot's center to sweep out an arc with given radius and angle. A
 	 * positive clockwise angle is forward and to the right, a negative clockwise
@@ -261,6 +257,10 @@ public class DriveBase extends Subsystem {
 	public double getRightEncoderPos() {
 
 		return rightPod.getQuadEncPos();
+	}
+	
+	public double getRobotHeadingDegrees() {
+		return imu.getYawPitchRoll()[0];
 	}
 
 	public void setGear(boolean isHighGear) {

@@ -121,6 +121,7 @@ public class OI {
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new SweepTurn(-90, 6*12));
 		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new SweepTurn(90, 6*12));
 		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
 		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
 		// SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
 		// DriveStraightAtSpeed(6, 2*12));

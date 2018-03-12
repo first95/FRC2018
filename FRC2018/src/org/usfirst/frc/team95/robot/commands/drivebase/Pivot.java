@@ -16,6 +16,7 @@ import org.usfirst.frc.team95.robot.Robot;
  */
 public class Pivot extends Command {
 	double degreesCw;
+	double robotHeadingAtStartOfMove;
 	
 	public Pivot(double degreesCw) {
 		requires(Robot.drivebase);
@@ -27,6 +28,7 @@ public class Pivot extends Command {
 	@Override
 	public void initialize() {
 		System.out.println("Starting Pivot (" + degreesCw + " degrees)");
+		robotHeadingAtStartOfMove = Robot.drivebase.getRobotHeadingDegrees();
 
 		// Command the movement
 		Robot.drivebase.pivotDegreesClockwise(degreesCw);
@@ -35,7 +37,14 @@ public class Pivot extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.drivebase.onTarget();
+		// Heading is measured with positive headings being counter-clockwise
+		if(degreesCw > 0) {
+			return (Robot.drivebase.getRobotHeadingDegrees() < (robotHeadingAtStartOfMove - degreesCw));
+		} else if (degreesCw < 0) {
+			return (Robot.drivebase.getRobotHeadingDegrees() > (robotHeadingAtStartOfMove - degreesCw));
+		} else { // degreesCW == 0
+			return true;
+		}
 	}
 
 	// Called once after isFinished returns true
