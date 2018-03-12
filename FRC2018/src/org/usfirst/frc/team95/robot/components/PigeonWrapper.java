@@ -33,6 +33,14 @@ public class PigeonWrapper {
 		System.out.println("Yaw:" + ypr[0]);
 		return ypr;
 	}
+	
+	/**
+	 * TODO: figure out the difference between yaw, compass heading, and fused heading
+	 * @return
+	 */
+	public double getFusedHeading() {
+		return wrapped.getFusedHeading();
+	}
 
 	public void setYaw(final double newAngle) {
 		wrapped.setYaw(newAngle, Constants.CAN_TIMEOUT_MS);

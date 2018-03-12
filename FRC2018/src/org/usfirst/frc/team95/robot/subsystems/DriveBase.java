@@ -9,6 +9,7 @@ import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.drivebase.ManuallyControlDrivebase;
 import org.usfirst.frc.team95.robot.components.DrivePod;
+import org.usfirst.frc.team95.robot.components.PigeonWrapper;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
 
@@ -33,6 +34,8 @@ public class DriveBase extends Subsystem {
 
 	private double leftSpeed;
 	private double rightSpeed;
+	
+	private PigeonWrapper imu;
 
 	private Timer shiftTimer = new Timer();
 	private boolean allowShift = true;
@@ -46,6 +49,8 @@ public class DriveBase extends Subsystem {
 		leftPod = new DrivePod("Left", Constants.LEFT_LEAD, Constants.LEFT_F1, Constants.LEFT_F2);
 		rightPod = new DrivePod("Right", Constants.RIGHT_LEAD, Constants.RIGHT_F1, Constants.RIGHT_F2);
 		shifter = new SolenoidWrapper(Constants.SHIFTER_SOLENOID_NUM);
+		
+		imu = new PigeonWrapper(Constants.PIGEON_NUM);
 	}
 
 	/**
@@ -71,6 +76,10 @@ public class DriveBase extends Subsystem {
 //
 //		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
 //		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
+		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
+		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
+		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
+		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
 	}
 
 	/**
