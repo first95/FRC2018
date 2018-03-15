@@ -28,12 +28,16 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
-	private static final double ML_INITIAL_MOVE = 12.0;
+	private static final double ML_INITIAL_MOVE = 48.0;
+	private static final double ML_ACROSS_MOVE = 55.5;
 	private static final double ML_SWEEP_TURN_RADIUS = 162.29;
-	private static final double ML_TO_R_SWEEP_TURN_RADIUS = 34.5;
+	//private static final double ML_TO_R_SWEEP_TURN_RADIUS = 34.5;
 	private static final double ML_SWEEP_TURN_DEGREE = 28.19;
-	private static final double ML_TO_R_SWEEP_TURN_DEGREE = 90.0;
-	private static final double ML_FINAL_MOVE = 139.1;
+	//private static final double ML_TO_R_SWEEP_TURN_DEGREE = 90.0;
+	private static final double ML_FINAL_MOVE = 91.1;
+	private static final double ML_TO_R_INITIAL_MOVE = 48.0;
+	private static final double ML_TO_R_ACROSS_MOVE = 192.0;
+	private static final double ML_TO_R_FINAL_MOVE = 175.0;
 	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
 
 	// IF CENTER LOGIC:
@@ -103,9 +107,11 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
+			//this is calculated
 			addSequential(new DriveStraight(ML_INITIAL_MOVE));
-			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
-			addSequential(new SweepTurn(ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(ML_ACROSS_MOVE));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(ML_FINAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
@@ -113,18 +119,13 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			//this is not entirely calculated. The sweeper turns still need calculating.
-			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new SweepTurn(-ML_TO_R_SWEEP_TURN_DEGREE, ML_TO_R_SWEEP_TURN_RADIUS));
-			addSequential(new DriveStraight(0));
-			addSequential(new SweepTurn(ML_TO_R_SWEEP_TURN_DEGREE, ML_TO_R_SWEEP_TURN_RADIUS));
-			addSequential(new DriveStraight(0));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+			//this is calculated
+			addSequential(new DriveStraight(ML_TO_R_INITIAL_MOVE));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+			addSequential(new DriveStraight(ML_TO_R_ACROSS_MOVE));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+			addSequential(new DriveStraight(ML_TO_R_FINAL_MOVE));
+			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		/*======================================*/
