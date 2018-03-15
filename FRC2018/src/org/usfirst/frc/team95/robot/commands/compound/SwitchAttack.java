@@ -102,7 +102,6 @@ public class SwitchAttack extends CommandGroup
 			addSequential(new SweepTurn(-ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
 			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		}
 			if(false) { 
 				// TODO: Fix sweeper moves and the enable this again
 				addSequential(new DriveStraight(ML_INITIAL_MOVE));
@@ -115,7 +114,6 @@ public class SwitchAttack extends CommandGroup
 				addSequential(new DriveStraight(MR_DISTANCE_STRIGHT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 				addSequential(new ScoreStartingCubeOnSwitch());				
 			}
-
 		}
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
