@@ -19,7 +19,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE = 304.31;
+	private static final double L_INITAL_MOVE = 304.31 + 10.0;
 	private static final double L_TO_R_INITIAL_MOVE = 231.0;
 	private static final double L_TO_R_ACROSS_MOVE = 264.0;
 	private static final double L_TO_R_NULL_ZONE = 33.0;
@@ -28,6 +28,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF MID-LEFT LOGIC:
 	private static final double ML_FORMAT_PATTERN = 0.0;
+	private static final double ML_INITIAL_MOVE = 12.0;
 	private static final double ML_SWEEP_TURN_RADIUS = 162.29;
 	private static final double ML_TO_R_SWEEP_TURN_RADIUS = 34.5;
 	private static final double ML_SWEEP_TURN_DEGREE = 28.19;
@@ -54,7 +55,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
-	private static final double R_INITAL_MOVE = 303.71;
+	private static final double R_INITAL_MOVE = 304.31 + 10.0;;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
 	// IF MID-RIGHT LOGIC:
@@ -99,11 +100,10 @@ public class ScaleAttack extends CommandGroup {
 		/*======================================*/
 
 		// MID-LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.MID_LEFT
+		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			//this is calculated
-			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new DriveStraight(ML_INITIAL_MOVE));
 			addSequential(new SweepTurn(-ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
 			addSequential(new SweepTurn(ML_SWEEP_TURN_DEGREE, ML_SWEEP_TURN_RADIUS));
 			addSequential(new DriveStraight(ML_FINAL_MOVE));
