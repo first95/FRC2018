@@ -64,15 +64,17 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF MID-RIGHT LOGIC:
 	private static final double MR_FORMAT_PATTERN = 0.0;
-	private static final double MR_SWEEP_RADIUS = 36.0;
-	private static final double MR_SWEEP_DEGREE = 45.0;
+	private static final double MR_INITIAL_MOVE = 64.0;
+	private static final double MR_ACROSS_MOVE = 140.0;
+	//private static final double MR_SWEEP_RADIUS = 36.0;
+	//private static final double MR_SWEEP_DEGREE = 45.0;
 	private static final double MR_MIDDLE_DISTANCE = 56.77;
-	private static final double MR_SWEEP2_RADIUS = 36.0;
-	private static final double MR_SWEEP2_DEGREE = 45.0;
+	//private static final double MR_SWEEP2_RADIUS = 36.0;
+	//private static final double MR_SWEEP2_DEGREE = 45.0;
 	private static final double MR_FINAL_MOVE = 167.01;
-	private static final double MR_TO_L_INITIAL_MOVE = 64.0625;
-	private static final double MR_TO_L_ACROSS_MOVE = 182.8125;
-	private static final double MR_TO_L_NULL_ZONE = 139.9375;
+	private static final double MR_TO_L_INITIAL_MOVE = 64.0;
+	private static final double MR_TO_L_ACROSS_MOVE = 182.9;
+	private static final double MR_TO_L_NULL_ZONE = 140.0;
 	private static final double MR_TO_L_ENDING_MOVE = 0.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
@@ -200,9 +202,10 @@ public class ScaleAttack extends CommandGroup {
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
 			//this is calculated
-			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new SweepTurn(MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
-			addSequential(new SweepTurn(-MR_SWEEP_DEGREE, MR_SWEEP_RADIUS));
+			addSequential(new DriveStraight(MR_INITIAL_MOVE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(MR_ACROSS_MOVE));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(MR_FINAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
