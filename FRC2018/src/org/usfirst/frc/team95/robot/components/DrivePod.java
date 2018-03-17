@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.sun.org.apache.bcel.internal.classfile.ConstantInterfaceMethodref;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -225,6 +227,8 @@ public class DrivePod {
 		SmartDashboard.putNumber(name + " target velocity (inps)", twiddle * getTargetVelocityInchesPerSecond());
 		SmartDashboard.putNumber("BUSvoltage", leader.getBusVoltage());
 		SmartDashboard.putNumber("OutputVoltage", leader.getMotorOutputVoltage());
+		SmartDashboard.putNumber("eIZone", leader.configGetParameter(314, Constants.CAN_ORDINAL_SLOT0, Constants.CAN_TIMEOUT_MS));
+		SmartDashboard.putNumber("eIValue", leader.configGetParameter(311, Constants.CAN_ORDINAL_SLOT0, Constants.CAN_TIMEOUT_MS));
 	}
 
 	// Throttle here is the traditional value, between -1.0 and 1.0, indicating

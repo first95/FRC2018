@@ -22,6 +22,7 @@ public class Constants
 		// Used with Talons
 		public static final int PID_IDX = 0; // The Talons support up to 2 PID loops, with indexes 0 and 1.  We only use 0.
 		public static final int CAN_TIMEOUT_MS = 10; // The amount of time to wait for the CAN transaction to finish
+		public static final int CAN_ORDINAL_SLOT0 = 0;
 		
 		// Indices for solenoids
 		public static final int SHIFTER_SOLENOID_NUM  = 0;
