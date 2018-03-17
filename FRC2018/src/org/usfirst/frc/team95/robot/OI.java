@@ -19,6 +19,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraightAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.PivotAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
@@ -123,6 +124,7 @@ public class OI {
 		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
 		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
 		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+		SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231));
 		// SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
 		// DriveStraightAtSpeed(6, 2*12));
 		// SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new
