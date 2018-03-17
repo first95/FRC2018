@@ -71,7 +71,7 @@ public class SwitchAttack extends CommandGroup
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraight(L_INITIAL_MOVE));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(L_FINAL_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
@@ -88,7 +88,7 @@ public class SwitchAttack extends CommandGroup
 			
 			// This sequence throws the cube over the center of the switch, scoring on the opposite side.  We're not sure we have the range for it.
 			addSequential(new DriveStraight(L_INITIAL_MOVE));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			// Intentionally try to go a little further than the actual distance
 			addSequential(new DriveStraight(L_FINAL_MOVE+AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
@@ -106,9 +106,9 @@ public class SwitchAttack extends CommandGroup
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 		{
 			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(ML_TO_R_MOVE));
-			addSequential(new PivotAtSpeed(36.0, -90));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(ML_TO_SWITCH_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
@@ -142,9 +142,9 @@ public class SwitchAttack extends CommandGroup
 		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraight(R_TO_L_INITIAL_MOVE));
-			addSequential(new PivotAtSpeed(36.0, -90));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(R_TO_L_MOVE));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(R_TO_SWITCH_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
@@ -159,7 +159,7 @@ public class SwitchAttack extends CommandGroup
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 		{
 			addSequential(new DriveStraight(R_INITAL_MOVE));
-			addSequential(new PivotAtSpeed(36.0, -90));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(R_FINAL_MOVE-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
@@ -169,9 +169,9 @@ public class SwitchAttack extends CommandGroup
 		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new PivotAtSpeed(36.0, -90));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(MR_TO_L_MOVE));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(MR_TO_SWITCH_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
