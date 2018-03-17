@@ -13,6 +13,7 @@ public class ScoreStartingCubeOverSwitch extends CommandGroup {
 	// This command assumes the cube starts in the maw, with the wrist up
 	public ScoreStartingCubeOverSwitch() {
 		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		addSequential(new DriveStraight(-18));
 		addSequential(new ResetElevatorAndWrist());
 	}
 }
