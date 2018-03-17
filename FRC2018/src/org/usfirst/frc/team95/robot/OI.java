@@ -439,8 +439,7 @@ public class OI {
 			// robotStartPosition));
 			break;
 		case CENTER:
-			// moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT,
-			// robotStartPosition));
+			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			// moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
 			break;
