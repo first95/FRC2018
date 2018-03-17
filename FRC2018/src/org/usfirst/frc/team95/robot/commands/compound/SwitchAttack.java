@@ -36,12 +36,11 @@ public class SwitchAttack extends CommandGroup
 
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
-	private static final double C_R_SWEEPER_RADIUS = 36.0;
-	private static final double C_R_SWEEPER_ANGLE = 47.22;
-	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 35.66;
-	private static final double C_L_SWEEPER_RADIUS = 36.0;
-	private static final double C_L_SWEEPER_ANGLE = 57.29;
-	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 30.5;
+	private static final double C_INITAL_MOVE = 45.0;
+	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 45.0;
+	private static final double C__R_FINAL_MOVE = 45.0;
+	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 45.0;
+	private static final double C__L_FINAL_MOVE = 45.0;
 	public static final String C_DESCRIPTION = "Go to switch hot side from center position and score";
 
 	// IF RIGHT LOGIC:
@@ -97,23 +96,9 @@ public class SwitchAttack extends CommandGroup
 		// MID-LEFT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new SweepTurn(ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
-			addSequential(new SweepTurn(-ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
-			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
-			addSequential(new ScoreStartingCubeOnSwitch());
-			if(false) { 
-				// TODO: Fix sweeper moves and the enable this again
-				addSequential(new DriveStraight(ML_INITIAL_MOVE));
-				addSequential(new SweepTurn(ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
-				addSequential(new SweepTurn(-ML_SWEEPER_DEGREES, ML_SWEEPER_TURN_RADIUS));
-				addSequential(new DriveStraight(ML_ENDING_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
-				addSequential(new ScoreStartingCubeOnSwitch());
-			} else {
-				// Just for now, do it the way the mid right does
-				addSequential(new DriveStraight(MR_DISTANCE_STRIGHT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
-				addSequential(new ScoreStartingCubeOnSwitch());				
-			}
+			// Just for now, do it the way the mid right does
+			addSequential(new DriveStraight(MR_DISTANCE_STRIGHT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new ScoreStartingCubeOnSwitch());				
 		}
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
@@ -131,21 +116,21 @@ public class SwitchAttack extends CommandGroup
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			
-			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new SweepTurn(-C_L_SWEEPER_ANGLE, C_L_SWEEPER_RADIUS));
+			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(C_L_DISTANCE_IN_THE_MIDDLE));
-			addSequential(new SweepTurn(C_L_SWEEPER_ANGLE, C_L_SWEEPER_RADIUS));
-			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(C__L_FINAL_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 		} else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
-			addSequential(new DriveStraight(ONE_FOOT));
-			addSequential(new SweepTurn(C_R_SWEEPER_ANGLE, C_R_SWEEPER_RADIUS));
+			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(C_R_DISTANCE_IN_THE_MIDDLE));
-			addSequential(new SweepTurn(-C_R_SWEEPER_ANGLE, C_R_SWEEPER_RADIUS));
-			addSequential(new DriveStraight(ONE_FOOT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(C__R_FINAL_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
 		}
@@ -191,8 +176,6 @@ public class SwitchAttack extends CommandGroup
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
-			System.out.println("RAN MID_RIGHT AND RIGHT COLOR");
-			System.out.println("RAN MID_RIGHT AND RIGHT COLOR");
 			addSequential(new DriveStraight(MR_DISTANCE_STRIGHT-AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
