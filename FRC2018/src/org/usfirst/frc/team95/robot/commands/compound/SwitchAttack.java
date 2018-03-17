@@ -129,9 +129,9 @@ public class SwitchAttack extends CommandGroup
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
 			addSequential(new DriveStraight(C_INITAL_MOVE));
-			addSequential(new PivotAtSpeed(36.0, 90));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(C_R_DISTANCE_IN_THE_MIDDLE));
-			addSequential(new PivotAtSpeed(36.0, -90));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(C__R_FINAL_MOVE));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			

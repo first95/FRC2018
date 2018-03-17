@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
+import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
+import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
@@ -17,6 +19,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
+import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
@@ -130,6 +133,10 @@ public class OI {
 //		SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
 //		SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33));
 //		SmartDashboard.putData("Scale L to R final move", new DriveStraight(80));
+		//SmartDashboard.putData("Raise Elevator", new SetElevatorHeight(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		///SmartDashboard.putData("Mid Up Wrist", new SetWristAngle(WristAngle.MID_UP));
+//		SmartDashboard.putData("Reset Elevator Pos", new ResetElevatorAndWrist());
+	//	SmartDashboard.putData("Wrist Up", new SetWristAngle(WristAngle.UP));
 		// SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
 		// DriveStraightAtSpeed(6, 2*12));
 		// SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new
