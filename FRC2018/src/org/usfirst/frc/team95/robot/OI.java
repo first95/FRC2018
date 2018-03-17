@@ -311,8 +311,7 @@ public class OI {
 			// robotStartPosition));
 			break;
 		case CENTER:
-			// moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT,
-			// robotStartPosition));
+			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,
 			// robotStartPosition));
 			break;
@@ -354,8 +353,7 @@ public class OI {
 			// robotStartPosition));
 			break;
 		case CENTER:
-			// moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT,
-			// robotStartPosition));
+			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
 			break;
@@ -398,8 +396,7 @@ public class OI {
 			// robotStartPosition));
 			break;
 		case CENTER:
-			// moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT,
-			// robotStartPosition));
+			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			// moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,
 			// robotStartPosition));
 			break;
