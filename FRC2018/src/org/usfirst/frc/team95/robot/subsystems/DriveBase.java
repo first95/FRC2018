@@ -28,6 +28,8 @@ public class DriveBase extends Subsystem {
 	// The speed at which we want the center of the robot to travel
 	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
 	private final double TURN_SPEED_INCHES_PER_SECOND = 36;
+	// This is tied to speed, if you change the speed of the turn also change this value
+	private final double TURN_DEGREE_CORRECTION = 45;
 	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
@@ -76,7 +78,7 @@ public class DriveBase extends Subsystem {
 //
 //		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
 //		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
-//		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
+		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
 //		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
 //		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
 //		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
@@ -164,7 +166,12 @@ public class DriveBase extends Subsystem {
 	}
 	
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
-		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
+		if(degreesToPivotCw > 0) {
+			degreesToPivotCw = degreesToPivotCw - TURN_DEGREE_CORRECTION;
+		}else if (degreesToPivotCw < 0) {
+			degreesToPivotCw = degreesToPivotCw + TURN_DEGREE_CORRECTION;
+		}
+		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * ((degreesToPivotCw)/360);
 		double rightDistanceInches = leftDistanceInches;
 		//leftDistanceInches *= PIVOT_FUDGE_FACTOR;
 		//rightDistanceInches *= PIVOT_FUDGE_FACTOR;
