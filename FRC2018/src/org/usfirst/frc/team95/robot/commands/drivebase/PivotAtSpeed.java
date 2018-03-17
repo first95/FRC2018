@@ -14,37 +14,30 @@ import org.usfirst.frc.team95.robot.Robot;
  * command is running. The input is the averaged values of the left and right
  * encoders.
  */
-public class Pivot extends Command {
+public class PivotAtSpeed extends Command {
+	double inchesPerSecond;
 	double degreesCw;
-	double robotHeadingAtStartOfMove;
 	
-	public Pivot(double degreesCw) {
+	public PivotAtSpeed(double inchesPerSecond, double degreesCw) {
 		requires(Robot.drivebase);
 		
+		this.inchesPerSecond = inchesPerSecond;
 		this.degreesCw = degreesCw;
 	}
 
 	// Called every time the command starts
 	@Override
 	public void initialize() {
-		System.out.println("Starting Pivot (" + degreesCw + " degrees)");
-		robotHeadingAtStartOfMove = Robot.drivebase.getRobotHeadingDegrees();
+		System.out.println("Starting Pivot At Speed (" + degreesCw + " degrees)");
 
 		// Command the movement
-		Robot.drivebase.pivotDegreesClockwise(degreesCw);
+		Robot.drivebase.pivotDegreesClockwise(inchesPerSecond,degreesCw);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		// Heading is measured with positive headings being counter-clockwise
-		if(degreesCw > 0) {
-			return (Robot.drivebase.getRobotHeadingDegrees() < (robotHeadingAtStartOfMove - degreesCw));
-		} else if (degreesCw < 0) {
-			return (Robot.drivebase.getRobotHeadingDegrees() > (robotHeadingAtStartOfMove - degreesCw));
-		} else { // degreesCW == 0
-			return true;
-		}
+		return Robot.drivebase.onTarget();
 	}
 
 	// Called once after isFinished returns true
