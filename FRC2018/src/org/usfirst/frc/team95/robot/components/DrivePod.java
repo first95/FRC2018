@@ -23,6 +23,7 @@ public class DrivePod {
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
 	private static final double K_D_POSITION_MODE = 0; //40.0 * K_P;
+	private static final int I_ZONE_POSITION_MODE = 20; // In closed loop error units
 	
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
@@ -31,7 +32,7 @@ public class DrivePod {
 	private double K_P_SPEED_MODE = 0.40; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_I_SPEED_MODE = 0.001; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
-	private static final int I_ZONE = 0; // In closed loop error units
+	private static final int I_ZONE_SPEED_MODE = 0; // In closed loop error units
 	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
@@ -92,11 +93,6 @@ public class DrivePod {
 		leader.configForwardSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 		leader.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 
-		// Prevent Integral Windup.
-		// Whenever the control loop error is outside this zone, zero out the I term
-		// accumulator.
-		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
-
 		// Send the initial PID constant values to the smartdash
 		fLabel = name + " " + fLabel;
 		pLabel = name + " " + pLabel;
@@ -118,7 +114,11 @@ public class DrivePod {
 		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kP(Constants.PID_IDX, K_P_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kI(Constants.PID_IDX, K_I_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
-		leader.config_kD(Constants.PID_IDX, K_D_POSITION_MODE, Constants.CAN_TIMEOUT_MS);		
+		leader.config_kD(Constants.PID_IDX, K_D_POSITION_MODE, Constants.CAN_TIMEOUT_MS);	
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 	}
 	
 	/**
@@ -129,6 +129,10 @@ public class DrivePod {
 		leader.config_kP(Constants.PID_IDX, K_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kI(Constants.PID_IDX, K_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kD(Constants.PID_IDX, K_D_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 	}
 	
 	/**
