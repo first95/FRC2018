@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.sun.org.apache.bcel.internal.classfile.ConstantInterfaceMethodref;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,7 +24,7 @@ public class DrivePod {
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
 	private static final double K_D_POSITION_MODE = 0; //40.0 * K_P;
-	private static final int I_ZONE_POSITION_MODE = 20; // In closed loop error units
+	private static final int I_ZONE_POSITION_MODE = 1000; // In closed loop error units
 	
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
@@ -34,7 +33,7 @@ public class DrivePod {
 	private double K_P_SPEED_MODE = 0.40; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_I_SPEED_MODE = 0.001; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
-	private static final int I_ZONE_SPEED_MODE = 0; // In closed loop error units
+	private static final int I_ZONE_SPEED_MODE = 1000; // In closed loop error units
 	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
