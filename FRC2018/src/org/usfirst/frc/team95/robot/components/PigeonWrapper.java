@@ -30,7 +30,7 @@ public class PigeonWrapper {
 	public double [] getYawPitchRoll() {
 		double [] ypr = new double[3];
 		wrapped.getYawPitchRoll(ypr);
-		System.out.println("Yaw:" + ypr[0]);
+		//System.out.println("Yaw:" + ypr[0]);
 		return ypr;
 	}
 	
