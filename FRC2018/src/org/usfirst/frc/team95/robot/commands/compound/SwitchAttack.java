@@ -37,7 +37,7 @@ public class SwitchAttack extends CommandGroup
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
 	private static final double C_INITAL_MOVE = 48.0;
-	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 48.0;
+	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 48.0+15.0;
 	private static final double C__R_FINAL_MOVE = 48.0;
 	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 48.0;
 	private static final double C__L_FINAL_MOVE = 48.0;
