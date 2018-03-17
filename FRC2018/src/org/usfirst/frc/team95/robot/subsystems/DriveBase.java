@@ -27,7 +27,7 @@ public class DriveBase extends Subsystem {
 	private final double RADIUS_OF_AVERAGED_WHEEL_CIRCLE = Math.sqrt(Math.pow((DISTANCE_FROM_INNER_TO_INNER_WHEEL/2), 2) + Math.pow(DISTANCE_FROM_OUTER_TO_INNER_WHEEL, 2));
 	// The speed at which we want the center of the robot to travel
 	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
-	private final double TURN_SPEED_INCHES_PER_SECOND = 12;
+	private final double TURN_SPEED_INCHES_PER_SECOND = 36;
 	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;

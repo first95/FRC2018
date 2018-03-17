@@ -141,7 +141,7 @@ public class Robot extends IterativeRobot {
         drivebase.pullPidConstantsFromSmartDash();
         oi.visit();
         drivebase.visit();
-		log();
+		debugLog();
 	}
 
 	@Override
