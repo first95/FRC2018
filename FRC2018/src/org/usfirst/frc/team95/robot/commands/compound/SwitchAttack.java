@@ -36,11 +36,11 @@ public class SwitchAttack extends CommandGroup
 
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
-	private static final double C_INITAL_MOVE = 45.0;
-	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 45.0;
-	private static final double C__R_FINAL_MOVE = 45.0;
-	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 45.0;
-	private static final double C__L_FINAL_MOVE = 45.0;
+	private static final double C_INITAL_MOVE = 48.0;
+	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 48.0;
+	private static final double C__R_FINAL_MOVE = 48.0;
+	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 48.0;
+	private static final double C__L_FINAL_MOVE = 48.0;
 	public static final String C_DESCRIPTION = "Go to switch hot side from center position and score";
 
 	// IF RIGHT LOGIC:
@@ -121,7 +121,7 @@ public class SwitchAttack extends CommandGroup
 			addSequential(new DriveStraight(C_L_DISTANCE_IN_THE_MIDDLE));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(C__L_FINAL_MOVE));
-			addSequential(new ScoreStartingCubeOnSwitch());
+			addSequential(new ScoreStartingCubeOnSwitch());	
 
 		} else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
