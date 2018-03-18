@@ -108,10 +108,14 @@ public class Climber extends Subsystem {
 		// }
 		// }
 
+		System.out.println("CLIMBER RUNNING!");
+		
 		if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_UP) {
 			climberDriver.set(value);
+			System.out.println("CLIMBER UP");
 		} else if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_DOWN) {
 			climberDriver.set(-value);
+			System.out.println("CLIMBER DOWN");
 		} else {
 			climberDriver.set(0);
 		}
