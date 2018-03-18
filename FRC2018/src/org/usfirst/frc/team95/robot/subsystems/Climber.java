@@ -14,12 +14,14 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends Subsystem {
 
-	private IMotorControllerEnhanced climberDriver;
+	// private IMotorControllerEnhanced climberDriver;
+	private Spark climberDriver;
 	public static final double FEET_FULL_RANGE = 71.0 / 12.0; // Copied from elevator
 	public static final double ENCODER_TICKS_FULL_RANGE = 78400.0; // Copied from elevator
 	private static final double TICKS_PER_FOOT = ENCODER_TICKS_FULL_RANGE / FEET_FULL_RANGE;
@@ -38,10 +40,13 @@ public class Climber extends Subsystem {
 		super();
 		// Set up the digital IO object to read the home switch
 
-		climberDriver = new AdjustedTalon(Constants.CLIMBER_DRIVER);
-		climberDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
-				Constants.CAN_TIMEOUT_MS);
-		climberDriver.setSensorPhase(true);
+		// climberDriver = new AdjustedTalon(Constants.CLIMBER_DRIVER);
+		// climberDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
+		// Constants.PID_IDX,
+		// Constants.CAN_TIMEOUT_MS);
+		// climberDriver.setSensorPhase(true);
+
+		climberDriver = new Spark(1);
 
 		// //Configure the right talon for closed loop control
 		// climberDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute,
@@ -81,7 +86,8 @@ public class Climber extends Subsystem {
 	// }
 
 	public void brake(boolean isEnabled) {
-		climberDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		// climberDriver.setNeutralMode(isEnabled ? NeutralMode.Brake :
+		// NeutralMode.Coast);
 	}
 
 	@Override
@@ -94,20 +100,20 @@ public class Climber extends Subsystem {
 	}
 
 	public void setClimberSpeed(double value) {
-		if (getClimberEncoderTicks() <= 10) {
-			if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_UP) {
-				climberDriver.set(ControlMode.PercentOutput, value);
-			} else {
-				climberDriver.set(ControlMode.PercentOutput, 0);
-			}
+		// if (getClimberEncoderTicks() <= 10) {
+		// if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_UP) {
+		// climberDriver.set(ControlMode.PercentOutput, value);
+		// } else {
+		// climberDriver.set(ControlMode.PercentOutput, 0);
+		// }
+		// }
+
+		if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_UP) {
+			climberDriver.set(value);
+		} else if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_DOWN) {
+			climberDriver.set(-value);
 		} else {
-			if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_UP) {
-				climberDriver.set(ControlMode.PercentOutput, value);
-			} else if (Robot.oi.getClimberPOV() == Robot.oi.D_POV_DOWN) {
-				climberDriver.set(ControlMode.PercentOutput, -value);
-			} else {
-				climberDriver.set(ControlMode.PercentOutput, 0);
-			}
+			climberDriver.set(0);
 		}
 
 		// if(getClimberEncoderTicks() <= 10 || value > 0) {
@@ -131,9 +137,9 @@ public class Climber extends Subsystem {
 	// TICKS_PER_FOOT;
 	// }
 
-	public double getClimberEncoderTicks() {
-		return climberDriver.getSelectedSensorPosition(Constants.PID_IDX);
-	}
+//	public double getClimberEncoderTicks() {
+//		return climberDriver.getSelectedSensorPosition(Constants.PID_IDX);
+//	}
 
 	// public double getTargetHeightFeet() {
 	// if (climberDriver instanceof AdjustedTalon) {
@@ -144,9 +150,9 @@ public class Climber extends Subsystem {
 	// }
 	// }
 
-	public void stopMotor() {
-		climberDriver.set(ControlMode.PercentOutput, 0.0);
-	}
+//	public void stopMotor() {
+//		climberDriver.set(ControlMode.PercentOutput, 0.0);
+//	}
 
 	// public void pullPidConstantsFromSmartDash() {
 	// // Retrieve
