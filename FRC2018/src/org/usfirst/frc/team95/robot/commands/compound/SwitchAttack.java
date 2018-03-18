@@ -5,6 +5,7 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.commands.drivebase.PivotAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 
@@ -16,6 +17,7 @@ public class SwitchAttack extends CommandGroup
 	// GENERAL LOGIC:
 	private static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 0; //2; // During auto moves to score on the switch, move up this close to the switch wall.
 	private static final double ONE_FOOT = 12.0;
+	
 	
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
@@ -37,11 +39,11 @@ public class SwitchAttack extends CommandGroup
 
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
-	private static final double C_INITAL_MOVE = 48.0;
-	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 48.0;
-	private static final double C__R_FINAL_MOVE = 48.0+18.0;
+	private static final double C_INITAL_MOVE = 48.0 - 18.0;
+	private static final double C_R_DISTANCE_IN_THE_MIDDLE = 48.0 + 3.0;
+	private static final double C__R_FINAL_MOVE = 48.0+18.0 + 18.0 + 1.0;
 	private static final double C_L_DISTANCE_IN_THE_MIDDLE = 48.0+15.0;
-	private static final double C__L_FINAL_MOVE = 48.0+20.0;
+	private static final double C__L_FINAL_MOVE = 48.0 + 18.0 + 18.0 + 1.0;
 	public static final String C_DESCRIPTION = "Go to switch hot side from center position and score";
 
 	// IF RIGHT LOGIC:
