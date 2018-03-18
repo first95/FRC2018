@@ -29,7 +29,7 @@ public class DriveBase extends Subsystem {
 	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
 	private final double TURN_SPEED_INCHES_PER_SECOND = 36;
 	// This is tied to speed, if you change the speed of the turn also change this value
-	private final double TURN_DEGREE_CORRECTION = 45;
+	
 	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
@@ -166,11 +166,7 @@ public class DriveBase extends Subsystem {
 	}
 	
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
-		if(degreesToPivotCw > 0) {
-			degreesToPivotCw = degreesToPivotCw - TURN_DEGREE_CORRECTION;
-		}else if (degreesToPivotCw < 0) {
-			degreesToPivotCw = degreesToPivotCw + TURN_DEGREE_CORRECTION;
-		}
+
 		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * ((degreesToPivotCw)/360);
 		double rightDistanceInches = leftDistanceInches;
 		//leftDistanceInches *= PIVOT_FUDGE_FACTOR;

@@ -17,6 +17,7 @@ import org.usfirst.frc.team95.robot.Robot;
 public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
+	private final double TURN_DEGREE_CORRECTION = 8.0;
 	
 	public Pivot(double degreesCw) {
 		requires(Robot.drivebase);
@@ -39,9 +40,17 @@ public class Pivot extends Command {
 	protected boolean isFinished() {
 		// Heading is measured with positive headings being counter-clockwise
 		if(degreesCw > 0) {
-			return (Robot.drivebase.getRobotHeadingDegrees() < (robotHeadingAtStartOfMove - degreesCw));
+			double headingDegrees = Robot.drivebase.getRobotHeadingDegrees();
+			double lessThanValueToCheck = robotHeadingAtStartOfMove - (degreesCw - TURN_DEGREE_CORRECTION);
+			System.out.println("Heading Degree " + headingDegrees);
+			System.out.println("Less Than Value " + lessThanValueToCheck);
+			return (headingDegrees < (lessThanValueToCheck));
 		} else if (degreesCw < 0) {
-			return (Robot.drivebase.getRobotHeadingDegrees() > (robotHeadingAtStartOfMove - degreesCw));
+			double headingDegrees = Robot.drivebase.getRobotHeadingDegrees();
+			double greaterThanValueToCheck = robotHeadingAtStartOfMove - (degreesCw + TURN_DEGREE_CORRECTION);
+			System.out.println("Heading Degree " + headingDegrees);
+			System.out.println("Greater Than Value " + greaterThanValueToCheck);
+			return (headingDegrees > (greaterThanValueToCheck));
 		} else { // degreesCW == 0
 			return true;
 		}
