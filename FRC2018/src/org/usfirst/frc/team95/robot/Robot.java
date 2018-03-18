@@ -36,6 +36,11 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
+	
+	public enum StageTwoCondition {
+		STAGE_TWO_FALSE,      
+		STAGE_TWO_TRUE, 
+	}
 
 	/**
 	 * Robot position after scoring on the scale. Robot is assumed to be centered

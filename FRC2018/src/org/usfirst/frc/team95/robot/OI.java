@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team95.robot.Robot.StageTwoCondition;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
@@ -72,6 +73,7 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 	// private XboxController xbox = new XboxController(0);
 
+	SendableChooser<StageTwoCondition> runStageTwo = new SendableChooser<>();
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleR = new MutableSendableChooser<>();
@@ -113,49 +115,73 @@ public class OI {
 		deployRampsButton.whileHeld(new TriggerRampRelease());
 
 		// Sendable Chooser for single commands
-		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
-		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
-		SmartDashboard.putData("Drive forward at 24 inps", new DriveStraightAtSpeed(24, 1000));
-		SmartDashboard.putData("Drive backward at 24 inps", new DriveStraightAtSpeed(-24, 1000));
-		SmartDashboard.putData("Pivot CW at 12 inps", new PivotAtSpeed(12, 1000));
-		SmartDashboard.putData("Pivot CCW at 12 inps", new PivotAtSpeed(12, -1000));		
-		SmartDashboard.putData("Pivot 180 degrees CW at 12 inps", new PivotAtSpeed(12, 180));
-		SmartDashboard.putData("Pivot 90 degrees CCW at 12 inps", new PivotAtSpeed(12, -90));		
-		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
-		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new SweepTurn(-90, 6*12));
-		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new SweepTurn(90, 6*12));
-		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
-		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
-		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-		SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231 - 15));
-		SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
-		SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33 + 6));
-		SmartDashboard.putData("Scale L to R final move", new DriveStraight(80));
-		SmartDashboard.putData("Score cube on scale", new ScoreStartingCubeOnScale());
-//		SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new DriveStraightAtSpeed(6, 2*12));
-//		SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new DriveStraightAtSpeed(-12, -3*12));
-//		SmartDashboard.putData("Drive forward at 24 inps", new DriveStraightAtSpeed(24, 1000));
-//		SmartDashboard.putData("Drive backward at 24 inps", new DriveStraightAtSpeed(-24, 1000));
-//		SmartDashboard.putData("Pivot CW at 12 inps", new PivotAtSpeed(12, 1000));
-//		SmartDashboard.putData("Pivot CCW at 12 inps", new PivotAtSpeed(12, -1000));		
-		//SmartDashboard.putData("Pivot 180 degrees CW at 12 inps", new PivotAtSpeed(12, 180));
-		//SmartDashboard.putData("Pivot 90 degrees CCW at 12 inps", new PivotAtSpeed(12, -90));		
-		//SmartDashboard.putData("Pivot 90 degrees CCW at 24 inps", new PivotAtSpeed(24, -90));
-		//SmartDashboard.putData("Pivot 90 degrees CCW at 36 inps", new PivotAtSpeed(36, -90));		
-//		SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new SweepTurn(45, 24));
-//		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new SweepTurn(-90, 6*12));
-//		SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new SweepTurn(90, 6*12));
-//		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
-		//SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
-		//SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-//		SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231));
-//		SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
-//		SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33));
-//		SmartDashboard.putData("Scale L to R final move", new DriveStraight(80));
-		//SmartDashboard.putData("Raise Elevator", new SetElevatorHeight(ElevatorHoldPoint.SCALE_SCORE_HIGH));
-		///SmartDashboard.putData("Mid Up Wrist", new SetWristAngle(WristAngle.MID_UP));
-//		SmartDashboard.putData("Reset Elevator Pos", new ResetElevatorAndWrist());
-	//	SmartDashboard.putData("Wrist Up", new SetWristAngle(WristAngle.UP));
+		// //SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
+		// DriveStraightAtSpeed(6, 2*12));
+		// SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new
+		// DriveStraightAtSpeed(-12, -3*12));
+		// SmartDashboard.putData("Drive forward at 24 inps", new
+		// DriveStraightAtSpeed(24, 1000));
+		// SmartDashboard.putData("Drive backward at 24 inps", new
+		// DriveStraightAtSpeed(-24, 1000));
+		// SmartDashboard.putData("Pivot CW at 12 inps", new PivotAtSpeed(12, 1000));
+		// SmartDashboard.putData("Pivot CCW at 12 inps", new PivotAtSpeed(12, -1000));
+		// SmartDashboard.putData("Pivot 180 degrees CW at 12 inps", new
+		// PivotAtSpeed(12, 180));
+		// SmartDashboard.putData("Pivot 90 degrees CCW at 12 inps", new
+		// PivotAtSpeed(12, -90));
+		// SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new
+		// SweepTurn(45, 24));
+		// SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new
+		// SweepTurn(-90, 6*12));
+		// SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new
+		// SweepTurn(90, 6*12));
+		// SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+		// SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
+		// SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+		// SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231 -
+		// 15));
+		// SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
+		// SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33 + 6));
+		// SmartDashboard.putData("Scale L to R final move", new DriveStraight(80));
+		// SmartDashboard.putData("Score cube on scale", new
+		// ScoreStartingCubeOnScale());
+		// SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
+		// DriveStraightAtSpeed(6, 2*12));
+		// SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new
+		// DriveStraightAtSpeed(-12, -3*12));
+		// SmartDashboard.putData("Drive forward at 24 inps", new
+		// DriveStraightAtSpeed(24, 1000));
+		// SmartDashboard.putData("Drive backward at 24 inps", new
+		// DriveStraightAtSpeed(-24, 1000));
+		// SmartDashboard.putData("Pivot CW at 12 inps", new PivotAtSpeed(12, 1000));
+		// SmartDashboard.putData("Pivot CCW at 12 inps", new PivotAtSpeed(12, -1000));
+		// SmartDashboard.putData("Pivot 180 degrees CW at 12 inps", new
+		// PivotAtSpeed(12, 180));
+		// SmartDashboard.putData("Pivot 90 degrees CCW at 12 inps", new
+		// PivotAtSpeed(12, -90));
+		// SmartDashboard.putData("Pivot 90 degrees CCW at 24 inps", new
+		// PivotAtSpeed(24, -90));
+		// SmartDashboard.putData("Pivot 90 degrees CCW at 36 inps", new
+		// PivotAtSpeed(36, -90));
+		// SmartDashboard.putData("Sweep turn, 2ft radius, 45 degrees CW", new
+		// SweepTurn(45, 24));
+		// SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CCW", new
+		// SweepTurn(-90, 6*12));
+		// SmartDashboard.putData("Sweep turn, 6ft radius, 90 degrees CW", new
+		// SweepTurn(90, 6*12));
+		// SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+		// SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
+		// SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+		// SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231));
+		// SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
+		// SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33));
+		// SmartDashboard.putData("Scale L to R final move", new DriveStraight(80));
+		// SmartDashboard.putData("Raise Elevator", new
+		// SetElevatorHeight(ElevatorHoldPoint.SCALE_SCORE_HIGH));
+		/// SmartDashboard.putData("Mid Up Wrist", new
+		// SetWristAngle(WristAngle.MID_UP));
+		// SmartDashboard.putData("Reset Elevator Pos", new ResetElevatorAndWrist());
+		// SmartDashboard.putData("Wrist Up", new SetWristAngle(WristAngle.UP));
 		// SmartDashboard.putData("Drive forward 2 feet in 4 seconds", new
 		// DriveStraightAtSpeed(6, 2*12));
 		// SmartDashboard.putData("Drive backward 3 feet in 3 seconds", new
@@ -289,6 +315,10 @@ public class OI {
 
 	public StartPosition getRobotStartPosition() {
 		return robotStartingPosition.getSelected();
+	}
+	
+	public StageTwoCondition getStageTwoCondition() {
+		return runStageTwo.getSelected();
 	}
 
 	// We've got some SendableChooserse that need updating based on the selected
