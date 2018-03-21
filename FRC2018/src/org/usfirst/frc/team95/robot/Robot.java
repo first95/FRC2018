@@ -7,25 +7,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 
-//import org.usfirst.frc.team95.robot.commands.Rotate;
-import org.usfirst.frc.team95.robot.commands.*;
-import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
-import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
-import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
-import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
-import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
-import org.usfirst.frc.team95.robot.strategies.AnyForward;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSF;
-import org.usfirst.frc.team95.robot.strategies.AnyOurSideSLF;
-import org.usfirst.frc.team95.robot.strategies.CenterScale;
-import org.usfirst.frc.team95.robot.strategies.Strategy;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
+import org.usfirst.frc.team95.robot.subsystems.Ramps;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -49,19 +36,27 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
-	private StartPosition robotStartSide;       // The location where the robot began
+
+	/**
+	 * Robot position after scoring on the scale. Robot is assumed to be centered
+	 * on the switch and have it's front bumper 10 inches back from the end of the scale
+	 * plate in all of these cases.
+	 */
+//	public enum ScalePosition {
+//		LEFT, // On the left side of the scale
+//		RIGHT, // One the right side of the scale
+//	}
+
+	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
 	
 	Command autonomousCommand;
-	SendableChooser<Command> singleAutomoveChooser;
-	SendableChooser<StartPosition> robotStartingPosition;
-	SendableChooser<Strategy> strategyChooser;
-//	SendableChooser a, b, c;
 
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
 	public static Elevator elevator;
+	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
 
@@ -78,6 +73,7 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
+		ramps = new Ramps();
 		compressor = new Compressor();
 		oi = new OI();
 
@@ -86,63 +82,35 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
-		// Sendable Chooser for single commands
-		singleAutomoveChooser = new SendableChooser<Command>();
-		singleAutomoveChooser.addDefault("Nothing", new Nothing());
-		singleAutomoveChooser.addObject("Forward 1 foot", new DriveStraight(12.0));
-		singleAutomoveChooser.addObject("Backward 1 foot", new DriveStraight(-12.0));
-		singleAutomoveChooser.addObject("Pivot clockwise 90 degrees", new Pivot(90));
-		singleAutomoveChooser.addObject("Pivot CCW 180 degrees", new Pivot(-180));
-		singleAutomoveChooser.addObject("EjectCube", new EjectCube());
-		singleAutomoveChooser.addObject("SetElevatorHeight", new SetElevatorHeight(ElevatorHoldPoint.SWITCH_SCORE));
-		singleAutomoveChooser.addObject("SweepTurn", new SweepTurn(90, 48));
-		singleAutomoveChooser.addObject("ScoreStartingCubeOnSwitch", new ScoreStartingCubeOnSwitch());
-		SmartDashboard.putData("Auto Moves?", singleAutomoveChooser);
-		
-		// For the operators to indicate on which side of the field they placed the robot
-		robotStartingPosition = new SendableChooser<StartPosition>();
-		robotStartingPosition.addObject("Left",      StartPosition.LEFT);
-		robotStartingPosition.addObject("Mid left",  StartPosition.MID_LEFT);
-		robotStartingPosition.addDefault("Center",   StartPosition.CENTER);
-		robotStartingPosition.addObject("Mid right", StartPosition.MID_RIGHT);
-		robotStartingPosition.addObject("Right",     StartPosition.RIGHT);
-		SmartDashboard.putData("Starting position", robotStartingPosition);
-		
-		// Choose strategy
-		strategyChooser = new SendableChooser<>();
-		strategyChooser.addDefault(AnyForward.DESCRIPTION, new AnyForward());
-		strategyChooser.addDefault(AnyOurSideSF.DESCRIPTION,
-				new AnyOurSideSF());
-		strategyChooser.addDefault(AnyOurSideSLF.DESCRIPTION, 
-				new AnyOurSideSLF());
-		strategyChooser.addDefault(CenterScale.DESCRIPTION,
-				new CenterScale());
-		SmartDashboard.putData(strategyChooser);
-
 		drivebase.brake(false);
+		elevator.brake(false);
+		
 	}
 
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		int maxTime_sec = 8;
+		double startTime_sec = Timer.getFPGATimestamp();
+		double elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
+		gameData = "";
+		while ((gameData.length() < 3) & (elapTime_sec < maxTime_sec)) {
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+			elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
+		}
+		if (gameData == "") {
+			gameData = "UUU";
+		} else {
+			System.out.println("Time to get game data was "+elapTime_sec+" seconds.");
+		}
 		System.out.println("Plate assignments are " + gameData);
 
-		robotStartSide = robotStartingPosition.getSelected();
+		robotStartSide = oi.getRobotStartPosition();
 		System.out.println("Robot start side: " + robotStartSide);
 		System.out.println("The " + getWhichSideOfTheNearSwitchIsOurColor() + " side of the near switch is our color.");
 		System.out.println("The " + getWhichSideOfTheScaleIsOurColor() + " side of the scale is our color.");
 		System.out.println("The " + getWhichSideOfTheFarSwitchIsOurColor() + " side of the far switch is our color.");
 		
-		autonomousCommand = singleAutomoveChooser.getSelected();
-		Strategy chosenStrategy = strategyChooser.getSelected();
-		chosenStrategy.AdjustStrategy(getWhichSideOfTheNearSwitchIsOurColor(),
-				getWhichSideOfTheScaleIsOurColor(),
-				robotStartSide);
-		
-		// When we've done some testing on single commands and are ready to do
-		// strategies, enable the following line.
-//		autonomousCommand = chosenStrategy;
-
+		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
 		autonomousCommand.start();
 	}
 
@@ -162,6 +130,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		
 		drivebase.brake(false);
+		elevator.brake(false);
 	}
 
 	public void disabledPeriodic() {	
@@ -172,12 +141,15 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run(); // Runs all active commands
 		elevator.checkAndApplyHomingSwitch();
         drivebase.pullPidConstantsFromSmartDash();
+        oi.visit();
+        drivebase.visit();
 		log();
 	}
 
 	@Override
 	public void teleopInit() {
 		drivebase.brake(true);
+		elevator.brake(true);
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -209,9 +181,16 @@ public class Robot extends IterativeRobot {
 	 * The log method puts interesting information to the SmartDashboard.
 	 */
 	private void log() {
+//		drivebase.log();
+//		elevator.log();
+		collector.log();
+//		oi.log();
+	}
+	
+	private void debugLog() {
 		drivebase.log();
 		elevator.log();
-//		collector.log();
+		collector.log();
 		oi.log();
 	}
 

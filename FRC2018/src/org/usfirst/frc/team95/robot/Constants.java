@@ -6,12 +6,14 @@ public class Constants
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
 
+		// Properties of the robot design 
 		public static final double ROBOT_WHEELBASE_WIDTH_INCHES = 23.0; // Distance between the centers of the wheels
+		public static final double ROBOT_TOP_SPEED_LOW_GEAR_FPS = 7; 
+		public static final double ROBOT_TOP_SPEED_HIGH_GEAR_FPS = 17; 
 		
 		// Used in closed-loop control
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
-		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point
-		public static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 2; // During auto moves to score on the switch, move up this close to the switch wall.
+		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point		
 
 		// Manual Drive
 		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec
@@ -20,12 +22,14 @@ public class Constants
 		// Used with Talons
 		public static final int PID_IDX = 0; // The Talons support up to 2 PID loops, with indexes 0 and 1.  We only use 0.
 		public static final int CAN_TIMEOUT_MS = 10; // The amount of time to wait for the CAN transaction to finish
+		public static final int CAN_ORDINAL_SLOT0 = 0;
 		
 		// Indices for solenoids
 		public static final int SHIFTER_SOLENOID_NUM  = 0;
 		public static final int COLLECTOR_SOLENOID_NUM  = 1;
 		public static final int WRIST_STAGE_ONE = 3; // The longer piston
 		public static final int WRIST_STAGE_TWO = 2; // The shorter piston
+		public static final int RAMP_LATCH = 4;
 		
 		// Indices for sensors
 		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
@@ -49,6 +53,9 @@ public class Constants
 		// Collector
 		public static final int LEFT_CHAIN_DRIVER  = 14;
 		public static final int RIGHT_CHAIN_DRIVER = 24;
+		
+		// Sensors attached via Talon
+		public static final int PIGEON_NUM = 30;		
 		
 		// Encoder values recycled from last year
 		public static final double ENCODER_TICKS_PER_FOOT = 1002;

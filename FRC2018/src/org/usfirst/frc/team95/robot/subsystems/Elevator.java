@@ -8,6 +8,9 @@ import org.usfirst.frc.team95.robot.components.AdjustedTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -43,22 +46,29 @@ public class Elevator extends Subsystem {
 		// Configure the left talon to follow the right talon, but backwards
 		leftElevDriver.setInverted(true); // Inverted here refers to the output
 		leftElevDriver.set(ControlMode.Follower, Constants.RIGHT_ELEV_DRIVER);
+		
+		
 
 		// Configure the right talon for closed loop control
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
 				Constants.CAN_TIMEOUT_MS);
 		rightElevDriver.setSensorPhase(true);
 		rightElevDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+		rightElevDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term
 		// accumulator.
 		rightElevDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
 
-		// Configure soft limits at ends of travel
-		rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configReverseSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
-		rightElevDriver.configReverseSoftLimitThreshold(0, Constants.CAN_TIMEOUT_MS);
+		// Configure soft limit at top
+		//rightElevDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
+		//rightElevDriver.configForwardSoftLimitThreshold((int) SOFT_FWD_LIMIT, Constants.CAN_TIMEOUT_MS);
+		//rightElevDriver.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
+		
+		//Tell talon a limit switch is connected
+		rightElevDriver.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, Constants.CAN_TIMEOUT_MS);
 
 		// Send the initial PID constant values to the smartdash
 		// SmartDashboard.putNumber(pLabel, K_P);
@@ -70,9 +80,13 @@ public class Elevator extends Subsystem {
 		// Pin floats high by default, due to an internal pull-up resistor.
 		// When the magnet gets close enough to the reed switch, the pin is
 		// connected to ground. Thus, get() starts returning false.
-		if (!homeSwitch.get()) {
+		if (elevatorIsHome()) {
 			setCurrentPosToZero();
 		}
+	}
+	
+	private boolean elevatorIsHome() {
+		return !homeSwitch.get();
 	}
 
 	/**
@@ -94,6 +108,11 @@ public class Elevator extends Subsystem {
 	public void setCurrentPosToZero() {
 		rightElevDriver.setSelectedSensorPosition(0, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
 	}
+	
+	public void brake(boolean isEnabled) {
+		rightElevDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		leftElevDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		}
 
 	@Override
 	protected void initDefaultCommand() {
@@ -110,13 +129,22 @@ public class Elevator extends Subsystem {
 	}
 
 	/**
-	 * Command the elevator to run at a specific speed
+	 * Command the elevator to run at a specific speed.
+	 * Won't drive downward if the homing switch is tripped.
 	 * 
 	 * @param value
 	 *            - the throttle value to apply to the motors, between -1 and +1
 	 */
 	public void setElevatorSpeed(double value) {
-		rightElevDriver.set(ControlMode.PercentOutput, value);
+		if(!elevatorIsHome() || value > 0) {
+			// Either the elevator is above the deck, or being driven upward.
+			// This is the normal state
+			rightElevDriver.set(ControlMode.PercentOutput, value);
+		} else {
+			// The elevator is on the deck and they're trying to drive down.
+			// Don't do that.
+			rightElevDriver.set(ControlMode.PercentOutput, 0);
+		}
 	}
 
 	/**
@@ -180,6 +208,6 @@ public class Elevator extends Subsystem {
 	public boolean isOnTarget() {
 		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
 		return Math.abs(getElevatorHeightFeet()
-				- getTargetHeightFeet()) < (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES * 12.0);
+				- getTargetHeightFeet()) < (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES / 12.0);
 	}
 }

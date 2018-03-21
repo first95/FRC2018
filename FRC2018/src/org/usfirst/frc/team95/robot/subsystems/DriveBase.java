@@ -9,6 +9,7 @@ import org.usfirst.frc.team95.robot.Constants;
 import org.usfirst.frc.team95.robot.Robot;
 import org.usfirst.frc.team95.robot.commands.drivebase.ManuallyControlDrivebase;
 import org.usfirst.frc.team95.robot.components.DrivePod;
+import org.usfirst.frc.team95.robot.components.PigeonWrapper;
 import org.usfirst.frc.team95.robot.components.SolenoidI;
 import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
 
@@ -17,7 +18,7 @@ import org.usfirst.frc.team95.robot.components.SolenoidWrapper;
  * the robot's chassis. These include two 3-motor drive pods.
  */
 public class DriveBase extends Subsystem {
-
+	
 	private final double DEFAULT_TRAVEL_SPEED_INCHES_PER_S = 20.0;
 	private final double DEFAULT_PIVOT_SPEED_RADS_PER_S = Math.PI;
 	private final double DEFAULT_PIVOT_SPEED_DEGREE_PER_S = 57.2958;
@@ -30,6 +31,16 @@ public class DriveBase extends Subsystem {
 	private final double PIVOT_FUDGE_FACTOR = 1.5; // This is how much extra we
 													// command the pods to move
 													// to account for slippage
+	
+	// in inches
+	private final double DISTANCE_FROM_OUTER_TO_INNER_WHEEL = 13.5;
+	// in inches
+	private final double DISTANCE_FROM_INNER_TO_INNER_WHEEL = 23.25;
+	private final double RADIUS_OF_AVERAGED_WHEEL_CIRCLE = Math.sqrt(Math.pow((DISTANCE_FROM_INNER_TO_INNER_WHEEL/2), 2) + Math.pow(DISTANCE_FROM_OUTER_TO_INNER_WHEEL, 2));
+	// The speed at which we want the center of the robot to travel
+	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
+	private final double TURN_SPEED_INCHES_PER_SECOND = 12;
+	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
 	private double limitAccelerationDrive = 0.0;
@@ -37,17 +48,30 @@ public class DriveBase extends Subsystem {
 
 	private double codeIteration = 0; // Test Variable for arcade drive
 
+	private double leftSpeed;
+	private double rightSpeed;
+	
+	private PigeonWrapper imu;
+
+	private Timer shiftTimer = new Timer();
+	private boolean allowShift = true;
+	private boolean allowDeshift = true;
+	private boolean hasAlreadyShifted = false;
+	private boolean shiftOverrideToggled = false;
+
 	public DriveBase() {
 		super();
 
 		leftPod = new DrivePod("Left", Constants.LEFT_LEAD, Constants.LEFT_F1, Constants.LEFT_F2);
 		rightPod = new DrivePod("Right", Constants.RIGHT_LEAD, Constants.RIGHT_F1, Constants.RIGHT_F2);
 		shifter = new SolenoidWrapper(Constants.SHIFTER_SOLENOID_NUM);
+		
+		imu = new PigeonWrapper(Constants.PIGEON_NUM);
 	}
 
 	/**
-	 * When no other command is running let the operator drive around using the
-	 * PS3 joystick.
+	 * When no other command is running let the operator drive around using the PS3
+	 * joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
@@ -61,14 +85,24 @@ public class DriveBase extends Subsystem {
 		leftPod.log();
 		rightPod.log();
 
-		SmartDashboard.putNumber("Voltage Ramp Rate:", VOLTAGE_RAMP_SOLPE);
-		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
-		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+//		SmartDashboard.putNumber("Voltage Ramp Rate:", VOLTAGE_RAMP_SOLPE);
+//		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+//		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+//		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+//		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
 
-		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
-		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
+
+//		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+//		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+//		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+//		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+//
+//		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
+//		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
+//		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
+//		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
+//		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
+//		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
 	}
 
 	/**
@@ -102,27 +136,40 @@ public class DriveBase extends Subsystem {
 		return (leftPod.getQuadEncPos() + rightPod.getQuadEncPos()) / 2;
 	}
 
-	/**
-	 * @return The distance to the obstacle detected by the rangefinder.
-	 */
-	public double getDistanceToObstacle() {
-		// Really meters in simulation since it's a rangefinder...
-		// return rangefinder.getAverageVoltage();
-		return 0.0;
-	}
-
 	public boolean onTarget() {
 		return leftPod.isOnTarget() && rightPod.isOnTarget();
 	}
 
-	// Command that the robot should travel a specific distance along the
-	// carpet.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
+	/**
+	 * Command that the robot should travel a specific distance along the carpet.
+	 * Call this once to command distance - do not call repeatedly, as this will
+	 * reset the distance remaining.
+	 * 
+	 * @param inchesToTravel
+	 *            - number of inches forward to travel
+	 */
 	public void travelStraight(double inchesToTravel) {
+		// Max speed back and forward, always make this number positve when setting it.
+		leftPod.setMaxSpeed(0.7);
+		rightPod.setMaxSpeed(0.7);
+
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
+	}
+
+	/**
+	 * Command that the robot should travel a specific distance along the carpet.
+	 * Call this once to command distance - do not call repeatedly, as this will
+	 * reset the distance remaining.
+	 * 
+	 * @param inchesToTravel
+	 *            - number of inches forward to travel
+	 * @param inchesPerSecond
+	 *            - speed at which to travel
+	 */
+	public void travelStraight(double inchesPerSecond, double inchesToTravel) {
+		leftPod.driveForDistanceAtSpeed(-inchesPerSecond, -inchesToTravel);
+		rightPod.driveForDistanceAtSpeed(inchesPerSecond, inchesToTravel);
 	}
 
 	// Talon Brake system
@@ -131,19 +178,33 @@ public class DriveBase extends Subsystem {
 		rightPod.enableBrakeMode(isEnabled);
 	}
 
-	public void pivotDegreesClockwise(double degreesToPivotCw) {
-		double leftDistanceInches = (degreesToPivotCw / 360.0) * Math.PI * Constants.ROBOT_WHEELBASE_WIDTH_INCHES;
+	public void pivotDegreesClockwise(double inchesPerSecond, double degreesToPivotCw) {
+		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
 		double rightDistanceInches = leftDistanceInches;
-		leftDistanceInches *= PIVOT_FUDGE_FACTOR;
-		rightDistanceInches *= PIVOT_FUDGE_FACTOR;
-		leftPod.setCLPosition(leftDistanceInches);
-		rightPod.setCLPosition(rightDistanceInches);
+		double turnSign = (degreesToPivotCw > 0)? 1.0 : -1.0;
+		leftPod.driveForDistanceAtSpeed( turnSign * inchesPerSecond, -leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(turnSign * inchesPerSecond, -rightDistanceInches);		
+	}
+	
+	public void pivotDegreesClockwise(double degreesToPivotCw) {
+		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
+		double rightDistanceInches = leftDistanceInches;
+		//leftDistanceInches *= PIVOT_FUDGE_FACTOR;
+		//rightDistanceInches *= PIVOT_FUDGE_FACTOR;
+		double turnSign = (degreesToPivotCw > 0)? 1.0 : -1.0;
+		leftPod.driveForDistanceAtSpeed( turnSign * TURN_SPEED_INCHES_PER_SECOND, -leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(turnSign * TURN_SPEED_INCHES_PER_SECOND, -rightDistanceInches);
 	}
 
+	public void setPivotRate(double inchesPerSecond) {
+		leftPod.setCLSpeed(inchesPerSecond);
+		rightPod.setCLPosition(inchesPerSecond);
+	}
+	
 	/**
-	 * Cause the robot's center to sweep out an arc with given radius and angle.
-	 * A positive clockwise angle is forward and to the right, a negative
-	 * clockwise angle is forward and to the left.
+	 * Cause the robot's center to sweep out an arc with given radius and angle. A
+	 * positive clockwise angle is forward and to the right, a negative clockwise
+	 * angle is forward and to the left.
 	 * 
 	 * This does not take into account the drivebase's tendency toward straight
 	 * turns.
@@ -156,24 +217,26 @@ public class DriveBase extends Subsystem {
 		double rightDistanceInches;
 
 		double fractionOfAFullCircumference = Math.abs(degreesToTurnCw / 360.0);
-
+		double sweepTimeS = (fractionOfAFullCircumference * turnRadiusInches * 2.0 * Math.PI)
+				/ SWEEPER_TURN_SPEED_INCHES_PER_SECOND;
 		if (degreesToTurnCw > 0) {
-			// Forward and to the right
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
+			// Forward and to the right - CW
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		} else {
-			leftDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches = fractionOfAFullCircumference * Math.PI
-					* 2.0 * (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
-			rightDistanceInches *= -1.0; // Right pod is backwards from the left
+			// Forward and to the left - CCW
+			leftDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches - Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
+			rightDistanceInches = fractionOfAFullCircumference * Math.PI * 2.0
+					* (turnRadiusInches + Constants.ROBOT_WHEELBASE_WIDTH_INCHES / 2.0);
 		}
+		double leftSpeedInchesPerSecond = leftDistanceInches / sweepTimeS;
+		double rightSpeedInchesPerSecond = rightDistanceInches / sweepTimeS;
 
-		leftPod.setCLPosition(leftDistanceInches);
-		rightPod.setCLPosition(rightDistanceInches);
+		leftPod.driveForDistanceAtSpeed(leftSpeedInchesPerSecond, leftDistanceInches);
+		rightPod.driveForDistanceAtSpeed(-rightSpeedInchesPerSecond, -rightDistanceInches);
 	}
 
 	// Corresponded to the Drive class in the 2017 code
@@ -188,10 +251,8 @@ public class DriveBase extends Subsystem {
 
 	public void arcade() {
 
-		// Test Variable to get how many times arcade has looped
-		codeIteration++;
-
-		// Inital joystick axis
+		leftPod.setMaxSpeed(1);
+		rightPod.setMaxSpeed(1);
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
@@ -222,11 +283,11 @@ public class DriveBase extends Subsystem {
 	}
 
 	public double getLeftSpeed() {
-		return leftPod.getEncoderVelocity();
+		return leftPod.getEncoderVelocityFeetPerSecond();
 	}
 
 	public double getRightSpeed() {
-		return rightPod.getEncoderVelocity();
+		return rightPod.getEncoderVelocityFeetPerSecond();
 	}
 
 	public double getLeftEncoderPos() {
@@ -238,9 +299,68 @@ public class DriveBase extends Subsystem {
 
 		return rightPod.getQuadEncPos();
 	}
+	
+	public double getRobotHeadingDegrees() {
+		return imu.getYawPitchRoll()[0];
+	}
 
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
+	}
+
+	public void autoShift() {
+		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
+		rightSpeed = Math.abs(Robot.drivebase.getRightSpeed());
+
+		// Autoshift framework based off speed
+		if (allowShift) {
+			if ((leftSpeed < Constants.SPEED_TO_SHIFT_DOWN) && (rightSpeed < Constants.SPEED_TO_SHIFT_DOWN)) {
+				Robot.drivebase.setGear(false);
+
+				if (hasAlreadyShifted) {
+					allowDeshift = true;
+					hasAlreadyShifted = false;
+				}
+
+			} else if ((leftSpeed > Constants.SPEED_TO_SHIFT_UP) && (rightSpeed > Constants.SPEED_TO_SHIFT_UP)) {
+				if (allowDeshift) {
+					shiftTimer.reset();
+					shiftTimer.start();
+					allowShift = false;
+					Robot.drivebase.setGear(true);
+				}
+			}
+		} else if (shiftTimer.get() > 1.0) {
+			allowShift = true;
+			shiftTimer.stop();
+			shiftTimer.reset();
+			allowDeshift = false;
+			hasAlreadyShifted = true;
+		}
+
+		// SmartDashboard.putBoolean("Allow Shift:", allowShift);
+		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
+		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
+	}
+
+	public void visit() {
+//		if (Robot.oi.getShiftOverrided()) {
+//
+//			allowShift = false;
+//			setGear(false);
+//			shiftOverrideToggled = true;
+//			
+//		} else {
+//
+//			if(shiftOverrideToggled) {
+//				allowShift = true;
+//				shiftOverrideToggled = false;
+//			}
+//
+//		}
+
+		autoShift();
+
 	}
 
 	public void pullPidConstantsFromSmartDash() {

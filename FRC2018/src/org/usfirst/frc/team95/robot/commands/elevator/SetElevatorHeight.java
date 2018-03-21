@@ -13,7 +13,7 @@ public class SetElevatorHeight extends Command {
 		FLOOR,            // Positioned at its lowest position
 		SWITCH_SCORE,     // Positioned to hold a cube above the fence around the Switch
 		SCALE_SCORE_HIGH, // Positioned at the lowest  sensible point to score a cube on the Scale
-		SCALE_SCORE_LOW,  // Positioned at the highest sensible point to score a cube on the Scalse
+		SCALE_SCORE_LOW,  // Positioned at the highest sensible point to score a cube on the Scale
 	};
 	
 	private ElevatorHoldPoint targetPoint = null;
@@ -32,7 +32,7 @@ public class SetElevatorHeight extends Command {
 	}
 
 	@Override
-	public synchronized void start() {
+	public synchronized void initialize() {
 		// This method is called once when the command is activated
 		if(targetPoint != null) {
 			seekHoldPoint(targetPoint);
@@ -45,7 +45,7 @@ public class SetElevatorHeight extends Command {
 	protected void execute() {
 		// This method is called every iteration
 		
-		// Nothing needed; we did everything we needed in start()
+		// Nothing needed; we did everything we needed in initialize()
 	}
 	
 	@Override

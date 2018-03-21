@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.IMotorControllerEnhanced;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,21 +18,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivePod {
 
-	private FeedbackDevice encoder;
-
-	private static final double ENCODER_TICKS_PER_INCH = 25560.0 / (4 * 12); // Measured 2/13/18 on practice robot on
-																				// "field" carpet
-	private double K_P = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with
-								// 60% throttle
-	private double K_I = 0.1; // 0.01 * K_P;
-	private double K_D = 0; // 40.0 * K_P;
-	private static final int I_ZONE = 20; // In closed loop error units
+	// Measured 2/13/18 on practice robot on "field" carpet
+	private static final double ENCODER_TICKS_PER_INCH = 23840.0 / (4*12); //25560.0 / (4 * 12);
+	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
+	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
+	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
+	private static final double K_D_POSITION_MODE = 0; //40.0 * K_P;
+	private static final int I_ZONE_POSITION_MODE = 1000; // In closed loop error units
+	
+	// Feedforward term (K_F) is only used in closed-loop speed control.
+	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
+	// the P, I, and D terms.
+	private double K_F_SPEED_MODE = 0.0; // 2018-3-9 It seems to behave in ways that don't make sense to me when this is nonzero 
+	private double K_P_SPEED_MODE = 0.40; // 2018-3-9 determined by experimentation on doppler, with no load
+	private double K_I_SPEED_MODE = 0.001; // 2018-3-9 determined by experimentation on doppler, with no load
+	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
+	private static final int I_ZONE_SPEED_MODE = 1000; // In closed loop error units
+	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
 	private String iLabel = "DrivePod I";
 	private String dLabel = "DrivePod D";
 	private IMotorControllerEnhanced leader, follower1, follower2;
 	private String name;
-	private double twiddle = 0;
+	private double twiddle = 1.0; // This value is used to force SmartDashboard line graphs to update by slightly changing the value
+	private double targetDistanceAtSpeed; // When commanded both a distance and a speed, this object needs to remember the target distance
+	private double targetDeltaSign; // When commanded both a distance and a speed, remember if the target is numerically greater or less than the present position.
 
 	// Provide the CAN addresses of the three motor controllers.
 	// Set reverse to true if positive throttle values correspond to moving the
@@ -74,11 +86,7 @@ public class DrivePod {
 	}
 
 	private void init() {
-		encoder = FeedbackDevice.QuadEncoder;
-
-		// Leaders have quadrature encoders connected to their inputs
-		leader.configSelectedFeedbackSensor(encoder, Constants.PID_IDX, Constants.CAN_TIMEOUT_MS);
-		leader.setSensorPhase(false);
+		
 
 		// Not being used at the moment
 		// voltageCurrentLimit();
@@ -101,21 +109,15 @@ public class DrivePod {
 		leader.configForwardSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 		leader.configReverseSoftLimitEnable(false, Constants.CAN_TIMEOUT_MS);
 
-		leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
-		// Prevent Integral Windup.
-		// Whenever the control loop error is outside this zone, zero out the I term
-		// accumulator.
-		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
-
 		// Send the initial PID constant values to the smartdash
+		fLabel = name + " " + fLabel;
 		pLabel = name + " " + pLabel;
 		iLabel = name + " " + iLabel;
 		dLabel = name + " " + dLabel;
-		SmartDashboard.putNumber(pLabel, K_P);
-		SmartDashboard.putNumber(iLabel, K_I);
-		SmartDashboard.putNumber(dLabel, K_D);
+		SmartDashboard.putNumber(fLabel, K_F_SPEED_MODE);
+		SmartDashboard.putNumber(pLabel, K_P_SPEED_MODE);
+		SmartDashboard.putNumber(iLabel, K_I_SPEED_MODE);
+		SmartDashboard.putNumber(dLabel, K_D_SPEED_MODE);
 
 		if (twiddle > 1.0) {
 			twiddle = 1.0;
@@ -134,33 +136,107 @@ public class DrivePod {
 	// Are all the speeds and distances expressed in ticks (/per second)?
 
 	/**
+	 * Apply the PID+F constants that are used during closed-loop position mode
+	 */
+	private void applyPositionPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_F_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_P_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_I_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_D_POSITION_MODE, Constants.CAN_TIMEOUT_MS);	
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+	}
+	
+	/**
+	 * Apply the PID+F constants that are used during closed-loop speed mode
+	 */
+	private void applySpeedPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_D_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+	}
+	
+	/**
 	 * Command the DrivePod to a position relative to current position
 	 * 
 	 * @param inches
 	 *            - the target position in inches from current position
 	 */
 	public void setCLPosition(double inches) {
+		applyPositionPidConsts();
 		double delta = ENCODER_TICKS_PER_INCH * inches;
 		double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
 		System.out.println(name + " going " + inches + " inches, or delta=" + delta + ", current = " + current);
 		leader.set(ControlMode.Position, current + delta);
 	}
 
+	/**
+	 * Command the DrivePod to take on a specific velocity until commanded to stop
+	 * 
+	 * @param inchesPerSecond
+	 *            - the target velocity in inches per second
+	 */
+	public void setCLSpeed(double inchesPerSecond) {
+		applySpeedPidConsts();
+		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+		leader.set(ControlMode.Velocity, speedTicksPer100ms);
+	}
+	
+	/**
+	 * Drive for a given distance at a given speed.
+	 * This method will use closed-loop control on the speed,
+	 * but only a simple threshold on the distance - it'll drive until the threshold is passed.
+	 * 
+	 * @param inchesPerSecond - the target velocity in inches per second
+	 * @param inches - the target distance in inches
+	 */
+	public void driveForDistanceAtSpeed(double inchesPerSecond, double inches) {
+		targetDistanceAtSpeed = getPositionInches() - inches;
+		if(inches < 0) {
+			targetDeltaSign = 1.0;
+		} else {
+			targetDeltaSign = -1.0;
+		}
+		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second for " + inches + ", sign=" + targetDeltaSign + ".");
+		setCLSpeed(inchesPerSecond);
+	}
+	
 	public double getPositionInches() {
 		return leader.getSelectedSensorPosition(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
 	}
 
 	public double getTargetPositionInches() {
-		if (leader instanceof AdjustedTalon) {
-			return ((AdjustedTalon) leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+		if (getControlMode() == ControlMode.Position) {
+			return ((TalonSrxWrapper) leader).getClosedLoopTarget(Constants.PID_IDX) / ENCODER_TICKS_PER_INCH;
+		} else if (getControlMode() == ControlMode.Velocity) {
+			return targetDistanceAtSpeed;
 		} else {
 			return 0;
 		}
 	}
-
-	public void reset() {
-		// TODO: anything that needs to be reset on an initialization should go here.
-		// Namely, zero out any record of distance traveled.
+	
+	public double getTargetVelocityInchesPerSecond() {
+		if (getControlMode() == ControlMode.Velocity) {
+			double speedTicksPer100ms = ((TalonSrxWrapper) leader).getClosedLoopTarget(Constants.PID_IDX);
+			return (speedTicksPer100ms / ENCODER_TICKS_PER_INCH) * 10.0;
+		} else {
+			return 0;
+		}
+	}
+	
+	public ControlMode getControlMode() {
+		if(leader instanceof TalonSrxWrapper) {
+			return ((TalonSrxWrapper) leader).getControlMode();
+		} else {
+			return ControlMode.PercentOutput; // Return something somewhat reasonable
+		}
 	}
 
 	// Throttle here is the traditional value, between -1.0 and 1.0, indicating how
@@ -168,33 +244,25 @@ public class DrivePod {
 
 	// be applied to the motor. It corresponds well to speed.
 	public void setThrottle(double throttle) {
+		// This is the only set...() method where we don't need to call either 
+		// applySpeedPidConsts() or applyPositionPidConsts().
 		leader.set(ControlMode.PercentOutput, throttle);
 		// followers follow
 	}
 
+	// Max speed back and forward, always make this number positve when setting it.
+	public void setMaxSpeed(double maxSpeed) {
+		leader.configPeakOutputForward(maxSpeed, Constants.CAN_TIMEOUT_MS);
+		leader.configPeakOutputReverse(-maxSpeed, Constants.CAN_TIMEOUT_MS);
+	}
+	
 	public void setVoltageRamp(double rampRate) {
 		leader.configOpenloopRamp(rampRate, Constants.CAN_TIMEOUT_MS);
 	}
 
-	// Command a specific speed, to be enforced via PID control
-	public void setSpeed(double speedInchesPerSecond) {
-		// TODO: this won't work without some settings getting applied first
-		// leader.set(ControlMode.Velocity, speedInchesPerSecond);
-		// followers follow
-	}
-
-	// Command that this side of the robot should travel a specific distance along
-	// the carpet.
-	// Note that unless the other pod is commanded to travel the same distance, this
-	// will not
-	// sweep out a straight line.
-	// Call this once to command distance - do not call repeatedly, as this will
-	// reset the
-	// distance remaining.
-	public void travelDistance(double inchesToTravel, double speedInchesPerSecond) {
-		// TODO
-	}
-
+	
+	
+	
 	public void enableBrakeMode(boolean isEnabled) {
 		leader.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 		follower1.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
@@ -207,8 +275,15 @@ public class DrivePod {
 	 */
 	public boolean isOnTarget() {
 		// leader.configNeutralDeadband(percentDeadband, timeoutMs);
-		return Math
-				.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
+
+		if(getControlMode() == ControlMode.Position) {
+			return Math.abs(getPositionInches() - getTargetPositionInches()) < Constants.DRIVEPOD_ON_TARGET_THRESHOLD_INCHES;
+		} else if (getControlMode() == ControlMode.Velocity) {
+			return (getPositionInches() * targetDeltaSign) > (targetDistanceAtSpeed * targetDeltaSign);
+		} else {
+			return true; // When you're not seeking anything, you're already at your destination.
+		}
+
 	}
 
 	/**
@@ -217,22 +292,21 @@ public class DrivePod {
 	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve
-		K_P = SmartDashboard.getNumber(pLabel, K_P);
-		K_I = SmartDashboard.getNumber(iLabel, K_I);
-		K_D = SmartDashboard.getNumber(dLabel, K_D);
+		K_F_SPEED_MODE = SmartDashboard.getNumber(fLabel, K_F_SPEED_MODE);
+		K_P_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_P_SPEED_MODE);
+		K_I_SPEED_MODE = SmartDashboard.getNumber(iLabel, K_I_SPEED_MODE);
+		K_D_SPEED_MODE = SmartDashboard.getNumber(dLabel, K_D_SPEED_MODE);
 
 		// Apply
-		leader.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		leader.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		leader.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		applySpeedPidConsts();
 	}
 
 	public double getQuadEncPos() {
 		return leader.getSelectedSensorPosition(Constants.PID_IDX);
 	}
 
-	public double getEncoderVelocity() {
-		return (leader.getSelectedSensorVelocity(Constants.PID_IDX)) * (1 / (ENCODER_TICKS_PER_INCH * 12)) * (10 / 1);
+	public double getEncoderVelocityFeetPerSecond() {
+		return (leader.getSelectedSensorVelocity(Constants.PID_IDX)) * (1/(ENCODER_TICKS_PER_INCH * 12)) * (10/1);
 	}
 
 	public double getLeadCurrent() {
