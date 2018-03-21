@@ -17,7 +17,7 @@ import org.usfirst.frc.team95.robot.Robot;
 public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
-	private final double TURN_DEGREE_CORRECTION = 15.0;
+	private final double TURN_DEGREE_CORRECTION = 18.0;
 	
 	public Pivot(double degreesCw) {
 		requires(Robot.drivebase);

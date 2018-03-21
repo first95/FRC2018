@@ -29,10 +29,10 @@ public class DrivePod {
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
-	private double K_F_SPEED_MODE = 0.0; // 2018-3-9 It seems to behave in ways that don't make sense to me when this is nonzero 
+	private double K_F_SPEED_MODE = 0.08; // 2018-3-9 It seems to behave in ways that don't make sense to me when this is nonzero 
 	private double K_P_SPEED_MODE = 0.40; // 2018-3-9 determined by experimentation on doppler, with no load
 	private double K_I_SPEED_MODE = 0.001; // 2018-3-9 determined by experimentation on doppler, with no load
-	private double K_D_SPEED_MODE = 0; //40.0 * K_P;
+	private double K_D_SPEED_MODE = 0.001; //40.0 * K_P;
 	private static final int I_ZONE_SPEED_MODE = 1000; // In closed loop error units
 	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
