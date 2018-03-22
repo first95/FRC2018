@@ -1,5 +1,6 @@
 package org.usfirst.frc.team95.robot.commands.compound;
 
+import org.usfirst.frc.team95.robot.commands.Pause;
 import org.usfirst.frc.team95.robot.commands.collector.EjectCube;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
@@ -18,6 +19,8 @@ public class ScoreStartingCubeOnScale extends CommandGroup
 	public ScoreStartingCubeOnScale()
 	{
 		addSequential(new DriveStraight(-18.0));
+		addSequential(new SetWristAngle(WristAngle.MID_UP));
+		addSequential(new Pause(0.5)); //this is to reduce flailing.
 		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH, false));
 		addSequential(new DriveStraight(-4.0));
 		addSequential(new ResetElevatorAndWrist());
