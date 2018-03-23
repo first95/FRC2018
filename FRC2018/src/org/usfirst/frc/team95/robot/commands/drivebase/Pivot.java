@@ -24,7 +24,7 @@ public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
 	
-	private static final double K_P = 7.5;
+	private static final double K_P = 1.75;
 	private static final double K_I = 0.0;
 	private static final double K_D = 0.0;
 	private static final double PIVOT_SPEED = 48;
@@ -64,7 +64,7 @@ public class Pivot extends Command {
 		}, 0.01);
 		
 		clp.setOutputRange(-PIVOT_SPEED, PIVOT_SPEED);
-		clp.setPercentTolerance(END_STOP_TOLERANCE);
+		clp.setAbsoluteTolerance(END_STOP_TOLERANCE);
 		
 		SmartDashboard.putData("PIDController", clp);
 		SmartDashboard.putNumber("PIDController F Value", clp.getF());
