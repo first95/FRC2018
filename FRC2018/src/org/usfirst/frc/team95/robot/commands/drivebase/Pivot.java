@@ -44,7 +44,9 @@ public class Pivot extends Command {
 			
 			@Override
 			public double pidGet() {
-				return Robot.drivebase.getRobotHeadingDegrees();
+				double modifiedHeading = Robot.drivebase.getRobotHeadingDegrees() % 360;
+				if(modifiedHeading < 0) modifiedHeading = 360;
+				return modifiedHeading;
 			}
 			
 			@Override
@@ -60,12 +62,13 @@ public class Pivot extends Command {
 		});
 		
 		clp.setInputRange(0, 360);
-		clp.setOutputRange(0, PIVOT_SPEED);
+		clp.setOutputRange(-PIVOT_SPEED, PIVOT_SPEED);
 		clp.setContinuous(true);
 		clp.setPercentTolerance(END_STOP_TOLERANCE);
 		
 		SmartDashboard.putData("PIDController", clp);
 		SmartDashboard.putNumber("PIDController F Value", clp.getF());
+		
 		SmartDashboard.putNumber("target pos", clp.getSetpoint());
 		SmartDashboard.putNumber("Error", clp.getError());
 		
@@ -80,7 +83,10 @@ public class Pivot extends Command {
 		
 		// Command the movement
 		clp.enable();
-		clp.setSetpoint((robotHeadingAtStartOfMove + degreesCw) % 360);
+		double modifiedHeading = (robotHeadingAtStartOfMove + degreesCw) % 360;
+		if(modifiedHeading < 0) modifiedHeading += 360;
+		
+		clp.setSetpoint(modifiedHeading);
 		
 		//Robot.drivebase.pivotDegreesClockwise(degreesCw);
 		//Robot.drivebase.setPivotRate(degreesCw > 0 ? 36 : -36);
