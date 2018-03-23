@@ -26,15 +26,15 @@ public class Pivot extends Command {
 	
 	private static final double K_P = 15.25;
 	private static final double K_I = 0.0;
-	private static final double K_D = 15.25*0.01;
+	private static final double K_D = 0.0;
 	private static final double PIVOT_SPEED = 48;
-	private static final double END_STOP_TOLERANCE = 2.5;
+	private static final double END_STOP_TOLERANCE = 5;
 	
 	private PIDController clp;
 	
 	public Pivot(double degreesCw) {
 		
-		// The robot goes the wrong way for some reason, so we make this negative
+		// We have to do this to make it turn the right way John "Cheese Warning"
 		degreesCw *= -1;
 		
 		requires(Robot.drivebase);
@@ -48,9 +48,7 @@ public class Pivot extends Command {
 			
 			@Override
 			public double pidGet() {
-				double modifiedHeading = Robot.drivebase.getRobotHeadingDegrees() % 360;
-				if(modifiedHeading < 0) modifiedHeading = 360;
-				return modifiedHeading;
+				return Robot.drivebase.getRobotHeadingDegrees();
 			}
 			
 			@Override
@@ -65,9 +63,7 @@ public class Pivot extends Command {
 			}
 		});
 		
-		clp.setInputRange(0, 360);
 		clp.setOutputRange(-PIVOT_SPEED, PIVOT_SPEED);
-		clp.setContinuous(true);
 		clp.setPercentTolerance(END_STOP_TOLERANCE);
 		
 		SmartDashboard.putData("PIDController", clp);
@@ -93,10 +89,7 @@ public class Pivot extends Command {
 		
 		// Command the movement
 		clp.enable();
-		double modifiedHeading = (robotHeadingAtStartOfMove + degreesCw) % 360;
-		if(modifiedHeading < 0) modifiedHeading += 360;
-		
-		clp.setSetpoint(modifiedHeading);
+		clp.setSetpoint((robotHeadingAtStartOfMove + degreesCw));
 		
 		//Robot.drivebase.pivotDegreesClockwise(degreesCw);
 		//Robot.drivebase.setPivotRate(degreesCw > 0 ? 36 : -36);

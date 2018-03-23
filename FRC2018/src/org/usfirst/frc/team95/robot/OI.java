@@ -104,6 +104,7 @@ public class OI {
 		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
 		SmartDashboard.putData("Pivot -90 degrees CW", new Pivot(-90));
 		SmartDashboard.putData("Pivot 360-90 degrees CW", new Pivot(360-90));
+		SmartDashboard.putData("Pivot 360", new Pivot(359));
 
 		// For the operators to indicate on which side of the field they placed the
 		// robot
