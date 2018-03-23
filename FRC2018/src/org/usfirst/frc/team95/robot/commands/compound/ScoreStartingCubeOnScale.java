@@ -18,7 +18,7 @@ public class ScoreStartingCubeOnScale extends CommandGroup
 	// up to the scale with the wrist in a flat position.
 	public ScoreStartingCubeOnScale()
 	{
-		addSequential(new DriveStraight(-18.0));
+		addSequential(new DriveStraight(-18.0 - 6.0));
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
 		addSequential(new Pause(0.5)); //this is to reduce flailing.
 		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH, false));
