@@ -172,18 +172,19 @@ public class DrivePod {
 	 * @param inchesPerSecond
 	 *            - the target velocity in inches per second
 	 */
-	public void setCLSpeed(double inchesPerSecond) {
-		applySpeedPidConsts();
-		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
-		leader.set(ControlMode.Velocity, speedTicksPer100ms);
+	public void setCLSpeed(double inchesPerSecond, boolean turning) {
+		if(turning) {
+			applyTurningSpeedPidConsts();
+			double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+			leader.set(ControlMode.Velocity, speedTicksPer100ms);
+		}
+		else {
+			applySpeedPidConsts();
+			double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+			leader.set(ControlMode.Velocity, speedTicksPer100ms);	
+		}	
 	}
-	
-	public void setTurningCLSpeed(double inchesPerSecond) {
-		applyTurningSpeedPidConsts();
-		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
-		leader.set(ControlMode.Velocity, speedTicksPer100ms);
-	}
-	
+
 	/**
 	 * Drive for a given distance at a given speed.
 	 * This method will use closed-loop control on the speed,
@@ -200,7 +201,7 @@ public class DrivePod {
 			targetDeltaSign = -1.0;
 		}
 		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second for " + inches + ", sign=" + targetDeltaSign + ".");
-		setCLSpeed(inchesPerSecond);
+		setCLSpeed(inchesPerSecond, false);
 	}
 	
 	public double getPositionInches() {

@@ -165,6 +165,7 @@ public class DriveBase extends Subsystem {
 		rightPod.driveForDistanceAtSpeed(turnSign * inchesPerSecond, -rightDistanceInches);		
 	}
 	
+	// Do not use this for turning! Use setPivotRate
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
 
 		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * ((degreesToPivotCw)/360);
@@ -177,8 +178,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void setPivotRate(double inchesPerSecond) {
-		leftPod.setTurningCLSpeed(inchesPerSecond);
-		rightPod.setTurningCLSpeed(inchesPerSecond);
+		leftPod.setCLSpeed(inchesPerSecond, true);
+		rightPod.setCLSpeed(inchesPerSecond, true);
 	}
 	
 	/**
