@@ -37,6 +37,11 @@ public class Robot extends IterativeRobot {
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
 	
+	public enum FinalPostion {
+		SWITCH,
+		SCALE,
+	}
+	
 	public enum StageTwoConditions{
 		CURRENT_TO_CURRENT, // Go from the current position, grab a cube and score again at the same location
 		CURRENT_TO_SWITCH, // Go from current position, grab a cube, and go to switch, if already at switch score on switch again

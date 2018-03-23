@@ -7,14 +7,14 @@ import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class SwitchAttackStageTwo extends CommandGroup {
+public class SwitchAttackWithStageTwo extends CommandGroup {
 
 	// GENERAL LOGIC:
 	private static final double DISTANCE_TILL_CENTER = ((42.0 - 18.0) + 23.0);
 	private static final double DISTANCE_TILL_SECOND_CUBE = (48.0 + 12.0);
 	private static final double DISTANCE_TO_RE_CENTER_WITH_CUBE = 10.0;
 
-	public SwitchAttackStageTwo(FieldSide whichSideOfTheSwitchIsOurColor, StartPosition robotStartingPosition) {
+	public SwitchAttackWithStageTwo(FieldSide whichSideOfTheSwitchIsOurColor, StartPosition robotStartingPosition) {
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(90));

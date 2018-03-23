@@ -7,7 +7,7 @@ import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScaleAttackStageTwo extends CommandGroup
+public class ScaleAttackWithStageTwo extends CommandGroup
 {
 	
 	// GENERAL LOGIC:
@@ -16,7 +16,7 @@ public class ScaleAttackStageTwo extends CommandGroup
 	private static final double DISTANCE_TILL_SECOND_CUBE = ((264/2)-24);
 	private static final double DISTANCE_TO_GRAB_CUBE = 5.0;
 	
-	public ScaleAttackStageTwo(FieldSide whichSideOfTheScaleIsOurColor,
+	public ScaleAttackWithStageTwo(FieldSide whichSideOfTheScaleIsOurColor,
 			StartPosition robotStartingPosition)
 	{
 		if(robotStartingPosition == StartPosition.LEFT
