@@ -33,7 +33,7 @@ public class Pivot extends Command {
 
 		// Command the movement
 		//Robot.drivebase.pivotDegreesClockwise(degreesCw);
-		Robot.drivebase.setPivotRate(degreesCw > 0?36 : -36);
+		Robot.drivebase.setPivotRate(degreesCw > 0 ? 36 : -36);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
