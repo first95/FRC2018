@@ -2,6 +2,7 @@ package org.usfirst.frc.team95.robot.commands.collector;
 
 import org.usfirst.frc.team95.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -27,8 +28,7 @@ public class AutoCloseMawOnCube extends Command {
 	
 	@Override
 	public synchronized void initialize() {
-		// Make it be open
-		Robot.collector.setMawOpen(true);
+		// Intake
 		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);
 	}
 	
