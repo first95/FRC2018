@@ -73,7 +73,7 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 	// private XboxController xbox = new XboxController(0);
 
-	SendableChooser<StageTwoCondition> runStageTwo = new SendableChooser<>();
+	SendableChooser<Command> runStageTwo = new SendableChooser<>();
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleR = new MutableSendableChooser<>();
@@ -204,6 +204,9 @@ public class OI {
 		SmartDashboard.putData("LR", moveSwitchLScaleR);
 		SmartDashboard.putData("RL", moveSwitchRScaleL);
 		SmartDashboard.putData("RR", moveSwitchRScaleR);
+		
+		runStageTwo.addDefault("FALSE", new Nothing());
+		//runStageTwo.addObject(name, object);
 	}
 
 	// There are a few things the OI wants to revisit every time around

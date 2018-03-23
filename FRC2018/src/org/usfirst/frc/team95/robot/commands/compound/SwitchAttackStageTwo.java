@@ -27,7 +27,35 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -51,7 +79,36 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
+			
 		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -75,7 +132,35 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-DISTANCE_TO_RE_CENTER_WITH_CUBE));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
+			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// 3 Cube Section
+			
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
