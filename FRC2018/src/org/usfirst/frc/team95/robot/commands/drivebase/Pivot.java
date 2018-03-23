@@ -67,7 +67,7 @@ public class Pivot extends Command {
 		
 		SmartDashboard.putData("PIDController", clp);
 		SmartDashboard.putNumber("PIDController F Value", clp.getF());
-		SmartDashboard.putNumber("target pos", clp.getSetpoint();
+		SmartDashboard.putNumber("target pos", clp.getSetpoint());
 		SmartDashboard.putNumber("Error", clp.getError());
 		
 		this.degreesCw = degreesCw;
