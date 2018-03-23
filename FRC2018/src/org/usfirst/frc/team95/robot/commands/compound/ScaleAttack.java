@@ -194,15 +194,15 @@ public class ScaleAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			//this is mostly calculated. The ending move still needs calculating.
+			//this is calculated.
 			addSequential(new DriveStraight(MR_TO_L_INITIAL_MOVE));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(MR_TO_L_ACROSS_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(MR_TO_L_NULL_ZONE));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(MR_TO_L_ENDING_MOVE));
-			addSequential(new ScoreStartingCubeOnSwitch());
+//			addSequential(new DriveStraight(MR_TO_L_ENDING_MOVE));
+			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
