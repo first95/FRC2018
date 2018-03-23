@@ -98,14 +98,6 @@ public class DriveBase extends Subsystem {
 	}
 
 	/**
-	 * @return The robots heading in degrees.
-	 */
-	public double getHeading() {
-		// return gyro.getAngle();
-		return 0;
-	}
-
-	/**
 	 * @return The distance driven (average of left and right encoders).
 	 */
 	public double getDistance() {
@@ -262,6 +254,9 @@ public class DriveBase extends Subsystem {
 		return rightPod.getQuadEncPos();
 	}
 	
+	/**
+	 * @return The robots heading in degrees.
+	 */
 	public double getRobotHeadingDegrees() {
 		return imu.getYawPitchRoll()[0];
 	}
