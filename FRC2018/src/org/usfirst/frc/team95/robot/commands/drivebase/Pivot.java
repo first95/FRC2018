@@ -28,11 +28,15 @@ public class Pivot extends Command {
 	private static final double K_I = 0.0;
 	private static final double K_D = 0.0;
 	private static final double PIVOT_SPEED = 36;
-	private static final double END_STOP_TOLERANCE = 5;
+	private static final double END_STOP_TOLERANCE = 0.5;
 	
 	private PIDController clp;
 	
 	public Pivot(double degreesCw) {
+		
+		// The robot goes the wrong way for some reason, so we make this negative
+		degreesCw *= -1;
+		
 		requires(Robot.drivebase);
 		
 		clp = new PIDController(K_P, K_I, K_D, new PIDSource() {
@@ -57,7 +61,7 @@ public class Pivot extends Command {
 			
 			@Override
 			public void pidWrite(double output) {
-				Robot.drivebase.setPivotRate(output);
+				Robot.drivebase.setPivotRate(-output);
 			}
 		});
 		
@@ -75,6 +79,12 @@ public class Pivot extends Command {
 		this.degreesCw = degreesCw;
 	}
 
+	@Override
+	protected void execute() {
+		SmartDashboard.putNumber("target pos", clp.getSetpoint());
+		SmartDashboard.putNumber("Error", clp.getError());
+	}
+	
 	// Called every time the command starts
 	@Override
 	public void initialize() {
