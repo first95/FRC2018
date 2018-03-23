@@ -23,12 +23,11 @@ import org.usfirst.frc.team95.robot.Robot;
 public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
-	//private final double TURN_DEGREE_CORRECTION = 18.0;
 	
 	private static final double K_P = 35;
 	private static final double K_I = 0.0;
 	private static final double K_D = 0.0;
-	private static final double PIVOT_SPEED = 24;
+	private static final double PIVOT_SPEED = 36;
 	private static final double END_STOP_TOLERANCE = 5;
 	
 	private PIDController clp;

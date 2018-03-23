@@ -140,7 +140,8 @@ public class OI {
 		// SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
 		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
 		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+		SmartDashboard.putData("Pivot -90 degrees CW", new Pivot(-90));
+		SmartDashboard.putData("Pivot 360-90 degrees CW", new Pivot(360-90));
 		// SmartDashboard.putData("Scale L to R initial move", new DriveStraight(231));
 		// SmartDashboard.putData("Scale L to R across move", new DriveStraight(264));
 		// SmartDashboard.putData("Scale L to R null zone", new DriveStraight(33));
