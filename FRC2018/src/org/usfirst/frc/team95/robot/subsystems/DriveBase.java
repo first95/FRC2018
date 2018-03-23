@@ -178,7 +178,7 @@ public class DriveBase extends Subsystem {
 
 	public void setPivotRate(double inchesPerSecond) {
 		leftPod.setCLSpeed(inchesPerSecond);
-		rightPod.setCLPosition(inchesPerSecond);
+		rightPod.setCLSpeed(inchesPerSecond);
 	}
 	
 	/**

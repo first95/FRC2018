@@ -17,7 +17,7 @@ import org.usfirst.frc.team95.robot.Robot;
 public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
-	private final double TURN_DEGREE_CORRECTION = 18.0;
+	private final double TURN_DEGREE_CORRECTION = 17.5;
 	
 	public Pivot(double degreesCw) {
 		requires(Robot.drivebase);
@@ -32,7 +32,8 @@ public class Pivot extends Command {
 		robotHeadingAtStartOfMove = Robot.drivebase.getRobotHeadingDegrees();
 
 		// Command the movement
-		Robot.drivebase.pivotDegreesClockwise(degreesCw);
+		//Robot.drivebase.pivotDegreesClockwise(degreesCw);
+		Robot.drivebase.setPivotRate(degreesCw > 0?36 : -36);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
