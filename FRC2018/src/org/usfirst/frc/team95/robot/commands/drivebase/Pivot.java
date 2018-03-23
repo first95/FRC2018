@@ -26,7 +26,7 @@ public class Pivot extends Command {
 	
 	private static final double K_P = 15.25;
 	private static final double K_I = 0.0;
-	private static final double K_D = 0.0;
+	private static final double K_D = 15.25 * 0.01;
 	private static final double PIVOT_SPEED = 48;
 	private static final double END_STOP_TOLERANCE = 5;
 	
@@ -34,7 +34,7 @@ public class Pivot extends Command {
 	
 	public Pivot(double degreesCw) {
 		
-		// We have to do this to make it turn the right way John "Cheese Warning"
+		// We have to do this to make it turn the right way : John says "Cheese Warning"
 		degreesCw *= -1;
 		
 		requires(Robot.drivebase);
