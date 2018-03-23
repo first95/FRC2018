@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team95.robot.Robot.StageTwoCondition;
+import org.usfirst.frc.team95.robot.Robot.StageThreeConditions;
+import org.usfirst.frc.team95.robot.Robot.StageTwoConditions;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnScale;
 import org.usfirst.frc.team95.robot.commands.compound.ScoreStartingCubeOnSwitch;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
+import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackStageTwo;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
@@ -73,7 +75,8 @@ public class OI {
 	private Joystick weaponsController = new Joystick(1);
 	// private XboxController xbox = new XboxController(0);
 
-	SendableChooser<Command> runStageTwo = new SendableChooser<>();
+	SendableChooser<StageTwoConditions> runStageTwo = new SendableChooser<>();
+	SendableChooser<StageThreeConditions> runStageThree = new SendableChooser<>();
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleR = new MutableSendableChooser<>();
@@ -205,8 +208,18 @@ public class OI {
 		SmartDashboard.putData("RL", moveSwitchRScaleL);
 		SmartDashboard.putData("RR", moveSwitchRScaleR);
 		
-		runStageTwo.addDefault("FALSE", new Nothing());
-		//runStageTwo.addObject(name, object);
+		// StageTwo Chooser
+		runStageTwo.addDefault("NONE", StageTwoConditions.NONE);
+		runStageTwo.addObject("CURRENT TO CURRENT", StageTwoConditions.CURRENT_TO_CURRENT);
+		runStageTwo.addObject("CURRENT TO SWITCH", StageTwoConditions.CURRENT_TO_SWITCH);
+		runStageTwo.addObject("CURRENT TO SCALE", StageTwoConditions.CURRENT_TO_SCALE);
+		
+		// StageThree Chooser
+		runStageThree.addDefault("NONE", StageThreeConditions.NONE);
+		runStageThree.addObject("CURRENT TO CURRENT", StageThreeConditions.CURRENT_TO_CURRENT);
+		runStageThree.addObject("CURRENT TO SWITCH", StageThreeConditions.CURRENT_TO_SWITCH);
+		runStageThree.addObject("CURRENT TO SCALE", StageThreeConditions.CURRENT_TO_SCALE);
+		
 	}
 
 	// There are a few things the OI wants to revisit every time around
@@ -320,10 +333,14 @@ public class OI {
 		return robotStartingPosition.getSelected();
 	}
 	
-	public StageTwoCondition getStageTwoCondition() {
+	public StageTwoConditions getStageTwoCondition() {
 		return runStageTwo.getSelected();
 	}
-
+	
+	public StageThreeConditions getStageThreeConditions() {
+		return runStageThree.getSelected();
+	}
+	
 	// We've got some SendableChooserse that need updating based on the selected
 	// robot position
 	public void updateSmartChoosers() {
