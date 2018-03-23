@@ -24,9 +24,9 @@ public class Pivot extends Command {
 	double degreesCw;
 	double robotHeadingAtStartOfMove;
 	
-	private static final double K_P = 15.25;
+	private static final double K_P = 7.5;
 	private static final double K_I = 0.0;
-	private static final double K_D = 15.25 * 0.01;
+	private static final double K_D = 0.0;
 	private static final double PIVOT_SPEED = 48;
 	private static final double END_STOP_TOLERANCE = 5;
 	
@@ -61,7 +61,7 @@ public class Pivot extends Command {
 			public void pidWrite(double output) {
 				Robot.drivebase.setPivotRate(-output);
 			}
-		});
+		}, 0.01);
 		
 		clp.setOutputRange(-PIVOT_SPEED, PIVOT_SPEED);
 		clp.setPercentTolerance(END_STOP_TOLERANCE);
