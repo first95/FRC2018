@@ -371,6 +371,34 @@ public class OI {
 		}
 	}
 
+	public Command getSelectedStageTwoCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
+		if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchLScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchLScaleR.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchRScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchRScaleR.getSelected();
+		} else {
+			return new Nothing();
+		}
+	}
+	
+	public Command getSelectedStageThreeCommand(FieldSide switchPosOurColor, FieldSide scalePosOurColor) {
+		if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchLScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.LEFT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchLScaleR.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.LEFT) {
+			return moveSwitchRScaleL.getSelected();
+		} else if (switchPosOurColor == FieldSide.RIGHT && scalePosOurColor == FieldSide.RIGHT) {
+			return moveSwitchRScaleR.getSelected();
+		} else {
+			return new Nothing();
+		}
+	}
+
 	// SWITCH LEFT || SCALE LEFT
 	private void updateLLAutoMoveChooser(StartPosition robotStartPosition) {
 		// Clear it out

@@ -14,8 +14,8 @@ public class SwitchAttackStageTwo extends CommandGroup {
 	private static final double DISTANCE_TILL_SECOND_CUBE = (48.0 + 12.0);
 	private static final double DISTANCE_TO_RE_CENTER_WITH_CUBE = 10.0;
 
-	public SwitchAttackStageTwo(FieldSide whichSideOfTheScaleIsOurColor, StartPosition robotStartingPosition) {
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
+	public SwitchAttackStageTwo(FieldSide whichSideOfTheSwitchIsOurColor, StartPosition robotStartingPosition) {
+		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -41,7 +41,7 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheSwitchIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -67,7 +67,7 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
+		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -94,7 +94,7 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
-		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheSwitchIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -120,7 +120,7 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
+		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
@@ -146,7 +146,7 @@ public class SwitchAttackStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
+		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheSwitchIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraight(-DISTANCE_TILL_CENTER));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
