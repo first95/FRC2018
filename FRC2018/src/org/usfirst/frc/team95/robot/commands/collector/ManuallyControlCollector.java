@@ -20,6 +20,8 @@ public class ManuallyControlCollector extends Command {
 		
 		if(Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
 			Robot.oi.setCubeCollectedState(true);
+//			Robot.oi.setDriverRumble(false);
+//			Robot.oi.setWeaponierRumble(false);
 		}
 		else {
 			Robot.oi.setCubeCollectedState(false);
