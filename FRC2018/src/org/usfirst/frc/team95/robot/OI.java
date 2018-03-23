@@ -1,5 +1,6 @@
 package org.usfirst.frc.team95.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -71,6 +72,9 @@ public class OI {
 	private Joystick driverController = new Joystick(0);
 	private Joystick weaponsController = new Joystick(1);
 	// private XboxController xbox = new XboxController(0);
+	public boolean driverRumbleState;
+	public boolean weaponierRumbleState;
+	public boolean cubeCollectedState = false;
 
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
 	MutableSendableChooser<Command> moveSwitchLScaleL = new MutableSendableChooser<>();
@@ -249,6 +253,46 @@ public class OI {
 
 	public boolean isElevatorScaleScoreHighButtonPressed() {
 		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON);
+	}
+	
+	public void setDriverRumble(boolean state) {
+		driverRumbleState = state;
+		if(state) {
+			driverController.setRumble(RumbleType.kLeftRumble, 1);
+			driverController.setRumble(RumbleType.kRightRumble, 1);
+		}else
+		{
+			driverController.setRumble(RumbleType.kLeftRumble, 0);
+			driverController.setRumble(RumbleType.kRightRumble, 0);
+		}
+	}
+	
+	public void setWeaponierRumble(boolean state) {
+		weaponierRumbleState = state;
+		if(state) {
+			weaponsController.setRumble(RumbleType.kLeftRumble, 1);
+			weaponsController.setRumble(RumbleType.kRightRumble, 1);
+		}else
+		{
+			weaponsController.setRumble(RumbleType.kLeftRumble, 0);
+			weaponsController.setRumble(RumbleType.kRightRumble, 0);
+		}
+	}
+	
+	public boolean getDriverRumbleState() {
+		return driverRumbleState;
+	}
+	
+	public boolean getWeaponierRumbleState() {
+		return weaponierRumbleState;
+	}
+	
+	public void setCubeCollectedState(boolean state) {
+		cubeCollectedState = state;
+	}
+	
+	public boolean getCubeCollectedState() {
+		return cubeCollectedState;
 	}
 
 	// Drive base controls

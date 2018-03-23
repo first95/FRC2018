@@ -61,6 +61,7 @@ public class Collector extends Subsystem {
 		SmartDashboard.putBoolean("Left maw photosensor detects?", isLeftMawPhotosensorTripped());
 		SmartDashboard.putBoolean("Middle maw photosensor detects?", isMiddleMawPhotosensorTripped());
 		SmartDashboard.putBoolean("Right maw photosensor detects?", isRightMawPhotosensorTripped());
+		SmartDashboard.putBoolean("Cube Collected", Robot.oi.getCubeCollectedState());
 	}
 
 	public void setMawOpen(boolean open) {

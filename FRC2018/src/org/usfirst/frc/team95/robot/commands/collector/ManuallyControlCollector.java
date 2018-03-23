@@ -17,6 +17,13 @@ public class ManuallyControlCollector extends Command {
 		Robot.collector.setIntakeSpeed(Robot.oi.getCollectorSpeed());
 		Robot.collector.setWristStageOneRetracted(Robot.oi.getWristStageOneRetracted());
 		Robot.collector.setWristStageTwoRetracted(Robot.oi.getWristStageTwoRetracted());
+		
+		if(Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
+			Robot.oi.setCubeCollectedState(true);
+		}
+		else {
+			Robot.oi.setCubeCollectedState(false);
+		}
 	}
 	
 	@Override
