@@ -104,10 +104,10 @@ public class DrivePod {
 		pLabel = name + " " + pLabel;
 		iLabel = name + " " + iLabel;
 		dLabel = name + " " + dLabel;
-		SmartDashboard.putNumber(fLabel, K_F_SPEED_MODE);
-		SmartDashboard.putNumber(pLabel, K_P_SPEED_MODE);
-		SmartDashboard.putNumber(iLabel, K_I_SPEED_MODE);
-		SmartDashboard.putNumber(dLabel, K_D_SPEED_MODE);
+		//SmartDashboard.putNumber(fLabel, K_F_SPEED_MODE);
+		//SmartDashboard.putNumber(pLabel, K_P_SPEED_MODE);
+		//SmartDashboard.putNumber(iLabel, K_I_SPEED_MODE);
+		//SmartDashboard.putNumber(dLabel, K_D_SPEED_MODE);
 
 	}
 	// TODO: How do we tell the CANTalon how many ticks per rev? Or do we?

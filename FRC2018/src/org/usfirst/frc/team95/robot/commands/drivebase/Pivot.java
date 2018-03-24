@@ -66,19 +66,19 @@ public class Pivot extends Command {
 		clp.setOutputRange(-PIVOT_SPEED, PIVOT_SPEED);
 		clp.setAbsoluteTolerance(END_STOP_TOLERANCE);
 		
-		SmartDashboard.putData("PIDController", clp);
-		SmartDashboard.putNumber("PIDController F Value", clp.getF());
+		//SmartDashboard.putData("PIDController", clp);
+		//SmartDashboard.putNumber("PIDController F Value", clp.getF());
 		
-		SmartDashboard.putNumber("target pos", clp.getSetpoint());
-		SmartDashboard.putNumber("Error", clp.getError());
+		//SmartDashboard.putNumber("target pos", clp.getSetpoint());
+		//SmartDashboard.putNumber("Error", clp.getError());
 		
 		this.degreesCw = degreesCw;
 	}
 
 	@Override
 	protected void execute() {
-		SmartDashboard.putNumber("target pos", clp.getSetpoint());
-		SmartDashboard.putNumber("Error", clp.getError());
+		//SmartDashboard.putNumber("target pos", clp.getSetpoint());
+		//SmartDashboard.putNumber("Error", clp.getError());
 	}
 	
 	// Called every time the command starts

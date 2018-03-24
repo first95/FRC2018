@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SwitchAttack extends CommandGroup {
 	// These strategies assumes we have a cube pre-loaded on the robot.
 	// GENERAL LOGIC:
+	private static final double ONE_FOOT = 12.0;
 	private static final double AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES = 0; // 2; // During auto moves to score on the
 																			// switch, move up this close to the switch
 																			// wall.
-	private static final double ONE_FOOT = 12.0;
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
