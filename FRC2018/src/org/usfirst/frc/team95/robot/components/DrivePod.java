@@ -23,7 +23,7 @@ public class DrivePod {
 	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
-	private static final double K_D_POSITION_MODE = 0.25; //40.0 * K_P;
+	private static final double K_D_POSITION_MODE = 0.15; //40.0 * K_P;
 	private static final int I_ZONE_POSITION_MODE = 1000; // In closed loop error units
 	
 	// Feedforward term (K_F) is only used in closed-loop speed control.
