@@ -14,6 +14,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
+import org.usfirst.frc.team95.robot.commands.compound.TURNANDGO;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
@@ -110,6 +111,7 @@ public class OI {
 		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
 		SmartDashboard.putData("Unlock Gear", new UnlockGear());
 		
+		SmartDashboard.putData("TURNANDGO", new TURNANDGO());
 		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
 		
 		// For the operators to indicate on which side of the field they placed the

@@ -18,6 +18,7 @@ public class ResetElevatorAndWrist extends CommandGroup {
 			addSequential(new SetElevatorHeight(ElevatorHoldPoint.FLOOR));
 		}
 		addSequential(new SetWristAngle(WristAngle.UP));
+		//addSequential(new Pause(0.1));
 	}
 
 }

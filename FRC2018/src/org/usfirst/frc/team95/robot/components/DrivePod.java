@@ -23,10 +23,10 @@ public class DrivePod {
 	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
 	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
-	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
+	private static final double K_I_POSITION_MODE = 0.0; //0.01 * K_P;
 	private static final double K_D_POSITION_MODE = 0.15; //40.0 * K_P;
 	private static final double K_F_HIGH_POSITION_MODE = 0.0; // Not used in position mode
-	private static final double K_P_HIGH_POSITION_MODE = 0.2;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private static final double K_P_HIGH_POSITION_MODE = 0.05;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
 	private static final double K_I_HIGH_POSITION_MODE = 0.0; //0.01 * K_P;
 	private static final double K_D_HIGH_POSITION_MODE = 0.35; //40.0 * K_P;
 	private static final int I_ZONE_POSITION_MODE = 1000; // In closed loop error units
@@ -178,8 +178,10 @@ public class DrivePod {
 		if(Robot.drivebase.getGear())
 		{
 			applyHighGearPositionPidConsts();
+			System.out.println("IN HIGH GEAR");
 		}else {
 			applyPositionPidConsts();
+			System.out.println("IN LOW GEAR");
 		}
 		
 		double delta = ENCODER_TICKS_PER_INCH * inches;

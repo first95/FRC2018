@@ -79,6 +79,7 @@ public class DriveBase extends Subsystem {
 		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
 		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
 		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
+		SmartDashboard.putBoolean("In High Gear", getGear());
 	}
 
 	/**
@@ -93,6 +94,7 @@ public class DriveBase extends Subsystem {
 
 		tank(left, right);
 	}
+	
 
 	/**
 	 * @return The robots heading in degrees.
@@ -126,8 +128,8 @@ public class DriveBase extends Subsystem {
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		leftPod.setMaxSpeed(0.3);
-		rightPod.setMaxSpeed(0.3);
+		leftPod.setMaxSpeed(0.8);
+		rightPod.setMaxSpeed(0.8);
 
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);

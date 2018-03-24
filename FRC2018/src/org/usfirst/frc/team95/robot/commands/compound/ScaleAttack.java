@@ -2,7 +2,9 @@ package org.usfirst.frc.team95.robot.commands.compound;
 
 import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
+import org.usfirst.frc.team95.robot.commands.Pause;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
+import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
 import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.ElevatorHoldPoint;
@@ -18,7 +20,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE = 304.31 + 10.0;
+	private static final double L_INITAL_MOVE =  304.31 + 10.0;
 	private static final double L_TO_R_INITIAL_MOVE = 231.0;
 	private static final double L_TO_R_ACROSS_MOVE = 264.0;
 	private static final double L_TO_R_NULL_ZONE = 33.0;
@@ -70,6 +72,7 @@ public class ScaleAttack extends CommandGroup {
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
+			addSequential(new LockGear(false));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
