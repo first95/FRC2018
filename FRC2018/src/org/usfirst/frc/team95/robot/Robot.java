@@ -42,7 +42,6 @@ public class Robot extends IterativeRobot {
 	 * on the switch and have it's front bumper 10 inches back from the end of the scale
 	 * plate in all of these cases.
 	 */
-
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
 	
@@ -141,8 +140,8 @@ public class Robot extends IterativeRobot {
         
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
-		//debugLog();
-        log();
+		debugLog();
+       //log();
 	}
 
 	@Override

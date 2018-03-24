@@ -319,8 +319,29 @@ public class DriveBase extends Subsystem {
 //
 //		}
 
-		autoShift();
+		lockGear(Robot.oi.getShiftLockValue());
 
+	}
+	
+	// If true it locks into high gear, if false locks into low gear
+	public void lockGear(int lockGear) {
+		if(lockGear > 1) lockGear = 0;
+		else if(lockGear < -1) lockGear = 0;
+		else if(lockGear > 0 && lockGear < 1) lockGear = 1;
+		else if(lockGear < 0 && lockGear > -1) lockGear = -1;
+		
+		if (lockGear == 1) {
+			Robot.drivebase.setGear(true);
+		}else if (lockGear == -1) {
+			Robot.drivebase.setGear(false);
+		}
+		else {
+			disableGearLock();
+		}
+	}
+	
+	public void disableGearLock() {
+		autoShift();
 	}
 
 	public void pullPidConstantsFromSmartDash() {
