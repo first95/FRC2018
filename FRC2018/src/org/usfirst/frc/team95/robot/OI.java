@@ -9,6 +9,7 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
+import org.usfirst.frc.team95.robot.commands.compound.DriveStraightLockedGears;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
@@ -108,7 +109,9 @@ public class OI {
 		SmartDashboard.putData("Lock High Gear", new LockGear(true));
 		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
 		SmartDashboard.putData("Unlock Gear", new UnlockGear());
-
+		
+		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
+		
 		// For the operators to indicate on which side of the field they placed the
 		// robot
 		robotStartingPosition.addObject("Left", StartPosition.LEFT);

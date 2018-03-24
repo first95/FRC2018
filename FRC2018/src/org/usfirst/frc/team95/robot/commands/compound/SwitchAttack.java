@@ -3,7 +3,6 @@ package org.usfirst.frc.team95.robot.commands.compound;
 import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
-import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.PivotAtSpeed;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
@@ -67,17 +66,17 @@ public class SwitchAttack extends CommandGroup {
 
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraight(L_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_TO_R_MOVE));
+			addSequential(new DriveStraightLockedGears(L_TO_R_MOVE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(L_TO_SWITCH_MOVE));
+			addSequential(new DriveStraightLockedGears(L_TO_SWITCH_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 
@@ -90,11 +89,11 @@ public class SwitchAttack extends CommandGroup {
 			
 		} else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(ML_TO_R_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_TO_R_MOVE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(ML_TO_SWITCH_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_TO_SWITCH_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 
@@ -103,21 +102,21 @@ public class SwitchAttack extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C_INITAL_MOVE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(C_L_DISTANCE_IN_THE_MIDDLE));
+			addSequential(new DriveStraightLockedGears(C_L_DISTANCE_IN_THE_MIDDLE, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(C__L_FINAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C__L_FINAL_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 		} else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 
-			addSequential(new DriveStraight(C_INITAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C_INITAL_MOVE, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(C_R_DISTANCE_IN_THE_MIDDLE));
+			addSequential(new DriveStraightLockedGears(C_R_DISTANCE_IN_THE_MIDDLE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(C__R_FINAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C__R_FINAL_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 		}
@@ -125,17 +124,17 @@ public class SwitchAttack extends CommandGroup {
 		/* ====================================== */
 		// RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraight(R_TO_L_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(R_TO_L_INITIAL_MOVE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(R_TO_L_MOVE));
+			addSequential(new DriveStraightLockedGears(R_TO_L_MOVE, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(R_TO_SWITCH_MOVE));
+			addSequential(new DriveStraightLockedGears(R_TO_SWITCH_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraight(R_INITAL_MOVE));
+			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 
@@ -143,15 +142,15 @@ public class SwitchAttack extends CommandGroup {
 		// MID-RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraight(ONE_FOOT));
+			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(MR_TO_L_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_TO_L_MOVE, false));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(MR_TO_SWITCH_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_TO_SWITCH_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraight(MR_DISTANCE_STRIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES));
+			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 

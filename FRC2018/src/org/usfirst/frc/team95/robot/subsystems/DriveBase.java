@@ -126,8 +126,8 @@ public class DriveBase extends Subsystem {
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		leftPod.setMaxSpeed(0.6);
-		rightPod.setMaxSpeed(0.6);
+		leftPod.setMaxSpeed(0.3);
+		rightPod.setMaxSpeed(0.3);
 
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
@@ -267,6 +267,12 @@ public class DriveBase extends Subsystem {
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
 	}
+	
+	public boolean getGear() {
+		// True in high gear
+		// False in low gear
+		return shifter.get();
+	}
 
 	public void autoShift() {
 		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
@@ -302,7 +308,7 @@ public class DriveBase extends Subsystem {
 		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
 		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
 	}
-
+	
 	public void visit() {
 //		if (Robot.oi.getShiftOverrided()) {
 //
