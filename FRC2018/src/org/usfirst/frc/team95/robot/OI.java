@@ -15,7 +15,9 @@ import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.commands.drivebase.UnlockGear;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
 /**
@@ -102,6 +104,10 @@ public class OI {
 		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
 		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
 		SmartDashboard.putData("Six Feet Forward", new DriveStraight(12*6));
+		
+		SmartDashboard.putData("Lock High Gear", new LockGear(true));
+		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
+		SmartDashboard.putData("Unlock Gear", new UnlockGear());
 
 		// For the operators to indicate on which side of the field they placed the
 		// robot

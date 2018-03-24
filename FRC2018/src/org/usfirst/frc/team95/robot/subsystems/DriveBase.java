@@ -336,14 +336,10 @@ public class DriveBase extends Subsystem {
 			Robot.drivebase.setGear(false);
 		}
 		else {
-			disableGearLock();
+			autoShift();
 		}
 	}
 	
-	public void disableGearLock() {
-		autoShift();
-	}
-
 	public void pullPidConstantsFromSmartDash() {
 		//leftPod.pullPidConstantsFromSmartDash();
 		//rightPod.pullPidConstantsFromSmartDash();
