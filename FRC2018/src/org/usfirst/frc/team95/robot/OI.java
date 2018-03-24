@@ -97,7 +97,7 @@ public class OI {
 //		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
 //		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
 //		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
-//		SmartDashboard.putData("Four Feet Forward", new DriveStraight(48));
+	//	SmartDashboard.putData("Four Feet Forward", new DriveStraight(12*6));
 
 		// For the operators to indicate on which side of the field they placed the
 		// robot
