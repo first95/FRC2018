@@ -29,10 +29,15 @@ public class DrivePod {
 	// Feedforward term (K_F) is only used in closed-loop speed control.
 	// The talon uses it to guess the appropriate throttle value for a given speed, before adjusting the throttle using
 	// the P, I, and D terms.
-	private double K_F_SPEED_MODE = 0.08; // 2018-3-21 It seems to behave in ways that don't make sense to me when this is nonzero 
-	private double K_P_SPEED_MODE = 0.40; // 2018-3-21 determined by experimentation on doppler, with no load
-	private double K_I_SPEED_MODE = 0.001; // 2018-3-21 determined by experimentation on doppler, with no load
-	private double K_D_SPEED_MODE = 0.001; //40.0 * K_P;
+	private static final double K_F_SPEED_MODE = 0.00; // 2018-3-21 It seems to behave in ways that don't make sense to me when this is nonzero 
+	private static final double K_P_SPEED_MODE = 0.40; // 2018-3-21 determined by experimentation on doppler, with no load
+	private static final double K_I_SPEED_MODE = 0.001; // 2018-3-21 determined by experimentation on doppler, with no load
+	private static final double K_D_SPEED_MODE = 0.000; //40.0 * K_P;
+	private static final double K_T_F_SPEED_MODE = 0.08; // 2018-3-21 It seems to behave in ways that don't make sense to me when this is nonzero 
+	private static final double K_T_P_SPEED_MODE = 0.40; // 2018-3-21 determined by experimentation on doppler, with no load
+	private static final double K_T_I_SPEED_MODE = 0.001; // 2018-3-21 determined by experimentation on doppler, with no load
+	private static final double K_T_D_SPEED_MODE = 0.001; //40.0 * K_P;
+
 	private static final int I_ZONE_SPEED_MODE = 1000; // In closed loop error units
 	private String fLabel = "DrivePod F";
 	private String pLabel = "DrivePod P";
@@ -125,11 +130,22 @@ public class DrivePod {
 	/**
 	 * Apply the PID+F constants that are used during closed-loop speed mode
 	 */
-	private void applySpeedPidConsts() {
+	public void applySpeedPidConsts() {
 		leader.config_kF(Constants.PID_IDX, K_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kP(Constants.PID_IDX, K_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kI(Constants.PID_IDX, K_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		leader.config_kD(Constants.PID_IDX, K_D_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+	}
+	
+	private void applyTurningSpeedPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_T_F_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_T_P_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_T_I_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_T_D_SPEED_MODE, Constants.CAN_TIMEOUT_MS);
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term
 		// accumulator.
@@ -156,12 +172,19 @@ public class DrivePod {
 	 * @param inchesPerSecond
 	 *            - the target velocity in inches per second
 	 */
-	public void setCLSpeed(double inchesPerSecond) {
-		applySpeedPidConsts();
-		double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
-		leader.set(ControlMode.Velocity, speedTicksPer100ms);
+	public void setCLSpeed(double inchesPerSecond, boolean turning) {
+		if(turning) {
+			applyTurningSpeedPidConsts();
+			double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+			leader.set(ControlMode.Velocity, speedTicksPer100ms);
+		}
+		else {
+			applySpeedPidConsts();
+			double speedTicksPer100ms = inchesPerSecond * ENCODER_TICKS_PER_INCH / 10.0;
+			leader.set(ControlMode.Velocity, speedTicksPer100ms);	
+		}	
 	}
-	
+
 	/**
 	 * Drive for a given distance at a given speed.
 	 * This method will use closed-loop control on the speed,
@@ -178,7 +201,7 @@ public class DrivePod {
 			targetDeltaSign = -1.0;
 		}
 		System.out.println(name + " seeking a rate of " + inchesPerSecond + " inches per second for " + inches + ", sign=" + targetDeltaSign + ".");
-		setCLSpeed(inchesPerSecond);
+		setCLSpeed(inchesPerSecond, false);
 	}
 	
 	public double getPositionInches() {
@@ -277,10 +300,10 @@ public class DrivePod {
 	 */
 	public void pullPidConstantsFromSmartDash() {
 		// Retrieve
-		K_F_SPEED_MODE = SmartDashboard.getNumber(fLabel, K_F_SPEED_MODE);
-		K_P_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_P_SPEED_MODE);
-		K_I_SPEED_MODE = SmartDashboard.getNumber(iLabel, K_I_SPEED_MODE);
-		K_D_SPEED_MODE = SmartDashboard.getNumber(dLabel, K_D_SPEED_MODE);
+		//K_F_SPEED_MODE = SmartDashboard.getNumber(fLabel, K_F_SPEED_MODE);
+		//K_P_SPEED_MODE = SmartDashboard.getNumber(pLabel, K_P_SPEED_MODE);
+		//K_I_SPEED_MODE = SmartDashboard.getNumber(iLabel, K_I_SPEED_MODE);
+		//K_D_SPEED_MODE = SmartDashboard.getNumber(dLabel, K_D_SPEED_MODE);
 
 		// Apply
 		applySpeedPidConsts();
