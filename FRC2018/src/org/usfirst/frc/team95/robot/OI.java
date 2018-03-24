@@ -14,6 +14,7 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
@@ -89,6 +90,7 @@ public class OI {
 		SmartDashboard.putData("Pivot -90 degrees CW", new Pivot(-90));
 		SmartDashboard.putData("Pivot 360-90 degrees CW", new Pivot(360-90));
 		SmartDashboard.putData("Pivot 360", new Pivot(359));
+		SmartDashboard.putData("Two Feet Forwards", new DriveStraight(24));
 
 		// For the operators to indicate on which side of the field they placed the
 		// robot
