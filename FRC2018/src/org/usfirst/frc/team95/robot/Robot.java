@@ -36,16 +36,31 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
-
+	
+	public enum FinalPostion {
+		SWITCH,
+		SCALE,
+	}
+	
+	public enum StageTwoConditions{
+		CURRENT_TO_CURRENT, // Go from the current position, grab a cube and score again at the same location
+		CURRENT_TO_SWITCH, // Go from current position, grab a cube, and go to switch, if already at switch score on switch again
+		CURRENT_TO_SCALE, // Go from current position, grab a cube, and go to scale, if already at scale score on scale again
+		NONE, // Dont conduct stage two
+	}
+	
+	public enum StageThreeConditions{
+		CURRENT_TO_CURRENT, // Go from the current position, grab a cube and score again at the same location
+		CURRENT_TO_SWITCH, // Go from current position, grab a cube, and go to switch, if already at switch score on switch again
+		CURRENT_TO_SCALE, // Go from current position, grab a cube, and go to scale, if already at scale score on scale again
+		NONE, // Dont conduct stage two
+	}
+	
 	/**
 	 * Robot position after scoring on the scale. Robot is assumed to be centered
 	 * on the switch and have it's front bumper 10 inches back from the end of the scale
 	 * plate in all of these cases.
 	 */
-//	public enum ScalePosition {
-//		LEFT, // On the left side of the scale
-//		RIGHT, // One the right side of the scale
-//	}
 
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
@@ -110,6 +125,7 @@ public class Robot extends IterativeRobot {
 		
 		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
 		autonomousCommand.start();
+		
 	}
 
 	/**
