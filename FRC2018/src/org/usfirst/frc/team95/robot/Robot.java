@@ -76,6 +76,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
+		// Disable brakes on talons to make it
+		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
 		
@@ -106,7 +108,6 @@ public class Robot extends IterativeRobot {
 		
 		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
 		autonomousCommand.start();
-		
 	}
 
 	/**
@@ -123,7 +124,6 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
-		
 		drivebase.brake(false);
 		elevator.brake(false);
 	}
@@ -138,6 +138,9 @@ public class Robot extends IterativeRobot {
         drivebase.pullPidConstantsFromSmartDash();
         oi.visit();
         drivebase.visit();
+        
+        // Depending if you want all output or just limited
+        // use either debugLog() or just log()
 		debugLog();
 	}
 
@@ -202,6 +205,7 @@ public class Robot extends IterativeRobot {
 			return FieldSide.UNKNOWN;
 		}
 	}
+	
 	// The side of the near switch that belongs to us
 	public  FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(0));
