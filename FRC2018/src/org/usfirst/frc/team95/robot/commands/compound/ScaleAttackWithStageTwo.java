@@ -78,9 +78,6 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 			addSequential(new DriveStraight(L_INITAL_MOVE));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-			
-			// Stage Two
-			
 			addSequential(new DriveStraight(RE_CENTER_DISTANCE));
 			addSequential(new Pivot(90.0));
 			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));

@@ -4,6 +4,7 @@ import org.usfirst.frc.team95.robot.FieldSide;
 import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.Pause;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
+import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
 import org.usfirst.frc.team95.robot.commands.drivebase.SweepTurn;
@@ -71,10 +72,15 @@ public class ScaleAttack extends CommandGroup {
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
-			addSequential(new LockGear(false));
-			addSequential(new Pivot(90));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
+			addSequential(new Pivot(98));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraight(-72));
+			addSequential(new Pivot(-90));
+			addSequential(new ScoreStartingCubeOnScale());
+
 		}
 		else if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)

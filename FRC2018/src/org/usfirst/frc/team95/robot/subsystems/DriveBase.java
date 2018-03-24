@@ -128,8 +128,8 @@ public class DriveBase extends Subsystem {
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		leftPod.setMaxSpeed(0.8);
-		rightPod.setMaxSpeed(0.8);
+		leftPod.setMaxSpeed(0.9);
+		rightPod.setMaxSpeed(0.9);
 
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
