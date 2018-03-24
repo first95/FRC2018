@@ -14,7 +14,7 @@ public class ScoreStartingCubeOnSwitch extends CommandGroup {
 	// This command assumes the cube starts in the maw, with the wrist up
 	public ScoreStartingCubeOnSwitch() {
 		//addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SWITCH_SCORE, true));
-		addSequential(new SetWristAngle(WristAngle.MID_DOWN));
+		addSequential(new SetWristAngle(WristAngle.MID_UP));
 		
 		// If the elevator is raised up during this move then use ReleaseCube
 		// However, if the elevator is not used then EjectCube is better
