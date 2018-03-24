@@ -141,7 +141,8 @@ public class Robot extends IterativeRobot {
         
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
-		debugLog();
+		//debugLog();
+        log();
 	}
 
 	@Override
@@ -179,10 +180,10 @@ public class Robot extends IterativeRobot {
 	 * The log method puts interesting information to the SmartDashboard.
 	 */
 	private void log() {
-		drivebase.log();
-//		elevator.log();
-//		collector.log();
-//		oi.log();
+		//drivebase.log();
+		//elevator.log();
+		//collector.log();
+		//oi.log();
 	}
 	
 	private void debugLog() {

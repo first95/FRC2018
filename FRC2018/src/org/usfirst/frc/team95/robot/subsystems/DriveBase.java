@@ -71,17 +71,14 @@ public class DriveBase extends Subsystem {
 		leftPod.log();
 		rightPod.log();
 
-//		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-//		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
-//		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-//		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
-//
-//		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
-//		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
+		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
 		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
-//		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
-//		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
-//		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
+		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
+		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
+		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
 	}
 
 	/**

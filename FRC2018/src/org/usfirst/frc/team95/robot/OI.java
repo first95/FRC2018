@@ -85,12 +85,19 @@ public class OI {
 
 		// Sendable Chooser for single commands
 		// These are only for testing Purposes
-		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
-		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-		SmartDashboard.putData("Pivot -90 degrees CW", new Pivot(-90));
-		SmartDashboard.putData("Pivot 360-90 degrees CW", new Pivot(360-90));
-		SmartDashboard.putData("Pivot 360", new Pivot(359));
-		SmartDashboard.putData("Two Feet Forwards", new DriveStraight(24));
+//		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
+//		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+//		
+//		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+//		SmartDashboard.putData("Pivot 180 degrees CCW", new Pivot(-180));
+//		
+//		SmartDashboard.putData("Pivot 360 degrees CW", new Pivot(360));
+//		SmartDashboard.putData("Pivot 360 degrees CCW", new Pivot(-360));
+//
+//		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
+//		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
+//		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
+//		SmartDashboard.putData("Four Feet Forward", new DriveStraight(48));
 
 		// For the operators to indicate on which side of the field they placed the
 		// robot
