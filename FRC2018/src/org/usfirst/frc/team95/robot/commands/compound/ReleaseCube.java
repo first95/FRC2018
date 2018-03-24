@@ -10,7 +10,7 @@ public class ReleaseCube extends CommandGroup{
 
 	public ReleaseCube() {
 		addSequential(new OpenMaw());
-		addSequential(new Pause(2.0));
+		addSequential(new Pause(0.5));
 		addSequential(new CloseMaw());
 	}
 
