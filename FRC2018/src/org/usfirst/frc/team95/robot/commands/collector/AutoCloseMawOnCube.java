@@ -2,7 +2,9 @@ package org.usfirst.frc.team95.robot.commands.collector;
 
 import org.usfirst.frc.team95.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -20,27 +22,57 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoCloseMawOnCube extends Command {
 	public static final double INTAKE_THROTTLE = -1.0;
+	private Timer holdTimer;
+	private boolean runOnce = true;
+	private boolean cubeIn = false;
 	
 	public AutoCloseMawOnCube() {
 		requires(Robot.collector);
+		holdTimer = new Timer();
+		SmartDashboard.putNumber("holdTimer Value", holdTimer.get());
 	}
 	
 	@Override
-	public synchronized void initialize() {
-		// Make it be open
-		Robot.collector.setMawOpen(true);
+	public void initialize() {
+		// Intake
 		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);
+		System.out.println("INIT RUNNING!!!");
+		
+		cubeIn = false;
+	}
+	
+	@Override
+	protected void execute() {
+		
+		SmartDashboard.putNumber("holdTimer Value", holdTimer.get());
+		
+		System.out.println("THIS IS RUNNING");
+		
+		if (Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
+
+			if(runOnce) {
+				holdTimer.reset();
+				holdTimer.start();
+				runOnce = false;
+			}
+			
+			if (holdTimer.get() > 0.1) {
+				System.out.println("Got " + Robot.collector.getNumberOfMawPhotosensorsTripped() + "sensors. Closing.");
+				holdTimer.stop();
+				cubeIn = true;
+			}
+		}
+		else
+		{
+			holdTimer.stop();
+			runOnce = true;
+		}
 	}
 	
 	@Override
 	protected boolean isFinished() {
 		// Need at least two to be tripped to count as done
-		if(Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
-			System.out.println("Got " + Robot.collector.getNumberOfMawPhotosensorsTripped() + "sensors. Closing.");
-			return true; 
-		} else {
-			return false;
-		}
+		return cubeIn;
 	}
 	
 	@Override
