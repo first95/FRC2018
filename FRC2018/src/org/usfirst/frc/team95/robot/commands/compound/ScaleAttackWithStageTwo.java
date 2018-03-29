@@ -75,7 +75,7 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
 			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			addSequential(new Pivot(98));
