@@ -87,13 +87,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+			// Needs to be tested, we may want to turn 45 degrees instead on 90
+			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+			addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+			addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, true));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -120,12 +121,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(ML_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(ML_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(ML_FINAL_MOVE));
-			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -149,12 +152,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(ML_TO_R_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(ML_TO_R_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(ML_TO_R_FINAL_MOVE));
-			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(ML_TO_R_FINAL_MOVE, true));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -181,12 +186,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(C_L_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C_L_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(C_L_MIDDLE_MOVE));
+			addSequential(new DriveStraightLockedGears(C_L_MIDDLE_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(C_L_FINAL_MOVE));
-			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(C_L_FINAL_MOVE, true));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -210,12 +217,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(C_R_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(C_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(C_R_MIDDLE_MOVE));
+			addSequential(new DriveStraightLockedGears(C_R_MIDDLE_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(C_R_FINAL_MOVE));
-			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(C_R_FINAL_MOVE, true));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -242,13 +251,10 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -272,9 +278,9 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(R_INITAL_MOVE));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());
+			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
+			addSequential(new Pivot(-45));
+			addSequential(new ScoreStartingCubeOnScale());	
 			
 			// Stage Two
 			
@@ -300,12 +306,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraight(MR_TO_L_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_TO_L_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(MR_TO_L_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(MR_TO_L_NULL_ZONE));
-			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, true));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
@@ -329,12 +337,14 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraight(MR_INITIAL_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(MR_ACROSS_MOVE));
+			addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(MR_FINAL_MOVE));
-			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new DriveStraightLockedGears(MR_FINAL_MOVE, true));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
