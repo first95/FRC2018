@@ -81,7 +81,6 @@ public class ScaleAttack extends CommandGroup {
 		{
 			
 			// Needs to be tested, we may want to turn 45 degrees instead on 90
-			
 			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));

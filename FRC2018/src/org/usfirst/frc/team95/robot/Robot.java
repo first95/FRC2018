@@ -86,9 +86,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		
-		// Lock auto into first gear
-		Robot.oi.setShiftLockValue(-1);
-		
 		int maxTime_sec = 8;
 		double startTime_sec = Timer.getFPGATimestamp();
 		double elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
@@ -146,7 +143,7 @@ public class Robot extends IterativeRobot {
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
 		debugLog();
-       //log();
+        //log();
 	}
 
 	@Override

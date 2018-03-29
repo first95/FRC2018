@@ -21,7 +21,7 @@ public class Ramps extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-//		setDefaultCommand(new Nothing());
+		//setDefaultCommand(new Nothing());
 	}
 	
 	public void log() {

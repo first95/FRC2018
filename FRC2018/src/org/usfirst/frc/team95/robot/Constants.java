@@ -3,6 +3,7 @@ package org.usfirst.frc.team95.robot;
 public class Constants
 	{
 	
+	    // How much the joystick must move before anything will happen
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
 
@@ -56,10 +57,6 @@ public class Constants
 		
 		// Sensors attached via Talon
 		public static final int PIGEON_NUM = 30;		
-		
-		// Encoder values recycled from last year
-		public static final double ENCODER_TICKS_PER_FOOT = 1002;
-		public static final double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
 
 		// Current limiting parameters
 		public static final int DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS = 10;

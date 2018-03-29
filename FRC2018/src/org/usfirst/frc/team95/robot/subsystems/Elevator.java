@@ -47,8 +47,6 @@ public class Elevator extends Subsystem {
 		leftElevDriver.setInverted(true); // Inverted here refers to the output
 		leftElevDriver.set(ControlMode.Follower, Constants.RIGHT_ELEV_DRIVER);
 		
-		
-
 		// Configure the right talon for closed loop control
 		rightElevDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
 				Constants.CAN_TIMEOUT_MS);
