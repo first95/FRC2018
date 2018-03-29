@@ -21,7 +21,7 @@ public class ScaleAttack extends CommandGroup {
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE =  304.31 + 10.0;
+	private static final double L_INITAL_MOVE =  304.31 + 10.0 - 30 - 12;
 	private static final double L_TO_R_INITIAL_MOVE = 231.0;
 	private static final double L_TO_R_ACROSS_MOVE = 264.0;
 	private static final double L_TO_R_NULL_ZONE = 33.0;
@@ -72,19 +72,15 @@ public class ScaleAttack extends CommandGroup {
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
 			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
-			addSequential(new Pivot(98));
-			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraight(-72));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());
-
 		}
 		else if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
+			
+			// Needs to be tested, we may want to turn 45 degrees instead on 90
 			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
@@ -104,8 +100,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, true));
 			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
-			addSequential(new Pivot(90));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.MID_LEFT
@@ -115,8 +113,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(ML_TO_R_FINAL_MOVE, true));
-			addSequential(new Pivot(-90));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		
@@ -129,8 +129,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(C_L_MIDDLE_MOVE, true));
 			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(C_L_FINAL_MOVE, true));
-			addSequential(new Pivot(90));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.CENTER
@@ -140,8 +142,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(C_R_MIDDLE_MOVE, true));
 			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(C_R_FINAL_MOVE, true));
-			addSequential(new Pivot(-90));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		
@@ -154,18 +158,14 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, true));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, true));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());
-			
+			addSequential(new Pivot(-45));
+			addSequential(new ScoreStartingCubeOnScale());	
 		}
 		
 		/*======================================*/
@@ -177,8 +177,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
 			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, true));
-			addSequential(new Pivot(90));
+			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
@@ -188,8 +190,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, true));
 			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new DriveStraightLockedGears(MR_FINAL_MOVE, true));
-			addSequential(new Pivot(-90));
+			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		
