@@ -76,14 +76,11 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new ScoreStartingCubeOnScale());
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
 			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			addSequential(new Pivot(98));
 			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraightLockedGears(-72, true));
+			addSequential(new DriveStraight(-72));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}

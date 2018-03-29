@@ -67,7 +67,9 @@ public class SwitchAttack extends CommandGroup {
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
-			addSequential(new Pivot(90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new Pivot(45));
 			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.LEFT
@@ -133,7 +135,9 @@ public class SwitchAttack extends CommandGroup {
 		} else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
-			addSequential(new Pivot(-90));
+			
+			// This drivestraight needs to be changed, it theoretically would go to far
+			addSequential(new Pivot(-45));
 			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
