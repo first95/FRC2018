@@ -149,9 +149,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		
-		// Unlock the auto shifter
-		Robot.oi.setShiftLockValue(0);
-		
 		drivebase.brake(true);
 		elevator.brake(true);
 
