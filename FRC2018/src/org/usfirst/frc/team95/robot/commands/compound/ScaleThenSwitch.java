@@ -10,7 +10,7 @@ import org.usfirst.frc.team95.robot.commands.elevator.SetElevatorHeight.Elevator
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ScaleThenSwitchAttack extends CommandGroup
+public class ScaleThenSwitch extends CommandGroup
 {
 	// These strategies assumes we have a cube pre-loaded on the robot.
 	
@@ -86,7 +86,7 @@ public class ScaleThenSwitchAttack extends CommandGroup
 		private static final double MR_TO_L_ENDING_MOVE = 0.0;
 		public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score, then pick up a new cube and score on switch hot side.";
 
-		public ScaleThenSwitchAttack(FieldSide whichSideOfTheScaleIsOurColor,
+		public ScaleThenSwitch(FieldSide whichSideOfTheScaleIsOurColor,
 				FieldSide whichSideOfTheNearSwitchIsOurColor,
 				StartPosition robotStartingPosition)
 		{
