@@ -18,9 +18,9 @@ public class ScoreStartingCubeOnScale extends CommandGroup
 	// up to the scale with the wrist in a flat position.
 	public ScoreStartingCubeOnScale()
 	{
-		addSequential(new DriveStraight(-18.0 - 6.0));
+		//addSequential(new DriveStraightLockedGears(-18, false));
 		addSequential(new ElevateCubeAndScore(ElevatorHoldPoint.SCALE_SCORE_HIGH, false));
-		addSequential(new DriveStraight(-4.0));
+		//addSequential(new DriveStraight(-4.0));
 		addSequential(new ResetElevatorAndWrist(true));
 	}
 }

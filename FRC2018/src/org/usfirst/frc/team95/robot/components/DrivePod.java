@@ -2,6 +2,7 @@
 package org.usfirst.frc.team95.robot.components;
 
 import org.usfirst.frc.team95.robot.Constants;
+import org.usfirst.frc.team95.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -22,8 +23,12 @@ public class DrivePod {
 	private static final double ROBOT_MAX_SPEED_TICKS_PER_100MS = Constants.ROBOT_TOP_SPEED_LOW_GEAR_FPS * 12.0 * ENCODER_TICKS_PER_INCH / 10.0;
 	private static final double K_F_POSITION_MODE = 0.0; // Not used in position mode
 	private static final double K_P_POSITION_MODE = 0.4;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
-	private static final double K_I_POSITION_MODE = 0.1; //0.01 * K_P;
+	private static final double K_I_POSITION_MODE = 0.0; //0.01 * K_P;
 	private static final double K_D_POSITION_MODE = 0.15; //40.0 * K_P;
+	private static final double K_F_HIGH_POSITION_MODE = 0.0; // Not used in position mode
+	private static final double K_P_HIGH_POSITION_MODE = 0.05;// 0.6 * 1023.0 / (6*ENCODER_TICKS_PER_INCH); // Respond to an error of 6" with 60% throttle
+	private static final double K_I_HIGH_POSITION_MODE = 0.0; //0.01 * K_P;
+	private static final double K_D_HIGH_POSITION_MODE = 0.35; //40.0 * K_P;
 	private static final int I_ZONE_POSITION_MODE = 1000; // In closed loop error units
 	
 	// Feedforward term (K_F) is only used in closed-loop speed control.
@@ -127,6 +132,17 @@ public class DrivePod {
 		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
 	}
 	
+	private void applyHighGearPositionPidConsts() {
+		leader.config_kF(Constants.PID_IDX, K_F_HIGH_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kP(Constants.PID_IDX, K_P_HIGH_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kI(Constants.PID_IDX, K_I_HIGH_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+		leader.config_kD(Constants.PID_IDX, K_D_HIGH_POSITION_MODE, Constants.CAN_TIMEOUT_MS);	
+		// Prevent Integral Windup.
+		// Whenever the control loop error is outside this zone, zero out the I term
+		// accumulator.
+		leader.config_IntegralZone(Constants.PID_IDX, I_ZONE_POSITION_MODE, Constants.CAN_TIMEOUT_MS);
+	}
+	
 	/**
 	 * Apply the PID+F constants that are used during closed-loop speed mode
 	 */
@@ -159,13 +175,39 @@ public class DrivePod {
 	 *            - the target position in inches from current position
 	 */
 	public void setCLPosition(double inches) {
-		applyPositionPidConsts();
+		if(Robot.drivebase.getGear())
+		{
+			applyHighGearPositionPidConsts();
+			System.out.println("IN HIGH GEAR");
+		}else {
+			applyPositionPidConsts();
+			System.out.println("IN LOW GEAR");
+		}
+		
 		double delta = ENCODER_TICKS_PER_INCH * inches;
 		double current = leader.getSelectedSensorPosition(Constants.PID_IDX);
 		System.out.println(name + " going " + inches + " inches, or delta=" + delta + ", current = " + current);
 		leader.set(ControlMode.Position, current + delta);
 	}
 
+//	public void reUpdatePIDValues() {
+//		
+//		if(getControlMode() == ControlMode.Position) {
+//			if(Robot.drivebase.getGear())
+//			{
+//				applyHighGearPositionPidConsts();
+//			}else {
+//				applyPositionPidConsts();
+//			}
+//		}
+//		else if(getControlMode() == ControlMode.Velocity) {
+//			applySpeedPidConsts();
+//		}
+//		else {
+//			
+//		}
+//	}
+	
 	/**
 	 * Command the DrivePod to take on a specific velocity until commanded to stop
 	 * 

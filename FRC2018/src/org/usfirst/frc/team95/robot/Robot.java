@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 
+import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.Ramps;
@@ -42,7 +43,6 @@ public class Robot extends IterativeRobot {
 	 * on the switch and have it's front bumper 10 inches back from the end of the scale
 	 * plate in all of these cases.
 	 */
-
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
 	
@@ -85,6 +85,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
+		
+		// Lock auto into first gear
+		Robot.oi.setShiftLockValue(-1);
+		
 		int maxTime_sec = 8;
 		double startTime_sec = Timer.getFPGATimestamp();
 		double elapTime_sec = Timer.getFPGATimestamp() - startTime_sec;
@@ -141,12 +145,16 @@ public class Robot extends IterativeRobot {
         
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
-		//debugLog();
-        log();
+		debugLog();
+       //log();
 	}
 
 	@Override
 	public void teleopInit() {
+		
+		// Unlock the auto shifter
+		Robot.oi.setShiftLockValue(0);
+		
 		drivebase.brake(true);
 		elevator.brake(true);
 

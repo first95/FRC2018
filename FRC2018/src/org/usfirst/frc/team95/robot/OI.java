@@ -9,13 +9,17 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
+import org.usfirst.frc.team95.robot.commands.compound.DriveStraightLockedGears;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
+import org.usfirst.frc.team95.robot.commands.compound.TURNANDGO;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
+import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.commands.drivebase.Pivot;
+import org.usfirst.frc.team95.robot.commands.drivebase.UnlockGear;
 import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
 
 /**
@@ -24,6 +28,10 @@ import org.usfirst.frc.team95.robot.oi.MutableSendableChooser;
  */
 public class OI {
 
+	//Shifter Lock
+	//Default 0, DO NOT LOCK SHIFTER
+	private int shiftLockValue = 0;
+	
 	// Axes on weapons controller
 	public static final int COLLECTOR_IN_AXIS = 2;
 	public static final int COLLECTOR_OUT_AXIS = 3;
@@ -85,20 +93,27 @@ public class OI {
 
 		// Sendable Chooser for single commands
 		// These are only for testing Purposes
-//		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
-//		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
-//		
-//		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-//		SmartDashboard.putData("Pivot 180 degrees CCW", new Pivot(-180));
-//		
-//		SmartDashboard.putData("Pivot 360 degrees CW", new Pivot(360));
-//		SmartDashboard.putData("Pivot 360 degrees CCW", new Pivot(-360));
-//
-//		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
-//		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
-//		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
-	//	SmartDashboard.putData("Four Feet Forward", new DriveStraight(12*6));
+		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
+		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+		
+		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+		SmartDashboard.putData("Pivot 180 degrees CCW", new Pivot(-180));
+		
+		SmartDashboard.putData("Pivot 360 degrees CW", new Pivot(360));
+		SmartDashboard.putData("Pivot 360 degrees CCW", new Pivot(-360));
 
+		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
+		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
+		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
+		SmartDashboard.putData("Six Feet Forward", new DriveStraight(12*6));
+		
+		SmartDashboard.putData("Lock High Gear", new LockGear(true));
+		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
+		SmartDashboard.putData("Unlock Gear", new UnlockGear());
+		
+		SmartDashboard.putData("TURNANDGO", new TURNANDGO());
+		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
+		
 		// For the operators to indicate on which side of the field they placed the
 		// robot
 		robotStartingPosition.addObject("Left", StartPosition.LEFT);
@@ -126,6 +141,14 @@ public class OI {
 		
 	}
 
+	public int getShiftLockValue() {
+		return shiftLockValue;	
+	}
+	
+	public void setShiftLockValue(int shifterValue) {
+		shiftLockValue = shifterValue;
+	}
+	
 	// Collector controls
 	public boolean getCollectorOpen() {
 		return weaponsController.getRawButton(OPEN_COLLECTOR_BUTTON);

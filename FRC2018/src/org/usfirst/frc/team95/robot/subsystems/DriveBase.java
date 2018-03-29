@@ -79,6 +79,7 @@ public class DriveBase extends Subsystem {
 		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
 		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
 		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
+		SmartDashboard.putBoolean("In High Gear", getGear());
 	}
 
 	/**
@@ -93,6 +94,7 @@ public class DriveBase extends Subsystem {
 
 		tank(left, right);
 	}
+	
 
 	/**
 	 * @return The robots heading in degrees.
@@ -126,8 +128,8 @@ public class DriveBase extends Subsystem {
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		leftPod.setMaxSpeed(0.6);
-		rightPod.setMaxSpeed(0.6);
+		leftPod.setMaxSpeed(0.9);
+		rightPod.setMaxSpeed(0.9);
 
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
@@ -267,6 +269,12 @@ public class DriveBase extends Subsystem {
 	public void setGear(boolean isHighGear) {
 		shifter.set(isHighGear);
 	}
+	
+	public boolean getGear() {
+		// True in high gear
+		// False in low gear
+		return shifter.get();
+	}
 
 	public void autoShift() {
 		leftSpeed = Math.abs(Robot.drivebase.getLeftSpeed());
@@ -302,7 +310,7 @@ public class DriveBase extends Subsystem {
 		// SmartDashboard.putBoolean("Allow Deshift:", allowDeshift);
 		// SmartDashboard.putBoolean("Has Already Shifted:", hasAlreadyShifted);
 	}
-
+	
 	public void visit() {
 //		if (Robot.oi.getShiftOverrided()) {
 //
@@ -319,10 +327,27 @@ public class DriveBase extends Subsystem {
 //
 //		}
 
-		autoShift();
+		lockGear(Robot.oi.getShiftLockValue());
 
 	}
-
+	
+	// If true it locks into high gear, if false locks into low gear
+	public void lockGear(int lockGear) {
+		if(lockGear > 1) lockGear = 0;
+		else if(lockGear < -1) lockGear = 0;
+		else if(lockGear > 0 && lockGear < 1) lockGear = 1;
+		else if(lockGear < 0 && lockGear > -1) lockGear = -1;
+		
+		if (lockGear == 1) {
+			Robot.drivebase.setGear(true);
+		}else if (lockGear == -1) {
+			Robot.drivebase.setGear(false);
+		}
+		else {
+			autoShift();
+		}
+	}
+	
 	public void pullPidConstantsFromSmartDash() {
 		//leftPod.pullPidConstantsFromSmartDash();
 		//rightPod.pullPidConstantsFromSmartDash();
