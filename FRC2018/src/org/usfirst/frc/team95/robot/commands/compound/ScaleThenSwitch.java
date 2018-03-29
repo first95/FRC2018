@@ -96,76 +96,82 @@ public class ScaleThenSwitch extends CommandGroup
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(L_INITAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
 				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(L_INITAL_MOVE));
-				addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, false));
+				//addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(-90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(-L_TO_R_FINAL_MOVE, false));
+				addSequential(new Pivot(-45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, false));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(-L_TO_R_FINAL_MOVE, false));
+				addSequential(new Pivot(-98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			/*======================================*/
@@ -175,82 +181,90 @@ public class ScaleThenSwitch extends CommandGroup
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(ML_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(ML_ACROSS_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(ML_FINAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_INITIAL_MOVE, false));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, false));
 				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(ML_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(ML_ACROSS_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(ML_FINAL_MOVE));
-				addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(ML_INITIAL_MOVE, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(-90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(ML_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(ML_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(ML_TO_R_FINAL_MOVE));
-				addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_FINAL_MOVE, true));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_LEFT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(ML_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(ML_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(ML_TO_R_FINAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(ML_TO_R_FINAL_MOVE, true));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			/*======================================*/
@@ -260,90 +274,98 @@ public class ScaleThenSwitch extends CommandGroup
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(C_L_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(C_L_INITIAL_MOVE, false));
 				addSequential(new Pivot(-90));
 				//addSequential(new SweepTurn(-C_L_SWEEP_DEGREE, C_L_SWEEP_RADIUS));
-				addSequential(new DriveStraight(C_L_MIDDLE_MOVE));
+				addSequential(new DriveStraightLockedGears(C_L_MIDDLE_MOVE, false));
 				addSequential(new Pivot(90));
 				//addSequential(new SweepTurn(C_L_SWEEP2_DEGREE, C_L_SWEEP2_RADIUS));
-				addSequential(new DriveStraight(C_L_FINAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(C_L_FINAL_MOVE, true));
 				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.CENTER
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(C_L_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(C_L_INITIAL_MOVE, false));
 				addSequential(new Pivot(-90));
 				//addSequential(new SweepTurn(-C_L_SWEEP_DEGREE, C_L_SWEEP_RADIUS));
-				addSequential(new DriveStraight(C_L_MIDDLE_MOVE));
+				addSequential(new DriveStraightLockedGears(C_L_MIDDLE_MOVE, false));
 				addSequential(new Pivot(90));
 				//addSequential(new SweepTurn(C_L_SWEEP2_DEGREE, C_L_SWEEP2_RADIUS));
-				addSequential(new DriveStraight(C_L_FINAL_MOVE));
-				addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(C_L_FINAL_MOVE, true));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(-90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.CENTER
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(C_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(C_R_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
 				//addSequential(new SweepTurn(C_R_SWEEP_DEGREE, C_R_SWEEP_RADIUS));
-				addSequential(new DriveStraight(C_R_MIDDLE_MOVE));
+				addSequential(new DriveStraightLockedGears(C_R_MIDDLE_MOVE, false));
 				addSequential(new Pivot(-90));
 				//addSequential(new SweepTurn(-C_R_SWEEP2_DEGREE, C_R_SWEEP2_RADIUS));
-				addSequential(new DriveStraight(C_R_FINAL_MOVE));
-				addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(C_R_FINAL_MOVE, true));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.CENTER
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(C_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(C_R_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
 				//addSequential(new SweepTurn(C_R_SWEEP_DEGREE, C_R_SWEEP_RADIUS));
-				addSequential(new DriveStraight(C_R_MIDDLE_MOVE));
+				addSequential(new DriveStraightLockedGears(C_R_MIDDLE_MOVE, false));
 				addSequential(new Pivot(-90));
 				//addSequential(new SweepTurn(-C_R_SWEEP2_DEGREE, C_R_SWEEP2_RADIUS));
-				addSequential(new DriveStraight(C_R_FINAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(C_R_FINAL_MOVE, true));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			/*======================================*/
@@ -353,76 +375,82 @@ public class ScaleThenSwitch extends CommandGroup
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, false));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
+				addSequential(new DriveStraightLockedGears(-L_TO_R_FINAL_MOVE, false));
+				addSequential(new Pivot(98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(-12, false));
 				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(L_TO_R_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-L_TO_R_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(L_TO_R_NULL_ZONE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(L_TO_R_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
+				addSequential(new Pivot(45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, false));
+				//addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(-90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(R_INITAL_MOVE));
-				addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(R_INITAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 				
 			}
@@ -433,84 +461,90 @@ public class ScaleThenSwitch extends CommandGroup
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(MR_TO_L_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_INITIAL_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(MR_TO_L_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_TO_L_NULL_ZONE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_TO_L_ENDING_MOVE));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, false));
 				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_ENDING_MOVE, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(-MR_TO_L_ENDING_MOVE, false));
+				addSequential(new Pivot(98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(MR_TO_L_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_INITIAL_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(MR_TO_L_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_TO_L_NULL_ZONE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_TO_L_ENDING_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, false));
+				addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(MR_TO_L_ENDING_MOVE, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(-MR_TO_L_ENDING_MOVE, false));
+				addSequential(new Pivot(45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, false));
+				//addSequential(new Pivot(90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(-90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 			{
-				addSequential(new DriveStraight(MR_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, false));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(MR_FINAL_MOVE));
-				addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(MR_FINAL_MOVE, true));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(0, false));
 				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-45));
+				//addSequential(new DriveStraightLockedGears(SCALE2_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(-90));
+				addSequential(new DriveStraightLockedGears(-SCALE2_TO_SWITCH_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE2_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(-SCALE2_TO_SWITCH_ACROSS_MOVE));
-				addSequential(new Pivot(90));
 				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(12));
+				addSequential(new DriveStraightLockedGears(12, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			else if (robotStartingPosition == StartPosition.MID_RIGHT
 					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
 					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 			{
-				addSequential(new DriveStraight(MR_INITIAL_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_INITIAL_MOVE, false));
 				addSequential(new Pivot(90));
-				addSequential(new DriveStraight(MR_ACROSS_MOVE));
+				addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, false));
 				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(MR_FINAL_MOVE));
-				addSequential(new Pivot(-90));
-				addSequential(new ScoreStartingCubeOnScale());
-				addSequential(new Pivot(-90));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_INITIAL_MOVE));
-				addSequential(new Pivot(45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_NEW_CUBE));
-				addSequential(new AutoPickUpCubeWithDrive());
-				addSequential(new DriveStraight(-12));
+				addSequential(new DriveStraightLockedGears(MR_FINAL_MOVE, true));
 				addSequential(new Pivot(-45));
-				addSequential(new DriveStraight(SCALE_TO_SWITCH_FINAL_MOVE));
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new ScoreStartingCubeOnScale());
+				addSequential(new DriveStraightLockedGears(0, false));
+				addSequential(new Pivot(-98));
+				//addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_INITIAL_MOVE, true));
+				//addSequential(new Pivot(45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_NEW_CUBE, false));
+				addSequential(new AutoPickUpCubeWithDrive());
+				addSequential(new DriveStraightLockedGears(-12, false));
+				addSequential(new Pivot(-45));
+				addSequential(new DriveStraightLockedGears(SCALE_TO_SWITCH_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnSwitch());
 			}
 			/*======================================*/
