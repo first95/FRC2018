@@ -28,7 +28,7 @@ public class DriveAtThrottle extends Command {
 		System.out.println("Starting DriveAtThrottle (" + throttleFwd + ")");
 		
 		// Command the movement
-		Robot.drivebase.travelStraight(throttleFwd);
+		Robot.drivebase.drive(throttleFwd, throttleFwd);
 		
 	}
 

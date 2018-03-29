@@ -37,25 +37,6 @@ public class Robot extends IterativeRobot {
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
 	
-	public enum FinalPostion {
-		SWITCH,
-		SCALE,
-	}
-	
-	public enum StageTwoConditions{
-		CURRENT_TO_CURRENT, // Go from the current position, grab a cube and score again at the same location
-		CURRENT_TO_SWITCH, // Go from current position, grab a cube, and go to switch, if already at switch score on switch again
-		CURRENT_TO_SCALE, // Go from current position, grab a cube, and go to scale, if already at scale score on scale again
-		NONE, // Dont conduct stage two
-	}
-	
-	public enum StageThreeConditions{
-		CURRENT_TO_CURRENT, // Go from the current position, grab a cube and score again at the same location
-		CURRENT_TO_SWITCH, // Go from current position, grab a cube, and go to switch, if already at switch score on switch again
-		CURRENT_TO_SCALE, // Go from current position, grab a cube, and go to scale, if already at scale score on scale again
-		NONE, // Dont conduct stage two
-	}
-	
 	/**
 	 * Robot position after scoring on the scale. Robot is assumed to be centered
 	 * on the switch and have it's front bumper 10 inches back from the end of the scale
@@ -95,6 +76,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
+		// Disable brakes on talons to make it
+		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
 		
@@ -125,7 +108,6 @@ public class Robot extends IterativeRobot {
 		
 		autonomousCommand = oi.getSelectedCommand(getWhichSideOfTheNearSwitchIsOurColor(), getWhichSideOfTheScaleIsOurColor());
 		autonomousCommand.start();
-		
 	}
 
 	/**
@@ -142,7 +124,6 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
-		
 		drivebase.brake(false);
 		elevator.brake(false);
 	}
@@ -157,7 +138,11 @@ public class Robot extends IterativeRobot {
         drivebase.pullPidConstantsFromSmartDash();
         oi.visit();
         drivebase.visit();
-		log();
+        
+        // Depending if you want all output or just limited
+        // use either debugLog() or just log()
+		//debugLog();
+        log();
 	}
 
 	@Override
@@ -195,10 +180,10 @@ public class Robot extends IterativeRobot {
 	 * The log method puts interesting information to the SmartDashboard.
 	 */
 	private void log() {
-//		drivebase.log();
-//		elevator.log();
-		collector.log();
-//		oi.log();
+		//drivebase.log();
+		//elevator.log();
+		//collector.log();
+		//oi.log();
 	}
 	
 	private void debugLog() {
@@ -221,6 +206,7 @@ public class Robot extends IterativeRobot {
 			return FieldSide.UNKNOWN;
 		}
 	}
+	
 	// The side of the near switch that belongs to us
 	public  FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(0));
