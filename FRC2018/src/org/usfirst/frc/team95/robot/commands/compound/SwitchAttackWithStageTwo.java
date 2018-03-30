@@ -61,14 +61,16 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 	private static final double MR_FORMAT_PATTERN = 0.0;
 	private static final double MR_TO_SWITCH_MOVE = 156;
 	private static final double MR_TO_L_MOVE = 153.5;
-	private static final double MR_DISTANCE_STRIGHT = 101.6; // Measured in Solidworks, 2018-2-15 //100.82;
+	private static final double MR_DISTANCE_STRAIGHT = 101.6; // Measured in Solidworks, 2018-2-15 //100.82;
 	// private static final double MR_DISTANCE_STRIGHT = 24.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
 	public SwitchAttackWithStageTwo(FieldSide whichSideOfTheNearSwitchIsOurColor, StartPosition robotStartingPosition) {
 
 		// LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		if (robotStartingPosition == StartPosition.LEFT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
 			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
 			
 			// This drivestraight needs to be changed, it theoretically would go to far
@@ -88,8 +90,10 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+		}
+		else if (robotStartingPosition == StartPosition.LEFT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
 			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(L_TO_R_MOVE, false));
@@ -115,12 +119,28 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 		/* ====================================== */
 		// MID-LEFT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-
-			// PATH NOT YET MAPPED
-
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
+			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRAIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
+			addSequential(new ScoreStartingCubeOnSwitch());
+			
+			// Stage Two
+			
+			addSequential(new DriveStraightLockedGears(-DISTANCE_TILL_CENTER, false));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
+			addSequential(new Pivot(90));
+			addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraightLockedGears(-DISTANCE_TO_RE_CENTER_WITH_CUBE, false));
+			addSequential(new Pivot(90));
+			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
+			addSequential(new Pivot(-90));
+			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
+			addSequential(new ScoreStartingCubeOnSwitch());
+		}
+		else if (robotStartingPosition == StartPosition.MID_LEFT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
 			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(ML_TO_R_MOVE, false));
@@ -146,8 +166,8 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 		/* ====================================== */
 		// CENTER MOVE:
 		else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
 			addSequential(new DriveStraightLockedGears(C_INITAL_MOVE, false));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(C_L_DISTANCE_IN_THE_MIDDLE, false));
@@ -169,9 +189,10 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
-		} else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-
+		}
+		else if (robotStartingPosition == StartPosition.CENTER
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
 			addSequential(new DriveStraightLockedGears(C_INITAL_MOVE, false));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(C_R_DISTANCE_IN_THE_MIDDLE, false));
@@ -192,12 +213,13 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-
 		}
 
 		/* ====================================== */
 		// RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+		else if (robotStartingPosition == StartPosition.RIGHT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
 			addSequential(new DriveStraightLockedGears(R_TO_L_INITIAL_MOVE, false));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(R_TO_L_MOVE, false));
@@ -206,8 +228,10 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnSwitch());
 			
 			// NO STAGE 2 YET
-		} else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
+		}
+		else if (robotStartingPosition == StartPosition.RIGHT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
 			
 			// This drivestraight needs to be changed, it theoretically would go to far
@@ -228,13 +252,13 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-
 		}
 
 		/* ====================================== */
 		// MID-RIGHT SIDE MOVE:
 		else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
+		{
 			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(MR_TO_L_MOVE, false));
@@ -255,10 +279,11 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-
-			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
+		}
+		else if (robotStartingPosition == StartPosition.MID_RIGHT
+				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
+		{
+			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRAIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 			// Stage Two
@@ -274,12 +299,12 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-
 		}
 
 		/* ====================================== */
 		// NO GAME DATA:
-		else {
+		else
+		{
 			System.out.println("NO GAME DATA FOUND");
 			addSequential(new AnyForward());
 		}
