@@ -380,7 +380,7 @@ public class ScaleThenSwitch extends CommandGroup
 				addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
 				addSequential(new Pivot(-90));
 				addSequential(new DriveStraightLockedGears(L_TO_R_NULL_ZONE, false));
-				addSequential(new Pivot(90));
+				addSequential(new Pivot(45));
 				addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, false));
 				addSequential(new ScoreStartingCubeOnScale());
 				addSequential(new DriveStraightLockedGears(-L_TO_R_FINAL_MOVE, false));
