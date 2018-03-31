@@ -14,7 +14,7 @@ public class ManuallyControlClimber extends Command {
 				// now.
 	};
 
-	private boolean wasHoldingPresentPositionLastIteration = false;
+	//private boolean wasHoldingPresentPositionLastIteration = false;
 
 	public ManuallyControlClimber() {
 		// This method is run once during robot startup
@@ -82,7 +82,7 @@ public class ManuallyControlClimber extends Command {
 	@Override
 	public synchronized void cancel() {
 		// Cancel any position seeking
-		Robot.elevator.stopMotor();
+		Robot.climber.stopMotor();
 	}
 
 	@Override

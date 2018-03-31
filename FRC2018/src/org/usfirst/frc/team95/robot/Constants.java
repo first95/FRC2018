@@ -52,13 +52,14 @@ public class Constants
 		// Elevator
 		public static final int LEFT_ELEV_DRIVER = 13;
 		public static final int RIGHT_ELEV_DRIVER = 23;
-
-		// Climber
-		public static final int CLIMBER_DRIVER = 0;
 		
 		// Collector
 		public static final int LEFT_CHAIN_DRIVER  = 14;
 		public static final int RIGHT_CHAIN_DRIVER = 24;
+
+		// Climber
+		public static final int LEFT_CLIMBER_DRIVER = 15;
+		public static final int RIGHT_CLIMBER_DRIVER = 25;
 		
 		// Sensors attached via Talon
 		public static final int PIGEON_NUM = 30;		
