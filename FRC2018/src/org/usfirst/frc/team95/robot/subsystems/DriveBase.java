@@ -27,7 +27,9 @@ public class DriveBase extends Subsystem {
 	private final double RADIUS_OF_AVERAGED_WHEEL_CIRCLE = Math.sqrt(Math.pow((DISTANCE_FROM_INNER_TO_INNER_WHEEL/2), 2) + Math.pow(DISTANCE_FROM_OUTER_TO_INNER_WHEEL, 2));
 	// The speed at which we want the center of the robot to travel
 	// private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 3.5*12.0;
-	private final double TURN_SPEED_INCHES_PER_SECOND = 12;
+	private final double TURN_SPEED_INCHES_PER_SECOND = 36;
+	// This is tied to speed, if you change the speed of the turn also change this value
+	
 	private final double SWEEPER_TURN_SPEED_INCHES_PER_SECOND = 24;
 	private DrivePod leftPod, rightPod;
 	private SolenoidI shifter;
@@ -69,17 +71,14 @@ public class DriveBase extends Subsystem {
 		leftPod.log();
 		rightPod.log();
 
-//		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
-//		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
-//		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
-//		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
-//
-//		SmartDashboard.putNumber("Left Pod Velocity:", leftPod.getEncoderVelocity());
-//		SmartDashboard.putNumber("Right Pod Velocity:", rightPod.getEncoderVelocity());
-//		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
-//		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
-//		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
-//		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
+		SmartDashboard.putNumber("leftDriveEncoder Value:", leftPod.getQuadEncPos());
+		SmartDashboard.putNumber("rightDriveEncoder Value:", rightPod.getQuadEncPos());
+		SmartDashboard.putNumber("leftDriveCurrent:", leftPod.getLeadCurrent());
+		SmartDashboard.putNumber("RightDriveCurrent:", rightPod.getLeadCurrent());
+		SmartDashboard.putNumber("IMU Yaw",   imu.getYawPitchRoll()[0]);
+		SmartDashboard.putNumber("IMU Pitch", imu.getYawPitchRoll()[1]);
+		SmartDashboard.putNumber("IMU Roll",  imu.getYawPitchRoll()[2]);
+		SmartDashboard.putNumber("IMU Fused heading", imu.getFusedHeading());
 	}
 
 	/**
@@ -127,8 +126,8 @@ public class DriveBase extends Subsystem {
 	 */
 	public void travelStraight(double inchesToTravel) {
 		// Max speed back and forward, always make this number positve when setting it.
-		leftPod.setMaxSpeed(0.7);
-		rightPod.setMaxSpeed(0.7);
+		leftPod.setMaxSpeed(0.6);
+		rightPod.setMaxSpeed(0.6);
 
 		leftPod.setCLPosition(-inchesToTravel);
 		rightPod.setCLPosition(inchesToTravel);
@@ -163,8 +162,10 @@ public class DriveBase extends Subsystem {
 		rightPod.driveForDistanceAtSpeed(turnSign * inchesPerSecond, -rightDistanceInches);		
 	}
 	
+	// Do not use this for turning! Use setPivotRate
 	public void pivotDegreesClockwise(double degreesToPivotCw) {
-		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * (degreesToPivotCw/360);
+
+		double leftDistanceInches = (2 * RADIUS_OF_AVERAGED_WHEEL_CIRCLE * Math.PI) * ((degreesToPivotCw)/360);
 		double rightDistanceInches = leftDistanceInches;
 		//leftDistanceInches *= PIVOT_FUDGE_FACTOR;
 		//rightDistanceInches *= PIVOT_FUDGE_FACTOR;
@@ -174,8 +175,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void setPivotRate(double inchesPerSecond) {
-		leftPod.setCLSpeed(inchesPerSecond);
-		rightPod.setCLPosition(inchesPerSecond);
+		leftPod.setCLSpeed(inchesPerSecond, true);
+		rightPod.setCLSpeed(inchesPerSecond, true);
 	}
 	
 	/**
@@ -323,7 +324,7 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void pullPidConstantsFromSmartDash() {
-		leftPod.pullPidConstantsFromSmartDash();
-		rightPod.pullPidConstantsFromSmartDash();
+		//leftPod.pullPidConstantsFromSmartDash();
+		//rightPod.pullPidConstantsFromSmartDash();
 	}
 }

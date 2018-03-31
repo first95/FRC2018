@@ -37,16 +37,12 @@ public class Robot extends IterativeRobot {
 		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
-
+	
 	/**
 	 * Robot position after scoring on the scale. Robot is assumed to be centered
 	 * on the switch and have it's front bumper 10 inches back from the end of the scale
 	 * plate in all of these cases.
 	 */
-//	public enum ScalePosition {
-//		LEFT, // On the left side of the scale
-//		RIGHT, // One the right side of the scale
-//	}
 
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
@@ -83,6 +79,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(elevator);
 		SmartDashboard.putData(collector);
 
+		// Disable brakes on talons to make it
+		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
 		
@@ -129,7 +127,6 @@ public class Robot extends IterativeRobot {
 	 * robot is disabled.
 	 */
 	public void disabledInit() {
-		
 		drivebase.brake(false);
 		elevator.brake(false);
 	}
@@ -144,7 +141,11 @@ public class Robot extends IterativeRobot {
         drivebase.pullPidConstantsFromSmartDash();
         oi.visit();
         drivebase.visit();
-		log();
+        
+        // Depending if you want all output or just limited
+        // use either debugLog() or just log()
+		//debugLog();
+        log();
 	}
 
 	@Override
@@ -182,10 +183,10 @@ public class Robot extends IterativeRobot {
 	 * The log method puts interesting information to the SmartDashboard.
 	 */
 	private void log() {
-//		drivebase.log();
-//		elevator.log();
-		collector.log();
-//		oi.log();
+		//drivebase.log();
+		//elevator.log();
+		//collector.log();
+		//oi.log();
 	}
 	
 	private void debugLog() {
@@ -208,6 +209,7 @@ public class Robot extends IterativeRobot {
 			return FieldSide.UNKNOWN;
 		}
 	}
+	
 	// The side of the near switch that belongs to us
 	public  FieldSide getWhichSideOfTheNearSwitchIsOurColor() {
 		return sideFromChar(gameData.charAt(0));
