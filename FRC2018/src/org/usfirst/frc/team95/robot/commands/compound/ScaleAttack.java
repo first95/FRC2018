@@ -22,6 +22,8 @@ public class ScaleAttack extends CommandGroup {
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
 	private static final double L_INITAL_MOVE =  304.31 + 10.0 - 30 - 12;
+	private static final double L_ANGLE = 65;
+	private static final double L_FINAL_MOVE = 3;
 	private static final double L_TO_R_INITIAL_MOVE = 231.0;
 	private static final double L_TO_R_ACROSS_MOVE = 264.0;
 	private static final double L_TO_R_NULL_ZONE = 33.0;
@@ -51,6 +53,8 @@ public class ScaleAttack extends CommandGroup {
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
 	private static final double R_INITAL_MOVE = 304.31 + 10.0;;
+	private static final double R_ANGLE = 65;
+	private static final double R_FINAL_MOVE = 3;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
 
 	// IF MID-RIGHT LOGIC:
@@ -73,8 +77,8 @@ public class ScaleAttack extends CommandGroup {
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
-			addSequential(new Pivot(45));
-			addSequential(new DriveStraightLockedGears(0, false));
+			addSequential(new Pivot(L_ANGLE));
+			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE, false));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		else if (robotStartingPosition == StartPosition.LEFT
@@ -167,8 +171,8 @@ public class ScaleAttack extends CommandGroup {
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
-			addSequential(new Pivot(-45));
-			addSequential(new DriveStraightLockedGears(0, false));
+			addSequential(new Pivot(-R_ANGLE));
+			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE, false));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 		
