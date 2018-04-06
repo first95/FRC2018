@@ -19,7 +19,7 @@ public class ScoreStartingCubeOnSwitch extends CommandGroup {
 		// If the elevator is raised up during this move then use ReleaseCube
 		// However, if the elevator is not used then EjectCube is better
 		addSequential(new EjectCube());
-		addSequential(new DriveStraight(-20.0));
 		addSequential(new ResetElevatorAndWrist(false));
+		addSequential(new DriveStraight(-20.0));
 	}
 }

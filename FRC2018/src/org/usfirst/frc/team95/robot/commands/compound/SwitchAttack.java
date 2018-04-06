@@ -20,10 +20,11 @@ public class SwitchAttack extends CommandGroup {
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITIAL_MOVE = 148.19;
+	private static final double L_INITIAL_MOVE = 148.19 - 15.0; // reduced it based on using < 90 degree turn
+	private static final double L_ANGLE = 65;
 	private static final double L_TO_R_MOVE = 158.5;
 	private static final double L_TO_SWITCH_MOVE = 156;
-	private static final double L_FINAL_MOVE = 19.56;
+	private static final double L_FINAL_MOVE = 19.56 + 3.0; // increased it based on using < 90 degree turn
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF MID-LEFT LOGIC:
@@ -47,8 +48,9 @@ public class SwitchAttack extends CommandGroup {
 
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
-	private static final double R_INITAL_MOVE = 148.19;
-	private static final double R_FINAL_MOVE = 19.56;
+	private static final double R_INITAL_MOVE = 148.19 - 15.0; // reduced it based on using < 90 degree turn
+	private static final double R_ANGLE = 65;
+	private static final double R_FINAL_MOVE = 19.56 + 3.0; // increased it based on using < 90 degree turn
 	private static final double R_TO_L_INITIAL_MOVE = 12.0;
 	private static final double R_TO_L_MOVE = 158.5;
 	private static final double R_TO_SWITCH_MOVE = 156;
@@ -69,7 +71,7 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
 			
 			// This drivestraight needs to be changed, it theoretically would go to far
-			addSequential(new Pivot(45));
+			addSequential(new Pivot(L_ANGLE));
 			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		} else if (robotStartingPosition == StartPosition.LEFT
@@ -137,7 +139,7 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
 			
 			// This drivestraight needs to be changed, it theoretically would go to far
-			addSequential(new Pivot(-45));
+			addSequential(new Pivot(-R_ANGLE));
 			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
