@@ -19,11 +19,11 @@ public class AutoPickUpCubeWithDistance extends CommandGroup {
 		addSequential(new SetWristAngle(WristAngle.DOWN));
 		addParallel(new OpenMaw());
 		addSequential(new Pause(0.25));
-		addSequential(new DriveStraightLockedGears(distanceToDrive, false));
-		addParallel(new RunChains(1.5));
+		addSequential(new DriveStraightAtSpeedLockedGears(distanceToDrive, false, 0.5));
+		addParallel(new RunChains(-1.0));
 		addSequential(new Pause(1.0));
 		addSequential(new CloseMaw());
-		addParallel(new RunChains(1.5));
+		addParallel(new RunChains(-1.0));
 		addSequential(new Pause(1.0));
 		addSequential(new SetWristAngle(WristAngle.MID_UP));
 		addSequential(new TimedIngestCube());

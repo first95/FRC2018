@@ -11,6 +11,7 @@ import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.DriveStraightLockedGears;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
+import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
@@ -324,7 +325,8 @@ public class OI {
 			break;
 		case RIGHT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+			moveSwitchLScaleL.addObject("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			break;
 		default:
 			break;

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RunChains extends Command {
-	private double throttleOutward = 1.0;
+	private double throttleOutward;
 	public static final double EJECT_TIME_S = 0.25;
 	
 	public RunChains(double throttleOutward) {

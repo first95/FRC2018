@@ -230,8 +230,7 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void arcade() {
-		leftPod.setMaxSpeed(1);
-		rightPod.setMaxSpeed(1);
+		setMaxSpeed(1);
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
@@ -242,6 +241,11 @@ public class DriveBase extends Subsystem {
 		x = Math.pow(x, 3);
 		y = Math.pow(y, 3);
 		arcade(y, x);
+	}
+	
+	public void setMaxSpeed(double maxSpeed) {
+		leftPod.setMaxSpeed(maxSpeed);
+		rightPod.setMaxSpeed(maxSpeed);
 	}
 
 	public double getLeftSpeed() {
