@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot {
 		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
+		climber.brake(false);
 		
 	}
 
@@ -129,6 +130,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		drivebase.brake(false);
 		elevator.brake(false);
+		climber.brake(false);
 	}
 
 	public void disabledPeriodic() {	
@@ -152,6 +154,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		drivebase.brake(true);
 		elevator.brake(true);
+		climber.brake(true);
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
