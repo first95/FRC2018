@@ -28,6 +28,7 @@ public class OI {
 	public static final int COLLECTOR_IN_AXIS = 2;
 	public static final int COLLECTOR_OUT_AXIS = 3;
 	public static final int ELEVATOR_AXIS = 5; // Right stick Y
+	public static final int CLIMBER_AXIS = 1; // Left stick Y
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
@@ -35,11 +36,6 @@ public class OI {
 	public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
 	// public static final int CLIMBER_UP = 4; // Y
 	// public static final int CLIMBER_DOWN = 1; // A
-
-	// POV/DPAD on the driver controller || IT IS IN DEGREES!!!!!
-	public static final int D_POV_NONE = -1; // No DPAD button pressed
-	public static final int D_POV_UP = 0;
-	public static final int D_POV_DOWN = 180;
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -133,32 +129,26 @@ public class OI {
 		
 	}
 
-	// Climber Controls
-	public double getClimberPOV() {
-		return driverController.getPOV();
-	}
-
-	// public double getClimberSpeed() {
-	//
-	// double climberSpeed = 0;
-	//
-	// if ((weaponsController.getRawAxis(ELEVATOR_AXIS) > .18)
-	// || (weaponsController.getRawAxis(ELEVATOR_AXIS) < -.18)) {
-	// climberSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
-	// }
-	//
-	// // The Y axis is reversed, so that positive is down
-	// return -climberSpeed;
-	// }
-	//
-	// public boolean isClimberDownButtonPressed() {
-	// return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
-	// }
-	//
-	// public boolean isClimberUpButtonPressed() {
-	// return false; // Not currently in use
-	// // return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
-	// }
+	 public double getClimberSpeed() {
+	
+		 double climberSpeed = 0;
+		
+		 if ((weaponsController.getRawAxis(CLIMBER_AXIS) > .18) || (weaponsController.getRawAxis(CLIMBER_AXIS) < -.18)) {
+			 climberSpeed = weaponsController.getRawAxis(CLIMBER_AXIS);
+		 }
+		
+		 // The Y axis is reversed, so that positive is down
+		 return -climberSpeed;
+	 }
+	
+//	 public boolean isClimberDownButtonPressed() {
+//	 return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
+//	 }
+//	
+//	 public boolean isClimberUpButtonPressed() {
+//	 return false; // Not currently in use
+//	 // return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
+//	 }
 
 	// Collector controls
 	public boolean getCollectorOpen() {

@@ -194,6 +194,7 @@ public class Robot extends IterativeRobot {
 		elevator.log();
 		collector.log();
 		oi.log();
+		climber.log();
 	}
 
 	public Robot.StartPosition getRobotStartSide() {

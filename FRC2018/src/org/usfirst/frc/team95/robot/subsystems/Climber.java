@@ -42,22 +42,22 @@ public class Climber extends Subsystem {
 		leftClimbDriver = new AdjustedTalon(Constants.LEFT_CLIMBER_DRIVER);
 		rightClimbDriver = new AdjustedTalon(Constants.RIGHT_CLIMBER_DRIVER);
 
-		// Configure the left talon to follow the right talon, but backwards
-		leftClimbDriver.setInverted(true); // Inverted here refers to the output
-		leftClimbDriver.set(ControlMode.Follower, Constants.RIGHT_CLIMBER_DRIVER);		
+		// Configure the right talon to follow the left talon, but backwards
+		rightClimbDriver.setInverted(true); // Inverted here refers to the output
+		rightClimbDriver.set(ControlMode.Follower, Constants.LEFT_CLIMBER_DRIVER);		
 
 		// Configure the right talon for closed loop control
-		rightClimbDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
+		leftClimbDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, Constants.PID_IDX,
 				Constants.CAN_TIMEOUT_MS);
-		rightClimbDriver.setSensorPhase(true);
-		rightClimbDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
-		rightClimbDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-		rightClimbDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-		rightClimbDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+		leftClimbDriver.setSensorPhase(true);
+		leftClimbDriver.config_kF(Constants.PID_IDX, K_F, Constants.CAN_TIMEOUT_MS);
+		leftClimbDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+		leftClimbDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+		leftClimbDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 		// Prevent Integral Windup.
 		// Whenever the control loop error is outside this zone, zero out the I term
 		// accumulator.
-		rightClimbDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
+		leftClimbDriver.config_IntegralZone(Constants.PID_IDX, I_ZONE, Constants.CAN_TIMEOUT_MS);
 		//
 		// //Configure soft limit at top
 		// climberDriver.configForwardSoftLimitEnable(true, Constants.CAN_TIMEOUT_MS);
@@ -76,13 +76,12 @@ public class Climber extends Subsystem {
 		 SmartDashboard.putNumber(dLabel, K_D);
 	}
 
-	// public void setCurrentPosToZero() {
-	// climberDriver.setSelectedSensorPosition(0, Constants.PID_IDX,
-	// Constants.CAN_TIMEOUT_MS);
-	// }
+	 public void setCurrentPosToZero() {
+		 leftClimbDriver.setSelectedSensorPosition(0, Constants.PID_IDX,Constants.CAN_TIMEOUT_MS);
+	 }
 
 	public void brake(boolean isEnabled) {
-		 rightClimbDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
+		 leftClimbDriver.setNeutralMode(isEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 	}
 
 	@Override
@@ -91,22 +90,21 @@ public class Climber extends Subsystem {
 	}
 
 	public void log() {
-
+		SmartDashboard.putNumber("Climber Speed", Robot.oi.getClimberSpeed());
+		SmartDashboard.putNumber("leftClimbEncoder Value:", leftClimbDriver.getSelectedSensorPosition(Constants.PID_IDX));
+		SmartDashboard.putNumber("rightClimbEncoder Value:", rightClimbDriver.getSelectedSensorPosition(Constants.PID_IDX));
+		SmartDashboard.putNumber("Climber height in feet:", getClimberHeightFeet());
 	}
 
+	/**
+	 * Command the climber to run at a specific speed.
+	 * 
+	 * @param value
+	 *            - the throttle value to apply to the motors, between -1 and +1
+	 */
 	public void setClimberSpeed(double value) {
-
-		System.out.println("CLIMBER RUNNING!");
-		
-		if (Robot.oi.getClimberPOV() == OI.D_POV_UP) {
-			rightClimbDriver.set(ControlMode.PercentOutput, value);
-			System.out.println("CLIMBER UP");
-		} else if (Robot.oi.getClimberPOV() == OI.D_POV_DOWN) {
-			rightClimbDriver.set(ControlMode.PercentOutput, -value);
-			System.out.println("CLIMBER DOWN");
-		} else {
-			rightClimbDriver.set(ControlMode.PercentOutput, 0);
-		}
+		leftClimbDriver.set(ControlMode.PercentOutput, value);		
+	}
 
 		// if(getClimberEncoderTicks() <= 10 || value > 0) {
 		// // Either the elevator is above the deck, or being driven upward.
@@ -118,32 +116,28 @@ public class Climber extends Subsystem {
 		// climberDriver.set(ControlMode.PercentOutput, 0);
 		// }
 
+	public void setClimberHeight(double feet) {
+		leftClimbDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
 	}
 
-	// public void setClimberHeight(double feet) {
-	// climberDriver.set(ControlMode.Position, feet * TICKS_PER_FOOT);
-	// }
+	public double getClimberHeightFeet() {
+		return leftClimbDriver.getSelectedSensorPosition(Constants.PID_IDX) / TICKS_PER_FOOT;
+	}
 
-	// public double getClimberHeightFeet() {
-	// return climberDriver.getSelectedSensorPosition(Constants.PID_IDX) /
-	// TICKS_PER_FOOT;
-	// }
+	public double getClimberEncoderTicks() {
+		return leftClimbDriver.getSelectedSensorPosition(Constants.PID_IDX);
+	}
 
-//	public double getClimberEncoderTicks() {
-//		return climberDriver.getSelectedSensorPosition(Constants.PID_IDX);
-//	}
-
-	// public double getTargetHeightFeet() {
-	// if (climberDriver instanceof AdjustedTalon) {
-	// return ((AdjustedTalon) climberDriver).getClosedLoopTarget(Constants.PID_IDX)
-	// / TICKS_PER_FOOT;
-	// } else {
-	// return 0;
-	// }
-	// }
+	 public double getTargetHeightFeet() {
+		 if (leftClimbDriver instanceof AdjustedTalon) {
+			 return ((AdjustedTalon) leftClimbDriver).getClosedLoopTarget(Constants.PID_IDX) / TICKS_PER_FOOT;
+		 } else {
+			 return 0;
+		 }
+	 }
 
 	public void stopMotor() {
-		rightClimbDriver.set(ControlMode.PercentOutput, 0.0);
+		leftClimbDriver.set(ControlMode.PercentOutput, 0.0);
 	}
 
 	 public void pullPidConstantsFromSmartDash() {
@@ -153,15 +147,13 @@ public class Climber extends Subsystem {
 	 K_D = SmartDashboard.getNumber(dLabel, K_D);
 	
 	 // Apply
-	 rightClimbDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
-	 rightClimbDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
-	 rightClimbDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
+	 leftClimbDriver.config_kP(Constants.PID_IDX, K_P, Constants.CAN_TIMEOUT_MS);
+	 leftClimbDriver.config_kI(Constants.PID_IDX, K_I, Constants.CAN_TIMEOUT_MS);
+	 leftClimbDriver.config_kD(Constants.PID_IDX, K_D, Constants.CAN_TIMEOUT_MS);
 	 }
 
-	// public boolean isOnTarget() {
-	// // leader.configNeutralDeadband(percentDeadband, timeoutMs);
-	// return Math.abs(getClimberHeightFeet() - getTargetHeightFeet()) <
-	// (Constants.ELEVATOR_ON_TARGET_THRESHOLD_INCHES
-	// / 12.0);
-	// }
+	 public boolean isOnTarget() {
+	 // leader.configNeutralDeadband(percentDeadband, timeoutMs);
+		 return Math.abs(getClimberHeightFeet() - getTargetHeightFeet()) < (Constants.CLIMBER_ON_TARGET_THRESHOLD_INCHES / 12.0);
+	 }
 }

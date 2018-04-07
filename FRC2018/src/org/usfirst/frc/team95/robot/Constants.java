@@ -15,7 +15,7 @@ public class Constants
 		
 		// Used in closed-loop control
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
-		public static final double CLIMBER_ON_TARGET_THRESHOLD_INCHES = 1;
+		public static final double CLIMBER_ON_TARGET_THRESHOLD_INCHES = 1; // Climber will call itself close enough at this point
 		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point		
 
 		// Manual Drive
