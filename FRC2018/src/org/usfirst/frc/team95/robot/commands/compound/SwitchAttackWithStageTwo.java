@@ -54,13 +54,12 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
 		{
 			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
-			
-			// This drivestraight needs to be changed, it theoretically would go to far
-			addSequential(new Pivot(45));
+			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
-			// Stage Two
 
+			// Stage Two
+			
 			addSequential(new DriveStraightLockedGears(-DISTANCE_TILL_CENTER, false));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
@@ -168,9 +167,7 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
 		{
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
-			
-			// This drivestraight needs to be changed, it theoretically would go to far
-			addSequential(new Pivot(-45));
+			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 

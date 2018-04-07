@@ -48,7 +48,6 @@ public class SwitchAttack extends CommandGroup {
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(L_INITIAL_MOVE, false));
-			// This drivestraight needs to be changed, it theoretically would go to far
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
@@ -61,7 +60,6 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(L_TO_SWITCH_MOVE, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
-
 
 		/* ====================================== */
 		// CENTER MOVE:
