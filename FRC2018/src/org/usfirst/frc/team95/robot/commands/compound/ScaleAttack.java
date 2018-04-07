@@ -76,6 +76,7 @@ public class ScaleAttack extends CommandGroup {
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
+			//addSequential(new DriveStraight(L_INITAL_MOVE));
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE, true));
 			addSequential(new Pivot(L_ANGLE));
 			addSequential(new DriveStraightLockedGears(L_FINAL_MOVE, false));

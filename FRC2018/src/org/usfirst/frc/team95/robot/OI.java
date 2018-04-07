@@ -9,6 +9,7 @@ import org.usfirst.frc.team95.robot.Robot.StartPosition;
 import org.usfirst.frc.team95.robot.commands.TriggerRampRelease;
 import org.usfirst.frc.team95.robot.commands.Nothing;
 import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeManualDrive;
+import org.usfirst.frc.team95.robot.commands.compound.AutoPickUpCubeWithDrive;
 import org.usfirst.frc.team95.robot.commands.compound.DriveStraightLockedGears;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
@@ -110,6 +111,7 @@ public class OI {
 		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
 		SmartDashboard.putData("Unlock Gear", new UnlockGear());
 		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
+		SmartDashboard.putData("AutoCollectWithDrive", new AutoPickUpCubeWithDrive());
 		
 		// For the operators to indicate on which side of the field they placed the
 		// robot
@@ -342,9 +344,9 @@ public class OI {
 		case LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
-			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
-			//moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,robotStartPosition));
+			moveSwitchLScaleR.addObject("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			moveSwitchLScaleR.addObject("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
