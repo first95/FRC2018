@@ -18,7 +18,6 @@ public class OpenMaw extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		
 		return true;
 	}
 

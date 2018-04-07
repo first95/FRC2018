@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -9,11 +8,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
-
-import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
+import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
-import org.usfirst.frc.team95.robot.subsystems.Ramps;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -30,11 +27,10 @@ public class Robot extends IterativeRobot {
 	 * Robot is assumed to have its bumper flush against the alliance wall
 	 * in all these cases.
 	 */
+	
 	public enum StartPosition {
 		LEFT,      // Rear left corner of the bumper touches the diagonal of the left portal
-		MID_LEFT,  // Robot's center is centered on the left switch plate
 		CENTER,    // Robot is centered on the field centerline
-		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
 	
@@ -45,14 +41,13 @@ public class Robot extends IterativeRobot {
 	 */
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
-	
-	Command autonomousCommand;
+	private Command autonomousCommand;
 
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
+	public static Climber climber;
 	public static Elevator elevator;
-	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
 
@@ -67,7 +62,7 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
-		ramps = new Ramps();
+		climber = new Climber();
 		compressor = new Compressor();
 		oi = new OI();
 
@@ -80,6 +75,7 @@ public class Robot extends IterativeRobot {
 		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
+		climber.brake(false);
 		
 	}
 
@@ -127,6 +123,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		drivebase.brake(false);
 		elevator.brake(false);
+		climber.brake(false);
 	}
 
 	public void disabledPeriodic() {	
@@ -142,8 +139,8 @@ public class Robot extends IterativeRobot {
         
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
-		debugLog();
-        //log();
+		//debugLog();
+        log();
 	}
 
 	@Override
@@ -154,6 +151,7 @@ public class Robot extends IterativeRobot {
 		
 		drivebase.brake(true);
 		elevator.brake(true);
+		climber.brake(true);
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -196,6 +194,7 @@ public class Robot extends IterativeRobot {
 		elevator.log();
 		collector.log();
 		oi.log();
+		climber.log();
 	}
 
 	public Robot.StartPosition getRobotStartSide() {

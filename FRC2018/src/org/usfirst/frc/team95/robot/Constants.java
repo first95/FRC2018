@@ -6,6 +6,8 @@ public class Constants
 	    // How much the joystick must move before anything will happen
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;
+		
+		public static final double MAX_CLIMBER_SPEED = 0.8;
 
 		// Properties of the robot design 
 		public static final double ROBOT_WHEELBASE_WIDTH_INCHES = 23.0; // Distance between the centers of the wheels
@@ -14,9 +16,10 @@ public class Constants
 		
 		// Used in closed-loop control
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
+		public static final double CLIMBER_ON_TARGET_THRESHOLD_INCHES = 1; // Climber will call itself close enough at this point
 		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point		
 
-		// Manual Drive
+		// Speed Shifter Values
 		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec
 		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
 
@@ -30,7 +33,6 @@ public class Constants
 		public static final int COLLECTOR_SOLENOID_NUM  = 1;
 		public static final int WRIST_STAGE_ONE = 3; // The longer piston
 		public static final int WRIST_STAGE_TWO = 2; // The shorter piston
-		public static final int RAMP_LATCH = 4;
 		
 		// Indices for sensors
 		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
@@ -50,10 +52,14 @@ public class Constants
 		// Elevator
 		public static final int LEFT_ELEV_DRIVER = 13;
 		public static final int RIGHT_ELEV_DRIVER = 23;
-
+		
 		// Collector
 		public static final int LEFT_CHAIN_DRIVER  = 14;
 		public static final int RIGHT_CHAIN_DRIVER = 24;
+
+		// Climber
+		public static final int LEFT_CLIMBER_DRIVER = 15;
+		public static final int RIGHT_CLIMBER_DRIVER = 25;
 		
 		// Sensors attached via Talon
 		public static final int PIGEON_NUM = 30;		

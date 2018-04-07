@@ -84,22 +84,6 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 
-		/* ====================================== */
-		// MID-LEFT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			
-			// PATH NOT YET MAPPED
-			
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(ML_TO_R_MOVE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(ML_TO_SWITCH_MOVE, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-		}
 
 		/* ====================================== */
 		// CENTER MOVE:
@@ -144,21 +128,6 @@ public class SwitchAttack extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnSwitch());
 		}
 
-		/* ====================================== */
-		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(MR_TO_L_MOVE, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(MR_TO_SWITCH_MOVE, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-		}
 
 		/* ====================================== */
 		// NO GAME DATA:

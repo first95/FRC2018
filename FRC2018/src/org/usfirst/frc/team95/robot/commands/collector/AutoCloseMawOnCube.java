@@ -29,24 +29,17 @@ public class AutoCloseMawOnCube extends Command {
 	public AutoCloseMawOnCube() {
 		requires(Robot.collector);
 		holdTimer = new Timer();
-		//SmartDashboard.putNumber("holdTimer Value", holdTimer.get());
 	}
 	
 	@Override
 	public void initialize() {
 		// Intake
-		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);
-		//System.out.println("INIT RUNNING!!!");
-		
+		Robot.collector.setIntakeSpeed(INTAKE_THROTTLE);		
 		cubeIn = false;
 	}
 	
 	@Override
 	protected void execute() {
-		
-		//SmartDashboard.putNumber("holdTimer Value", holdTimer.get());
-		
-		//System.out.println("THIS IS RUNNING");
 		
 		if (Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
 
