@@ -15,7 +15,7 @@ public class Constants
 		public static final double ELEVATOR_ON_TARGET_THRESHOLD_INCHES = 1; // Elevator will call itself close enough at this point
 		public static final double DRIVEPOD_ON_TARGET_THRESHOLD_INCHES = 1; // Each drivepod will call itself close enough at this point		
 
-		// Manual Drive
+		// Speed Shifter Values
 		public static final double SPEED_TO_SHIFT_UP = 5.5; // ft per sec
 		public static final double SPEED_TO_SHIFT_DOWN = 5.0; // ft per sec
 
@@ -29,7 +29,6 @@ public class Constants
 		public static final int COLLECTOR_SOLENOID_NUM  = 1;
 		public static final int WRIST_STAGE_ONE = 3; // The longer piston
 		public static final int WRIST_STAGE_TWO = 2; // The shorter piston
-		public static final int RAMP_LATCH = 4;
 		
 		// Indices for sensors
 		public static final int ELEVATOR_HOME_SWITCH_DIO_NUM = 0;
@@ -57,10 +56,6 @@ public class Constants
 		// Sensors attached via Talon
 		public static final int PIGEON_NUM = 30;		
 		
-		// Encoder values recycled from last year
-		public static final double ENCODER_TICKS_PER_FOOT = 1002;
-		public static final double ENCODER_TICKS_PER_RADIAN = 1637.39265;//1100
-
 		// Current limiting parameters
 		public static final int DRIVEPOD_MAX_CURRENT_CONTINUAL_AMPS = 10;
 		public static final int DRIVEPOD_MAX_CURRENT_PEAK_AMPS = 5;

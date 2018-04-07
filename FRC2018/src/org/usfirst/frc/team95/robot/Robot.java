@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team95.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -9,11 +8,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
-
-import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
-import org.usfirst.frc.team95.robot.subsystems.Ramps;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
 
 /**
@@ -30,6 +26,7 @@ public class Robot extends IterativeRobot {
 	 * Robot is assumed to have its bumper flush against the alliance wall
 	 * in all these cases.
 	 */
+	
 	public enum StartPosition {
 		LEFT,      // Rear left corner of the bumper touches the diagonal of the left portal
 		CENTER,    // Robot is centered on the field centerline
@@ -43,14 +40,12 @@ public class Robot extends IterativeRobot {
 	 */
 	private StartPosition robotStartSide; // The location where the robot began
 	private String gameData;
-	
-	Command autonomousCommand;
+	private Command autonomousCommand;
 
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
 	public static Elevator elevator;
-	public static Ramps ramps;
 	public static Compressor compressor;
 	public static OI oi;
 
@@ -65,7 +60,6 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
-		ramps = new Ramps();
 		compressor = new Compressor();
 		oi = new OI();
 

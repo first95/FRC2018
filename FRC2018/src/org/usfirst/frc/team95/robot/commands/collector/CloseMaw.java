@@ -18,7 +18,6 @@ public class CloseMaw extends Command{
 	
 	@Override
 	protected boolean isFinished() {
-		
 		return true;
 	}
 

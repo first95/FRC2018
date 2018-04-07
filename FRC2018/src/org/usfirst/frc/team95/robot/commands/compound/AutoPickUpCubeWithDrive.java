@@ -16,7 +16,7 @@ public class AutoPickUpCubeWithDrive extends CommandGroup {
 
 	public AutoPickUpCubeWithDrive() {
 		addSequential(new SetWristAngle(WristAngle.DOWN));
-		//addParallel(new DriveAtThrottle(FORWARD_THROTTLE));
+		addParallel(new DriveAtThrottle(FORWARD_THROTTLE));
 		addSequential(new OpenMaw());
 		addSequential(new DriveStraight(12 * 4.5));
 		addSequential(new Pause(0.25));
