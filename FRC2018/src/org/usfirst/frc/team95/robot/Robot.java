@@ -145,8 +145,8 @@ public class Robot extends IterativeRobot {
         
         // Depending if you want all output or just limited
         // use either debugLog() or just log()
-		debugLog();
-       //log();
+		//debugLog();
+        log();
 	}
 
 	@Override

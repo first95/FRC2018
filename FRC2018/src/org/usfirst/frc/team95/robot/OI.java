@@ -14,7 +14,6 @@ import org.usfirst.frc.team95.robot.commands.compound.ScaleAttack;
 import org.usfirst.frc.team95.robot.commands.compound.ScaleAttackWithStageTwo;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttack;
 import org.usfirst.frc.team95.robot.commands.compound.SwitchAttackWithStageTwo;
-import org.usfirst.frc.team95.robot.commands.compound.TURNANDGO;
 import org.usfirst.frc.team95.robot.commands.drivebase.AnyForward;
 import org.usfirst.frc.team95.robot.commands.drivebase.DriveStraight;
 import org.usfirst.frc.team95.robot.commands.drivebase.LockGear;
@@ -93,26 +92,25 @@ public class OI {
 
 		// Sendable Chooser for single commands
 		// These are only for testing Purposes
-		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
-		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
-		
-		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
-		SmartDashboard.putData("Pivot 180 degrees CCW", new Pivot(-180));
-		
-		SmartDashboard.putData("Pivot 360 degrees CW", new Pivot(360));
-		SmartDashboard.putData("Pivot 360 degrees CCW", new Pivot(-360));
-
-		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
-		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
-		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
-		SmartDashboard.putData("Six Feet Forward", new DriveStraight(12*6));
-		
-		SmartDashboard.putData("Lock High Gear", new LockGear(true));
-		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
-		SmartDashboard.putData("Unlock Gear", new UnlockGear());
-		
-		SmartDashboard.putData("TURNANDGO", new TURNANDGO());
-		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
+//		SmartDashboard.putData("Pivot 90 degrees CW", new Pivot(90));
+//		SmartDashboard.putData("Pivot 90 degrees CCW", new Pivot(-90));
+//		
+//		SmartDashboard.putData("Pivot 180 degrees CW", new Pivot(180));
+//		SmartDashboard.putData("Pivot 180 degrees CCW", new Pivot(-180));
+//		
+//		SmartDashboard.putData("Pivot 360 degrees CW", new Pivot(360));
+//		SmartDashboard.putData("Pivot 360 degrees CCW", new Pivot(-360));
+//
+//		SmartDashboard.putData("One Foot Forward", new DriveStraight(12));
+//		SmartDashboard.putData("Two Feet Forward", new DriveStraight(24));
+//		SmartDashboard.putData("Three Feet Forward", new DriveStraight(36));
+//		SmartDashboard.putData("Six Feet Forward", new DriveStraight(12*6));
+//		
+//		SmartDashboard.putData("Lock High Gear", new LockGear(true));
+//		SmartDashboard.putData("Lock Low Gear", new LockGear(false));
+//		SmartDashboard.putData("Unlock Gear", new UnlockGear());
+//		
+//		SmartDashboard.putData("LOCK DRIVE UNLOCK", new DriveStraightLockedGears(12*8, true));
 		
 		// For the operators to indicate on which side of the field they placed the
 		// robot
@@ -297,9 +295,8 @@ public class OI {
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
 			moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
-
+			//moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
@@ -309,7 +306,7 @@ public class OI {
 			break;
 		case CENTER:
 			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,
 			// robotStartPosition));
@@ -317,14 +314,14 @@ public class OI {
 		case MID_RIGHT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,robotStartPosition));
 			break;
@@ -345,39 +342,39 @@ public class OI {
 		case LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
 			break;
 		case CENTER:
 			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
 			break;
 		case MID_RIGHT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			//robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchLScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
 			moveSwitchLScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
-			moveSwitchLScaleR.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchLScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchLScaleR.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
@@ -395,22 +392,22 @@ public class OI {
 		switch (robotStartPosition) {
 		case LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
+			//moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,
 			// robotStartPosition));
 			break;
 		case CENTER:
 			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,
 			// robotStartPosition));
@@ -418,13 +415,13 @@ public class OI {
 		case MID_RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			break;
 		case RIGHT:
 			moveSwitchRScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleL.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchRScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT,robotStartPosition));
 			break;
@@ -444,22 +441,22 @@ public class OI {
 		switch (robotStartPosition) {
 		case LEFT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			//moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,robotStartPosition));
 			break;
 		case MID_LEFT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
-			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
 			break;
 		case CENTER:
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
@@ -467,7 +464,7 @@ public class OI {
 		case MID_RIGHT:
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			//moveSwitchLScaleL.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			// moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT,
 			// robotStartPosition));
@@ -476,8 +473,8 @@ public class OI {
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Switch With Stage Two", new SwitchAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			//moveSwitchRScaleR.addDefault("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;

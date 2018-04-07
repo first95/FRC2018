@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ScaleAttack extends CommandGroup {
 
 	// These strategies assumes we have a cube pre-loaded on the robot.
-	
-	//INDEPENDENT CONSTANTS:
+
+	// INDEPENDENT CONSTANTS:
 	private static final double ONE_FOOT = 12.0;
 
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
-	private static final double L_INITAL_MOVE =  304.31 + 10.0;
+	private static final double L_INITAL_MOVE = 304.31 + 10.0;
 	private static final double L_TO_R_INITIAL_MOVE = 231.0;
 	private static final double L_TO_R_ACROSS_MOVE = 264.0;
 	private static final double L_TO_R_NULL_ZONE = 33.0;
@@ -65,26 +65,14 @@ public class ScaleAttack extends CommandGroup {
 	private static final double MR_TO_L_ENDING_MOVE = 0.0;
 	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
-	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor,
-			StartPosition robotStartingPosition) {
+	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor, StartPosition robotStartingPosition) {
 
 		// LEFT SIDE MOVE:
-		if (robotStartingPosition == StartPosition.LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
-		{
+		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
 			addSequential(new Pivot(45));
-			addSequential(new ScoreStartingCubeOnScale());
-			addSequential(new Pivot(98));
-			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraight(-72));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());
-
-		}
-		else if (robotStartingPosition == StartPosition.LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
-		{
+			//addSequential(new ScoreStartingCubeOnScale());
+		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
@@ -94,12 +82,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, true));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
-		
-		/*======================================*/
+
+		/* ====================================== */
 		// MID-LEFT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
-		{
+		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(ML_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, true));
@@ -107,10 +93,8 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-		}
-		else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
-		{
+		} else if (robotStartingPosition == StartPosition.MID_LEFT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(ML_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
@@ -119,12 +103,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
-		
-		/*======================================*/
+
+		/* ====================================== */
 		// CENTER MOVE:
-		else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
-		{
+		else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(C_L_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(C_L_MIDDLE_MOVE, true));
@@ -132,10 +114,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(C_L_FINAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-		}
-		else if (robotStartingPosition == StartPosition.CENTER
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
-		{
+		} else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(C_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(C_R_MIDDLE_MOVE, true));
@@ -144,12 +123,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
-		
-		/*======================================*/
+
+		/* ====================================== */
 		// RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
-		{
+		else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(-L_TO_R_ACROSS_MOVE, true));
@@ -158,21 +135,15 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(L_TO_R_FINAL_MOVE, true));
 			addSequential(new ScoreStartingCubeOnScale());
-		}
-		else if (robotStartingPosition == StartPosition.RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
-		{
+		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
-			
 		}
-		
-		/*======================================*/
+
+		/* ====================================== */
 		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
-		{
+		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(MR_TO_L_INITIAL_MOVE, true));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
@@ -180,10 +151,8 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, true));
 			addSequential(new Pivot(90));
 			addSequential(new ScoreStartingCubeOnScale());
-		}
-		else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
-		{
+		} else if (robotStartingPosition == StartPosition.MID_RIGHT
+				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(MR_INITIAL_MOVE, true));
 			addSequential(new Pivot(90));
 			addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, true));
@@ -192,11 +161,10 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
-		
-		/*======================================*/
+
+		/* ====================================== */
 		// NO GAME DATA:
-		else
-		{
+		else {
 			addSequential(new AnyForward());
 		}
 	}
