@@ -32,17 +32,6 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 	private static final double L_TO_R_FINAL_MOVE = 80.0;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
-	// IF MID-LEFT LOGIC:
-	private static final double ML_FORMAT_PATTERN = 0.0;
-	private static final double ML_INITIAL_MOVE = 48.0;
-	private static final double ML_ACROSS_MOVE = 55.5;
-
-	private static final double ML_FINAL_MOVE = 266.31;
-	private static final double ML_TO_R_INITIAL_MOVE = 48.0;
-	private static final double ML_TO_R_ACROSS_MOVE = 192.0;
-	private static final double ML_TO_R_FINAL_MOVE = 266.31;
-	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
-
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
 	private static final double C_L_INITIAL_MOVE = 12.0;
@@ -57,18 +46,6 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 	private static final double R_FORMAT_PATTERN = 0.0;
 	private static final double R_INITAL_MOVE = 304.31 + 10.0;;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
-
-	// IF MID-RIGHT LOGIC:
-	private static final double MR_FORMAT_PATTERN = 0.0;
-	private static final double MR_INITIAL_MOVE = 64.0;
-	private static final double MR_ACROSS_MOVE = 140.0;
-	private static final double MR_MIDDLE_DISTANCE = 56.77;
-	private static final double MR_FINAL_MOVE = 167.01;
-	private static final double MR_TO_L_INITIAL_MOVE = 64.0;
-	private static final double MR_TO_L_ACROSS_MOVE = 182.9;
-	private static final double MR_TO_L_NULL_ZONE = 140.0;
-	private static final double MR_TO_L_ENDING_MOVE = 0.0;
-	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
 	public ScaleAttackWithStageTwo(FieldSide whichSideOfTheScaleIsOurColor,
 			StartPosition robotStartingPosition) {
