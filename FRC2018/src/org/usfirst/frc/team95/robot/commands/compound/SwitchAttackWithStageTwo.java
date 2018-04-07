@@ -29,16 +29,6 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 	private static final double L_FINAL_MOVE = 19.56;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
-	// IF MID-LEFT LOGIC:
-	private static final double ML_FORMAT_PATTERN = 0.0;
-	private static final double ML_INITIAL_MOVE = 0.0;
-	private static final double ML_ENDING_MOVE = 0.0;
-	private static final double ML_TO_SWITCH_MOVE = 156;
-	private static final double ML_TO_R_MOVE = 153.5;
-	private static final double ML_SWEEPER_TURN_RADIUS = 71.61;
-	private static final double ML_SWEEPER_DEGREES = 32.73;
-	public static final String ML_DESCRIPTION = "Go to switch hot side from mid-left position and score";
-
 	// IF CENTER LOGIC:
 	private static final double C_FORMAT_PATTERN = 0.0;
 	private static final double C_INITAL_MOVE = 48.0 - 18.0;
@@ -56,14 +46,6 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 	private static final double R_TO_L_MOVE = 158.5;
 	private static final double R_TO_SWITCH_MOVE = 156;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
-
-	// IF MID-RIGHT LOGIC:
-	private static final double MR_FORMAT_PATTERN = 0.0;
-	private static final double MR_TO_SWITCH_MOVE = 156;
-	private static final double MR_TO_L_MOVE = 153.5;
-	private static final double MR_DISTANCE_STRIGHT = 101.6; // Measured in Solidworks, 2018-2-15 //100.82;
-	// private static final double MR_DISTANCE_STRIGHT = 24.0;
-	public static final String MR_DESCRIPTION = "Go to switch hot side from mid-right position and score";
 
 	public SwitchAttackWithStageTwo(FieldSide whichSideOfTheNearSwitchIsOurColor, StartPosition robotStartingPosition) {
 
