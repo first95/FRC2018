@@ -112,37 +112,6 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 		}
 
 		/* ====================================== */
-		// MID-LEFT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-
-			// PATH NOT YET MAPPED
-
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(ML_TO_R_MOVE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(ML_TO_SWITCH_MOVE, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-			
-			// Stage Two
-			
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TILL_CENTER, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(90));
-			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TO_RE_CENTER_WITH_CUBE, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-		}
-
-		/* ====================================== */
 		// CENTER MOVE:
 		else if (robotStartingPosition == StartPosition.CENTER
 				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
@@ -203,52 +172,6 @@ public class SwitchAttackWithStageTwo extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE, false));
 			addSequential(new Pivot(-90));
 			addSequential(new DriveStraightLockedGears(R_FINAL_MOVE - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-
-			// Stage Two
-
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TILL_CENTER, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(90));
-			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TO_RE_CENTER_WITH_CUBE, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-
-		}
-
-		/* ====================================== */
-		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraightLockedGears(ONE_FOOT, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(MR_TO_L_MOVE, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(MR_TO_SWITCH_MOVE, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-			
-			// Stage Two 
-			
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TILL_CENTER, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraightLockedGears(-DISTANCE_TO_RE_CENTER_WITH_CUBE, false));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_SECOND_CUBE, false));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(DISTANCE_TILL_CENTER, false));
-			addSequential(new ScoreStartingCubeOnSwitch());
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT) {
-
-			addSequential(new DriveStraightLockedGears(MR_DISTANCE_STRIGHT - AUTO_MOVE_SWITCH_SCORE_STANDOFF_INCHES, false));
 			addSequential(new ScoreStartingCubeOnSwitch());
 
 			// Stage Two

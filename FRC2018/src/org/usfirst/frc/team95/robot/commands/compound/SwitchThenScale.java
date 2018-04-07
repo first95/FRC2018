@@ -18,13 +18,9 @@ public class SwitchThenScale extends CommandGroup
 
 		// IF LEFT LOGIC:
 		
-		// IF MID-LEFT LOGIC:
-		
 		// IF CENTER LOGIC:
 		
 		// IF RIGHT LOGIC:
-
-		// IF MID-RIGHT LOGIC:
 
 		public SwitchThenScale(FieldSide whichSideOfTheScaleIsOurColor,
 				FieldSide whichSideOfTheNearSwitchIsOurColor,
@@ -55,35 +51,8 @@ public class SwitchThenScale extends CommandGroup
 			{
 			
 			}
+			
 			/*======================================*/
-
-			// MID-LEFT SIDE MOVE:
-			else if (robotStartingPosition == StartPosition.MID_LEFT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
-			{
-		
-			}
-			else if (robotStartingPosition == StartPosition.MID_LEFT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
-			{
-			
-			}
-			else if (robotStartingPosition == StartPosition.MID_LEFT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
-			{
-			
-			}
-			else if (robotStartingPosition == StartPosition.MID_LEFT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
-			{
-			
-			}
-			/*======================================*/
-
 			// CENTER MOVE:
 			else if (robotStartingPosition == StartPosition.CENTER
 					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
@@ -136,35 +105,8 @@ public class SwitchThenScale extends CommandGroup
 				
 				
 			}
+			
 			/*======================================*/
-
-			// MID-RIGHT SIDE MOVE:
-			else if (robotStartingPosition == StartPosition.MID_RIGHT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
-			{
-				
-			}
-			else if (robotStartingPosition == StartPosition.MID_RIGHT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
-			{
-				
-			}
-			else if (robotStartingPosition == StartPosition.MID_RIGHT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.LEFT)
-			{
-
-			}
-			else if (robotStartingPosition == StartPosition.MID_RIGHT
-					&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT
-					&& whichSideOfTheNearSwitchIsOurColor == FieldSide.RIGHT)
-			{
-				
-			}
-			/*======================================*/
-
 			// NO GAME DATA:
 			else
 			{

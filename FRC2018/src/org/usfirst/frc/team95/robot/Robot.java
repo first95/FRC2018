@@ -32,9 +32,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public enum StartPosition {
 		LEFT,      // Rear left corner of the bumper touches the diagonal of the left portal
-		MID_LEFT,  // Robot's center is centered on the left switch plate
 		CENTER,    // Robot is centered on the field centerline
-		MID_RIGHT, // Robot's center is centered on the right switch plate
 		RIGHT,     // Rear right corner of the bumper touches the diagonal of the right portal
 	}
 	

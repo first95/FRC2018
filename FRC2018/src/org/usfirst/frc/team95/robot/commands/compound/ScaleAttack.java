@@ -84,27 +84,6 @@ public class ScaleAttack extends CommandGroup {
 		}
 
 		/* ====================================== */
-		// MID-LEFT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraightLockedGears(ML_INITIAL_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(ML_ACROSS_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(ML_FINAL_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new ScoreStartingCubeOnScale());
-		} else if (robotStartingPosition == StartPosition.MID_LEFT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(ML_TO_R_INITIAL_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(ML_TO_R_ACROSS_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(ML_TO_R_FINAL_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());
-		}
-
-		/* ====================================== */
 		// CENTER MOVE:
 		else if (robotStartingPosition == StartPosition.CENTER && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(C_L_INITIAL_MOVE, true));
@@ -138,27 +117,6 @@ public class ScaleAttack extends CommandGroup {
 		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE - 30 - 12, true));
 			addSequential(new Pivot(-45));
-			addSequential(new ScoreStartingCubeOnScale());
-		}
-
-		/* ====================================== */
-		// MID-RIGHT SIDE MOVE:
-		else if (robotStartingPosition == StartPosition.MID_RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraightLockedGears(MR_TO_L_INITIAL_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(MR_TO_L_ACROSS_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(MR_TO_L_NULL_ZONE, true));
-			addSequential(new Pivot(90));
-			addSequential(new ScoreStartingCubeOnScale());
-		} else if (robotStartingPosition == StartPosition.MID_RIGHT
-				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(MR_INITIAL_MOVE, true));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraightLockedGears(MR_ACROSS_MOVE, true));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraightLockedGears(MR_FINAL_MOVE, true));
-			addSequential(new Pivot(-90));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 
