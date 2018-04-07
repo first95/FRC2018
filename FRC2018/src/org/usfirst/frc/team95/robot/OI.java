@@ -27,11 +27,14 @@ public class OI {
 	public static final int COLLECTOR_IN_AXIS = 2;
 	public static final int COLLECTOR_OUT_AXIS = 3;
 	public static final int ELEVATOR_AXIS = 5; // Right stick Y
+	public static final int CLIMBER_AXIS = 1; // Left stick Y
 
 	// Buttons on drive controller
 	public static final int SHIFT_BUTTON = 5; // Left bumper
 	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
 	public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
+	// public static final int CLIMBER_UP = 4; // Y
+	// public static final int CLIMBER_DOWN = 1; // A
 
 	// Buttons on weapons controller
 	public static final int OPEN_COLLECTOR_BUTTON = 5; // Left bumper
@@ -139,7 +142,28 @@ public class OI {
 	public void setShiftLockValue(int shifterValue) {
 		shiftLockValue = shifterValue;
 	}
+
+	 public double getClimberSpeed() {
 	
+		 double climberSpeed = 0;
+		
+		 if ((weaponsController.getRawAxis(CLIMBER_AXIS) > .18) || (weaponsController.getRawAxis(CLIMBER_AXIS) < -.18)) {
+			 climberSpeed = weaponsController.getRawAxis(CLIMBER_AXIS);
+		 }
+		
+		 // The Y axis is reversed, so that positive is down
+		 return -climberSpeed;
+	 }
+	
+//	 public boolean isClimberDownButtonPressed() {
+//	 return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
+//	 }
+//	
+//	 public boolean isClimberUpButtonPressed() {
+//	 return false; // Not currently in use
+//	 // return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
+//	 }
+
 	// Collector controls
 	public boolean getCollectorOpen() {
 		return weaponsController.getRawButton(OPEN_COLLECTOR_BUTTON);
@@ -151,11 +175,11 @@ public class OI {
 
 	// Wrist controls
 	// We support 4 positions:
-	//            Stage 1   Stage 2   POV position
-	// Full up    extended  extended  Up
-	// some up    extended  retracted Up/right, left/up
-	// some down  retracted extended  Right, left
-	// full down  retracted retracted Down , right/down, left/down
+	// Stage 1 Stage 2 POV position
+	// Full up extended extended Up
+	// some up extended retracted Up/right, left/up
+	// some down retracted extended Right, left
+	// full down retracted retracted Down , right/down, left/down
 	public void updateWristSettings() {
 		if (weaponsController.getPOV() != POV_NONE) {
 			// Per table above, retract stage one if the POV hat is right or down
