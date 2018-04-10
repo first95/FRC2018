@@ -57,8 +57,8 @@ public class Constants
 		public static final int RIGHT_CHAIN_DRIVER = 24;
 
 		// Climber
-		public static final int LEFT_CLIMBER_DRIVER = 15;
-		public static final int RIGHT_CLIMBER_DRIVER = 25;
+		public static final int LEFT_CLIMBER_DRIVER = 25;
+		public static final int RIGHT_CLIMBER_DRIVER = 15;
 		
 		// Sensors attached via Talon
 		public static final int PIGEON_NUM = 30;		
