@@ -41,7 +41,7 @@ public class AutoCloseMawOnCube extends Command {
 	@Override
 	protected void execute() {
 		
-		if (Robot.collector.getNumberOfMawPhotosensorsTripped() >= 2) {
+		if (Robot.collector.getNumberOfMawPhotosensorsTripped() >= 1) {
 
 			if(runOnce) {
 				holdTimer.reset();
