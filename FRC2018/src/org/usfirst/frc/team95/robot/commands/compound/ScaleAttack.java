@@ -49,7 +49,7 @@ public class ScaleAttack extends CommandGroup {
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
 			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
-			addSequential(new Pivot(45));
+			addSequential(new Pivot(65));
 			addSequential(new ScoreStartingCubeOnScale());
 		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(L_TO_R_INITIAL_MOVE, true));
@@ -91,7 +91,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new ScoreStartingCubeOnScale());
 		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
 			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE - 30 - 12, true));
-			addSequential(new Pivot(-45));
+			addSequential(new Pivot(-65));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
 
