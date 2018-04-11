@@ -44,7 +44,7 @@ public class ScaleAttack extends CommandGroup {
 	private static final double R_TO_L_ACROSS_MOVE = 90; // Will need to add 100 in the future
 	private static final double R_TO_L_FINAL_MOVE = 12 + 6 + 6  + 4;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
-	
+
 	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor, StartPosition robotStartingPosition) {
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
