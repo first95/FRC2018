@@ -23,7 +23,7 @@ public class SwitchAttack extends CommandGroup {
 	private static final double L_INITIAL_MOVE = 148.19;
 	private static final double L_TO_R_MOVE = 158.5;
 	private static final double L_TO_SWITCH_MOVE = 156;
-	private static final double L_FINAL_MOVE = 19.56;
+	private static final double L_FINAL_MOVE = 19.56 + 10; // Adjustment made based on Doppler testing 4/10/18
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF CENTER LOGIC:
@@ -38,7 +38,7 @@ public class SwitchAttack extends CommandGroup {
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
 	private static final double R_INITAL_MOVE = 148.19;
-	private static final double R_FINAL_MOVE = 19.56;
+	private static final double R_FINAL_MOVE = 19.56 + 10; // Adjustment made based on Doppler testing of left side on 4/10/18
 	private static final double R_TO_L_INITIAL_MOVE = 12.0;
 	private static final double R_TO_L_MOVE = 158.5;
 	private static final double R_TO_SWITCH_MOVE = 156;
