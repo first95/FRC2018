@@ -22,9 +22,9 @@ public class ScaleAttack extends CommandGroup {
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
 	private static final double L_INITAL_MOVE = 304.31 + 10.0;
-	private static final double L_TO_R_INITIAL_MOVE = 200;
-	private static final double L_TO_R_ACROSS_MOVE = 100; // Will need to add 100 in the future
-	private static final double L_TO_R_FINAL_MOVE = 12;
+	private static final double L_TO_R_INITIAL_MOVE = 205;
+	private static final double L_TO_R_ACROSS_MOVE = 90; // Will need to add 100 in the future
+	private static final double L_TO_R_FINAL_MOVE = 12 + 6 + 6 + 4;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
 
 	// IF CENTER LOGIC:
