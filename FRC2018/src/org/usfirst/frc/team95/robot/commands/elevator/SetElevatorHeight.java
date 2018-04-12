@@ -8,7 +8,7 @@ public class SetElevatorHeight extends Command {
 	public static double FLOOR_HEIGHT_FEET = 0.0;
 	public static double SWITCH_SCORE_HEIGHT_FEET = 2.0;
 	public static double SCALE_SCORE_LOW_HEIGHT_FEET = 5;
-	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5 + 0.5;
+	public static double SCALE_SCORE_HIGH_HEIGHT_FEET = 5.5; //+0.5 removed due to issues discovered in practice match;
 	public enum ElevatorHoldPoint {
 		FLOOR,            // Positioned at its lowest position
 		SWITCH_SCORE,     // Positioned to hold a cube above the fence around the Switch

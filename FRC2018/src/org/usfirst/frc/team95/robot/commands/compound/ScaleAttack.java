@@ -22,7 +22,7 @@ public class ScaleAttack extends CommandGroup {
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
 	private static final double L_INITAL_MOVE = 304.31 + 10.0;
-	private static final double L_TO_R_INITIAL_MOVE = 205;
+	private static final double L_TO_R_INITIAL_MOVE = 205 + 18.0;
 	private static final double L_TO_R_ACROSS_MOVE = 90 + 100; // Adding 100 to hopefully work on full width field vs our practice field
 	private static final double L_TO_R_FINAL_MOVE = 12 + 6 + 6 + 4;
 	public static final String L_DESCRIPTION = "Go to switch hot side from left position and score";
@@ -40,7 +40,7 @@ public class ScaleAttack extends CommandGroup {
 	// IF RIGHT LOGIC:
 	private static final double R_FORMAT_PATTERN = 0.0;
 	private static final double R_INITAL_MOVE = 304.31 + 10.0;
-	private static final double R_TO_L_INITIAL_MOVE = 205;
+	private static final double R_TO_L_INITIAL_MOVE = 205 + 18.0;
 	private static final double R_TO_L_ACROSS_MOVE = 90 + 100; // Adding 100 to hopefully work on full width field vs our practice field
 	private static final double R_TO_L_FINAL_MOVE = 12 + 6 + 6  + 4;
 	public static final String R_DESCRIPTION = "Go to switch hot side from right position and score";
@@ -48,7 +48,7 @@ public class ScaleAttack extends CommandGroup {
 	public ScaleAttack(FieldSide whichSideOfTheScaleIsOurColor, StartPosition robotStartingPosition) {
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.LEFT) {
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12 + 18, true));
 			addSequential(new Pivot(65));
 			addSequential(new ScoreStartingCubeOnScale());
 		} else if (robotStartingPosition == StartPosition.LEFT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
@@ -90,7 +90,7 @@ public class ScaleAttack extends CommandGroup {
 			addSequential(new DriveStraightLockedGears(R_TO_L_FINAL_MOVE, false));
 			addSequential(new ScoreStartingCubeOnScale());
 		} else if (robotStartingPosition == StartPosition.RIGHT && whichSideOfTheScaleIsOurColor == FieldSide.RIGHT) {
-			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE - 30 - 12, true));
+			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE - 30 - 12 + 18, true));
 			addSequential(new Pivot(-65));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
