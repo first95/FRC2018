@@ -12,7 +12,7 @@ import org.usfirst.frc.team95.robot.commands.collector.SetWristAngle.WristAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoPickUpCubeWithDrive extends CommandGroup {
-	private static final double FORWARD_THROTTLE = 0.15;
+	private static final double FORWARD_THROTTLE = 0.4;
 
 	public AutoPickUpCubeWithDrive() {
 		addSequential(new SetWristAngle(WristAngle.DOWN));

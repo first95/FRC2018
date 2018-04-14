@@ -24,9 +24,9 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 	private static final double DISTANCE_TILL_SECOND_CUBE = ((264/2)-24);
 	private static final double DISTANCE_TO_GRAB_CUBE = 5.0;
 	private static final double ONE_FOOT = 12.0;
-	private static final double BACKUP_DISTENCE_MOVE = 4.0;
-	private static final double STAGETWO_SAME_SIDE_DISTENCE_TO_2ND_CUBE = 4*12 + 10 +5 + 14 + 3 + 4;
-	private static final double STAGETWO_OPPOSITE_SIDE_DISTENCE_TO_2ND_CUBE = 20;
+	private static final double BACKUP_DISTANCE_MOVE = 4.0;
+	private static final double STAGETWO_SAME_SIDE_DISTANCE_TO_2ND_CUBE = 4*12 + 10 +5 + 14 + 3 + 4;
+	private static final double STAGETWO_OPPOSITE_SIDE_DISTANCE_TO_2ND_CUBE = 20;
 	
 	// IF LEFT LOGIC:
 	private static final double L_FORMAT_PATTERN = 0.0;
@@ -57,20 +57,20 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 
 	public ScaleAttackWithStageTwo(FieldSide whichSideOfTheScaleIsOurColor,
 			StartPosition robotStartingPosition) {
-
 		// LEFT SIDE MOVE:
 		if (robotStartingPosition == StartPosition.LEFT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.LEFT)
 		{
-			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12, true));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12 - 8, true));
 			addSequential(new Pivot(45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
 			
-			addSequential(new Pivot(105 - 5));
-			addSequential(new AutoPickUpCubeWithDistance(STAGETWO_SAME_SIDE_DISTENCE_TO_2ND_CUBE));
-			addSequential(new DriveStraightLockedGears(-STAGETWO_SAME_SIDE_DISTENCE_TO_2ND_CUBE, false));
+			addSequential(new Pivot(100));
+            addSequential(new AutoPickUpCubeWithDistance(STAGETWO_SAME_SIDE_DISTANCE_TO_2ND_CUBE));
+			//addSequential(new AutoPickUpCubeWithDrive());
+			addSequential(new DriveStraightLockedGears(-STAGETWO_SAME_SIDE_DISTANCE_TO_2ND_CUBE, false));
 			addSequential(new Pivot(-100));
 			addSequential(new ScoreStartingCubeOnScale());
 		}
@@ -87,9 +87,9 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 			// Stage Two
 			
 			addSequential(new Pivot(-180));
-			addSequential(new AutoPickUpCubeWithDistance(STAGETWO_OPPOSITE_SIDE_DISTENCE_TO_2ND_CUBE));
+			addSequential(new AutoPickUpCubeWithDistance(STAGETWO_OPPOSITE_SIDE_DISTANCE_TO_2ND_CUBE));
 			addSequential(new Pivot(-180));
-			addSequential(new DriveStraightLockedGears(STAGETWO_OPPOSITE_SIDE_DISTENCE_TO_2ND_CUBE, false));
+			addSequential(new DriveStraightLockedGears(STAGETWO_OPPOSITE_SIDE_DISTANCE_TO_2ND_CUBE, false));
 			addSequential(new ScoreStartingCubeOnScale());	
 		}
 		
@@ -174,8 +174,8 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 			
 			
 			addSequential(new Pivot(-185));
-			addSequential(new AutoPickUpCubeWithDistance(STAGETWO_OPPOSITE_SIDE_DISTENCE_TO_2ND_CUBE));
-			addSequential(new DriveStraightLockedGears(-STAGETWO_OPPOSITE_SIDE_DISTENCE_TO_2ND_CUBE, false));
+			addSequential(new AutoPickUpCubeWithDistance(STAGETWO_OPPOSITE_SIDE_DISTANCE_TO_2ND_CUBE));
+			addSequential(new DriveStraightLockedGears(-STAGETWO_OPPOSITE_SIDE_DISTANCE_TO_2ND_CUBE, false));
 			addSequential(new Pivot(-173));
 			addSequential(new DriveStraightLockedGears(R_TO_L_FINAL_MOVE + 8, false));
 			addSequential(new ScoreStartingCubeOnScale());	
@@ -183,27 +183,17 @@ public class ScaleAttackWithStageTwo extends CommandGroup {
 		else if (robotStartingPosition == StartPosition.RIGHT
 				&& whichSideOfTheScaleIsOurColor == FieldSide.RIGHT)
 		{
-			addSequential(new DriveStraightLockedGears(R_INITAL_MOVE - 30 - 12, true));
+			addSequential(new DriveStraightLockedGears(L_INITAL_MOVE - 30 - 12 - 8, true));
 			addSequential(new Pivot(-45));
 			addSequential(new ScoreStartingCubeOnScale());
 			
 			// Stage Two
 			
-			addSequential(new DriveStraight(RE_CENTER_DISTANCE));
-			addSequential(new Pivot(-90.0));
-			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
-			addSequential(new Pivot(90));
-			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(DISTANCE_TO_GRAB_CUBE));
+			addSequential(new Pivot(-100));
 			addSequential(new AutoPickUpCubeWithDrive());
-			addSequential(new DriveStraight(-DISTANCE_TO_GRAB_CUBE));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(DISTANCE_TILL_SECOND_CUBE));
-			addSequential(new Pivot(-90));
-			addSequential(new DriveStraight(DISTANCE_TILL_CENTER));
-			addSequential(new Pivot(-90));
-			addSequential(new ScoreStartingCubeOnScale());	
+			addSequential(new DriveStraightLockedGears(-STAGETWO_SAME_SIDE_DISTANCE_TO_2ND_CUBE, false));
+			addSequential(new Pivot(100));
+			addSequential(new ScoreStartingCubeOnScale());
 		}
 		
 		/*======================================*/

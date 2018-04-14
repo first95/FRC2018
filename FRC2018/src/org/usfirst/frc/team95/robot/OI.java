@@ -319,6 +319,7 @@ public class OI {
 			moveSwitchLScaleL.addObject("Forward to auto line", new AnyForward());
 			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
 			moveSwitchLScaleL.addObject("Score Scale", new ScaleAttack(FieldSide.LEFT, robotStartPosition));
+			moveSwitchLScaleL.addObject("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.LEFT, robotStartPosition));
 			break;
 		case CENTER:
 			moveSwitchLScaleL.addObject("Score Switch", new SwitchAttack(FieldSide.LEFT, robotStartPosition));
@@ -405,6 +406,7 @@ public class OI {
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchRScaleR.addObject("Score Switch With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
