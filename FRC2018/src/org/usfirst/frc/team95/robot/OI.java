@@ -406,7 +406,7 @@ public class OI {
 			moveSwitchRScaleR.addObject("Forward to auto line", new AnyForward());
 			moveSwitchRScaleR.addObject("Score Switch", new SwitchAttack(FieldSide.RIGHT, robotStartPosition));
 			moveSwitchRScaleR.addObject("Score Scale", new ScaleAttack(FieldSide.RIGHT, robotStartPosition));
-			moveSwitchRScaleR.addObject("Score Switch With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
+			moveSwitchRScaleR.addObject("Score Scale With Stage Two", new ScaleAttackWithStageTwo(FieldSide.RIGHT, robotStartPosition));
 			break;
 		default:
 			break;
