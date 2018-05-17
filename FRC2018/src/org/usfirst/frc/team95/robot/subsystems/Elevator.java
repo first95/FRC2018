@@ -120,7 +120,7 @@ public class Elevator extends Subsystem {
 	}
 
 	public void log() {
-		SmartDashboard.putNumber("Elevator Speed", Robot.oi.getElevatorSpeed());
+//		SmartDashboard.putNumber("Elevator Speed", Robot.oi.getElevatorSpeed());
 		SmartDashboard.putBoolean("Elevator Home Switch", homeSwitch.get());
 		SmartDashboard.putNumber("leftElevEncoder Value:", leftElevDriver.getSelectedSensorPosition(Constants.PID_IDX));
 		SmartDashboard.putNumber("rightElevEncoder Value:",

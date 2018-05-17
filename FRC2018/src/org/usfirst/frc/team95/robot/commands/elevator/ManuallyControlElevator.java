@@ -62,25 +62,27 @@ public class ManuallyControlElevator extends Command {
 			// SmartDashboard.putString(ELEV_MODE, "Seek scale scoring position (high)");
 			seekHoldPoint(ElevatorHoldPoint.SCALE_SCORE_HIGH);
 			wasHoldingPresentPositionLastIteration = false;
-		} else {
-			// Second priority: Is the stick outside the deadband?
-			if (Math.abs(Robot.oi.getElevatorSpeed()) > 0) {
-				SmartDashboard.putString(ELEV_MODE, "Set speed");
-				Robot.elevator.setElevatorSpeed(Robot.oi.getElevatorSpeed());
-				wasHoldingPresentPositionLastIteration = false;
-			} else {
-				// Third priority: hold the present position
-				if (!wasHoldingPresentPositionLastIteration) {
-					seekHoldPoint(ElevatorHoldPoint.HERE);
-					// System.out.println("TEST THE ELEVATOR HOLD POINT IS: " +
-					// ElevatorHoldPoint.HERE);
-					wasHoldingPresentPositionLastIteration = true;
-				} else {
-					// We already commanded the elevator to hold its present
-					// position, so we don't need to command it to do so again.
-				}
-				SmartDashboard.putString(ELEV_MODE, "Hold present position");
-			}
+		} else
+		
+		{
+//			// Second priority: Is the stick outside the deadband?
+//			if (Math.abs(Robot.oi.getElevatorSpeed()) > 0) {
+//				SmartDashboard.putString(ELEV_MODE, "Set speed");
+//				Robot.elevator.setElevatorSpeed(Robot.oi.getElevatorSpeed());
+//				wasHoldingPresentPositionLastIteration = false;
+//			} else {
+//				// Third priority: hold the present position
+//				if (!wasHoldingPresentPositionLastIteration) {
+//					seekHoldPoint(ElevatorHoldPoint.HERE);
+//					// System.out.println("TEST THE ELEVATOR HOLD POINT IS: " +
+//					// ElevatorHoldPoint.HERE);
+//					wasHoldingPresentPositionLastIteration = true;
+//				} else {
+//					// We already commanded the elevator to hold its present
+//					// position, so we don't need to command it to do so again.
+//				}
+//				SmartDashboard.putString(ELEV_MODE, "Hold present position");
+//			}
 		}
 	}
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.team95.robot.subsystems.Climber;
+//import org.usfirst.frc.team95.robot.subsystems.Climber;
 import org.usfirst.frc.team95.robot.subsystems.Collector;
 import org.usfirst.frc.team95.robot.subsystems.Elevator;
 import org.usfirst.frc.team95.robot.subsystems.DriveBase;
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	// Components of the robot
 	public static DriveBase drivebase;
 	public static Collector collector;
-	public static Climber climber;
+//	public static Climber climber;
 	public static Elevator elevator;
 	public static Compressor compressor;
 	public static OI oi;
@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 		drivebase = new DriveBase();
 		collector = new Collector();
 		elevator = new Elevator();
-		climber = new Climber();
+//		climber = new Climber();
 		compressor = new Compressor();
 		oi = new OI();
 
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 		// easier to push
 		drivebase.brake(false);
 		elevator.brake(false);
-		climber.brake(false);
+//		climber.brake(false);
 		
 	}
 
@@ -126,7 +126,7 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		drivebase.brake(false);
 		elevator.brake(false);
-		climber.brake(false);
+//		climber.brake(false);
 	}
 
 	public void disabledPeriodic() {	
@@ -154,7 +154,7 @@ public class Robot extends IterativeRobot {
 		
 		drivebase.brake(true);
 		elevator.brake(true);
-		climber.brake(true);
+//		climber.brake(true);
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot {
 		elevator.log();
 		collector.log();
 		oi.log();
-		climber.log();
+//		climber.log();
 	}
 
 	public Robot.StartPosition getRobotStartSide() {

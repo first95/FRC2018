@@ -26,13 +26,13 @@ public class OI {
 	// Axes on weapons controller
 	public static final int COLLECTOR_IN_AXIS = 2;
 	public static final int COLLECTOR_OUT_AXIS = 3;
-	public static final int ELEVATOR_AXIS = 5; // Right stick Y
-	public static final int CLIMBER_AXIS = 1; // Left stick Y
+	// public static final int ELEVATOR_AXIS = 5; // Right stick Y
+	// public static final int CLIMBER_AXIS = 1; // Left stick Y
 
 	// Buttons on drive controller
-	public static final int SHIFT_BUTTON = 5; // Left bumper
-	public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
-	public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
+	// public static final int SHIFT_BUTTON = 5; // Left bumper
+	// public static final int DEPLOY_RAMPS_BUTTON = 8; // Start
+	// public static final int SHIFT_STATE_BUTTON = 6; // Right bumper
 	// public static final int CLIMBER_UP = 4; // Y
 	// public static final int CLIMBER_DOWN = 1; // A
 
@@ -62,7 +62,7 @@ public class OI {
 
 	// Controllers
 	private Joystick driverController = new Joystick(0);
-	private Joystick weaponsController = new Joystick(1);
+	// private Joystick weaponsController = new Joystick(1);
 
 	// Setup choosers for automoves
 	SendableChooser<StartPosition> robotStartingPosition = new SendableChooser<>();
@@ -78,7 +78,7 @@ public class OI {
 
 		// Create some buttons
 		JoystickButton joy_A = new JoystickButton(driverController, 1);
-		JoystickButton autograbButton = new JoystickButton(weaponsController, MAW_AUTOGRAB_BUTTON);
+		JoystickButton autograbButton = new JoystickButton(driverController, MAW_AUTOGRAB_BUTTON);
 
 		// Connect the buttons to commands
 		autograbButton.whileHeld(new AutoPickUpCubeManualDrive());
@@ -143,34 +143,34 @@ public class OI {
 		shiftLockValue = shifterValue;
 	}
 
-	 public double getClimberSpeed() {
+//	 public double getClimberSpeed() {
+//	
+//		 double climberSpeed = 0;
+//		
+//		 if ((weaponsController.getRawAxis(CLIMBER_AXIS) > .18) || (weaponsController.getRawAxis(CLIMBER_AXIS) < -.18)) {
+//			 climberSpeed = weaponsController.getRawAxis(CLIMBER_AXIS);
+//		 }
+//		
+//		 // The Y axis is reversed, so that positive is down
+//		 return -climberSpeed;
+//	 }
 	
-		 double climberSpeed = 0;
-		
-		 if ((weaponsController.getRawAxis(CLIMBER_AXIS) > .18) || (weaponsController.getRawAxis(CLIMBER_AXIS) < -.18)) {
-			 climberSpeed = weaponsController.getRawAxis(CLIMBER_AXIS);
-		 }
-		
-		 // The Y axis is reversed, so that positive is down
-		 return -climberSpeed;
+	 public boolean isClimberDownButtonPressed() {
+	 return driverController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
 	 }
 	
-//	 public boolean isClimberDownButtonPressed() {
-//	 return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
-//	 }
-//	
-//	 public boolean isClimberUpButtonPressed() {
-//	 return false; // Not currently in use
-//	 // return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
-//	 }
+	 public boolean isClimberUpButtonPressed() {
+	 return false; // Not currently in use
+	 // return weaponsController.getRawButton(ELEV_SEEK_SWITCH_SCORE_BUTTON);
+	 }
 
 	// Collector controls
 	public boolean getCollectorOpen() {
-		return weaponsController.getRawButton(OPEN_COLLECTOR_BUTTON);
-	}
+		return driverController.getRawButton(OPEN_COLLECTOR_BUTTON);
+}
 
 	public double getCollectorSpeed() {
-		return weaponsController.getRawAxis(COLLECTOR_IN_AXIS) - weaponsController.getRawAxis(COLLECTOR_OUT_AXIS);
+		return driverController.getRawAxis(COLLECTOR_IN_AXIS) - driverController.getRawAxis(COLLECTOR_OUT_AXIS);
 	}
 
 	// Wrist controls
@@ -181,13 +181,13 @@ public class OI {
 	// some down retracted extended Right, left
 	// full down retracted retracted Down , right/down, left/down
 	public void updateWristSettings() {
-		if (weaponsController.getPOV() != POV_NONE) {
+		if (driverController.getPOV() != POV_NONE) {
 			// Per table above, retract stage one if the POV hat is right or down
-			stageOneRetracted = (weaponsController.getPOV() >= POV_RIGHT
-					&& weaponsController.getPOV() <= POV_DOWN_LEFT);
+			stageOneRetracted = (driverController.getPOV() >= POV_RIGHT
+					&& driverController.getPOV() <= POV_DOWN_LEFT);
 			// Retract if the POV hat is up or down-ish
-			stageTwoRetracted = (weaponsController.getPOV() >= POV_RIGHT_DOWN
-					&& weaponsController.getPOV() <= POV_LEFT);
+			stageTwoRetracted = (driverController.getPOV() >= POV_RIGHT_DOWN
+					&& driverController.getPOV() <= POV_LEFT);
 		} else {
 			// When no D-Pad button is pressed, don't change the angle
 		}
@@ -210,21 +210,21 @@ public class OI {
 	}
 
 	// Elevator controls
-	public double getElevatorSpeed() {
-
-		double elevatorSpeed = 0;
-
-		if ((weaponsController.getRawAxis(ELEVATOR_AXIS) > .18)
-				|| (weaponsController.getRawAxis(ELEVATOR_AXIS) < -.18)) {
-			elevatorSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
-		}
-
-		// The Y axis is reversed, so that positive is down
-		return -elevatorSpeed;
-	}
+//	public double getElevatorSpeed() {
+//
+//		double elevatorSpeed = 0;
+//
+//		if ((weaponsController.getRawAxis(ELEVATOR_AXIS) > .18)
+//				|| (weaponsController.getRawAxis(ELEVATOR_AXIS) < -.18)) {
+//			elevatorSpeed = weaponsController.getRawAxis(ELEVATOR_AXIS);
+//		}
+//
+//		// The Y axis is reversed, so that positive is down
+//		return -elevatorSpeed;
+//	}
 
 	public boolean isElevatorFloorButtonPressed() {
-		return weaponsController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
+		return driverController.getRawButton(ELEV_SEEK_FLOOR_BUTTON);
 	}
 
 	public boolean isElevatorSwitchScoreButtonPressed() {
@@ -233,15 +233,15 @@ public class OI {
 	}
 
 	public boolean isElevatorScaleScoreLowButtonPressed() {
-		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_LOW_BUTTON);
+		return driverController.getRawButton(ELEV_SEEK_SCALE_SCORE_LOW_BUTTON);
 	}
 
 	public boolean isElevatorScaleScoreMedButtonPressed() {
-		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_MED_BUTTON);
+		return driverController.getRawButton(ELEV_SEEK_SCALE_SCORE_MED_BUTTON);
 	}
 
 	public boolean isElevatorScaleScoreHighButtonPressed() {
-		return weaponsController.getRawButton(ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON);
+		return driverController.getRawButton(ELEV_SEEK_SCALE_SCORE_HIGH_BUTTON);
 	}
 
 	// Drive base controls
@@ -253,9 +253,9 @@ public class OI {
 		return driverController.getRawAxis(4);
 	}
 
-	public boolean getHighGear() {
-		return driverController.getRawButton(SHIFT_BUTTON);
-	}
+//	public boolean getHighGear() {
+//		return driverController.getRawButton(SHIFT_BUTTON);
+//	}
 
 	// This feature has been put on hold
 	// It's goal was to allow the driver
