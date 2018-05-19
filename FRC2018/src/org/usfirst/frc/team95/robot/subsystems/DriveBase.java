@@ -234,6 +234,12 @@ public class DriveBase extends Subsystem {
 		double y = Robot.oi.getForwardAxis();
 		double x = Robot.oi.getTurnAxis();
 
+		if (Math.abs(x) > 0.5) {
+			Robot.oi.setShiftLockValue(-1);
+		} else {
+			Robot.oi.setShiftLockValue(0);
+		}
+		
 		// "Exponential" drive, where the movements are more sensitive during
 		// slow
 		// movement,
