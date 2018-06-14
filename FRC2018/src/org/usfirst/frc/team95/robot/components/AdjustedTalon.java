@@ -26,8 +26,8 @@ public class AdjustedTalon extends TalonSrxWrapper
 		public static final double INTERCEPTV = (MIN_ATTENV - (SLOPEV * MIN_VOLTAGE));
 		Queue<Double> voltageRec = new LinkedList<Double>();
 
-		public AdjustedTalon(int deviceNumber) {
-			super(deviceNumber);
+		public AdjustedTalon(int armSwingerTalon) {
+			super(armSwingerTalon);
 			panel = new PowerDistributionPanelWrapper();
 		}
 		public AdjustedTalon(IMotorControllerEnhanced wrapped, PowerDistributionPanelI panel) {

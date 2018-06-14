@@ -2,6 +2,8 @@ package org.usfirst.frc.team95.robot;
 
 public class Constants
 	{
+		//used for the arm swinger class
+		public static final int ARM_SWINGER_TALON = 7;
 	
 		public static double joystickDeadbandV = 0.07;
 		public static double joystickDeadbandH = 0.05;

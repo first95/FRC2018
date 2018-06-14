@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.team95.robot.subsystems.ArmSwinger;
 //import org.usfirst.frc.team95.robot.subsystems.Climber;
 //import org.usfirst.frc.team95.robot.subsystems.Collector;
 //import org.usfirst.frc.team95.robot.subsystems.Elevator;
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
 
 	// Components of the robot
 	public static DriveBase drivebase;
+	public static ArmSwinger armswinger;
 //	public static Collector collector;
 //	public static Climber climber;
 //	public static Elevator elevator;
